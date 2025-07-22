@@ -5,6 +5,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  password?: string;
   avatar?: string;
   role: 'user' | 'admin';
   bio?: string;
@@ -70,7 +71,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     case 'LOGIN_START':
     case 'REGISTER_START':
       return { ...state, isLoading: true, error: null };
-    
+
     case 'LOGIN_SUCCESS':
     case 'REGISTER_SUCCESS':
       return {
@@ -81,7 +82,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         isLoading: false,
         error: null
       };
-    
+
     case 'LOGIN_FAILURE':
     case 'REGISTER_FAILURE':
       return {
@@ -92,7 +93,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         isLoading: false,
         error: action.payload
       };
-    
+
     case 'LOGOUT':
       return {
         ...state,
@@ -101,39 +102,39 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         isAuthenticated: false,
         error: null
       };
-    
+
     case 'UPDATE_PROFILE':
       return {
         ...state,
         user: state.user ? { ...state.user, ...action.payload } : null
       };
-    
+
     case 'CHANGE_PASSWORD_SUCCESS':
       return { ...state, error: null };
-    
+
     case 'LOAD_USERS':
       return { ...state, users: action.payload };
-    
+
     case 'UPDATE_USER':
       return {
         ...state,
-        users: state.users.map(user => 
+        users: state.users.map(user =>
           user.id === action.payload.id ? action.payload : user
         )
       };
-    
+
     case 'DELETE_USER':
       return {
         ...state,
         users: state.users.filter(user => user.id !== action.payload)
       };
-    
+
     case 'CLEAR_ERROR':
       return { ...state, error: null };
-    
+
     case 'HYDRATE_AUTH':
       return { ...state, ...action.payload };
-    
+
     default:
       return state;
   }
@@ -142,8 +143,8 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
 const AuthContext = createContext<{
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
-  login: (email: string, password: string, role: 'user' | 'admin') => Promise<void>;
-  register: (name: string, email: string, password: string, role: 'user' | 'admin') => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   updateProfile: (data: Partial<User>) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
@@ -151,6 +152,52 @@ const AuthContext = createContext<{
   updateUser: (user: User) => void;
   deleteUser: (userId: string) => void;
 } | null>(null);
+
+const seedAdmins = () => {
+  const existingUsers = JSON.parse(localStorage.getItem('devElevateUsers') || '[]');
+
+  const predefinedAdmins: User[] = [
+    {
+      id: 'admin_' + Date.now(),
+      name: 'Admin1',
+      email: 'admin@develevate.com',
+      role: 'admin',
+      password: 'adminpassword123',
+      avatar: '',
+      bio: 'System administrator',
+      joinDate: new Date().toISOString(),
+      lastLogin: '',
+      isActive: true,
+      preferences: {
+        theme: 'light',
+        notifications: true,
+        language: 'en',
+        emailUpdates: true
+      },
+      progress: {
+        coursesEnrolled: [],
+        completedModules: 0,
+        totalPoints: 0,
+        streak: 0,
+        level: 'Admin'
+      }
+    }
+  ];
+
+  const updatedUsers = [...existingUsers];
+
+  predefinedAdmins.forEach(admin => {
+    const exists = existingUsers.find((u: User) => u.email === admin.email);
+    if (!exists) {
+      updatedUsers.push(admin);
+    }
+  });
+
+  localStorage.setItem('devElevateUsers', JSON.stringify(updatedUsers));
+};
+
+
+
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -173,66 +220,83 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.setItem('devElevateAuth', JSON.stringify(state));
   }, [state]);
 
+  useEffect(() => {
+    seedAdmins();
+  }, []);
+  useEffect(() => {
+    const users = JSON.parse(localStorage.getItem('devElevateUsers') || '[]');
+    console.log('Current users in localStorage:', users);
+  }, []);
+
+
   const generateToken = () => {
     return 'token_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
   };
 
-  const login = async (email: string, password: string, role: 'user' | 'admin') => {
+  const login = async (email: string, password: string) => {
     dispatch({ type: 'LOGIN_START' });
-    
+
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Check if user exists in localStorage
       const savedUsers = JSON.parse(localStorage.getItem('devElevateUsers') || '[]');
-      const user = savedUsers.find((u: User) => u.email === email && u.role === role);
-      
+      const user = savedUsers.find((u: User) => u.email === email);
+
       if (!user) {
         throw new Error('Invalid credentials or role');
       }
-      
-      // Simulate password check (in real app, this would be hashed)
-      if (password !== 'password123') {
-        throw new Error('Invalid password');
+
+      if (user.role === 'admin') {
+        if (!user.password || user.password !== password) {
+          throw new Error('Invalid password');
+        }
       }
-      
+      else {
+        // Simulate password check (in real app, this would be hashed)
+        if (password != 'password123') {
+          throw new Error('Invalid password');
+        }
+      }
+
       const token = generateToken();
       const updatedUser = { ...user, lastLogin: new Date().toISOString() };
-      
-      dispatch({ 
-        type: 'LOGIN_SUCCESS', 
-        payload: { user: updatedUser, token } 
+
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: { user: updatedUser, token }
       });
-      
+      return updatedUser;
+
     } catch (error) {
-      dispatch({ 
-        type: 'LOGIN_FAILURE', 
-        payload: error instanceof Error ? error.message : 'Login failed' 
+      dispatch({
+        type: 'LOGIN_FAILURE',
+        payload: error instanceof Error ? error.message : 'Login failed'
       });
     }
   };
 
-  const register = async (name: string, email: string, password: string, role: 'user' | 'admin') => {
+  const register = async (name: string, email: string, password: string,) => {
     dispatch({ type: 'REGISTER_START' });
-    
+
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Check if user already exists
       const savedUsers = JSON.parse(localStorage.getItem('devElevateUsers') || '[]');
       const existingUser = savedUsers.find((u: User) => u.email === email);
-      
+
       if (existingUser) {
         throw new Error('User already exists');
       }
-      
+
       const newUser: User = {
         id: 'user_' + Date.now(),
         name,
         email,
-        role,
+        role: 'user',
         joinDate: new Date().toISOString(),
         lastLogin: new Date().toISOString(),
         isActive: true,
@@ -250,22 +314,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           level: 'Beginner'
         }
       };
-      
+
       // Save user to localStorage
       savedUsers.push(newUser);
       localStorage.setItem('devElevateUsers', JSON.stringify(savedUsers));
-      
+
       const token = generateToken();
-      
-      dispatch({ 
-        type: 'REGISTER_SUCCESS', 
-        payload: { user: newUser, token } 
+
+      dispatch({
+        type: 'REGISTER_SUCCESS',
+        payload: { user: newUser, token }
       });
-      
+
     } catch (error) {
-      dispatch({ 
-        type: 'REGISTER_FAILURE', 
-        payload: error instanceof Error ? error.message : 'Registration failed' 
+      dispatch({
+        type: 'REGISTER_FAILURE',
+        payload: error instanceof Error ? error.message : 'Registration failed'
       });
     }
   };
@@ -277,13 +341,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const updateProfile = async (data: Partial<User>) => {
     if (!state.user) return;
-    
+
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 500));
-      
+
       const updatedUser = { ...state.user, ...data };
-      
+
       // Update in localStorage
       const savedUsers = JSON.parse(localStorage.getItem('devElevateUsers') || '[]');
       const userIndex = savedUsers.findIndex((u: User) => u.id === state.user!.id);
@@ -291,7 +355,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         savedUsers[userIndex] = updatedUser;
         localStorage.setItem('devElevateUsers', JSON.stringify(savedUsers));
       }
-      
+
       dispatch({ type: 'UPDATE_PROFILE', payload: data });
     } catch (error) {
       console.error('Profile update failed:', error);
@@ -302,12 +366,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 500));
-      
+
       // In real app, verify current password and update
       if (currentPassword !== 'password123') {
         throw new Error('Current password is incorrect');
       }
-      
+
       dispatch({ type: 'CHANGE_PASSWORD_SUCCESS' });
     } catch (error) {
       throw error;
@@ -327,7 +391,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       savedUsers[userIndex] = user;
       localStorage.setItem('devElevateUsers', JSON.stringify(savedUsers));
     }
-    
+
     dispatch({ type: 'UPDATE_USER', payload: user });
   };
 
@@ -336,7 +400,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const savedUsers = JSON.parse(localStorage.getItem('devElevateUsers') || '[]');
     const filteredUsers = savedUsers.filter((u: User) => u.id !== userId);
     localStorage.setItem('devElevateUsers', JSON.stringify(filteredUsers));
-    
+
     dispatch({ type: 'DELETE_USER', payload: userId });
   };
 

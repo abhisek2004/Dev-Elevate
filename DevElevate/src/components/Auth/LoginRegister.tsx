@@ -8,7 +8,6 @@ const LoginRegister: React.FC = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState<'user' | 'admin'>('user');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,17 +26,18 @@ const LoginRegister: React.FC = () => {
 
     try {
       if (isLogin) {
-        await login(formData.email, formData.password, role);
+        await login(formData.email, formData.password);
+        if (state.user?.role === 'admin') {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/');
+        }
       } else {
-        await register(formData.name, formData.email, formData.password, role);
-      }
-      
-      // Redirect based on role
-      if (role === 'admin') {
-        navigate('/admin');
-      } else {
+        await register(formData.name, formData.email, formData.password);
         navigate('/');
       }
+
+      navigate('/');
     } catch (error) {
       console.error('Auth error:', error);
     }
@@ -64,39 +64,6 @@ const LoginRegister: React.FC = () => {
           <p className="text-gray-600 dark:text-gray-400">
             {isLogin ? 'Sign in to continue your learning journey' : 'Start your learning journey today'}
           </p>
-        </div>
-
-        {/* Role Toggle */}
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-            Select Role
-          </label>
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setRole('user')}
-              className={`p-3 rounded-lg border-2 transition-all ${
-                role === 'user'
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                  : 'border-gray-200 dark:border-gray-700'
-              }`}
-            >
-              <User className="w-5 h-5 mx-auto mb-1 text-blue-500" />
-              <span className="text-sm font-medium text-gray-900 dark:text-white">User</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setRole('admin')}
-              className={`p-3 rounded-lg border-2 transition-all ${
-                role === 'admin'
-                  ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
-                  : 'border-gray-200 dark:border-gray-700'
-              }`}
-            >
-              <Shield className="w-5 h-5 mx-auto mb-1 text-purple-500" />
-              <span className="text-sm font-medium text-gray-900 dark:text-white">Admin</span>
-            </button>
-          </div>
         </div>
 
         {/* Error Message */}
