@@ -26,8 +26,8 @@ const LoginRegister: React.FC = () => {
 
     try {
       if (isLogin) {
-        await login(formData.email, formData.password);
-        if (state.user?.role === 'admin') {
+        const user=await login(formData.email, formData.password);
+        if (user?.role === 'admin') {
           navigate('/admin/dashboard');
         } else {
           navigate('/');
@@ -36,8 +36,6 @@ const LoginRegister: React.FC = () => {
         await register(formData.name, formData.email, formData.password);
         navigate('/');
       }
-
-      navigate('/');
     } catch (error) {
       console.error('Auth error:', error);
     }
