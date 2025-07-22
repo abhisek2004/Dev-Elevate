@@ -141,164 +141,172 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex min-h-screen items-start justify-center p-4 pt-16">
-        <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" onClick={onClose} />
-        
-        <div className={`relative w-full max-w-2xl ${state.darkMode ? 'bg-gray-900' : 'bg-white'} rounded-xl shadow-2xl`}>
-          {/* Search Input */}
-          <div className="flex items-center p-4 border-b border-gray-200 dark:border-gray-700">
-            <Search className="w-5 h-5 text-gray-400 mr-3" />
-            <input
-              ref={inputRef}
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Search courses, features, topics..."
-              className={`flex-1 bg-transparent text-lg outline-none ${
-                state.darkMode ? 'text-white placeholder-gray-400' : 'text-gray-900 placeholder-gray-500'
-              }`}
-            />
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-            >
-              <X className="w-5 h-5 text-gray-400" />
-            </button>
-          </div>
+<div className="fixed inset-0 z-50 overflow-y-auto">
+  <div className="flex min-h-screen items-start justify-center p-4 pt-16">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300"
+      onClick={onClose}
+    />
 
-          {/* Search Results */}
-          <div className="max-h-96 overflow-y-auto">
-            {query.trim() ? (
-              results.length > 0 ? (
-                <div className="p-2">
-                  {results.map((item, index) => {
-                    const Icon = item.icon;
-                    return (
-                      <button
-                        key={index}
-                        onClick={() => handleSelect(item)}
-                        className={`w-full p-3 rounded-lg text-left transition-colors ${
-                          selectedIndex === index
-                            ? 'bg-blue-50 dark:bg-blue-900/20'
-                            : 'hover:bg-gray-50 dark:hover:bg-gray-800'
-                        }`}
-                      >
-                        <div className="flex items-center space-x-3">
-                          <Icon className={`w-5 h-5 ${getTypeColor(item.type)}`} />
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2">
-                              <span className={`font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                                {item.title}
-                              </span>
-                              <span className={`text-xs px-2 py-1 rounded-full ${
-                                state.darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
-                              }`}>
-                                {getTypeLabel(item.type)}
-                              </span>
-                            </div>
-                            <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                              {item.description}
-                            </p>
-                          </div>
-                          <ExternalLink className="w-4 h-4 text-gray-400" />
+    <div
+      className={`relative w-full max-w-2xl rounded-xl shadow-2xl transform transition-all duration-300 ease-out ${
+        state.darkMode ? 'bg-gray-900' : 'bg-white'
+      }`}
+    >
+      {/* Search Input */}
+      <div className="flex items-center p-4 border-b border-gray-200 dark:border-gray-700">
+        <Search className="w-5 h-5 text-gray-400 mr-3" />
+        <input
+          ref={inputRef}
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Search courses, features, topics..."
+          className={`flex-1 bg-transparent text-lg outline-none transition-colors duration-200 ${
+            state.darkMode ? 'text-white placeholder-gray-400' : 'text-gray-900 placeholder-gray-500'
+          }`}
+        />
+        <button
+          onClick={onClose}
+          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200"
+        >
+          <X className="w-5 h-5 text-gray-400" />
+        </button>
+      </div>
+
+      {/* Search Results */}
+      <div className="max-h-96 overflow-y-auto">
+        {query.trim() ? (
+          results.length > 0 ? (
+            <div className="p-2 space-y-1">
+              {results.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleSelect(item)}
+                    className={`w-full p-3 rounded-lg text-left transition-all duration-200 ${
+                      selectedIndex === index
+                        ? 'bg-blue-50 dark:bg-blue-900/20 shadow-inner'
+                        : 'hover:bg-gray-50 dark:hover:bg-gray-800'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <Icon className={`w-5 h-5 ${getTypeColor(item.type)}`} />
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2">
+                          <span className={`font-medium transition-colors ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                            {item.title}
+                          </span>
+                          <span className={`text-xs px-2 py-1 rounded-full transition-all ${
+                            state.darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
+                          }`}>
+                            {getTypeLabel(item.type)}
+                          </span>
                         </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="p-8 text-center">
-                  <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className={`text-lg font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                    No results found
-                  </p>
-                  <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                    Try searching for courses, features, or topics
-                  </p>
-                </div>
-              )
-            ) : (
-              <div className="p-4">
-                {recentSearches.length > 0 && (
-                  <div className="mb-6">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className={`text-sm font-medium ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                        Recent Searches
-                      </h3>
-                      <button
-                        onClick={clearRecentSearches}
-                        className="text-xs text-blue-500 hover:text-blue-600"
-                      >
-                        Clear all
-                      </button>
+                        <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                          {item.description}
+                        </p>
+                      </div>
+                      <ExternalLink className="w-4 h-4 text-gray-400" />
                     </div>
-                    <div className="space-y-1">
-                      {recentSearches.map((search, index) => (
-                        <button
-                          key={index}
-                          onClick={() => {
-                            setQuery(search);
-                            handleSearch(search);
-                          }}
-                          className={`w-full p-2 rounded-lg text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-800`}
-                        >
-                          <div className="flex items-center space-x-3">
-                            <Clock className="w-4 h-4 text-gray-400" />
-                            <span className={`${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                              {search}
-                            </span>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div>
-                  <h3 className={`text-sm font-medium mb-3 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Popular Searches
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="p-8 text-center animate-fade-in">
+              <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <p className={`text-lg font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                No results found
+              </p>
+              <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                Try searching for courses, features, or topics
+              </p>
+            </div>
+          )
+        ) : (
+          <div className="p-4 space-y-6">
+            {/* Recent Searches */}
+            {recentSearches.length > 0 && (
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className={`text-sm font-medium ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    Recent Searches
                   </h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    {['Data Structures', 'React Hooks', 'System Design', 'Mock Interview', 'Resume Builder', 'AI/ML'].map((term, index) => (
-                      <button
-                        key={index}
-                        onClick={() => {
-                          setQuery(term);
-                          handleSearch(term);
-                        }}
-                        className={`p-2 rounded-lg text-sm text-left transition-colors ${
-                          state.darkMode
-                            ? 'bg-gray-800 hover:bg-gray-700 text-gray-300'
-                            : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                        }`}
-                      >
-                        {term}
-                      </button>
-                    ))}
-                  </div>
+                  <button
+                    onClick={clearRecentSearches}
+                    className="text-xs text-blue-500 hover:text-blue-600 transition-colors"
+                  >
+                    Clear all
+                  </button>
+                </div>
+                <div className="space-y-1">
+                  {recentSearches.map((search, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setQuery(search);
+                        handleSearch(search);
+                      }}
+                      className="w-full p-2 rounded-lg text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <Clock className="w-4 h-4 text-gray-400" />
+                        <span className={`${state.darkMode ? 'text-white' : 'text-gray-900'}`}>{search}</span>
+                      </div>
+                    </button>
+                  ))}
                 </div>
               </div>
             )}
-          </div>
 
-          {/* Footer */}
-          <div className={`p-3 border-t border-gray-200 dark:border-gray-700 ${
-            state.darkMode ? 'bg-gray-800' : 'bg-gray-50'
-          }`}>
-            <div className="flex items-center justify-between text-xs text-gray-500">
-              <div className="flex items-center space-x-4">
-                <span>↑↓ Navigate</span>
-                <span>↵ Select</span>
-                <span>Esc Close</span>
+            {/* Popular Searches */}
+            <div>
+              <h3 className={`text-sm font-medium mb-3 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                Popular Searches
+              </h3>
+              <div className="grid grid-cols-2 gap-2">
+                {['Data Structures', 'React Hooks', 'System Design', 'Mock Interview', 'Resume Builder', 'AI/ML'].map((term, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setQuery(term);
+                      handleSearch(term);
+                    }}
+                    className={`p-2 rounded-lg text-sm text-left font-medium transition-colors duration-200 ${
+                      state.darkMode
+                        ? 'bg-gray-800 hover:bg-gray-700 text-gray-300'
+                        : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                    }`}
+                  >
+                    {term}
+                  </button>
+                ))}
               </div>
-              <span>Powered by DevElevate</span>
             </div>
           </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className={`p-3 border-t border-gray-200 dark:border-gray-700 ${
+        state.darkMode ? 'bg-gray-800' : 'bg-gray-50'
+      }`}>
+        <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center space-x-4">
+            <span>↑↓ Navigate</span>
+            <span>↵ Select</span>
+            <span>Esc Close</span>
+          </div>
+          <span>Powered by DevElevate</span>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
   );
 };
 

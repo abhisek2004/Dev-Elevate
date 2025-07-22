@@ -113,159 +113,157 @@ const Chatbot: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className={`text-3xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-            Study Buddy AI
-          </h1>
-          <p className={`text-lg ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Your 24/7 AI mentor for learning and career guidance
-          </p>
-        </div>
+   <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-blue-50'} transition-colors duration-200`}>
+  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="mb-8">
+      <h1 className={`text-3xl font-bold ${state.darkMode ? 'text-white' : 'text-blue-900'} mb-2`}>
+        Study Buddy AI
+      </h1>
+      <p className={`text-lg ${state.darkMode ? 'text-gray-300' : 'text-blue-700'}`}>
+        Your 24/7 AI mentor for learning and career guidance
+      </p>
+    </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Chat Categories */}
-          <div className="lg:col-span-1">
-            <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
-              <h3 className={`text-lg font-semibold mb-4 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Chat Categories
-              </h3>
-              <div className="space-y-3">
-                {categories.map((category) => {
-                  const Icon = category.icon;
-                  return (
-                    <button
-                      key={category.id}
-                      onClick={() => setSelectedCategory(category.id as any)}
-                      className={`w-full p-3 rounded-lg border text-left transition-all ${
-                        selectedCategory === category.id
-                          ? 'bg-blue-500 text-white border-blue-500'
-                          : state.darkMode
-                          ? 'border-gray-700 hover:border-gray-600 text-gray-300'
-                          : 'border-gray-200 hover:border-gray-300 text-gray-900'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <Icon className="w-5 h-5" />
-                        <span className="font-medium">{category.label}</span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="mt-6">
-                <h4 className={`text-sm font-medium mb-3 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Suggested Questions
-                </h4>
-                <div className="space-y-2">
-                  {suggestedQuestions[selectedCategory].map((question, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleSuggestedQuestion(question)}
-                      className={`w-full p-2 text-left text-sm rounded-lg transition-colors ${
-                        state.darkMode
-                          ? 'text-gray-400 hover:text-gray-300 hover:bg-gray-700'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                      }`}
-                    >
-                      {question}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      {/* Chat Categories */}
+      <div className="lg:col-span-1">
+        <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-blue-200'} rounded-xl p-6 border shadow-sm`}>
+          <h3 className={`text-lg font-semibold mb-4 ${state.darkMode ? 'text-white' : 'text-blue-900'}`}>
+            Chat Categories
+          </h3>
+          <div className="space-y-3">
+            {categories.map((category) => {
+              const Icon = category.icon;
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id as any)}
+                  className={`w-full p-3 rounded-lg border text-left transition-all ${
+                    selectedCategory === category.id
+                      ? 'bg-violet-500 text-white border-violet-500'
+                      : state.darkMode
+                      ? 'border-gray-700 hover:border-gray-600 text-gray-300'
+                      : 'border-blue-200 hover:border-blue-300 text-blue-800'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <Icon className="w-5 h-5" />
+                    <span className="font-medium">{category.label}</span>
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Chat Interface */}
-          <div className="lg:col-span-3">
-            <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl border shadow-sm flex flex-col h-[600px]`}>
-              {/* Chat Messages */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4">
-                {state.chatHistory.length === 0 ? (
-                  <div className="text-center py-12">
-                    <Bot className={`w-12 h-12 mx-auto mb-4 ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-                    <h3 className={`text-lg font-medium mb-2 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                      Welcome to Study Buddy!
-                    </h3>
-                    <p className={`${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                      Ask me anything about learning, career advice, or tech topics.
-                    </p>
-                  </div>
-                ) : (
-                  state.chatHistory.map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div className={`flex max-w-xs lg:max-w-md ${msg.type === 'user' ? 'flex-row-reverse' : 'flex-row'} space-x-2`}>
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                          msg.type === 'user' ? 'bg-blue-500' : 'bg-purple-500'
-                        }`}>
-                          {msg.type === 'user' ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-white" />}
-                        </div>
-                        <div className={`px-4 py-2 rounded-lg ${
-                          msg.type === 'user'
-                            ? 'bg-blue-500 text-white'
-                            : state.darkMode
-                            ? 'bg-gray-700 text-gray-300'
-                            : 'bg-gray-100 text-gray-900'
-                        }`}>
-                          <p className="text-sm">{msg.content}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                )}
-                {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="flex space-x-2">
-                      <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center">
-                        <Bot className="w-4 h-4 text-white" />
-                      </div>
-                      <div className={`px-4 py-2 rounded-lg ${state.darkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                        <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
+          <div className="mt-6">
+            <h4 className={`text-sm font-medium mb-3 ${state.darkMode ? 'text-gray-300' : 'text-blue-700'}`}>
+              Suggested Questions
+            </h4>
+            <div className="space-y-2">
+              {suggestedQuestions[selectedCategory].map((question, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleSuggestedQuestion(question)}
+                  className={`w-full p-2 text-left text-sm rounded-lg transition-colors ${
+                    state.darkMode
+                      ? 'text-gray-400 hover:text-gray-300 hover:bg-gray-700'
+                      : 'text-blue-600 hover:text-blue-900 hover:bg-blue-100'
+                  }`}
+                >
+                  {question}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
-              {/* Message Input */}
-              <div className="border-t border-gray-200 dark:border-gray-700 p-4">
-                <div className="flex space-x-3">
-                  <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                    placeholder="Ask me anything..."
-                    className={`flex-1 px-4 py-2 rounded-lg border ${
-                      state.darkMode
-                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                        : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                    } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                  />
-                  <button
-                    onClick={sendMessage}
-                    disabled={!message.trim() || isTyping}
-                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white rounded-lg transition-colors flex items-center space-x-2"
-                  >
-                    <Send className="w-4 h-4" />
-                  </button>
+      {/* Chat Interface */}
+      <div className="lg:col-span-3">
+        <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-blue-200'} rounded-xl border shadow-sm flex flex-col h-[600px]`}>
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            {state.chatHistory.length === 0 ? (
+              <div className="text-center py-12">
+                <Bot className={`w-12 h-12 mx-auto mb-4 ${state.darkMode ? 'text-gray-400' : 'text-blue-400'}`} />
+                <h3 className={`text-lg font-medium mb-2 ${state.darkMode ? 'text-white' : 'text-blue-900'}`}>
+                  Welcome to Study Buddy!
+                </h3>
+                <p className={`${state.darkMode ? 'text-gray-400' : 'text-blue-600'}`}>
+                  Ask me anything about learning, career advice, or tech topics.
+                </p>
+              </div>
+            ) : (
+              state.chatHistory.map((msg) => (
+                <div key={msg.id} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`flex max-w-xs lg:max-w-md ${msg.type === 'user' ? 'flex-row-reverse' : 'flex-row'} space-x-2`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      msg.type === 'user' ? 'bg-blue-500' : 'bg-teal-500'
+                    }`}>
+                      {msg.type === 'user' ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-white" />}
+                    </div>
+                    <div className={`px-4 py-2 rounded-lg ${
+                      msg.type === 'user'
+                        ? 'bg-blue-500 text-white'
+                        : state.darkMode
+                        ? 'bg-gray-700 text-gray-300'
+                        : 'bg-blue-100 text-blue-900'
+                    }`}>
+                      <p className="text-sm">{msg.content}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+            {isTyping && (
+              <div className="flex justify-start">
+                <div className="flex space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center">
+                    <Bot className="w-4 h-4 text-white" />
+                  </div>
+                  <div className={`px-4 py-2 rounded-lg ${state.darkMode ? 'bg-gray-700' : 'bg-blue-100'}`}>
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    </div>
+                  </div>
                 </div>
               </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Message Input */}
+          <div className="border-t border-gray-200 dark:border-gray-700 p-4">
+            <div className="flex space-x-3">
+              <input
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                placeholder="Ask me anything..."
+                className={`flex-1 px-4 py-2 rounded-lg border ${
+                  state.darkMode
+                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
+                    : 'bg-white border-blue-300 text-blue-900 placeholder-blue-400'
+                } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              />
+              <button
+                onClick={sendMessage}
+                disabled={!message.trim() || isTyping}
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white rounded-lg transition-colors flex items-center space-x-2"
+              >
+                <Send className="w-4 h-4" />
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
   );
 };
 

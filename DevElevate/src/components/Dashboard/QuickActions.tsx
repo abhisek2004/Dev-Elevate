@@ -39,38 +39,64 @@ const QuickActions: React.FC = () => {
   ];
 
   return (
-    <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
-      <h3 className={`text-xl font-semibold mb-6 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-        Quick Actions
-      </h3>
-      
-      <div className="grid grid-cols-1 gap-4">
-        {actions.map((action, index) => {
-          const Icon = action.icon;
-          return (
-            <button
-              key={index}
-              onClick={action.onClick}
-              className={`p-4 rounded-lg border ${state.darkMode ? 'border-gray-700 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'} transition-all hover:shadow-md group`}
-            >
-              <div className="flex items-center space-x-3">
-                <div className={`p-2 rounded-lg bg-gradient-to-r ${action.color} group-hover:scale-110 transition-transform`}>
-                  <Icon className="w-5 h-5 text-white" />
-                </div>
-                <div className="text-left">
-                  <h4 className={`font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                    {action.title}
-                  </h4>
-                  <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                    {action.description}
-                  </p>
-                </div>
-              </div>
-            </button>
-          );
-        })}
-      </div>
-    </div>
+    <div
+ className={`rounded-2xl p-6 border shadow-sm transition-shadow hover:shadow-md ${
+ state.darkMode
+ ? 'bg-gray-800 border-gray-700'
+ : 'bg-white border-yellow-300'
+ }`}
+>
+ <h3
+ className={`text-xl font-semibold mb-6 tracking-wide ${
+ state.darkMode ? 'text-white' : 'text-gray-900'
+ }`}
+ >
+ Quick Actions
+ </h3>
+
+<div className="grid grid-cols-1 gap-4">
+ {actions.map((action, index) => {
+ const Icon = action.icon;
+return (
+<button
+ key={index}
+ onClick={action.onClick}
+className={`w-full text-left p-4 rounded-xl border transition-all duration-200 group hover:shadow-md focus:outline-none ${
+ state.darkMode
+? 'border-gray-700 hover:border-gray-600 bg-gray-700 hover:bg-gray-600'
+: 'border-yellow-200 hover:border-yellow-300 bg-[#FBF5DE] hover:bg-[#fffbd1]'
+ }`}
+ >
+<div className="flex items-center space-x-4">
+  <div
+ className={`p-2 rounded-xl bg-gradient-to-r ${action.color} group-hover:scale-105 transition-transform`}
+ >
+ <Icon className="w-5 h-5 text-white" />
+ </div>
+ <div className="flex flex-col">
+ <h4
+ className={`font-semibold text-base ${
+ state.darkMode ? 'text-white' : 'text-gray-900'
+}`}
+ >
+ {action.title}
+ </h4>
+<p
+ className={`text-sm mt-0.5 ${
+ state.darkMode ? 'text-gray-400' : 'text-gray-700'
+}`}
+ >
+  {action.description}
+ </p>
+ </div>
+</div>
+ </button>
+ );
+})}
+</div>
+</div>
+
+
   );
 };
 

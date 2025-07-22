@@ -78,159 +78,140 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
 
   return (
     <div
-      ref={dropdownRef}
-      className={`absolute right-0 top-full mt-2 w-80 ${
-        state.darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'
-      } border rounded-xl shadow-2xl z-50 overflow-hidden`}
-    >
-      {/* User Info Header */}
-      <div className={`p-4 border-b ${state.darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-gray-50'}`}>
-        <div className="flex items-center space-x-3">
-          <div className="relative">
-            <img
-              src={authState.user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(authState.user?.name || 'User')}&background=3b82f6&color=fff`}
-              alt={authState.user?.name}
-              className="w-12 h-12 rounded-full border-2 border-blue-500"
-            />
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
-          </div>
-          <div className="flex-1">
-            <h3 className={`font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-              {authState.user?.name || 'Guest User'}
-            </h3>
-            <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              {authState.user?.email || 'guest@example.com'}
-            </p>
-            <div className="flex items-center space-x-2 mt-1">
-              <span className={`text-xs px-2 py-1 rounded-full ${
-                state.darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-700'
-              }`}>
-                {authState.user?.progress.level || 'Beginner'}
-              </span>
-              <span className={`text-xs ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                {authState.user?.progress.totalPoints || 0} points
-              </span>
-            </div>
-          </div>
-        </div>
+  ref={dropdownRef}
+  className={`absolute right-0 top-full mt-2 w-80 transition-all duration-300 transform origin-top ${
+    state.darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'
+  } border rounded-xl shadow-2xl z-50 overflow-hidden animate-fadeIn`}
+>
+  {/* User Info Header */}
+  <div className={`p-4 border-b ${state.darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-gray-50'}`}>
+    <div className="flex items-center space-x-3">
+      <div className="relative">
+        <img
+          src={authState.user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(authState.user?.name || 'User')}&background=3b82f6&color=fff`}
+          alt={authState.user?.name}
+          className="w-12 h-12 rounded-full border-2 border-blue-500"
+        />
+        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
       </div>
-
-      {/* Quick Stats */}
-      <div className={`p-4 border-b ${state.darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-        <div className="grid grid-cols-3 gap-4 text-center">
-          <div>
-            <div className={`text-lg font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-              {authState.user?.progress.streak || 0}
-            </div>
-            <div className={`text-xs ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Day Streak
-            </div>
-          </div>
-          <div>
-            <div className={`text-lg font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-              {state.completedGoals.length}
-            </div>
-            <div className={`text-xs ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Goals Done
-            </div>
-          </div>
-          <div>
-            <div className={`text-lg font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-              {authState.user?.progress.coursesEnrolled.length || 0}
-            </div>
-            <div className={`text-xs ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Courses
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Menu Items */}
-      <div className="max-h-80 overflow-y-auto">
-        {menuItems.map((section, sectionIndex) => (
-          <div key={sectionIndex} className={`${sectionIndex > 0 ? `border-t ${state.darkMode ? 'border-gray-700' : 'border-gray-200'}` : ''}`}>
-            <div className={`px-4 py-2 text-xs font-medium uppercase tracking-wider ${
-              state.darkMode ? 'text-gray-400 bg-gray-800' : 'text-gray-500 bg-gray-50'
-            }`}>
-              {section.section}
-            </div>
-            <div className="py-1">
-              {section.items.map((item, itemIndex) => {
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={itemIndex}
-                    onClick={() => {
-                      item.action();
-                      onClose();
-                    }}
-                    className={`w-full px-4 py-3 flex items-center space-x-3 text-left transition-colors ${
-                      item.highlight
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700'
-                        : state.darkMode
-                        ? 'hover:bg-gray-800 text-gray-300'
-                        : 'hover:bg-gray-50 text-gray-700'
-                    }`}
-                  >
-                    <Icon className={`w-5 h-5 ${item.highlight ? 'text-white' : 'text-gray-400'}`} />
-                    <span className={`font-medium ${item.highlight ? 'text-white' : ''}`}>
-                      {item.label}
-                    </span>
-                    {item.highlight && (
-                      <span className="ml-auto px-2 py-1 bg-white/20 rounded-full text-xs">
-                        New
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Theme Toggle & Logout */}
-      <div className={`p-4 border-t ${state.darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-gray-50'}`}>
-        <div className="flex items-center justify-between mb-3">
-          <span className={`text-sm font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-            Theme
+      <div className="flex-1">
+        <h3 className={`font-semibold transition-colors ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+          {authState.user?.name || 'Guest User'}
+        </h3>
+        <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+          {authState.user?.email || 'guest@example.com'}
+        </p>
+        <div className="flex items-center space-x-2 mt-1">
+          <span className={`text-xs px-2 py-1 rounded-full ${
+            state.darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-700'
+          }`}>
+            {authState.user?.progress.level || 'Beginner'}
           </span>
-          <button
-            onClick={toggleDarkMode}
-            className={`flex items-center space-x-2 px-3 py-1 rounded-lg transition-colors ${
-              state.darkMode
-                ? 'bg-gray-700 hover:bg-gray-600 text-gray-300'
-                : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
-            }`}
-          >
-            {state.darkMode ? (
-              <>
-                <Sun className="w-4 h-4" />
-                <span className="text-sm">Light</span>
-              </>
-            ) : (
-              <>
-                <Moon className="w-4 h-4" />
-                <span className="text-sm">Dark</span>
-              </>
-            )}
-          </button>
+          <span className={`text-xs ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            {authState.user?.progress.totalPoints || 0} points
+          </span>
         </div>
-        
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-        >
-          <LogOut className="w-4 h-4" />
-          <span>Sign Out</span>
-        </button>
-      </div>
-
-      {/* Footer */}
-      <div className={`px-4 py-2 text-center text-xs ${state.darkMode ? 'text-gray-500 bg-gray-900' : 'text-gray-400 bg-gray-50'}`}>
-        DevElevate v1.0 • Made with ❤️
       </div>
     </div>
+  </div>
+
+  {/* Quick Stats */}
+  <div className={`p-4 border-b ${state.darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+    <div className="grid grid-cols-3 gap-4 text-center">
+      {[
+        { label: 'Day Streak', value: authState.user?.progress.streak || 0 },
+        { label: 'Goals Done', value: state.completedGoals.length },
+        { label: 'Courses', value: authState.user?.progress.coursesEnrolled.length || 0 }
+      ].map((stat, i) => (
+        <div key={i}>
+          <div className={`text-lg font-bold transition-colors ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>{stat.value}</div>
+          <div className={`text-xs ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* Menu Items */}
+  <div className="max-h-80 overflow-y-auto custom-scroll">
+    {menuItems.map((section, sectionIndex) => (
+      <div key={sectionIndex} className={`${sectionIndex > 0 ? `border-t ${state.darkMode ? 'border-gray-700' : 'border-gray-200'}` : ''}`}>
+        <div className={`px-4 py-2 text-xs font-medium uppercase tracking-wider ${
+          state.darkMode ? 'text-gray-400 bg-gray-800' : 'text-gray-500 bg-gray-50'
+        }`}>
+          {section.section}
+        </div>
+        <div className="py-1">
+          {section.items.map((item, itemIndex) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={itemIndex}
+                onClick={() => {
+                  item.action();
+                  onClose();
+                }}
+                className={`w-full px-4 py-3 flex items-center space-x-3 text-left rounded-lg transition-all duration-200 ease-in-out ${
+                  item.highlight
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:scale-[1.02]'
+                    : state.darkMode
+                    ? 'hover:bg-gray-800 text-gray-300'
+                    : 'hover:bg-gray-100 text-gray-700'
+                }`}
+              >
+                <Icon className={`w-5 h-5 ${item.highlight ? 'text-white' : 'text-gray-400'}`} />
+                <span className={`font-medium ${item.highlight ? 'text-white' : ''}`}>{item.label}</span>
+                {item.highlight && (
+                  <span className="ml-auto px-2 py-1 bg-white/20 rounded-full text-xs">New</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Theme Toggle & Logout */}
+  <div className={`p-4 border-t ${state.darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-gray-50'}`}>
+    <div className="flex items-center justify-between mb-3">
+      <span className={`text-sm font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Theme</span>
+      <button
+        onClick={toggleDarkMode}
+        className={`flex items-center space-x-2 px-3 py-1 rounded-lg transition-all ${
+          state.darkMode
+            ? 'bg-gray-700 hover:bg-gray-600 text-gray-300'
+            : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+        }`}
+      >
+        {state.darkMode ? (
+          <>
+            <Sun className="w-4 h-4" />
+            <span className="text-sm">Light</span>
+          </>
+        ) : (
+          <>
+            <Moon className="w-4 h-4" />
+            <span className="text-sm">Dark</span>
+          </>
+        )}
+      </button>
+    </div>
+
+    <button
+      onClick={handleLogout}
+      className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-all"
+    >
+      <LogOut className="w-4 h-4" />
+      <span>Sign Out</span>
+    </button>
+  </div>
+
+  {/* Footer */}
+  <div className={`px-4 py-2 text-center text-xs ${state.darkMode ? 'text-gray-500 bg-gray-900' : 'text-gray-400 bg-gray-50'}`}>
+    DevElevate v1.0 • Made with ❤️
+  </div>
+</div>
+
   );
 };
 

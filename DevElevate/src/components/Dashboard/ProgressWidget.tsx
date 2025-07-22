@@ -45,7 +45,7 @@ const ProgressWidget: React.FC = () => {
   ];
 
   return (
-    <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
+    <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-[#DDF6D2] border-gray-200'} rounded-xl p-6 border shadow-sm`}>
       <div className="flex items-center justify-between mb-6">
         <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
           Learning Progress

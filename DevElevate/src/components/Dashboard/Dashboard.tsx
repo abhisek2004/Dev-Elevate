@@ -7,6 +7,7 @@ import NewsWidget from './NewsWidget';
 import QuickActions from './QuickActions';
 import StreakCalendar from './StreakCalendar';
 import DailyGoals from './DailyGoals';
+import {motion} from "framer-motion";
 import { User } from '../../contexts/GlobalContext';
 
 const Dashboard: React.FC = () => {
@@ -61,38 +62,55 @@ const Dashboard: React.FC = () => {
   }, [state.user, state.newsItems.length, dispatch]);
 
   return (
-    <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className={`text-3xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-            Welcome back, {authState.user?.name || 'Developer'}! 👋
-          </h1>
-          <p className={`text-lg ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Ready to continue your learning journey?
-          </p>
-        </div>
+    <div className={`min-h-screen ${state.darkMode ? 'bg-neutral-900' : 'bg-neutral-100'} transition-colors duration-300`}>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
+    
+    {/* Welcome Section */}
+    <div className="mb-8">
+      <h1 className={`text-3xl sm:text-4xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
+        Welcome back, {authState.user?.name || 'Developer'}! 👋
+      </h1>
+      <p className={`text-lg ${state.darkMode ? 'text-gray-300' : 'text-neutral-600'}`}>
+        Ready to continue your learning journey?
+      </p>
+    </div>
 
-        {/* Stats Cards */}
-        <StatsCards />
+    {/* Stats Cards */}
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+      <StatsCards />
+    </motion.div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
-          {/* Left Column */}
-          <div className="lg:col-span-2 space-y-6">
-            <ProgressWidget />
-            <NewsWidget />
-          </div>
+    {/* Main Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-8">
+      
+      {/* Left Column */}
+      <div className="lg:col-span-2 space-y-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+          <ProgressWidget />
+        </motion.div>
 
-          {/* Right Column */}
-          <div className="space-y-6">
-            <QuickActions />
-            <DailyGoals />
-            <StreakCalendar />
-          </div>
-        </div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+          <NewsWidget />
+        </motion.div>
+      </div>
+
+      {/* Right Column */}
+      <div className="space-y-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+          <QuickActions />
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
+          <DailyGoals />
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
+          <StreakCalendar />
+        </motion.div>
       </div>
     </div>
+  </div>
+</div>
   );
 };
 

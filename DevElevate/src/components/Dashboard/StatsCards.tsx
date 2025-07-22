@@ -39,39 +39,43 @@ const StatsCards: React.FC = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {stats.map((stat, index) => {
-        const Icon = stat.icon;
-        return (
-          <div
-            key={index}
-            className={`${
-              state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-            } rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow duration-200`}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 rounded-lg bg-gradient-to-r ${stat.color}`}>
-                <Icon className="w-6 h-6 text-white" />
-              </div>
-              <div className="text-right">
-                <p className={`text-2xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                  {stat.value}{stat.suffix || ''}
-                </p>
-                <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {stat.title}
-                </p>
-              </div>
-            </div>
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-              <div
-                className={`h-2 rounded-full bg-gradient-to-r ${stat.color}`}
-                style={{ width: `${Math.min(100, (stat.value / 100) * 100)}%` }}
-              ></div>
-            </div>
+   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  {stats.map((stat, index) => {
+    const Icon = stat.icon;
+    return (
+      <div
+        key={index}
+        className={`
+          rounded-xl p-6 border shadow-sm hover:shadow-md transition-all duration-300
+          focus:outline-none focus:ring-0
+          ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}
+        `}
+        tabIndex={0}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <div className={`p-3 rounded-xl bg-gradient-to-r ${stat.color} shadow-inner`}>
+            <Icon className="w-6 h-6 text-white" />
           </div>
-        );
-      })}
-    </div>
+          <div className="text-right">
+            <p className={`text-2xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+              {stat.value}{stat.suffix || ''}
+            </p>
+            <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              {stat.title}
+            </p>
+          </div>
+        </div>
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+          <div
+            className={`h-2 rounded-full bg-gradient-to-r ${stat.color} transition-all duration-500`}
+            style={{ width: `${Math.min(100, (stat.value / 100) * 100)}%` }}
+          ></div>
+        </div>
+      </div>
+    );
+  })}
+</div>
+
   );
 };
 

@@ -104,145 +104,152 @@ const TechFeed: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className={`text-3xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-            Tech Feed & Career Updates
-          </h1>
-          <p className={`text-lg ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Stay updated with the latest in tech news, jobs, and opportunities
-          </p>
-        </div>
+    <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-[#fefbf6]'} transition-colors duration-200`}>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="mb-8">
+      <h1 className={`text-3xl font-bold ${state.darkMode ? 'text-white' : 'text-[#2d2d2d]'} mb-2`}>
+        Tech Feed & Career Updates
+      </h1>
+      <p className={`text-lg ${state.darkMode ? 'text-gray-300' : 'text-[#6b5e4f]'}`}>
+        Stay updated with the latest in tech news, jobs, and opportunities
+      </p>
+    </div>
 
-        {/* Search and Filter */}
-        <div className="mb-8 flex flex-col sm:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search news and updates..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className={`w-full pl-10 pr-4 py-2 rounded-lg border ${
-                state.darkMode
-                  ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400'
-                  : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-              } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            />
-          </div>
-          <div className="flex items-center space-x-2">
-            <Filter className="w-5 h-5 text-gray-400" />
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value as any)}
-              className={`px-4 py-2 rounded-lg border ${
-                state.darkMode
-                  ? 'bg-gray-800 border-gray-700 text-white'
-                  : 'bg-white border-gray-300 text-gray-900'
-              } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            >
-              {categories.map(category => (
-                <option key={category.id} value={category.id}>
-                  {category.label} ({category.count})
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Category Tabs */}
-        <div className="mb-8 flex flex-wrap gap-2">
+    {/* Search and Filter */}
+    <div className="mb-8 flex flex-col sm:flex-row gap-4">
+      <div className="relative flex-1">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+        <input
+          type="text"
+          placeholder="Search news and updates..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={`w-full pl-10 pr-4 py-2 rounded-lg border ${
+            state.darkMode
+              ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400'
+              : 'bg-[#fffdf9] border-[#e6dacb] text-[#2d2d2d] placeholder-[#a0896d]'
+          } focus:outline-none focus:ring-2 focus:ring-[#c3a574]`}
+        />
+      </div>
+      <div className="flex items-center space-x-2">
+        <Filter className="w-5 h-5 text-gray-400" />
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value as any)}
+          className={`px-4 py-2 rounded-lg border ${
+            state.darkMode
+              ? 'bg-gray-800 border-gray-700 text-white'
+              : 'bg-[#fffdf9] border-[#e6dacb] text-[#2d2d2d]'
+          } focus:outline-none focus:ring-2 focus:ring-[#c3a574]`}
+        >
           {categories.map(category => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id as any)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                selectedCategory === category.id
-                  ? 'bg-blue-500 text-white'
-                  : state.darkMode
-                  ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
+            <option key={category.id} value={category.id}>
               {category.label} ({category.count})
-            </button>
+            </option>
           ))}
-        </div>
-
-        {/* News Items */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredItems.map(item => (
-            <div
-              key={item.id}
-              className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow`}
-            >
-              <div className="flex items-start justify-between mb-4">
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(item.category)}`}>
-                  {item.category.charAt(0).toUpperCase() + item.category.slice(1)}
-                </span>
-                <div className="flex items-center space-x-2">
-                  <div className="flex items-center space-x-1 text-xs text-gray-500">
-                    <Calendar className="w-3 h-3" />
-                    <span>{format(new Date(item.publishDate), 'MMM dd')}</span>
-                  </div>
-                  <button
-                    onClick={() => toggleBookmark(item.id)}
-                    className={`p-1 rounded-full transition-colors ${
-                      state.bookmarks.includes(item.id)
-                        ? 'text-yellow-500 hover:text-yellow-600'
-                        : 'text-gray-400 hover:text-gray-600'
-                    }`}
-                  >
-                    {state.bookmarks.includes(item.id) ? (
-                      <BookmarkCheck className="w-4 h-4" />
-                    ) : (
-                      <Bookmark className="w-4 h-4" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              <h3 className={`text-lg font-semibold mb-3 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                {item.title}
-              </h3>
-              
-              <p className={`text-sm mb-4 ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                {item.summary}
-              </p>
-
-              <div className="flex items-center justify-between">
-                <button className="flex items-center space-x-2 text-blue-500 hover:text-blue-600 font-medium">
-                  <span>Read More</span>
-                  <ExternalLink className="w-4 h-4" />
-                </button>
-                <div className="flex items-center space-x-2">
-                  <button className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                    state.darkMode
-                      ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}>
-                    Share
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {filteredItems.length === 0 && (
-          <div className="text-center py-12">
-            <Search className={`w-12 h-12 mx-auto mb-4 ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-            <h3 className={`text-lg font-medium mb-2 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-              No items found
-            </h3>
-            <p className={`${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Try adjusting your search terms or filters.
-            </p>
-          </div>
-        )}
+        </select>
       </div>
     </div>
+
+    {/* Category Tabs */}
+    <div className="mb-8 flex flex-wrap gap-2">
+      {categories.map(category => (
+        <button
+          key={category.id}
+          onClick={() => setSelectedCategory(category.id as any)}
+          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+            selectedCategory === category.id
+              ? 'bg-[#d2b48c] text-white'
+              : state.darkMode
+              ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              : 'bg-[#fefaf1] text-[#5c4e3c] hover:bg-[#f3e5cd]'
+          }`}
+        >
+          {category.label} ({category.count})
+        </button>
+      ))}
+    </div>
+
+    {/* News Items */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {filteredItems.map(item => (
+        <div
+          key={item.id}
+          className={`rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow ${
+            state.darkMode
+              ? 'bg-gray-800 border-gray-700'
+              : 'bg-[#fffdf9] border-[#e6dacb]'
+          }`}
+        >
+          <div className="flex items-start justify-between mb-4">
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+              state.darkMode ? 'bg-gray-700 text-gray-300' : 'bg-[#f6e9d7] text-[#5b4c3a]'
+            }`}>
+              {item.category.charAt(0).toUpperCase() + item.category.slice(1)}
+            </span>
+            <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 text-xs text-gray-500">
+                <Calendar className="w-3 h-3" />
+                <span>{format(new Date(item.publishDate), 'MMM dd')}</span>
+              </div>
+              <button
+                onClick={() => toggleBookmark(item.id)}
+                className={`p-1 rounded-full transition-colors ${
+                  state.bookmarks.includes(item.id)
+                    ? 'text-yellow-500 hover:text-yellow-600'
+                    : 'text-gray-400 hover:text-gray-600'
+                }`}
+              >
+                {state.bookmarks.includes(item.id) ? (
+                  <BookmarkCheck className="w-4 h-4" />
+                ) : (
+                  <Bookmark className="w-4 h-4" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          <h3 className={`text-lg font-semibold mb-3 ${state.darkMode ? 'text-white' : 'text-[#2d2d2d]'}`}>
+            {item.title}
+          </h3>
+
+          <p className={`text-sm mb-4 ${state.darkMode ? 'text-gray-400' : 'text-[#6b5e4f]'}`}>
+            {item.summary}
+          </p>
+
+          <div className="flex items-center justify-between">
+            <button className="flex items-center space-x-2 text-[#b78e5c] hover:text-[#a5783e] font-medium">
+              <span>Read More</span>
+              <ExternalLink className="w-4 h-4" />
+            </button>
+            <div className="flex items-center space-x-2">
+              <button className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                state.darkMode
+                  ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  : 'bg-[#f3e5cd] text-[#5c4e3c] hover:bg-[#e9d5ba]'
+              }`}>
+                Share
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {filteredItems.length === 0 && (
+      <div className="text-center py-12">
+        <Search className={`w-12 h-12 mx-auto mb-4 ${state.darkMode ? 'text-gray-400' : 'text-[#b4a99a]'}`} />
+        <h3 className={`text-lg font-medium mb-2 ${state.darkMode ? 'text-white' : 'text-[#2d2d2d]'}`}>
+          No items found
+        </h3>
+        <p className={`${state.darkMode ? 'text-gray-400' : 'text-[#6b5e4f]'}`}>
+          Try adjusting your search terms or filters.
+        </p>
+      </div>
+    )}
+  </div>
+</div>
+
   );
 };
 
