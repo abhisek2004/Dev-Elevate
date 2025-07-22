@@ -291,7 +291,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
                   key={notification.id}
                   className={`p-4 border-l-4 ${getPriorityColor(notification.priority)} ${
                     !notification.read ? 'bg-blue-50 dark:bg-blue-900/10' : ''
-                  } hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors`}
+                  } hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group`}
                 >
                   <div className="flex items-start space-x-3">
                     <input
@@ -309,23 +309,31 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <h3 className={`text-sm font-medium ${
-                            state.darkMode ? 'text-white' : 'text-gray-900'
+                            state.darkMode 
+                              ? 'text-white' 
+                              : 'text-gray-900 group-hover:text-gray-800'
                           }`}>
                             {notification.title}
                           </h3>
                           <p className={`text-sm mt-1 ${
-                            state.darkMode ? 'text-gray-400' : 'text-gray-600'
+                            state.darkMode 
+                              ? 'text-gray-400' 
+                              : 'text-gray-600 group-hover:text-gray-700'
                           }`}>
                             {notification.message}
                           </p>
                           <div className="flex items-center space-x-2 mt-2">
                             <span className={`text-xs ${
-                              state.darkMode ? 'text-gray-500' : 'text-gray-500'
+                              state.darkMode 
+                                ? 'text-gray-500' 
+                                : 'text-gray-500 group-hover:text-gray-600'
                             }`}>
                               {formatDistanceToNow(new Date(notification.timestamp), { addSuffix: true })}
                             </span>
                             <span className={`text-xs px-2 py-1 rounded-full ${
-                              state.darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
+                              state.darkMode 
+                                ? 'bg-gray-700 text-gray-300' 
+                                : 'bg-gray-200 text-gray-600 group-hover:bg-gray-300 group-hover:text-gray-700'
                             }`}>
                               {notification.category}
                             </span>
