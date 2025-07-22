@@ -289,7 +289,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
               {filteredNotifications.map(notification => (
                 <div
                   key={notification.id}
-                  className={`p-4 border-l-4 ${getPriorityColor(notification.priority)} ${
+                  className={`p-4 border-l-4 group ${getPriorityColor(notification.priority)} ${
                     !notification.read ? 'bg-blue-50 dark:bg-blue-900/10' : ''
                   } hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors`}
                 >
@@ -309,12 +309,12 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <h3 className={`text-sm font-medium ${
-                            state.darkMode ? 'text-white' : 'text-gray-900'
+                            state.darkMode ? 'text-white' : 'text-gray-900 group-hover:text-white'
                           }`}>
                             {notification.title}
                           </h3>
                           <p className={`text-sm mt-1 ${
-                            state.darkMode ? 'text-gray-400' : 'text-gray-600'
+                            state.darkMode ? 'text-gray-400' : 'text-gray-600 group-hover:text-gray-100'
                           }`}>
                             {notification.message}
                           </p>
