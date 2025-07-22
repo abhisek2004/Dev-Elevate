@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-1">
+            <div className="hidden lg:flex items-center space-x-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -150,7 +150,7 @@ const Navbar: React.FC = () => {
               <div className="relative">
                 <button
                   onClick={handleProfileToggle}
-                  className={`flex items-center space-x-2 p-1 rounded-lg transition-colors ${
+                  className={`flex items-center space-x-2 p-2 rounded-lg transition-colors ${
                     showProfile
                       ? 'bg-blue-100 dark:bg-blue-900'
                       : 'hover:bg-gray-100 dark:hover:bg-gray-800'
