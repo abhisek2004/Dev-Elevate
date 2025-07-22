@@ -189,9 +189,10 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
     <div className="fixed inset-0 z-50 overflow-hidden">
       <div className="absolute inset-0 bg-black bg-opacity-50" onClick={onClose} />
       
-      <div className={`absolute right-0 top-0 h-full w-full max-w-md ${
-        state.darkMode ? 'bg-gray-900' : 'bg-white'
-      } shadow-2xl transform transition-transform duration-300 ease-in-out`}>
+  <div className={`absolute right-0 top-0 h-full w-full max-w-md flex flex-col ${
+    state.darkMode ? 'bg-gray-900' : 'bg-white'
+  } shadow-2xl transform transition-transform duration-300 ease-in-out`}>
+
         
         {/* Header */}
         <div className={`p-4 border-b ${state.darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
@@ -283,7 +284,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
         </div>
 
         {/* Notifications List */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto custom-scrollbar">
           {filteredNotifications.length > 0 ? (
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {filteredNotifications.map(notification => (
@@ -291,7 +292,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
                   key={notification.id}
                   className={`p-4 border-l-4 ${getPriorityColor(notification.priority)} ${
                     !notification.read ? 'bg-blue-50 dark:bg-blue-900/10' : ''
-                  } hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors`}
+                  } hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group`}
                 >
                   <div className="flex items-start space-x-3">
                     <input
@@ -309,23 +310,31 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <h3 className={`text-sm font-medium ${
-                            state.darkMode ? 'text-white' : 'text-gray-900'
+                            state.darkMode 
+                              ? 'text-gray-500' 
+                              : 'text-gray-900 group-hover:text-gray-800'
                           }`}>
                             {notification.title}
                           </h3>
                           <p className={`text-sm mt-1 ${
-                            state.darkMode ? 'text-gray-400' : 'text-gray-600'
+                            state.darkMode 
+                              ? 'text-gray-400' 
+                              : 'text-gray-600 group-hover:text-gray-700'
                           }`}>
                             {notification.message}
                           </p>
                           <div className="flex items-center space-x-2 mt-2">
                             <span className={`text-xs ${
-                              state.darkMode ? 'text-gray-500' : 'text-gray-500'
+                              state.darkMode 
+                                ? 'text-gray-500' 
+                                : 'text-gray-500 group-hover:text-gray-600'
                             }`}>
                               {formatDistanceToNow(new Date(notification.timestamp), { addSuffix: true })}
                             </span>
                             <span className={`text-xs px-2 py-1 rounded-full ${
-                              state.darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
+                              state.darkMode 
+                                ? 'bg-gray-700 text-gray-300' 
+                                : 'bg-gray-200 text-gray-600 group-hover:bg-gray-300 group-hover:text-gray-700'
                             }`}>
                               {notification.category}
                             </span>
