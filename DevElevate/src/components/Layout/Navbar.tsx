@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-1">
+            <div className="hidden lg:flex items-center space-x-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 return (
