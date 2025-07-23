@@ -217,7 +217,7 @@ const Footer: React.FC = () => {
               
               {contributors.length > 0 && (
                 <a
-                  href="https://github.com/abhisek2004/Dev-Elevate.git/graphs/contributors"
+                  href="https://github.com/abhisek2004/Dev-Elevate/graphs/contributors"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`w-12 h-12 rounded-full border-2 border-dashed border-gray-400 flex items-center justify-center hover:border-blue-500 transition-colors ${
