@@ -286,88 +286,63 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
         <div className="flex-1 overflow-y-auto">
           {filteredNotifications.length > 0 ? (
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
-              {filteredNotifications.map(notification => (
-                <div
-                  key={notification.id}
-                  className={`p-4 border-l-4 ${getPriorityColor(notification.priority)} ${
-                    !notification.read ? 'bg-blue-50 dark:bg-blue-900/10' : ''
-                  } hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors`}
-                >
-                  <div className="flex items-start space-x-3">
-                    <input
-                      type="checkbox"
-                      checked={selectedNotifications.includes(notification.id)}
-                      onChange={() => toggleSelection(notification.id)}
-                      className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                    />
-                    
+                {filteredNotifications.map(notification => (
+                <div key={notification.id} className={`group p-4 border-l-4 ${getPriorityColor(notification.priority)} ${!notification.read ? 'bg-blue-50 dark:bg-blue-900/10' : ''} hover:bg-gray-800 transition-colors`}>
+                <div className="flex items-start space-x-3">
+                    <input type="checkbox" checked={selectedNotifications.includes(notification.id)} onChange={() => toggleSelection(notification.id)} className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"/>
                     <div className="flex-shrink-0 mt-1">
-                      {getNotificationIcon(notification.type)}
+                        {getNotificationIcon(notification.type)}
                     </div>
-                    
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h3 className={`text-sm font-medium ${
-                            state.darkMode ? 'text-white' : 'text-gray-900'
-                          }`}>
-                            {notification.title}
-                          </h3>
-                          <p className={`text-sm mt-1 ${
-                            state.darkMode ? 'text-gray-400' : 'text-gray-600'
-                          }`}>
-                            {notification.message}
-                          </p>
-                          <div className="flex items-center space-x-2 mt-2">
-                            <span className={`text-xs ${
-                              state.darkMode ? 'text-gray-500' : 'text-gray-500'
-                            }`}>
-                              {formatDistanceToNow(new Date(notification.timestamp), { addSuffix: true })}
-                            </span>
-                            <span className={`text-xs px-2 py-1 rounded-full ${
-                              state.darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
-                            }`}>
-                              {notification.category}
-                            </span>
+                        <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                                <h3 className={`text-sm font-medium ${state.darkMode? 'text-white': 'text-gray-900 group-hover:text-white'}`}>
+                                    {notification.title}
+                                </h3>
+                                <p className={`text-sm mt-1 ${state.darkMode? 'text-gray-400': 'text-gray-600 group-hover:text-white' }`}>
+                                  {notification.message}
+                                </p>
+                                <div className="flex items-center space-x-2 mt-2">
+                                    <span className={`text-xs ${state.darkMode? 'text-gray-500': 'text-gray-500 group-hover:text-gray-200' }`}>
+                                      {formatDistanceToNow(new Date(notification.timestamp), { addSuffix: true })}
+                                    </span>
+                                    <span className={`text-xs px-2 py-1 rounded-full ${   state.darkMode     ? 'bg-gray-700 text-gray-300'     : 'bg-gray-100 text-gray-600 group-hover:bg-gray-700 group-hover:text-white' }`}>
+                                        {notification.category}
+                                    </span>
+                                </div>
+                            </div>
+                          <div className="flex items-center space-x-1 ml-2">
+                            {!notification.read && (
+                              <button
+                                onClick={() => markAsRead(notification.id)}
+                                className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                                title="Mark as read"
+                              >
+                                <Check className="w-4 h-4 text-green-500" />
+                              </button>
+                            )}
+                            <button
+                              onClick={() => deleteNotification(notification.id)}
+                              className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                              title="Delete notification"
+                            >
+                              <Trash2 className="w-4 h-4 text-red-500" />
+                            </button>
                           </div>
                         </div>
-                        
-                        <div className="flex items-center space-x-1 ml-2">
-                          {!notification.read && (
-                            <button
-                              onClick={() => markAsRead(notification.id)}
-                              className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
-                              title="Mark as read"
-                            >
-                              <Check className="w-4 h-4 text-green-500" />
-                            </button>
-                          )}
-                          <button
-                            onClick={() => deleteNotification(notification.id)}
-                            className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
-                            title="Delete notification"
-                          >
-                            <Trash2 className="w-4 h-4 text-red-500" />
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {notification.actionUrl && (
-                        <button
-                          onClick={() => {
-                            // Navigate to action URL
+                        {notification.actionUrl && (
+                        <button onClick={() => {
                             markAsRead(notification.id);
-                            onClose();
-                          }}
-                          className="mt-2 text-sm text-blue-500 hover:text-blue-700 font-medium"
-                        >
-                          Take Action →
+                             onClose();
+                            }}     
+                            className="mt-2 text-sm text-blue-500 group-hover:text-blue-300 font-medium">
+                        Take Action →
                         </button>
-                      )}
+                        )}
                     </div>
-                  </div>
                 </div>
-              ))}
+            </div>
+            ))}
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-64 text-center">

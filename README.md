@@ -3,11 +3,9 @@
 
 <!--- Welcome back, Developer! 👋 Ready to continue your learning journey? -->
 
-
 <div align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&duration=3000&pause=1000&color=0000FF&center=true&vCenter=true&width=700&lines=Welcome+to+Open+Source+Contribution!;GirlScript+Summer+of+Code+GSSoC+2025!+🎉;Start+this+repo+now!;Fork+it+🚀;Contribute+to+it+🛠️;Commit+to+your+forked+repo+💾;Create+a+Pull+Request+without+conflicts+✅" alt="Typing SVG" />
 </div>
-
 
 **Your Personalized Smart Learning & Placement Hub**
 
@@ -40,7 +38,6 @@
     </tbody>
 </table>
 
-
 <h2 align="center">🎯 Open Source Programmes ⭐</h2>
 
 <p align="center">
@@ -50,8 +47,6 @@
 <div align="center">
   <img src="https://github.com/apu52/METAVERSE/assets/114172928/e79eb6de-81b1-4ffb-b6ed-f018bb977e88" alt="GSSOC" width="80%">
 </div>
-
-
 
 🌟 **Exciting News...**
 
@@ -69,10 +64,12 @@
 🎉 **I can’t wait to welcome new contributors** from GSSoC 2025 to this DevElevate project family!
 Let’s build, learn, and grow together — one commit at a time. 🔥👨‍💻👩‍💻
 
-
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 > ⚠️ **📢 Important Note – Must Read Before You Contribute!** ⚠️
+
+<!-- New Login Flow GIF -->
+<img src="DevElevate/login-flow/login-flow.gif" alt="Login Flow Demo" width="100%">
 
 🔐 **Login/Sign Up page is now live** and appears first for both **👤 User** and **🛡️ Admin** roles.
 📂 **Database integration is not yet active**, but you can still **freely explore** the platform!
@@ -82,23 +79,23 @@ Let’s build, learn, and grow together — one commit at a time. 🔥👨‍�
 
 🖥️ Once logged in, you’ll be able to:
 
-* 🔍 **Explore the full UI**
-* 🧪 **Preview dashboard pages**
-* 🛠️ **Start contributing** to build real-time features like:
+- 🔍 **Explore the full UI**
+- 🧪 **Preview dashboard pages**
+- 🛠️ **Start contributing** to build real-time features like:
 
-  * Admin Panel 🛡️
-  * Course Manager 📚
-  * Profile Settings ⚙️
-  * Content Upload System 📤
+  - Admin Panel 🛡️
+  - Course Manager 📚
+  - Profile Settings ⚙️
+  - Content Upload System 📤
 
 ---
 
 ⚠️ **🚨 Attention Contributors!** 🚨
 📖 Please make sure to **thoroughly read the entire `README.md`** to understand:
 
-* 👨‍💼 What the **Admin** wants to build
-* 🔐 Important notes on **security practices**
-* 🤝 Guidelines for **how to contribute successfully**
+- 👨‍💼 What the **Admin** wants to build
+- 🔐 Important notes on **security practices**
+- 🤝 Guidelines for **how to contribute successfully**
 
 🔁 This will help avoid confusion, reduce merge conflicts, and ensure your PR gets accepted faster!
 
@@ -106,12 +103,13 @@ Let’s build, learn, and grow together — one commit at a time. 🔥👨‍�
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-![logo](https://github.com/user-attachments/assets/8b804ec3-1390-4acb-84c7-adf1050fd54c)
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8b804ec3-1390-4acb-84c7-adf1050fd54c" alt="logo" width="200" height="200">
+</p>
 
 
 **DevElevate is a full-stack, AI-powered smart education and career advancement platform built to empower students, developers, and job seekers. It centralizes learning resources, personalized roadmaps, job updates, resume tools, and much more — all in one powerful dashboard.**
-
-
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
@@ -135,13 +133,14 @@ A complete, secure system for login, registration, and role-based control for **
 
 #### 🧑‍💻 **User/Admin Unified Login & Registration**
 
-* 🔐 Single login/register page with role toggle:
+- 🔐 Single login/register page with role toggle:
 
-  * 👤 *User Mode:* Access learning platform, dashboard, profile
-  * 🛡️ *Admin Mode:* Redirects to admin dashboard with controls
-* 🌐 Email + password auth (with OTP/2FA support – optional)
-* 🔁 Persistent session management (cookies / JWT)
-* 🚫 Incorrect role selection prevents access to restricted pages
+  - 👤 _User Mode:_ Access learning platform, dashboard, profile
+  - 🛡️ _Admin Mode:_ Redirects to admin dashboard with controls
+
+- 🌐 Email + password auth (with OTP/2FA support – optional)
+- 🔁 Persistent session management (cookies / JWT)
+- 🚫 Incorrect role selection prevents access to restricted pages
 
 ---
 
@@ -149,23 +148,23 @@ A complete, secure system for login, registration, and role-based control for **
 
 A personalized profile section with full account control:
 
-* 🪪 View profile: name, email, course progress, resume link, bookmarks
-* ✏️ Edit Profile: update name, bio, social links, picture
-* 🔒 Change Password option
-* 📊 Progress Summary (modules, quizzes, assignments)
-* 💾 Save preferences (theme, notification settings, language)
+- 🪪 View profile: name, email, course progress, resume link, bookmarks
+- ✏️ Edit Profile: update name, bio, social links, picture
+- 🔒 Change Password option
+- 📊 Progress Summary (modules, quizzes, assignments)
+- 💾 Save preferences (theme, notification settings, language)
 
 ---
 
 #### 🧠 **Smart User Dashboard Includes:**
 
-* 🗂️ Current Courses Enrolled
-* 📈 Weekly Progress Analytics
-* 📌 Saved Notes, Bookmarks
-* 🔗 Resume Builder Shortcut
-* 🧠 Study Buddy Chat Access
-* 📥 Assignments Uploaded (track submission)
-* 🚀 Daily Goal Reminders + Streak Calendar
+- 🗂️ Current Courses Enrolled
+- 📈 Weekly Progress Analytics
+- 📌 Saved Notes, Bookmarks
+- 🔗 Resume Builder Shortcut
+- 🧠 Study Buddy Chat Access
+- 📥 Assignments Uploaded (track submission)
+- 🚀 Daily Goal Reminders + Streak Calendar
 
 ---
 
@@ -175,53 +174,96 @@ A powerful admin dashboard to manage the platform without code:
 
 #### 👨‍💼 Admin Abilities:
 
-* 👥 **Manage Users:**
+- 👥 **Manage Users:**
 
-  * View all registered users
-  * Delete, block, or update roles
-  * Monitor learning progress
+  - View all registered users
+  - Delete, block, or update roles
+  - Monitor learning progress
 
-* 📚 **Manage Courses:**
+- 📚 **Manage Courses:**
 
-  * Add/Edit/Delete courses (DSA, Java, ML, etc.)
-  * Add topics, upload notes, quizzes, YouTube playlists
-  * Set prerequisites and learning path
+  - Add/Edit/Delete courses (DSA, Java, ML, etc.)
+  - Add topics, upload notes, quizzes, YouTube playlists
+  - Set prerequisites and learning path
 
-* 📄 **Manage Assignments/Quizzes:**
+- 📄 **Manage Assignments/Quizzes:**
 
-  * Upload MCQs and coding problems
-  * View student submissions
-  * Auto-evaluate or manually grade
+  - Upload MCQs and coding problems
+  - View student submissions
+  - Auto-evaluate or manually grade
 
-* 📂 **Manage Content:**
+- 📂 **Manage Content:**
 
-  * Upload Ebooks, Notes, PDFs
-  * Add links to YouTube or GitHub repos
-  * Approve/reject community submissions
+  - Upload Ebooks, Notes, PDFs
+  - Add links to YouTube or GitHub repos
+  - Approve/reject community submissions
 
-* 📣 **Tech Feed / Announcements:**
+- 📣 **Tech Feed / Announcements:**
 
-  * Push tech news manually
-  * Auto-sync from NewsAPI
-  * Post custom announcements
+  - Push tech news manually
+  - Auto-sync from NewsAPI
+  - Post custom announcements
 
-* 📰 **Newsletter & Email Manager:**
+- 📰 **Newsletter & Email Manager:**
 
-  * Compose and send weekly digests
-  * Email verification for users
-  * View open rates (optional via SendGrid)
+  - Compose and send weekly digests
+  - Email verification for users
+  - View open rates (optional via SendGrid)
 
-* 📈 **Admin Analytics Dashboard:**
+- 📈 **Admin Analytics Dashboard:**
 
-  * Total users, active learners, quiz stats
-  * Most popular courses/modules
-  * Assignment success rate
+  - Total users, active learners, quiz stats
+  - Most popular courses/modules
+  - Assignment success rate
 
 #### 🛡️ Security & Stability
 
-* 🔒 Protected admin routes
-* 🚫 Unauthorized access blocking (JWT + role middleware)
-* 🔁 All changes reflected in real-time (Socket.IO optional)
+- 🔒 Protected admin routes
+- 🚫 Unauthorized access blocking (JWT + role middleware)
+- 🔁 All changes reflected in real-time (Socket.IO optional)
+
+---
+
+### ⚙️ Signup Flow – Auto Welcome Mail + Secure Data Storage
+
+Hey Devs 👋
+
+For both **Admin** and **User** registrations, we've got a sleek email + database flow in place to boost onboarding experience and security 🚀
+
+---
+
+📧 **After Signup – Auto Welcome Mail**
+Every time a new **user** or **admin** signs up, they’ll receive an instant welcome email 💌 that includes:
+
+* 🧾 Their **username**
+* 🔐 A **default password** (for admins only)
+* 💬 A friendly greeting and motivation to explore the platform
+* 🔁 Reset password option (via email)
+
+All this is powered by our mail system connected to the admin email:
+
+```
+my_email = "nicdelhi2024@gmail.com"
+code = "zuff vkvx pamt kdor"  # App-specific password for secure SMTP (Gmail)
+```
+
+---
+
+📂 **Data Storage – MongoDB Atlas**
+All user/admin credentials and email logs are safely stored using **MongoDB Atlas** 💾
+
+Here's the current connection setup:
+
+```
+pymongo.MongoClient(
+  "mongodb+srv://abhisekpanda2004guddul:Y3pU0wNKOW8r1ea7@cluster0.0khgj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+)
+```
+
+🧪 **Test Locally First**
+Before pushing to production, test the signup + mail flow on **localhost**. Make sure emails are triggered, and data is saved correctly in the DB.
+
+Once confirmed — go ahead and connect to the live MongoDB Atlas cluster for full deployment 🚀
 
 ---
 
@@ -241,7 +283,9 @@ A powerful admin dashboard to manage the platform without code:
 ## 🚀 Features
 
 ### 📚 Learning Hub
+
 Structured, trackable learning paths for:
+
 - **DSA** – Arrays, Strings, Trees, Graphs, DP...
 - **Java** – Core Java, OOP, Multithreading, JDBC...
 - **MERN Stack** – HTML, CSS, JS, React, Node, MongoDB...
@@ -249,6 +293,7 @@ Structured, trackable learning paths for:
 - **Data Science** – Pandas, Numpy, Matplotlib, Scikit-Learn...
 
 Includes:
+
 - ✅ Roadmaps
 - 📽️ YouTube Playlist Integration
 - 📝 Notes & Mindmaps
@@ -260,6 +305,7 @@ Includes:
 ---
 
 ### 💬 Study Buddy AI Chatbot
+
 - 24x7 AI chatbot powered by GPT-4
 - Doubt solving (DSA, Java, ML, etc.)
 - Resource suggestion
@@ -270,6 +316,7 @@ Includes:
 ---
 
 ### 📰 Tech Feed & Career Updates
+
 - 📢 Latest tech news (News API)
 - 🗓️ Internship calendar (Google Sheets)
 - 🎯 Hackathons & Reskilll Events
@@ -279,6 +326,7 @@ Includes:
 ---
 
 ### 📂 Resume + Cover Letter Builder
+
 - ATS-compliant templates
 - Dynamic section builder (Projects, Skills, etc.)
 - GPT-powered suggestions for:
@@ -291,6 +339,7 @@ Includes:
 ---
 
 ### 🎯 Placement Prep Arena
+
 - 📄 Job listings (IT & Product-Based)
 - 🔗 Referral Opportunities
 - 📘 Ebooks and Cheatsheets
@@ -301,6 +350,7 @@ Includes:
 ---
 
 ### 🖥️ Personalized Smart Dashboard
+
 - 📅 Daily planner with streaks
 - 📘 Resume where you left off
 - 📊 Weekly progress graphs
@@ -312,79 +362,81 @@ Includes:
 
 ### 🧾 **Error Pages (🚨 Required)**
 
-* ❌ 404 Not Found
-* 🔒 403 Forbidden
-* ⚠️ Validation/Submission Errors
-  
+- ❌ 404 Not Found
+- 🔒 403 Forbidden
+- ⚠️ Validation/Submission Errors
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 ## 🔧 Tech Stack
 
-| Layer         | Tech Used                                         |
-| ------------- | ------------------------------------------------- |
-| Frontend      | Typescript, Tailwind CSS, Shadcn UI, Axios          |
-| Backend       | Node.js + Express                   |
-| Database      | MongoDB Atlas                                |
-| Auth          | JWT                                    |
-| AI Chatbot    | GPT-4 API, any other                    |
-| Resume Engine | HTML2PDF, GPT Suggestion APIs                     |
-| APIs          | YouTube API, Google Sheets API, News API          |
-| Hosting       | Vercel      |
+| Layer         | Tech Used                                  |
+| ------------- | ------------------------------------------ |
+| Frontend      | Typescript, Tailwind CSS, Shadcn UI, Axios |
+| Backend       | Node.js + Express                          |
+| Database      | MongoDB Atlas                              |
+| Auth          | JWT                                        |
+| AI Chatbot    | GPT-4 API, any other                       |
+| Resume Engine | HTML2PDF, GPT Suggestion APIs              |
+| APIs          | YouTube API, Google Sheets API, News API   |
+| Hosting       | Vercel                                     |
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 ## 🌟 Summary – Trending Enhancements
 
-| Category           | Feature Examples                                      |
-|--------------------|--------------------------------------------------------|
-| 🧠 AI              | Career Advisor, Resume GPT, Roadmap Recommender       |
-| 🔁 Real-Time       | Collaborative Coding, Study Groups, Hackathons        |
-| 🎨 Personalization | One-Click Portfolio, Dark Mode, TTS, Resume Tools     |
-| 📢 Community       | Plugin Store, Forum, Mentorship Matching              |
-| 🎓 Learning        | Voice AI, Flashcards, Skill Graphs, Watch Mode        |
-| 🚀 Career          | Job Recommender, LinkedIn/GitHub Sync, Interview Bot  |
-| 🌍 Inclusive       | Multi-language, Accessibility Focus                   |
+| Category           | Feature Examples                                     |
+| ------------------ | ---------------------------------------------------- |
+| 🧠 AI              | Career Advisor, Resume GPT, Roadmap Recommender      |
+| 🔁 Real-Time       | Collaborative Coding, Study Groups, Hackathons       |
+| 🎨 Personalization | One-Click Portfolio, Dark Mode, TTS, Resume Tools    |
+| 📢 Community       | Plugin Store, Forum, Mentorship Matching             |
+| 🎓 Learning        | Voice AI, Flashcards, Skill Graphs, Watch Mode       |
+| 🚀 Career          | Job Recommender, LinkedIn/GitHub Sync, Interview Bot |
+| 🌍 Inclusive       | Multi-language, Accessibility Focus                  |
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 ## 🧑‍🤝‍🧑 Open Source Roles
 
-| Role               | Responsibility                                |
-|--------------------|-----------------------------------------------|
-| 📱 Frontend Lead   | UI development (Dashboard, Learning, Resume)  |
-| 🖥️ Backend Lead   | APIs for users, resumes, quizzes, etc.         |
-| 🤖 AI Integrator   | LangChain, GPT APIs, Vector DB                |
-| 🔌 API Dev         | Integrate 3rd-party tools (GSheets, NewsAPI) |
-| 🎨 UX Designer     | UI/UX flows, accessibility                    |
-| 📝 Content Writer  | Notes, Quizzes, Assignments, Flashcards      |
-| 🧪 QA Tester       | Feature testing, bug fixing                   |
-| 📣 Community Lead  | Docs, Outreach, GitHub management             |
-
+| Role              | Responsibility                               |
+| ----------------- | -------------------------------------------- |
+| 📱 Frontend Lead  | UI development (Dashboard, Learning, Resume) |
+| 🖥️ Backend Lead   | APIs for users, resumes, quizzes, etc.       |
+| 🤖 AI Integrator  | LangChain, GPT APIs, Vector DB               |
+| 🔌 API Dev        | Integrate 3rd-party tools (GSheets, NewsAPI) |
+| 🎨 UX Designer    | UI/UX flows, accessibility                   |
+| 📝 Content Writer | Notes, Quizzes, Assignments, Flashcards      |
+| 🧪 QA Tester      | Feature testing, bug fixing                  |
+| 📣 Community Lead | Docs, Outreach, GitHub management            |
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 ## 🔥 Bonus Enhancements – Phase 2 / 3
 
 ### 🎧 AI-Powered Voice Interaction
+
 - Voice-based doubt asking & TTS replies
 - Powered by Web Speech API, Whisper, gTTS
 
 ---
 
 ### 📊 Skill Graph + Personalized Learning Path
+
 - Auto-mapped skill graphs
 - AI-suggested next topics & roadmap
 
 ---
 
 ### 🎮 Gamified Learning Engine
+
 - XP, badges, levels, and leaderboards
 - Optional profile collectibles
 
 ---
 
 ### 🔗 LinkedIn + GitHub Integration
+
 - Auto-sync for resume builder
 - GitHub stats & repo highlighting
 - "Find your GitHub twin" feature
@@ -392,6 +444,7 @@ Includes:
 ---
 
 ### 🧪 Real-Time Collaborative Coding Arena
+
 - Code together live with others
 - Live competitions, mentor reviews
 - Powered by CodeMirror & WebSockets
@@ -399,6 +452,7 @@ Includes:
 ---
 
 ### 🤳 One-Click Portfolio Generator
+
 - Auto-generates a developer site
 - Uses your DevElevate data
 - `.vercel.app` deploy or ZIP export
@@ -406,12 +460,14 @@ Includes:
 ---
 
 ### 📡 Virtual Hackathon Organizer
+
 - Create/manage coding contests
 - GitHub submissions + live leaderboard
 
 ---
 
 ### 💼 Job Recommendation Engine (AI)
+
 - Upload resume → Get matched jobs
 - From Internshala, LinkedIn, AngelList, Naukri
 - JD keyword-based AI matching
@@ -419,34 +475,40 @@ Includes:
 ---
 
 ### 🧠 Memory Cards & Spaced Repetition
+
 - Flashcards for every subject
 - Anki-inspired revision schedule
 
 ---
 
 ### 🧬 AI Career Counselor
+
 - Analyze skills + preferences
 - Suggest roles & growth paths
 
 ---
 
 ### 🎨 Accessibility Tools
+
 - Dark Mode, Dyslexia Mode, Font Scaling
 
 ---
 
 ### 📺 Watch Party Mode
+
 - Study YouTube playlists with friends
 - Chat or voice integration
 
 ---
 
 ### 📢 In-App Notifications + Digest
+
 - Reminders, job alerts, weekly summaries
 
 ---
 
 ### 🧩 Plugin/Widget Marketplace
+
 - Contribute & install add-ons:
   - Resume templates
   - Roadmaps
@@ -455,6 +517,7 @@ Includes:
 ---
 
 ### 💡 Interview Simulator
+
 - Simulate full interviews:
   - System Design
   - Guesstimates
@@ -463,12 +526,14 @@ Includes:
 ---
 
 ### 🚀 Daily Dev Digest
+
 - Trending GitHub repos
 - Dev tweets & product launches
 
 ---
 
 ### 🗺️ Roadmap Generator
+
 - Auto-create plan for:
   - “DSA in 60 Days”
   - “MERN Full Stack Roadmap”
@@ -477,12 +542,14 @@ Includes:
 ---
 
 ### 🧪 Project Idea Generator
+
 - AI suggests ideas + code snippets
 - Deploy-ready with datasets
 
 ---
 
 ### 📞 Mentorship Matching
+
 - Match with peer/industry mentor
 - Based on interest, region, skillset
 
@@ -491,11 +558,12 @@ Includes:
 ## 🔥 Bonus Enhancements – Phase 3 / 3
 
 🧑‍🏫 Live AI Teaching Assistant (AI TA)
+
 - A real-time assistant that:
 - Answers coding doubts with explanations + code examples
 - Supports voice + text interaction
 - Offers instant feedback on quizzes or code
--🛠️ Tech: GPT-4, LangChain Agents, Whisper API, Speech Synthesis
+  -🛠️ Tech: GPT-4, LangChain Agents, Whisper API, Speech Synthesis
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
@@ -510,7 +578,6 @@ Includes:
 </p>
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
 
 ### ⭐ Stargazers
 
@@ -530,8 +597,6 @@ Includes:
 
 </div>
 
-
-
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 ## 🌐 Connect with Me
@@ -541,8 +606,6 @@ Includes:
   &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/user-attachments/assets/a92d4e36-c38a-4af2-bbfa-aae37e35ccbf" alt="Abhisek Panda_DSC0019" height="200"/>
 </p>
-
-
 
 - 👨‍💻 **Website Creator:** [Abhisek Panda](https://abhisekpanda072.vercel.app)
 - 🌍 **Portfolio:** [🌐 abhisekpanda072.vercel.app](https://abhisekpanda072.vercel.app)
@@ -556,9 +619,7 @@ Includes:
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&duration=3000&pause=1000&color=00C853&center=true&vCenter=true&width=700&lines=Thanks+for+visiting+DevElevate!+🙌;Start+the+repo+✅;Share+it+with+others+🌍;Contribute+and+grow+🛠️;Happy+Coding+✨!" alt="Thanks Banner Typing SVG" />
 </div>
 
-
-
-<!--Footer--> 
+<!--Footer-->
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=65&section=footer"/>
 </p>
