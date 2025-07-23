@@ -64,7 +64,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className={`${state.darkMode ? 'bg-gray-700/30 border-gray-700 backdrop-blur-md' : 'bg-gray-300/40 backdrop-blur-lg border border-gray-300 shadow'} transition-colors duration-200 sticky top-0 z-40`}>
+      <nav className={`${state.darkMode ? 'bg-gray-700/30 border-gray-700 backdrop-blur-md' : 'bg-gray-300/40 backdrop-blur-lg border border-gray-300 shadow'} transition-colors duration-200 fixed w-full z-40`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
