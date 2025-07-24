@@ -85,7 +85,7 @@ const LearningHub: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
+      <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
         {/* Displays toast notification */}
         {toastMessage && (
             <Toast message={toastMessage} onClose={() => setToastMessage("")} darkMode={state.darkMode} />

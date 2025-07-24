@@ -1,0 +1,65 @@
+[
+  {
+    "title": "Frontend Mastery",
+    "category": "Frontend",
+    "level": "Beginner",
+    "goal": "Frontend Developer",
+    "link": "https://example.com/frontend-course"
+  },
+  {
+    "title": "Backend APIs",
+    "category": "Backend",
+    "level": "Intermediate",
+    "goal": "Backend Developer",
+    "link": "https://example.com/backend-course"
+  },
+  {
+    "title": "DSA Bootcamp",
+    "category": "DSA",
+    "level": "Beginner",
+    "goal": "Crack Coding Interviews",
+    "link": "https://example.com/dsa-bootcamp"
+  },
+  {
+    "title": "Mastering React",
+    "category": "React",
+    "level": "Intermediate",
+    "goal": "Frontend Developer",
+    "link": "https://example.com/mastering-react"
+  },
+  {
+    "title": "Node.js Essentials",
+    "category": "Node",
+    "level": "Beginner",
+    "goal": "Backend Developer",
+    "link": "https://example.com/node-essentials"
+  },
+  {
+    "title": "Advanced DSA Techniques",
+    "category": "DSA",
+    "level": "Advanced",
+    "goal": "Competitive Programming",
+    "link": "https://example.com/advanced-dsa"
+  },
+  {
+    "title": "Fullstack Web Development",
+    "category": "Fullstack",
+    "level": "Intermediate",
+    "goal": "Fullstack Developer",
+    "link": "https://example.com/fullstack-web"
+  },
+  {
+    "title": "React + TypeScript",
+    "category": "React",
+    "level": "Advanced",
+    "goal": "Frontend Developer",
+    "link": "https://example.com/react-typescript"
+  },
+  {
+    "title": "Node.js with MongoDB",
+    "category": "Node",
+    "level": "Intermediate",
+    "goal": "Backend Developer",
+    "link": "https://example.com/node-mongodb"
+  }
+]

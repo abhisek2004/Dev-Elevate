@@ -37,6 +37,7 @@ const Navbar: React.FC = () => {
     { path: "/news", icon: Newspaper, label: "Tech Feed" },
     { path: "/resume", icon: FileText, label: "Resume Builder" },
     { path: "/placement", icon: Target, label: "Placement Prep" },
+    { path: "/course-suggestions", icon: BookOpen, label: "Course Suggestion" },
   ];
 
   const isActive = (path: string) => location.pathname === path;

@@ -35,6 +35,13 @@ const QuickActions: React.FC = () => {
       icon: Target,
       color: 'from-orange-500 to-red-500',
       onClick: () => navigate('/placement')
+    },
+    {
+      title: 'course suggestions',
+      description: 'Learn courses',
+      icon: Target,
+      color: 'from-orange-500 to-red-500',
+      onClick: () => navigate('/course-suggestions')
     }
   ];
 
