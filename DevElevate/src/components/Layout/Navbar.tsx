@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { 
   Home, 
   BookOpen, 
-  MessageSquare, 
+  MessageSquare, // MessageSquare is already imported!
   Newspaper, 
   FileText, 
   Target, 
@@ -33,7 +33,9 @@ const Navbar: React.FC = () => {
   const navItems = [
     { path: '/', icon: Home, label: 'Dashboard' },
     { path: '/learning', icon: BookOpen, label: 'Learning Hub' },
-    { path: '/chatbot', icon: MessageSquare, label: 'Study Buddy' },
+    // NEW: Discussions Link
+    { path: '/discussions', icon: MessageSquare, label: 'Discussions' }, 
+    { path: '/chatbot', icon: MessageSquare, label: 'Study Buddy' }, // Keep existing Study Buddy if distinct
     { path: '/news', icon: Newspaper, label: 'Tech Feed' },
     { path: '/resume', icon: FileText, label: 'Resume Builder' },
     { path: '/placement', icon: Target, label: 'Placement Prep' },
@@ -89,7 +91,7 @@ const Navbar: React.FC = () => {
                     to={item.path}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isActive(item.path)
-                        ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 shadow-sm'
+                        ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 shadow-sm'
                         : state.darkMode
                         ? 'text-gray-300 hover:text-white hover:bg-gray-800'
                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
@@ -202,7 +204,7 @@ const Navbar: React.FC = () => {
                       onClick={() => setShowMobileMenu(false)}
                       className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                         isActive(item.path)
-                          ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
+                          ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
                           : state.darkMode
                           ? 'text-gray-300 hover:text-white hover:bg-gray-800'
                           : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
