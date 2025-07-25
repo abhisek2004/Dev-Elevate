@@ -22,15 +22,13 @@ app.get('/', (req, res) => {
    });
 });
 
-// Start server
-const PORT = process.env.PORT || 8080;
 
 (async () => {
   await mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB connected successfully"))
   .catch(err => console.error("MongoDB connection error:", err));
 
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
   });
 })();
