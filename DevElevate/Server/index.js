@@ -6,6 +6,7 @@ import passport from "passport";
 import dotenv from "dotenv";
 dotenv.config();
 import userRouter from "./routes/userRoutes.js";
+import { connectDB } from "./utils/DB.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -29,3 +30,5 @@ app.use("/api/v1", userRouter);
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+connectDB();

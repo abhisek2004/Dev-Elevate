@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import User from "../models/User.model.js";
-import { generateToken } from "../utils/token.js";
+import { User } from "../model/User.js";
+import { generateToken } from "../utils/generateToken.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -32,6 +32,7 @@ passport.use(
         const token = generateToken(user._id);
 
         user.token = token;
+        console.log("User authenticated successfully:", user);
         done(null, user);
       } catch (err) {
         done(err, null);
