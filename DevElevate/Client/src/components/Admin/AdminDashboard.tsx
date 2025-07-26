@@ -30,6 +30,7 @@ import {
   Award,
   Target
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 type Course = {
   id: string;
@@ -83,6 +84,7 @@ const AdminDashboard: React.FC = () => {
   };
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [courses, setCourses] =useState<Course[]>([]);
+
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [systemSettings, setSystemSettings] = useState({
     siteName: 'DevElevate',
@@ -92,6 +94,15 @@ const AdminDashboard: React.FC = () => {
     maxUsersPerCourse: 1000,
     sessionTimeout: 30
   });
+  const [filter, setFilter] = useState({
+    role: '',
+    dateFrom: '',
+    dateTo: '',
+    minProgress: '',
+    maxProgress: ''
+  });
+  const [showFilter, setShowFilter] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadUsers();
@@ -102,7 +113,7 @@ const AdminDashboard: React.FC = () => {
   const loadCourses = () => {
     const savedCourses = JSON.parse(localStorage.getItem('adminCourses') || '[]');
     if (savedCourses.length === 0) {
-      const defaultCourses = [
+      const defaultCourses: Course[] = [
         {
           id: '1',
           title: 'Data Structures & Algorithms',
@@ -153,7 +164,7 @@ const AdminDashboard: React.FC = () => {
   const loadNewsArticles = () => {
     const savedNews = JSON.parse(localStorage.getItem('adminNews') || '[]');
     if (savedNews.length === 0) {
-      const defaultNews = [
+      const defaultNews: NewsArticle[] = [
         {
           id: '1',
           title: 'New AI Course Launch',
@@ -223,10 +234,23 @@ const AdminDashboard: React.FC = () => {
     }
   ];
 
-  const filteredUsers = authState.users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter logic
+  const filteredUsers = authState.users
+    .filter(user =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter(user => {
+      // Role filter
+      if (filter.role && user.role !== filter.role) return false;
+      // Date filter
+      if (filter.dateFrom && new Date(user.joinDate) < new Date(filter.dateFrom)) return false;
+      if (filter.dateTo && new Date(user.joinDate) > new Date(filter.dateTo)) return false;
+      // Progress filter
+      if (filter.minProgress && user.progress.totalPoints < Number(filter.minProgress)) return false;
+      if (filter.maxProgress && user.progress.totalPoints > Number(filter.maxProgress)) return false;
+      return true;
+    });
 
   const addCourse = (courseData: Omit<Course, 'id' | 'enrolled' | 'completion' | 'status' | 'createdAt'>) => {
     const newCourse = {
@@ -468,8 +492,139 @@ const AdminDashboard: React.FC = () => {
             <Mail className="w-4 h-4" />
             <span>Send Email</span>
           </button>
+          <button
+            className="flex items-center space-x-2 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+            onClick={() => setShowFilter(true)}
+          >
+            <Filter className="w-4 h-4" />
+            <span>Filter</span>
+          </button>
         </div>
       </div>
+
+      {/* Filter Modal */}
+      {showFilter && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className={`${globalState.darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 w-full max-w-md mx-4`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className={`text-lg font-semibold ${globalState.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                Filter Users
+              </h3>
+              <button onClick={() => setShowFilter(false)} className="text-gray-500 hover:text-gray-700">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+                setShowFilter(false);
+              }}
+              className="space-y-4"
+            >
+              <div>
+                <label className={`block text-sm font-medium mb-1 ${globalState.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Role</label>
+                <select
+                  value={filter.role}
+                  onChange={e => setFilter(f => ({ ...f, role: e.target.value }))}
+                  className={`w-full px-3 py-2 rounded-lg border ${
+                    globalState.darkMode
+                      ? 'bg-gray-700 border-gray-600 text-white'
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
+                >
+                  <option value="">All</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                  <option value="moderator">Moderator</option>
+                </select>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className={`block text-sm font-medium mb-1 ${globalState.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Joined After</label>
+                  <input
+                    type="date"
+                    value={filter.dateFrom}
+                    onChange={e => setFilter(f => ({ ...f, dateFrom: e.target.value }))}
+                    className={`w-full px-3 py-2 rounded-lg border ${
+                      globalState.darkMode
+                        ? 'bg-gray-700 border-gray-600 text-white'
+                        : 'bg-white border-gray-300 text-gray-900'
+                    }`}
+                  />
+                </div>
+                <div>
+                  <label className={`block text-sm font-medium mb-1 ${globalState.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Joined Before</label>
+                  <input
+                    type="date"
+                    value={filter.dateTo}
+                    onChange={e => setFilter(f => ({ ...f, dateTo: e.target.value }))}
+                    className={`w-full px-3 py-2 rounded-lg border ${
+                      globalState.darkMode
+                        ? 'bg-gray-700 border-gray-600 text-white'
+                        : 'bg-white border-gray-300 text-gray-900'
+                    }`}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className={`block text-sm font-medium mb-1 ${globalState.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Min Progress</label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={filter.minProgress}
+                    onChange={e => setFilter(f => ({ ...f, minProgress: e.target.value }))}
+                    placeholder="Points"
+                    className={`w-full px-3 py-2 rounded-lg border ${
+                      globalState.darkMode
+                        ? 'bg-gray-700 border-gray-600 text-white'
+                        : 'bg-white border-gray-300 text-gray-900'
+                    }`}
+                  />
+                </div>
+                <div>
+                  <label className={`block text-sm font-medium mb-1 ${globalState.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Max Progress</label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={filter.maxProgress}
+                    onChange={e => setFilter(f => ({ ...f, maxProgress: e.target.value }))}
+                    placeholder="Points"
+                    className={`w-full px-3 py-2 rounded-lg border ${
+                      globalState.darkMode
+                        ? 'bg-gray-700 border-gray-600 text-white'
+                        : 'bg-white border-gray-300 text-gray-900'
+                    }`}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end space-x-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFilter({
+                      role: '',
+                      dateFrom: '',
+                      dateTo: '',
+                      minProgress: '',
+                      maxProgress: ''
+                    });
+                  }}
+                  className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                >
+                  Reset
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+                >
+                  Apply
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* User Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -1324,6 +1479,19 @@ const AdminDashboard: React.FC = () => {
           <p className={`text-lg ${globalState.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             Comprehensive platform management and analytics
           </p>
+          {/* 🌙 Dark Mode Toggle Button */}
+            <button
+           
+            onClick={() => dispatch({ type: 'TOGGLE_DARK_MODE'
+ })}
+            className={`mt-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+              globalState.darkMode
+                ? 'bg-gray-700 text-white hover:bg-gray-600'
+                : 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+            }`}
+          >
+            {globalState.darkMode ? '☀ Light' : '🌙 Dark'}
+          </button>
         </div>
 
         {/* Tab Navigation */}
@@ -1602,7 +1770,7 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({ onClose, onAdd, darkMode })
             <textarea
               value={formData.content}
               onChange={(e) => setFormData({...formData, content: e.target.value})}
-              rows={4}
+              rows={3}
               className={`w-full px-3 py-2 rounded-lg border ${
                 darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
               } focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -1610,40 +1778,33 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({ onClose, onAdd, darkMode })
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className={`block text-sm font-medium mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                Category
-              </label>
-              <select
-                value={formData.category}
-                onChange={(e) => setFormData({...formData, category: e.target.value})}
-                className={`w-full px-3 py-2 rounded-lg border ${
-                  darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
-                } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              >
-                <option value="announcement">Announcement</option>
-                <option value="maintenance">Maintenance</option>
-                <option value="feature">Feature</option>
-                <option value="general">General</option>
-              </select>
-            </div>
+          <div>
+            <label className={`block text-sm font-medium mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+              Category
+            </label>
+            <select
+              value={formData.category}
+              onChange={(e) => setFormData({...formData, category: e.target.value})}
+              className={`w-full px-3 py-2 rounded-lg border ${
+                darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
+              }`}
+            >
+              <option value="announcement">Announcement</option>
+              <option value="maintenance">Maintenance</option>
+              <option value="news">News</option>
+            </select>
+          </div>
 
-            <div>
-              <label className={`block text-sm font-medium mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                Status
-              </label>
-              <select
-                value={formData.status}
-                onChange={(e) => setFormData({...formData, status: e.target.value})}
-                className={`w-full px-3 py-2 rounded-lg border ${
-                  darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
-                } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              >
-                <option value="published">Published</option>
-                <option value="draft">Draft</option>
-              </select>
-            </div>
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={formData.status === 'published'}
+              onChange={(e) => setFormData({...formData, status: e.target.checked ? 'published' : 'draft'})}
+              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+            <label className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+              Publish immediately
+            </label>
           </div>
 
           <div className="flex space-x-3 pt-4">
@@ -1651,7 +1812,7 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({ onClose, onAdd, darkMode })
               type="submit"
               className="flex-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
             >
-              Add Article
+              Add News
             </button>
             <button
               type="button"
@@ -1666,7 +1827,6 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({ onClose, onAdd, darkMode })
     </div>
   );
 };
-
 // User Details Modal Component
 type UserDetailsModalProps = {
   user: {

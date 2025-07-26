@@ -1,9 +1,23 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { GlobalProvider } from './contexts/GlobalContext';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 import LoginRegister from './components/Auth/LoginRegister';
 import Dashboard from './components/Dashboard/Dashboard';
+=======
+=======
+>>>>>>> 67c7ddbdc7f1d8f238bb2e2bd9548ad5794b70cb
+import { AuthProvider } from './contexts/AuthContext';
+import { GlobalProvider } from './contexts/GlobalContext';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Layout/Navbar';
+import Footer from './components/Layout/Footer';
+<<<<<<< HEAD
+>>>>>>> 7c701e3a (Fixing app.tsx)
+=======
+>>>>>>> 67c7ddbdc7f1d8f238bb2e2bd9548ad5794b70cb
 import LearningHub from './components/LearningHub/LearningHub';
 import Chatbot from './components/Chatbot/Chatbot';
 import TechFeed from './components/TechFeed/TechFeed';
@@ -12,6 +26,8 @@ import PlacementPrep from './components/PlacementPrep/PlacementPrep';
 import UserProfile from './components/Profile/UserProfile';
 import PrivacyPolicy from './components/Legal/PrivacyPolicy';
 import TermsOfService from './components/Legal/TermsOfService';
+<<<<<<< HEAD
+<<<<<<< HEAD
 import CreatorPage from './components/Legal/CreatorPage';
 import Disclaimer from './components/Legal/Disclaimer';
 import AdminDashboard from './components/Admin/AdminDashboard';
@@ -19,6 +35,19 @@ import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
 import AppContent from './components/Layout/Toast'; // or wherever AppContent is defined
 
+=======
+=======
+>>>>>>> 67c7ddbdc7f1d8f238bb2e2bd9548ad5794b70cb
+import Disclaimer from './components/Legal/Disclaimer';
+import AdminDashboard from './components/Admin/AdminDashboard';
+import ProtectedRoute from './components/Auth/ProtectedRoute';
+import LoginRegister from './components/Auth/LoginRegister';
+import CreatorPage from './components/Legal/CreatorPage';
+import Dashboard from './components/Dashboard/Dashboard';
+<<<<<<< HEAD
+>>>>>>> 7c701e3a (Fixing app.tsx)
+=======
+>>>>>>> 67c7ddbdc7f1d8f238bb2e2bd9548ad5794b70cb
 
 function App() {
   return (
@@ -82,7 +111,7 @@ function App() {
             </Routes>
           {/* </div> */}
 
-          <AppContent />
+          {/* <AppContent /> */}
 
         </Router>
       </GlobalProvider>

@@ -72,7 +72,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       return { ...state, isLoading: true, error: null };
     
     case 'LOGIN_SUCCESS':
-    case 'REGISTER_SUCCESS':
+      console.log('Reducer - LOGIN_SUCCESS payload:', action.payload);
       return {
         ...state,
         user: action.payload.user,
@@ -133,6 +133,17 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     
     case 'HYDRATE_AUTH':
       return { ...state, ...action.payload };
+    
+    case 'REGISTER_SUCCESS':
+      console.log('Reducer - REGISTER_SUCCESS payload:', action.payload);
+      return {
+        ...state,
+        user: action.payload.user,
+        sessionToken: action.payload.token,
+        isAuthenticated: true,
+        isLoading: false,
+        error: null
+      };
     
     default:
       return state;
@@ -199,6 +210,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       const token = generateToken();
       const updatedUser = { ...user, lastLogin: new Date().toISOString() };
+      console.log('Login function - updatedUser:', updatedUser);
+      console.log('Login function - dispatching LOGIN_SUCCESS');
       
       dispatch({ 
         type: 'LOGIN_SUCCESS', 
@@ -250,6 +263,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           level: 'Beginner'
         }
       };
+      console.log('Register function - newUser:', newUser);
+      console.log('Register function - dispatching REGISTER_SUCCESS');
       
       // Save user to localStorage
       savedUsers.push(newUser);

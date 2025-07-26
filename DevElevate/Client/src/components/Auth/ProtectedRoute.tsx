@@ -17,20 +17,18 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 }) => {
   const { state } = useAuth();
 
-  // If authentication is required but user is not authenticated
-  if (requireAuth && !state.isAuthenticated) {
-    return <Navigate to={redirectTo} replace />;
-  }
+  // TEMPORARY: Disable all route protection for development
+  // if (requireAuth && !state.isAuthenticated) {
+  //   return <Navigate to={redirectTo} replace />;
+  // }
 
-  // If admin access is required but user is not admin
-  if (requireAdmin && (!state.user || state.user.role !== 'admin')) {
-    return <Navigate to="/" replace />;
-  }
+  // if (requireAdmin && (!state.user || state.user.role !== 'admin')) {
+  //   return <Navigate to="/" replace />;
+  // }
 
-  // If user is authenticated but trying to access login page
-  if (!requireAuth && state.isAuthenticated) {
-    return <Navigate to="/" replace />;
-  }
+  // if (!requireAuth && state.isAuthenticated) {
+  //   return <Navigate to="/" replace />;
+  // }
 
   return <>{children}</>;
 };

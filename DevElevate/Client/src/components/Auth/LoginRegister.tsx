@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, User, Shield, Mail, Lock, UserPlus, LogIn, AlertCircle } from 'lucide-react';
@@ -16,6 +16,17 @@ const LoginRegister: React.FC = () => {
     confirmPassword: ''
   });
 
+  useEffect(() => {
+    console.log('LoginRegister useEffect - state.user:', state.user);
+    if (state.isAuthenticated && state.user) {
+      if (state.user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
+    }
+  }, [state.isAuthenticated, state.user, navigate]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     dispatch({ type: 'CLEAR_ERROR' });
@@ -31,13 +42,7 @@ const LoginRegister: React.FC = () => {
       } else {
         await register(formData.name, formData.email, formData.password, role);
       }
-      
-      // Redirect based on role
-      if (role === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/');
-      }
+      // Remove the redirect from here!
     } catch (error) {
       console.error('Auth error:', error);
     }
