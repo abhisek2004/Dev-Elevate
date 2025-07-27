@@ -72,6 +72,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+             
           </Routes>
         </Router>
       </GlobalProvider>
