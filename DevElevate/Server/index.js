@@ -1,6 +1,6 @@
 import express from "express"
 import dotenv from "dotenv"
-import connectDB from "./config/db.js";
+// import connectDB from "./config/db.js";
 import cors from "cors"
 import userRoutes from './routes/userRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
@@ -8,13 +8,14 @@ import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorize.js";
 import { authenticateToken } from "./middleware/authMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
-connectDB();
+import paymentRoutes from "./routes/paymentRoutes.js";
+// connectDB(); // Temporarily disabled for testing
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 // Middleware
 app.use(cors({
@@ -39,6 +40,7 @@ app.set('trust proxy', true);
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/admin/courses", courseRoutes);
+app.use("/api/payment", paymentRoutes);
 
 // Basic route
 app.get('/', (req, res) => {

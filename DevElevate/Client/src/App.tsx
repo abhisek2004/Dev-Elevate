@@ -21,6 +21,9 @@ import LoginRegister from './components/Auth/LoginRegister';
 import Dashboard from './components/Dashboard/Dashboard';
 import Settings from './components/Settings/Settings';
 import PremiumPage from './components/premium/PremiumPage';
+import PaymentPage from './components/Payment/PaymentPage';
+import PaymentSuccess from './components/Payment/PaymentSuccess';
+import PaymentFailed from './components/Payment/PaymentFailed';
 function App() {
   return (
     <AuthProvider>
@@ -55,6 +58,9 @@ function App() {
                           <Route path="/placement" element={<PlacementPrep />} />
                           <Route path="/settings" element={<Settings />} />
                           <Route path="/premium" element={<PremiumPage />} />
+                          <Route path="/premium/payment" element={<PaymentPage />} />
+                          <Route path="/premium/payment/success" element={<PaymentSuccess />} />
+                          <Route path="/premium/payment/failed" element={<PaymentFailed />} />
                           <Route path="/profile" element={<UserProfile />} />
                           <Route path="/privacy" element={<PrivacyPolicy />} />
                           <Route path="/terms" element={<TermsOfService />} />

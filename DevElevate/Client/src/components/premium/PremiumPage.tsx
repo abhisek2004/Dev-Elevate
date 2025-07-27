@@ -1,9 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { Check, Star, Zap, Shield, Users, Crown, ArrowRight } from 'lucide-react';
 
 const PremiumPage: React.FC = () => {
   const { state } = useGlobalState();
+  const navigate = useNavigate();
+
+  const handleUpgradeClick = (planName: string) => {
+    if (planName === 'Pro') {
+      navigate('/premium/payment');
+    }
+  };
 
   const pricingPlans = [
     {
@@ -228,6 +236,7 @@ const PremiumPage: React.FC = () => {
               </div>
 
               <button
+                onClick={() => handleUpgradeClick(plan.name)}
                 className={`w-full py-3 px-6 rounded-lg font-medium transition-all flex items-center justify-center ${
                   plan.buttonVariant === 'primary'
                     ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700'
@@ -305,8 +314,11 @@ const PremiumPage: React.FC = () => {
             Join thousands of developers who have accelerated their careers with DevElevate Pro.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition-all flex items-center justify-center">
-              Start Free Trial
+            <button
+              onClick={() => navigate('/premium/payment')}
+              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition-all flex items-center justify-center"
+            >
+              Upgrade to Pro
               <ArrowRight className="w-4 h-4 ml-2" />
             </button>
             <button className={`px-8 py-3 rounded-lg font-medium border-2 transition-all ${
