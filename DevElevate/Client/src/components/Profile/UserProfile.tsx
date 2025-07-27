@@ -50,6 +50,20 @@ const UserProfile: React.FC = () => {
     }
   };
 
+  const handleCancelEdit = () => {
+    // Reset form data to original user data
+    setFormData({
+      name: authState.user?.name || '',
+      bio: authState.user?.bio || '',
+      socialLinks: {
+        linkedin: authState.user?.socialLinks?.linkedin || '',
+        github: authState.user?.socialLinks?.github || '',
+        twitter: authState.user?.socialLinks?.twitter || ''
+      }
+    });
+    setIsEditing(false);
+  };
+
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
     setPasswordError('');
@@ -72,6 +86,12 @@ const UserProfile: React.FC = () => {
     } catch (error) {
       setPasswordError(error instanceof Error ? error.message : 'Failed to change password');
     }
+  };
+
+  const handleCancelPasswordChange = () => {
+    setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    setPasswordError('');
+    setShowPasswordForm(false);
   };
 
   if (!authState.user) {
@@ -194,7 +214,7 @@ const UserProfile: React.FC = () => {
                       <span>Save</span>
                     </button>
                     <button
-                      onClick={() => setIsEditing(false)}
+                      onClick={handleCancelEdit}
                       className="flex items-center space-x-1 px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
                     >
                       <X className="w-4 h-4" />
@@ -376,7 +396,7 @@ const UserProfile: React.FC = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => setShowPasswordForm(false)}
+                      onClick={handleCancelPasswordChange}
                       className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
                     >
                       Cancel

@@ -18,6 +18,8 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 //   console.warn('⚠️ Database connection failed, some features may not work:', dbError.message);
 // }
 console.log('🧪 Running in test mode without database');
+import adminFeedbackRoutes from './routes/adminFeedbackRoutes.js';
+connectDB();
 
 // Load environment variables
 dotenv.config();
@@ -49,6 +51,8 @@ app.use("/api/v1/auth", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/admin/courses", courseRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use('/admin', adminFeedbackRoutes);
+
 
 // Basic route
 app.get('/', (req, res) => {
