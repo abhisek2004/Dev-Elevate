@@ -6,8 +6,7 @@ import userRoutes from './routes/userRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
 import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorize.js";
-import authenticate from "./middleware/authMiddleware.js";
-import cors from "cors";
+import { authenticateToken } from "./middleware/authMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
 connectDB();
 
@@ -47,8 +46,8 @@ app.get('/', (req, res) => {
 });
 
 
-// Sample Usage of authenticate and autherie middleware for roleBased Features
-app.get("/api/admin/dashboard", authenticate, authorize("admin"), (req, res) => {
+// Sample Usage of authenticate and authorize middleware for roleBased Features
+app.get("/api/admin/dashboard", authenticateToken, authorize("admin"), (req, res) => {
   res.send("Hello Admin");
 });
 

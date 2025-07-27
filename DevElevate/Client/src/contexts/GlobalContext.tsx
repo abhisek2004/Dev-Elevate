@@ -94,6 +94,15 @@ export interface Resume {
   };
 }
 
+// Add Notification type and notifications to GlobalState
+export interface Notification {
+  id: string;
+  message: string;
+  read: boolean;
+  date: string;
+  type?: string;
+}
+
 export interface GlobalState {
   user: User | null;
   learningProgress: LearningProgress;
@@ -107,6 +116,7 @@ export interface GlobalState {
   dailyGoals: string[];
   completedGoals: string[];
   streakData: { [date: string]: boolean };
+  notifications: Notification[]; // <-- Added notifications property
 }
 
 // Actions
@@ -130,6 +140,10 @@ type GlobalAction =
   | { type: "UPDATE_STREAK"; payload: { date: string; completed: boolean } }
   | { type: "HYDRATE_STATE"; payload: Partial<GlobalState> }
   | { type: "UNDO_DAILY_GOAL"; payload: string }
+  | { type: "ADD_NOTIFICATION"; payload: Notification }
+  | { type: "MARK_NOTIFICATION_READ"; payload: string }
+  | { type: "MARK_ALL_NOTIFICATIONS_READ" }
+  | { type: "SET_NOTIFICATIONS"; payload: Notification[] }
 
 // Initial state
 const initialState: GlobalState = {
@@ -145,6 +159,7 @@ const initialState: GlobalState = {
   dailyGoals: [],
   completedGoals: [],
   streakData: {},
+  notifications: [], // <-- Initialize notifications as empty array
 };
 
 // Reducer
@@ -269,6 +284,33 @@ const globalReducer = (
       return {
         ...state,
         ...action.payload,
+      };
+
+    // --- Notification actions ---
+    case "ADD_NOTIFICATION":
+      return {
+        ...state,
+        notifications: [action.payload, ...state.notifications],
+      };
+
+    case "MARK_NOTIFICATION_READ":
+      return {
+        ...state,
+        notifications: state.notifications.map((n) =>
+          n.id === action.payload ? { ...n, read: true } : n
+        ),
+      };
+
+    case "MARK_ALL_NOTIFICATIONS_READ":
+      return {
+        ...state,
+        notifications: state.notifications.map((n) => ({ ...n, read: true })),
+      };
+
+    case "SET_NOTIFICATIONS":
+      return {
+        ...state,
+        notifications: action.payload,
       };
 
     default:

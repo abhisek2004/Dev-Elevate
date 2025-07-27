@@ -1,5 +1,6 @@
 import { AuthProvider } from './contexts/AuthContext';
 import { GlobalProvider } from './contexts/GlobalContext';
+import { NotificationProvider } from './contexts/NotificationContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
@@ -24,67 +25,69 @@ function App() {
   return (
     <AuthProvider>
       <GlobalProvider>
-        <Router>
-          <Routes>
-            {/* Public Routes */}
-            <Route
-              path="/login"
-              element={
-                <ProtectedRoute requireAuth={false}>
-                  <LoginRegister />
-                </ProtectedRoute>
-              }
-            />
+        <NotificationProvider>
+          <Router>
+            <Routes>
+              {/* Public Routes */}
+              <Route
+                path="/login"
+                element={
+                  <ProtectedRoute requireAuth={false}>
+                    <LoginRegister />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Protected Routes */}
-            <Route
-              path="/*"
-              element={
-                <ProtectedRoute>
-                  <Navbar />
-                  <div className="flex-1 bg-white dark:bg-gray-900">
-                    <main className="flex-1">
-                      <Routes>
-                        <Route path="/" element={<Dashboard />} />
-                        <Route path="/learning" element={<LearningHub />} />
-                        <Route path="/chatbot" element={<Chatbot />} />
-                        <Route path="/news" element={<TechFeed />} />
-                        <Route path="/resume" element={<ResumeBuilder />} />
-                        <Route path="/placement" element={<PlacementPrep />} />
-                        <Route path="/settings" element={<Settings />} />
-                        <Route path="/premium" element={<PremiumPage />} />
-                        <Route path="/profile" element={<UserProfile />} />
-                        <Route path="/privacy" element={<PrivacyPolicy />} />
-                        <Route path="/terms" element={<TermsOfService />} />
-                        <Route path="/creator" element={<CreatorPage />} />
-                        <Route path="/disclaimer" element={<Disclaimer />} />
-                      </Routes>
-                    </main>
-                    <Footer />
-                  </div>
-                </ProtectedRoute>
-              }
-            />
+              {/* Protected Routes */}
+              <Route
+                path="/*"
+                element={
+                  <ProtectedRoute>
+                    <Navbar />
+                    <div className="flex-1 bg-white dark:bg-gray-900">
+                      <main className="flex-1">
+                        <Routes>
+                          <Route path="/" element={<Dashboard />} />
+                          <Route path="/learning" element={<LearningHub />} />
+                          <Route path="/chatbot" element={<Chatbot />} />
+                          <Route path="/news" element={<TechFeed />} />
+                          <Route path="/resume" element={<ResumeBuilder />} />
+                          <Route path="/placement" element={<PlacementPrep />} />
+                          <Route path="/settings" element={<Settings />} />
+                          <Route path="/premium" element={<PremiumPage />} />
+                          <Route path="/profile" element={<UserProfile />} />
+                          <Route path="/privacy" element={<PrivacyPolicy />} />
+                          <Route path="/terms" element={<TermsOfService />} />
+                          <Route path="/creator" element={<CreatorPage />} />
+                          <Route path="/disclaimer" element={<Disclaimer />} />
+                        </Routes>
+                      </main>
+                      <Footer />
+                    </div>
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Admin Routes */}
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute requireAdmin={true}>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/logs"
-              element={
-                <ProtectedRoute requireAdmin={true}>
-                  <AdminSystemLogs />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </Router>
+              {/* Admin Routes */}
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute requireAdmin={true}>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/logs"
+                element={
+                  <ProtectedRoute requireAdmin={true}>
+                    <AdminSystemLogs />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </Router>
+        </NotificationProvider>
       </GlobalProvider>
     </AuthProvider>
   );

@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useGlobalState } from "../../contexts/GlobalContext";
+import { useNotificationContext } from "../../contexts/NotificationContext";
 import SearchModal from "./SearchModal";
 import NotificationPanel from "./NotificationPanel";
 import ProfileDropdown from "./ProfileDropdown";
@@ -29,6 +30,7 @@ const Navbar: React.FC = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const { notifications } = useNotificationContext();
 
   const navItems = [
     { path: "/", icon: Home, label: "Dashboard" },
@@ -42,7 +44,7 @@ const Navbar: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   // Mock notification count
-  const notificationCount = 3;
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   const handleSearchOpen = () => {
     setShowSearch(true);
@@ -65,13 +67,12 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav
-  className={`sticky top-0 z-40 backdrop-blur-md border-b transition-colors duration-200 bg-opacity-40 ${
-    state.darkMode
-      ? 'bg-gray-900/90 border-gray-800'
-      : 'bg-white border-gray-200'
-  }`}
->
-
+        className={`sticky top-0 z-40 backdrop-blur-md border-b transition-colors duration-200 bg-opacity-40 ${
+          state.darkMode
+            ? "bg-gray-900/90 border-gray-800"
+            : "bg-white border-gray-200"
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -141,9 +142,9 @@ const Navbar: React.FC = () => {
                 title="Notifications"
               >
                 <Bell className="w-5 h-5" />
-                {notificationCount > 0 && (
+                {unreadCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
-                    {notificationCount > 9 ? "9+" : notificationCount}
+                    {unreadCount > 9 ? "9+" : unreadCount}
                   </span>
                 )}
               </button>

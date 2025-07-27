@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Bell, X, Check, CheckCheck, Trash2, Settings, Filter, Calendar, BookOpen, Target, MessageSquare, Star, AlertCircle, Info } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
+import { useNotificationContext } from "../../contexts/NotificationContext";
 import { format, formatDistanceToNow } from 'date-fns';
 
 interface NotificationPanelProps {
@@ -22,7 +23,7 @@ interface Notification {
 
 const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }) => {
   const { state, dispatch } = useGlobalState();
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const { notifications, setNotifications } = useNotificationContext();
   const [filter, setFilter] = useState<'all' | 'unread' | 'achievements' | 'reminders'>('all');
   const [selectedNotifications, setSelectedNotifications] = useState<string[]>([]);
 
@@ -106,7 +107,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
         return notification.type === "reminder" && !notification.read;
       case "all":
       default:
-        return !notification.read;
+        return true; // Show all notifications
     }
   });
 
@@ -285,10 +286,14 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
         </div>
 
         {/* Notifications List */}
-        <div className="flex-1 overflow-y-auto">
+        <div
+  className={`flex-1 overflow-y-auto max-h-[70vh] custom-scrollbar ${
+    state.darkMode ? "scrollbar-dark" : "scrollbar-light"
+  }`}
+>
           {filteredNotifications.length > 0 ? (
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
-                {filteredNotifications.map(notification => (
+              {filteredNotifications.map(notification => (
                 <div key={notification.id} className={`group p-4 border-l-4 ${getPriorityColor(notification.priority)} ${!notification.read ? 'bg-blue-50 dark:bg-blue-900/10' : ''} hover:bg-gray-800 transition-colors`}>
                 <div className="flex items-start space-x-3">
                     <input type="checkbox" checked={selectedNotifications.includes(notification.id)} onChange={() => toggleSelection(notification.id)} className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"/>
