@@ -583,19 +583,65 @@ Includes:
 
 <div align='center'>
 
-[![Stargazers repo roster for @abhisek2004/Dev-Elevate](https://reporoster.com/stars/abhisek2004/Dev-Elevate)](https://github.com/abhisek2004/Dev-Elevate/stargazers)
-
+<div style="overflow: hidden; white-space: nowrap; width: 100%;">
+  <div style="display: inline-block; animation: scroll 30s linear infinite; white-space: nowrap;">
+    <a href="https://github.com/bhavyawork121" target="_blank"><img src="https://github.com/bhavyawork121.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/Coder-010506" target="_blank"><img src="https://github.com/Coder-010506.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/abhiaswal108" target="_blank"><img src="https://github.com/abhiaswal108.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/parthasarathi-meta" target="_blank"><img src="https://github.com/parthasarathi-meta.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/JyotirmoyDas05" target="_blank"><img src="https://github.com/JyotirmoyDas05.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/vijayvardhan-killi" target="_blank"><img src="https://github.com/vijayvardhan-killi.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/aadityaa29" target="_blank"><img src="https://github.com/aadityaa29.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/ika12345" target="_blank"><img src="https://github.com/ika12345.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/sai1dhinesh" target="_blank"><img src="https://github.com/sai1dhinesh.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/AditiChauhan713317" target="_blank"><img src="https://github.com/AditiChauhan713317.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/BhargavShekokar3425" target="_blank"><img src="https://github.com/BhargavShekokar3425.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/Salusha" target="_blank"><img src="https://github.com/Salusha.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/Grish1221" target="_blank"><img src="https://github.com/Grish1221.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/GOBINDA-GAGAN" target="_blank"><img src="https://github.com/GOBINDA-GAGAN.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/shivalika-jpg" target="_blank"><img src="https://github.com/shivalika-jpg.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/Sridhar1030" target="_blank"><img src="https://github.com/Sridhar1030.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/Rahul5977" target="_blank"><img src="https://github.com/Rahul5977.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/Swayam29082004" target="_blank"><img src="https://github.com/Swayam29082004.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/GoodMan28" target="_blank"><img src="https://github.com/GoodMan28.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/apoorvaww" target="_blank"><img src="https://github.com/apoorvaww.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/abhisekguddul" target="_blank"><img src="https://github.com/abhisekguddul.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    <a href="https://github.com/abhisek2004" target="_blank"><img src="https://github.com/abhisek2004.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+  </div>
+</div>
 </div>
 
----
 
 ### 🍴 Forkers
 
 <div align='center'>
 
-[![Forkers repo roster for @abhisek2004/Dev-Elevate](https://reporoster.com/forks/abhisek2004/Dev-Elevate)](https://github.com/abhisek2004/Dev-Elevate/network/members)
-
+  <div style="overflow: hidden; white-space: nowrap; width: 100%;">
+    <div style="display: inline-block; animation: scroll 30s linear infinite; white-space: nowrap;">
+      <a href="https://github.com/sai1dhinesh" target="_blank"><img src="https://github.com/sai1dhinesh.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/NamanSoni18" target="_blank"><img src="https://github.com/NamanSoni18.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/NickyY28" target="_blank"><img src="https://github.com/NickyY28.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/NishaM2" target="_blank"><img src="https://github.com/NishaM2.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/RAJA-072" target="_blank"><img src="https://github.com/RAJA-072.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/RAJVEER42" target="_blank"><img src="https://github.com/RAJVEER42.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/Riya-chandra" target="_blank"><img src="https://github.com/Riya-chandra.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/rohIta-k" target="_blank"><img src="https://github.com/rohIta-k.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/sagnik-create" target="_blank"><img src="https://github.com/sagnik-create.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/Sangeeta-20-stack" target="_blank"><img src="https://github.com/Sangeeta-20-stack.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/SaniyaArora03" target="_blank"><img src="https://github.com/SaniyaArora03.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/unnati-joshi" target="_blank"><img src="https://github.com/unnati-joshi.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/vdh05" target="_blank"><img src="https://github.com/vdh05.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/VidhanThakur09" target="_blank"><img src="https://github.com/VidhanThakur09.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/Vidhi-Mathur" target="_blank"><img src="https://github.com/Vidhi-Mathur.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/vidishadeswal" target="_blank"><img src="https://github.com/vidishadeswal.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/vijayvardhan-killi" target="_blank"><img src="https://github.com/vijayvardhan-killi.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/Abhishek-Verma0" target="_blank"><img src="https://github.com/Abhishek-Verma0.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/Abhiyank-afk" target="_blank"><img src="https://github.com/Abhiyank-afk.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+      <a href="https://github.com/achewadakhil" target="_blank"><img src="https://github.com/achewadakhil.png" width="40" height="40" style="border-radius: 50%; margin: 0 8px;" /></a>
+    </div>
+  </div>
 </div>
+
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
