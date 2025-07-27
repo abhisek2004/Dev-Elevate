@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
+import axios from 'axios';
 
 // Types
 export interface User {
@@ -188,19 +189,31 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     dispatch({ type: 'LOGIN_START' });
     
     try {
-      // Make API call to backend login endpoint
-      const response = await fetch('http://localhost:4000/api/v1/auth/login', {
-        method: 'POST',
+      // Make API call to backend login endpoint using axios
+      console.log('📡 Making login request with axios...');
+      const response = await axios.post('/api/v1/auth/login', {
+        email,
+        password
+      }, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        validateStatus: function (status) {
+          // Accept any status code - we'll handle errors manually
+          return true;
+        }
       });
 
-      const data = await response.json();
+      console.log('📡 Login response received:', {
+        status: response.status,
+        statusText: response.statusText,
+        data: response.data
+      });
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+      const data = response.data;
+
+      if (response.status >= 400) {
+        throw new Error(data?.message || `Login failed (${response.status})`);
       }
 
       // Backend returns real JWT token and user data
@@ -258,36 +271,67 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     dispatch({ type: 'REGISTER_START' });
     
     try {
-      // Make API call to backend register endpoint
-      const response = await fetch('http://localhost:4000/api/users/signup', {
-        method: 'POST',
+      console.log('🚀 Starting registration request...');
+      console.log('Registration data:', { name, email, role });
+
+      // Backend connectivity will be tested through the actual registration request
+      console.log('🔍 Proceeding with registration request...');
+
+      // Make API call to backend register endpoint using axios
+      console.log('📡 Making registration request with axios...');
+      const response = await axios.post('/http://localhost:4000/api/v1/auth/signup', {
+        name,
+        email,
+        password,
+        role
+      }, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, password, role }),
+        validateStatus: function (status) {
+          // Accept any status code - we'll handle errors manually
+          return true;
+        }
       });
 
-      const data = await response.json();
+      console.log('📡 Registration response received:', {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+        data: response.data
+      });
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
+      const data = response.data;
+
+      if (response.status >= 400) {
+        throw new Error(data?.message || `Registration failed (${response.status})`);
       }
 
       // For registration, we need to login after successful signup
       // The backend doesn't return a token on signup, so we login immediately
       if (data.message === 'User registered successfully') {
-        // Auto-login after successful registration
-        const loginResponse = await fetch('http://localhost:4000/api/v1/auth/login', {
-          method: 'POST',
+        // Auto-login after successful registration using axios
+        console.log('🔄 Attempting auto-login with axios...');
+        const loginResponse = await axios.post('/api/v1/auth/login', {
+          email,
+          password
+        }, {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ email, password }),
+          validateStatus: function (status) {
+            return true; // Accept any status code
+          }
         });
 
-        const loginData = await loginResponse.json();
+        console.log('🔄 Auto-login response received:', {
+          status: loginResponse.status,
+          data: loginResponse.data
+        });
 
-        if (loginResponse.ok && loginData.token && loginData.user) {
+        const loginData = loginResponse.data;
+
+        if (loginResponse.status < 400 && loginData?.token && loginData?.user) {
           const user: User = {
             id: loginData.user.id,
             name: loginData.user.name,

@@ -1,6 +1,6 @@
 import express from "express"
 import dotenv from "dotenv"
-// import connectDB from "./config/db.js";
+import connectDB from "./config/db.js";
 import cors from "cors"
 import userRoutes from './routes/userRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
@@ -9,7 +9,15 @@ import authorize from "./middleware/authorize.js";
 import { authenticateToken } from "./middleware/authMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
-// connectDB(); // Temporarily disabled for testing
+
+// Temporarily disable database connection for testing
+// try {
+//   connectDB();
+//   console.log('✅ Database connection initiated');
+// } catch (dbError) {
+//   console.warn('⚠️ Database connection failed, some features may not work:', dbError.message);
+// }
+console.log('🧪 Running in test mode without database');
 
 // Load environment variables
 dotenv.config();
@@ -45,6 +53,28 @@ app.use("/api/payment", paymentRoutes);
 // Basic route
 app.get('/', (req, res) => {
   res.send('Hello from DevElevate !');
+});
+
+// Test routes for debugging
+app.get('/api/test', (req, res) => {
+  res.json({
+    message: 'API is working!',
+    timestamp: new Date().toISOString(),
+    env: {
+      nodeEnv: process.env.NODE_ENV,
+      mongoUri: process.env.MONGO_URI ? 'configured' : 'missing'
+    }
+  });
+});
+
+app.post('/api/v1/auth/test', (req, res) => {
+  console.log('🧪 Test auth endpoint hit');
+  console.log('📥 Request body:', req.body);
+  res.json({
+    message: 'Auth endpoint is working!',
+    receivedData: req.body,
+    timestamp: new Date().toISOString()
+  });
 });
 
 

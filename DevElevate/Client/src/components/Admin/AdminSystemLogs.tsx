@@ -90,7 +90,7 @@ const AdminSystemLogs: React.FC = () => {
         message: `Admin ${authData.user.name} viewed system logs page`
       };
 
-      await fetch('http://localhost:4000/api/admin/system-log', {
+      await fetch('/api/admin/system-log', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const AdminSystemLogs: React.FC = () => {
         params.append('dateTo', dateFilter);
       }
 
-      const response = await fetch(`http://localhost:4000/api/admin/system-logs?${params}`, {
+      const response = await fetch(`/api/admin/system-logs?${params}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

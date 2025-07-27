@@ -4,13 +4,31 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 dotenv.config();
 export const registerUser = async (req, res) => {
+  console.log('🚀 Registration endpoint hit');
+  console.log('📥 Request body:', req.body);
+  console.log('📋 Request headers:', req.headers);
+
   try {
     const { name, email, password, role } = req.body;
 
+    // Validate required fields
+    if (!name || !email || !password || !role) {
+      console.log('❌ Missing required fields:', { name: !!name, email: !!email, password: !!password, role: !!role });
+      return res.status(400).json({
+        message: "Missing required fields",
+        required: ['name', 'email', 'password', 'role'],
+        received: { name: !!name, email: !!email, password: !!password, role: !!role }
+      });
+    }
+
+    console.log('📝 Registration attempt for:', { name, email, role });
+
     // Check if user already exists
     const existingUser = await User.findOne({ email });
-    if (existingUser)
+    if (existingUser) {
+      console.log('❌ User already exists:', email);
       return res.status(400).json({ message: "User already exists" });
+    }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -24,12 +42,41 @@ export const registerUser = async (req, res) => {
     });
 
     await newUser.save();
+    console.log('✅ User registered successfully:', email);
 
-    res.status(201).json({ message: "User registered successfully", newUser });
+    res.status(201).json({
+      message: "User registered successfully",
+      success: true,
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role
+      }
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong", error: error.message });
+    console.error('❌ Registration error:', error);
+
+    // Handle specific MongoDB errors
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        message: "Invalid user data",
+        error: error.message
+      });
+    } else if (error.code === 11000) {
+      return res.status(400).json({
+        message: "User already exists"
+      });
+    } else if (error.name === 'MongoError' || error.name === 'MongoNetworkError') {
+      return res.status(503).json({
+        message: "Database unavailable. Please try again later."
+      });
+    }
+
+    res.status(500).json({
+      message: "Registration failed",
+      error: error.message
+    });
   }
 };
 
