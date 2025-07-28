@@ -1,6 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useGlobalState } from '../../contexts/GlobalContext';
+
+// Type definitions
+interface Course {
+  id: string;
+  title: string;
+  description: string;
+  modules: number;
+  enrolled: number;
+  completion: number;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  duration: string;
+  instructor: string;
+  status: 'active' | 'inactive';
+  createdAt: string;
+}
+
+interface NewsArticle {
+  id: string;
+  title: string;
+  content: string;
+  category: 'announcement' | 'maintenance' | 'feature' | 'general';
+  status: 'published' | 'draft';
+  author: string;
+  publishDate: string;
+  views: number;
+}
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'user';
+  isActive: boolean;
+  joinDate: string;
+  lastLogin: string;
+  avatar?: string;
+  progress: {
+    totalPoints: number;
+    streak: number;
+    completedModules: number;
+  };
+}
+
+interface AddCourseModalProps {
+  onClose: () => void;
+  onAdd: (courseData: Omit<Course, 'id' | 'enrolled' | 'completion' | 'status' | 'createdAt'>) => void;
+  darkMode: boolean;
+}
+
+interface AddNewsModalProps {
+  onClose: () => void;
+  onAdd: (newsData: Omit<NewsArticle, 'id' | 'author' | 'publishDate' | 'views'>) => void;
+  darkMode: boolean;
+}
+
+interface UserDetailsModalProps {
+  user: User;
+  onClose: () => void;
+  darkMode: boolean;
+}
+
 import { 
   Users, 
   BookOpen, 
@@ -43,9 +104,9 @@ const AdminDashboard: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddCourse, setShowAddCourse] = useState(false);
   const [showAddNews, setShowAddNews] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [courses, setCourses] = useState([]);
-  const [newsArticles, setNewsArticles] = useState([]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [systemSettings, setSystemSettings] = useState({
     siteName: 'DevElevate',
     maintenanceMode: false,
@@ -59,11 +120,12 @@ const AdminDashboard: React.FC = () => {
     loadUsers();
     loadCourses();
     loadNewsArticles();
-  }, []);
+  }, [loadUsers]);
 
   const loadCourses = () => {
-    const savedCourses = JSON.parse(localStorage.getItem('adminCourses') || '[]');
-    if (savedCourses.length === 0) {
+    try {
+      const savedCourses = JSON.parse(localStorage.getItem('adminCourses') || '[]');
+      if (savedCourses.length === 0) {
       const defaultCourses = [
         {
           id: '1',
@@ -106,15 +168,20 @@ const AdminDashboard: React.FC = () => {
         }
       ];
       setCourses(defaultCourses);
-      localStorage.setItem('adminCourses', JSON.stringify(defaultCourses));
-    } else {
-      setCourses(savedCourses);
+        localStorage.setItem('adminCourses', JSON.stringify(defaultCourses));
+      } else {
+        setCourses(savedCourses);
+      }
+    } catch (error) {
+      console.error('Error loading courses:', error);
+      setCourses([]);
     }
   };
 
   const loadNewsArticles = () => {
-    const savedNews = JSON.parse(localStorage.getItem('adminNews') || '[]');
-    if (savedNews.length === 0) {
+    try {
+      const savedNews = JSON.parse(localStorage.getItem('adminNews') || '[]');
+      if (savedNews.length === 0) {
       const defaultNews = [
         {
           id: '1',
@@ -138,9 +205,13 @@ const AdminDashboard: React.FC = () => {
         }
       ];
       setNewsArticles(defaultNews);
-      localStorage.setItem('adminNews', JSON.stringify(defaultNews));
-    } else {
-      setNewsArticles(savedNews);
+        localStorage.setItem('adminNews', JSON.stringify(defaultNews));
+      } else {
+        setNewsArticles(savedNews);
+      }
+    } catch (error) {
+      console.error('Error loading news articles:', error);
+      setNewsArticles([]);
     }
   };
 
@@ -190,45 +261,61 @@ const AdminDashboard: React.FC = () => {
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const addCourse = (courseData) => {
-    const newCourse = {
-      id: Date.now().toString(),
-      ...courseData,
-      enrolled: 0,
-      completion: 0,
-      status: 'active',
-      createdAt: new Date().toISOString()
-    };
-    const updatedCourses = [...courses, newCourse];
-    setCourses(updatedCourses);
-    localStorage.setItem('adminCourses', JSON.stringify(updatedCourses));
-    setShowAddCourse(false);
+  const addCourse = (courseData: Omit<Course, 'id' | 'enrolled' | 'completion' | 'status' | 'createdAt'>) => {
+    try {
+      const newCourse: Course = {
+        id: Date.now().toString(),
+        ...courseData,
+        enrolled: 0,
+        completion: 0,
+        status: 'active' as const,
+        createdAt: new Date().toISOString()
+      };
+      const updatedCourses = [...courses, newCourse];
+      setCourses(updatedCourses);
+      localStorage.setItem('adminCourses', JSON.stringify(updatedCourses));
+      setShowAddCourse(false);
+    } catch (error) {
+      console.error('Error adding course:', error);
+    }
   };
 
-  const deleteCourse = (courseId) => {
-    const updatedCourses = courses.filter(course => course.id !== courseId);
-    setCourses(updatedCourses);
-    localStorage.setItem('adminCourses', JSON.stringify(updatedCourses));
+  const deleteCourse = (courseId: string) => {
+    try {
+      const updatedCourses = courses.filter(course => course.id !== courseId);
+      setCourses(updatedCourses);
+      localStorage.setItem('adminCourses', JSON.stringify(updatedCourses));
+    } catch (error) {
+      console.error('Error deleting course:', error);
+    }
   };
 
-  const addNewsArticle = (newsData) => {
-    const newArticle = {
-      id: Date.now().toString(),
-      ...newsData,
-      author: authState.user?.name || 'Admin',
-      publishDate: new Date().toISOString(),
-      views: 0
-    };
-    const updatedNews = [...newsArticles, newArticle];
-    setNewsArticles(updatedNews);
-    localStorage.setItem('adminNews', JSON.stringify(updatedNews));
-    setShowAddNews(false);
+  const addNewsArticle = (newsData: Omit<NewsArticle, 'id' | 'author' | 'publishDate' | 'views'>) => {
+    try {
+      const newArticle: NewsArticle = {
+        id: Date.now().toString(),
+        ...newsData,
+        author: authState.user?.name || 'Admin',
+        publishDate: new Date().toISOString(),
+        views: 0
+      };
+      const updatedNews = [...newsArticles, newArticle];
+      setNewsArticles(updatedNews);
+      localStorage.setItem('adminNews', JSON.stringify(updatedNews));
+      setShowAddNews(false);
+    } catch (error) {
+      console.error('Error adding news article:', error);
+    }
   };
 
-  const deleteNewsArticle = (articleId) => {
-    const updatedNews = newsArticles.filter(article => article.id !== articleId);
-    setNewsArticles(updatedNews);
-    localStorage.setItem('adminNews', JSON.stringify(updatedNews));
+  const deleteNewsArticle = (articleId: string) => {
+    try {
+      const updatedNews = newsArticles.filter(article => article.id !== articleId);
+      setNewsArticles(updatedNews);
+      localStorage.setItem('adminNews', JSON.stringify(updatedNews));
+    } catch (error) {
+      console.error('Error deleting news article:', error);
+    }
   };
 
   const exportUserData = () => {
@@ -265,7 +352,13 @@ const AdminDashboard: React.FC = () => {
                     {stat.change}
                   </p>
                 </div>
-                <div className={`p-4 rounded-xl bg-gradient-to-r from-${stat.color}-500 to-${stat.color}-600`}>
+                <div className={`p-4 rounded-xl ${
+                  stat.color === 'blue' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
+                  stat.color === 'green' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                  stat.color === 'purple' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
+                  stat.color === 'orange' ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
+                  'bg-gradient-to-r from-gray-500 to-gray-600'
+                }`}>
                   <Icon className="w-8 h-8 text-white" />
                 </div>
               </div>
@@ -1350,8 +1443,8 @@ const AdminDashboard: React.FC = () => {
 };
 
 // Add Course Modal Component
-const AddCourseModal = ({ onClose, onAdd, darkMode }) => {
-  const [formData, setFormData] = useState({
+const AddCourseModal: React.FC<AddCourseModalProps> = ({ onClose, onAdd, darkMode }) => {
+  const [formData, setFormData] = useState<Omit<Course, 'id' | 'enrolled' | 'completion' | 'status' | 'createdAt'>>({
     title: '',
     description: '',
     modules: 0,
@@ -1360,7 +1453,7 @@ const AddCourseModal = ({ onClose, onAdd, darkMode }) => {
     instructor: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onAdd(formData);
   };
@@ -1430,7 +1523,7 @@ const AddCourseModal = ({ onClose, onAdd, darkMode }) => {
               </label>
               <select
                 value={formData.difficulty}
-                onChange={(e) => setFormData({...formData, difficulty: e.target.value})}
+                onChange={(e) => setFormData({...formData, difficulty: e.target.value as Course['difficulty']})}
                 className={`w-full px-3 py-2 rounded-lg border ${
                   darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
                 } focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -1497,15 +1590,15 @@ const AddCourseModal = ({ onClose, onAdd, darkMode }) => {
 };
 
 // Add News Modal Component
-const AddNewsModal = ({ onClose, onAdd, darkMode }) => {
-  const [formData, setFormData] = useState({
+const AddNewsModal: React.FC<AddNewsModalProps> = ({ onClose, onAdd, darkMode }) => {
+  const [formData, setFormData] = useState<Omit<NewsArticle, 'id' | 'author' | 'publishDate' | 'views'>>({
     title: '',
     content: '',
     category: 'announcement',
     status: 'published'
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onAdd(formData);
   };
@@ -1560,7 +1653,7 @@ const AddNewsModal = ({ onClose, onAdd, darkMode }) => {
               </label>
               <select
                 value={formData.category}
-                onChange={(e) => setFormData({...formData, category: e.target.value})}
+                onChange={(e) => setFormData({...formData, category: e.target.value as NewsArticle['category']})}
                 className={`w-full px-3 py-2 rounded-lg border ${
                   darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
                 } focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -1578,7 +1671,7 @@ const AddNewsModal = ({ onClose, onAdd, darkMode }) => {
               </label>
               <select
                 value={formData.status}
-                onChange={(e) => setFormData({...formData, status: e.target.value})}
+                onChange={(e) => setFormData({...formData, status: e.target.value as NewsArticle['status']})}
                 className={`w-full px-3 py-2 rounded-lg border ${
                   darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
                 } focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -1611,7 +1704,7 @@ const AddNewsModal = ({ onClose, onAdd, darkMode }) => {
 };
 
 // User Details Modal Component
-const UserDetailsModal = ({ user, onClose, darkMode }) => {
+const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ user, onClose, darkMode }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 w-full max-w-lg mx-4`}>
