@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LinkedIn API Test</title>
+</head>
+<body>
+    <h1>LinkedIn API Test</h1>
+    <button id="testHealth">Test Health Endpoint</button>
+    <button id="testLinkedIn">Test LinkedIn Status</button>
+    <div id="results"></div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+
+        document.getElementById('testHealth').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/health');
+                const data = await response.json();
+                resultsDiv.innerHTML = '<pre>Health: ' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                resultsDiv.innerHTML = '<pre>Health Error: ' + error.message + '</pre>';
+            }
+        });
+
+        document.getElementById('testLinkedIn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/integrations/linkedin/status', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer test-token'
+                    }
+                });
+                const data = await response.json();
+                resultsDiv.innerHTML = '<pre>LinkedIn Status: ' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                resultsDiv.innerHTML = '<pre>LinkedIn Error: ' + error.message + '</pre>';
+            }
+        });
+    </script>
+</body>
+</html>
