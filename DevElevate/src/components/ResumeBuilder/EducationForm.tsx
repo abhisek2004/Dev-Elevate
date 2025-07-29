@@ -49,9 +49,15 @@ const EducationForm: React.FC = () => {
   };
 
   const startEdit = (index: number) => {
-    if (state.resume) {
+    if (state.resume && state.resume.education && state.resume.education[index]) {
       setEditingIndex(index);
-      setFormData(state.resume.education[index]);
+      const educationItem = state.resume.education[index];
+      setFormData({
+        institution: educationItem.institution,
+        degree: educationItem.degree,
+        duration: educationItem.duration,
+        gpa: educationItem.gpa || ''
+      });
     }
   };
 

@@ -9,7 +9,7 @@ const ProjectsForm: React.FC = () => {
     name: '',
     description: '',
     technologies: [] as string[],
-    url: ''
+    url: '' as string
   });
   const [newTech, setNewTech] = useState('');
 
@@ -50,9 +50,15 @@ const ProjectsForm: React.FC = () => {
   };
 
   const startEdit = (index: number) => {
-    if (state.resume) {
+    if (state.resume && state.resume.projects && state.resume.projects[index]) {
       setEditingIndex(index);
-      setFormData(state.resume.projects[index]);
+      const project = state.resume.projects[index];
+      setFormData({
+        name: project.name,
+        description: project.description,
+        technologies: project.technologies,
+        url: project.url || ''
+      });
     }
   };
 
@@ -131,7 +137,7 @@ const ProjectsForm: React.FC = () => {
                 type="text"
                 value={newTech}
                 onChange={(e) => setNewTech(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && addTechnology()}
+                onKeyDown={(e) => e.key === 'Enter' && addTechnology()}
                 className={`flex-1 px-3 py-2 rounded-lg border ${
                   state.darkMode
                     ? 'bg-gray-700 border-gray-600 text-white'

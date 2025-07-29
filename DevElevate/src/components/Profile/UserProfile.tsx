@@ -19,6 +19,8 @@ import {
   Twitter,
   Globe
 } from 'lucide-react';
+import GitHubCard from '../GitHubCard.tsx';
+import LinkedInCard from '../LinkedInCard.tsx';
 
 const UserProfile: React.FC = () => {
   const { state: authState, updateProfile, changePassword } = useAuth();
@@ -427,6 +429,23 @@ const UserProfile: React.FC = () => {
                   <p className={`text-sm ${globalState.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                     Total Points
                   </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Integration Section */}
+            <div className="space-y-6">
+              <div className={`${globalState.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
+                <h3 className={`text-xl font-semibold mb-6 ${globalState.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  🔗 Platform Integrations
+                </h3>
+                <p className={`text-sm mb-6 ${globalState.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  Connect your LinkedIn and GitHub accounts to automatically enhance your profile and resume with real-world data.
+                </p>
+                
+                <div className="space-y-6">
+                  <GitHubCard />
+                  <LinkedInCard />
                 </div>
               </div>
             </div>

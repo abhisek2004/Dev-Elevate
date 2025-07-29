@@ -206,7 +206,14 @@ const globalReducer = (state: GlobalState, action: GlobalAction): GlobalState =>
     case 'UPDATE_RESUME':
       return {
         ...state,
-        resume: action.payload
+        resume: {
+          ...action.payload,
+          // Ensure all arrays are properly initialized
+          education: action.payload.education || [],
+          experience: action.payload.experience || [],
+          projects: action.payload.projects || [],
+          skills: action.payload.skills || { technical: [], soft: [] }
+        }
       };
     
     case 'TOGGLE_DARK_MODE':
@@ -244,10 +251,23 @@ const globalReducer = (state: GlobalState, action: GlobalAction): GlobalState =>
       };
     
     case 'HYDRATE_STATE':
-      return {
+      const hydratedState = {
         ...state,
         ...action.payload
       };
+      
+      // Ensure resume arrays are properly initialized after hydration
+      if (hydratedState.resume) {
+        hydratedState.resume = {
+          ...hydratedState.resume,
+          education: hydratedState.resume.education || [],
+          experience: hydratedState.resume.experience || [],
+          projects: hydratedState.resume.projects || [],
+          skills: hydratedState.resume.skills || { technical: [], soft: [] }
+        };
+      }
+      
+      return hydratedState;
     
     default:
       return state;
