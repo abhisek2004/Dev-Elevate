@@ -8,13 +8,17 @@ const SkillsForm: React.FC = () => {
   const [newSoftSkill, setNewSoftSkill] = useState('');
 
   const addTechnicalSkill = () => {
-    if (state.resume && newTechnicalSkill.trim() && !state.resume.skills.technical.includes(newTechnicalSkill.trim())) {
+    if (
+      state.resume &&
+      newTechnicalSkill.trim() &&
+      !state.resume.skills.technical.includes(newTechnicalSkill.trim())
+    ) {
       const updatedResume = {
         ...state.resume,
         skills: {
           ...state.resume.skills,
-          technical: [...state.resume.skills.technical, newTechnicalSkill.trim()]
-        }
+          technical: [...state.resume.skills.technical, newTechnicalSkill.trim()],
+        },
       };
       dispatch({ type: 'UPDATE_RESUME', payload: updatedResume });
       setNewTechnicalSkill('');
@@ -27,21 +31,25 @@ const SkillsForm: React.FC = () => {
         ...state.resume,
         skills: {
           ...state.resume.skills,
-          technical: state.resume.skills.technical.filter(s => s !== skill)
-        }
+          technical: state.resume.skills.technical.filter((s) => s !== skill),
+        },
       };
       dispatch({ type: 'UPDATE_RESUME', payload: updatedResume });
     }
   };
 
   const addSoftSkill = () => {
-    if (state.resume && newSoftSkill.trim() && !state.resume.skills.soft.includes(newSoftSkill.trim())) {
+    if (
+      state.resume &&
+      newSoftSkill.trim() &&
+      !state.resume.skills.soft.includes(newSoftSkill.trim())
+    ) {
       const updatedResume = {
         ...state.resume,
         skills: {
           ...state.resume.skills,
-          soft: [...state.resume.skills.soft, newSoftSkill.trim()]
-        }
+          soft: [...state.resume.skills.soft, newSoftSkill.trim()],
+        },
       };
       dispatch({ type: 'UPDATE_RESUME', payload: updatedResume });
       setNewSoftSkill('');
@@ -54,8 +62,8 @@ const SkillsForm: React.FC = () => {
         ...state.resume,
         skills: {
           ...state.resume.skills,
-          soft: state.resume.skills.soft.filter(s => s !== skill)
-        }
+          soft: state.resume.skills.soft.filter((s) => s !== skill),
+        },
       };
       dispatch({ type: 'UPDATE_RESUME', payload: updatedResume });
     }
@@ -64,13 +72,13 @@ const SkillsForm: React.FC = () => {
   const technicalSkillSuggestions = [
     'JavaScript', 'Python', 'Java', 'React', 'Node.js', 'Express.js', 'MongoDB', 'PostgreSQL',
     'HTML5', 'CSS3', 'TypeScript', 'Angular', 'Vue.js', 'Docker', 'AWS', 'Git', 'RESTful APIs',
-    'GraphQL', 'Machine Learning', 'Data Analysis', 'SQL', 'NoSQL', 'Kubernetes', 'Jenkins'
+    'GraphQL', 'Machine Learning', 'Data Analysis', 'SQL', 'NoSQL', 'Kubernetes', 'Jenkins',
   ];
 
   const softSkillSuggestions = [
     'Communication', 'Leadership', 'Problem Solving', 'Teamwork', 'Time Management',
     'Critical Thinking', 'Adaptability', 'Creativity', 'Project Management', 'Mentoring',
-    'Conflict Resolution', 'Analytical Thinking', 'Attention to Detail', 'Presentation Skills'
+    'Conflict Resolution', 'Analytical Thinking', 'Attention to Detail', 'Presentation Skills',
   ];
 
   if (!state.resume) return null;
@@ -87,13 +95,18 @@ const SkillsForm: React.FC = () => {
           <h3 className={`text-lg font-semibold mb-4 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             Technical Skills
           </h3>
-          
+
           <div className="flex space-x-2 mb-4">
             <input
               type="text"
               value={newTechnicalSkill}
               onChange={(e) => setNewTechnicalSkill(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && addTechnicalSkill()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  addTechnicalSkill();
+                }
+              }}
               className={`flex-1 px-3 py-2 rounded-lg border ${
                 state.darkMode
                   ? 'bg-gray-700 border-gray-600 text-white'
@@ -117,7 +130,19 @@ const SkillsForm: React.FC = () => {
               {technicalSkillSuggestions.map((skill, index) => (
                 <button
                   key={index}
-                  onClick={() => setNewTechnicalSkill(skill)}
+                  onClick={() => {
+                    if (!state.resume.skills.technical.includes(skill)) {
+                      const updatedResume = {
+                        ...state.resume,
+                        skills: {
+                          ...state.resume.skills,
+                          technical: [...state.resume.skills.technical, skill],
+                        },
+                      };
+                      dispatch({ type: 'UPDATE_RESUME', payload: updatedResume });
+                    }
+                    setNewTechnicalSkill('');
+                  }}
                   className={`px-3 py-1 rounded-full text-sm transition-colors ${
                     state.darkMode
                       ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -135,9 +160,7 @@ const SkillsForm: React.FC = () => {
               <span
                 key={index}
                 className={`px-3 py-1 rounded-full text-sm flex items-center space-x-2 ${
-                  state.darkMode
-                    ? 'bg-blue-900 text-blue-300'
-                    : 'bg-blue-100 text-blue-700'
+                  state.darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-700'
                 }`}
               >
                 <span>{skill}</span>
@@ -157,13 +180,18 @@ const SkillsForm: React.FC = () => {
           <h3 className={`text-lg font-semibold mb-4 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             Soft Skills
           </h3>
-          
+
           <div className="flex space-x-2 mb-4">
             <input
               type="text"
               value={newSoftSkill}
               onChange={(e) => setNewSoftSkill(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && addSoftSkill()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  addSoftSkill();
+                }
+              }}
               className={`flex-1 px-3 py-2 rounded-lg border ${
                 state.darkMode
                   ? 'bg-gray-700 border-gray-600 text-white'
@@ -187,7 +215,19 @@ const SkillsForm: React.FC = () => {
               {softSkillSuggestions.map((skill, index) => (
                 <button
                   key={index}
-                  onClick={() => setNewSoftSkill(skill)}
+                  onClick={() => {
+                    if (!state.resume.skills.soft.includes(skill)) {
+                      const updatedResume = {
+                        ...state.resume,
+                        skills: {
+                          ...state.resume.skills,
+                          soft: [...state.resume.skills.soft, skill],
+                        },
+                      };
+                      dispatch({ type: 'UPDATE_RESUME', payload: updatedResume });
+                    }
+                    setNewSoftSkill('');
+                  }}
                   className={`px-3 py-1 rounded-full text-sm transition-colors ${
                     state.darkMode
                       ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -205,9 +245,7 @@ const SkillsForm: React.FC = () => {
               <span
                 key={index}
                 className={`px-3 py-1 rounded-full text-sm flex items-center space-x-2 ${
-                  state.darkMode
-                    ? 'bg-green-900 text-green-300'
-                    : 'bg-green-100 text-green-700'
+                  state.darkMode ? 'bg-green-900 text-green-300' : 'bg-green-100 text-green-700'
                 }`}
               >
                 <span>{skill}</span>
