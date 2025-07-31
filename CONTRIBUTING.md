@@ -45,17 +45,58 @@ cd Dev-Elevate
 
 ### 4. 📦 Install Dependencies
 
+This project has separate **Client** (frontend) and **Server** (backend) components. You need to install dependencies for both:
+
+**📱 For the Client (Frontend - React/Vite):**
 ```bash
+cd DevElevate/Client
+npm install
+```
+
+**🖥️ For the Server (Backend - Node.js/Express):**
+```bash
+cd DevElevate/Server
 npm install
 ```
 
 ### 5. 🚀 Run the Project (Dev Mode)
 
+You need to run both the client and server in **separate terminals**:
+
+**Terminal 1 - Start the Server (Backend):**
 ```bash
+cd DevElevate/Server
+node index.js
+```
+
+**Terminal 2 - Start the Client (Frontend):**
+```bash
+cd DevElevate/Client
 npm run dev
 ```
 
+> **💡 Platform Notes:** 
+> - **Windows:** Use `cd DevElevate\Client` and `cd DevElevate\Server` (backslashes)
+> - **Linux/Mac:** Use `cd DevElevate/Client` and `cd DevElevate/Server` (forward slashes)
+> - The client will typically run on `http://localhost:5173` (Vite default)
+> - The server will run on a port specified in the backend configuration
+
+### 5.1. 🔧 Environment Configuration (Optional)
+
+**For Server Setup:**
+If you need to configure environment variables:
+```bash
+cd DevElevate/Server
+# Copy the sample env file (if it exists)
+cp .env.sample .env
+# Edit .env file with your configuration
+```
+
 > **Note:** Initial login/register forms (user/admin) are UI-based only. Data is stored temporarily in memory/cache. Dashboard access is possible post sign-up.
+
+Sure! Here's the updated and corrected contribution guideline, highlighting that **all commits should be made directly to the `main` branch** of the forked repository before creating a pull request:
+
+---
 
 ### 6. 🔄 Add Remote Upstream
 
@@ -64,15 +105,23 @@ git remote add upstream https://github.com/abhisek2004/Dev-Elevate.git
 git pull upstream main
 ```
 
-### 7. 🌿 Create New Branch
+---
+
+### 7. 🌿 Always Work on Your `main` Branch
+
+> ⚠️ **Important:** For this project, **do not create a new branch. Always make your changes directly in your forked repository’s `main` branch**.
 
 ```bash
-git checkout -b <your-feature-name>
+git checkout main
 ```
+
+Make sure you're on your fork's `main` branch before making changes.
+
 
 ### 8. 💻 Make Your Changes
 
-Work your magic! Fix bugs, enhance UI, write logic — you name it!
+Work your magic! ✨
+Fix bugs, enhance UI, write logic — whatever your contribution is.
 
 ### 9. ✅ Add & Commit Changes
 
@@ -81,7 +130,13 @@ git add .
 git commit -m "✨ Your concise commit message here"
 ```
 
-### 10. 🚀 Push to Your Fork
+### 10. 🚀 Push to Your Fork (Main Branch Only)
+
+```bash
+git push origin main
+```
+
+Or, if using a separate feature branch:
 
 ```bash
 git push origin <your-branch-name>
@@ -89,9 +144,15 @@ git push origin <your-branch-name>
 
 ### 11. 🔁 Create Pull Request (PR)
 
-Go to your forked repo, click on `Compare & Pull Request`, and submit your changes.
+Go to your **forked repository** → Click on `Compare & Pull Request` → Submit your changes to the `main` branch of [Dev-Elevate](https://github.com/abhisek2004/Dev-Elevate.git)
 
 ---
+
+✅ **Important**:
+
+* Ensure your PR is from your **fork’s `main` branch** to `abhisek2004/Dev-Elevate`'s `main`.
+* Do **not create PRs to any other branch**.
+
 
 ## 🧪 Contribution with GitHub Desktop (Alternative)
 
