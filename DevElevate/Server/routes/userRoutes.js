@@ -14,8 +14,6 @@ router.post("/auth/signup", registerUser);
 router.post("/auth/login", loginUser);
 router.get("/logout", authenticateToken, logout);
 
-
-
 router.post("/feedback", authenticateToken, feedback);
 
 

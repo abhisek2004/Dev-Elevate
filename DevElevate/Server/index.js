@@ -21,7 +21,11 @@ dotenv.config();
 const app = express();
 
 // ✅ Connect to MongoDB
-connectDB();
+if (process.env.MONGO_URI) {
+  connectDB();
+} else {
+  console.log('MongoDB connection skipped - PDF routes will work without database');
+}
 
 // ✅ Middleware
 app.use(cors({
@@ -29,7 +33,6 @@ app.use(cors({
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
 app.use(express.json());
 app.use(cookieParser());
 app.set('trust proxy', true);

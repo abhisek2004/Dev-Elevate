@@ -1,0 +1,102 @@
+This pull request introduces a redesigned and bold-styled user interface for the Tech News & Opportunities section of the application. The goal of this enhancement is to improve readability, user engagement, and visual hierarchy using Tailwind CSS and shadcn/ui components.
+"use client";
+
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+
+const mockData = {
+  news: [
+    {
+      title: "React 18.3 Released",
+      description: "React 18.3 brings performance improvements and new hooks...",
+      image: "/images/react-release.jpg",
+      link: "#",
+      tag: "Frontend",
+    },
+    {
+      title: "AI Advancements in 2025",
+      description: "OpenAI and Google unveil new transformer models...",
+      image: "/images/ai-news.jpg",
+      link: "#",
+      tag: "AI",
+    },
+  ],
+  internships: [
+    {
+      title: "Frontend Developer Intern",
+      description: "Join a fast-paced startup working on AI tools.",
+      image: "/images/intern.jpg",
+      link: "#",
+      tag: "Remote",
+    },
+    {
+      title: "Cloud Engineering Intern",
+      description: "Internship opportunity at AWS India, summer 2025.",
+      image: "/images/aws.jpg",
+      link: "#",
+      tag: "Cloud",
+    },
+  ],
+};
+
+export default function TechNewsAndOpportunities() {
+  const [tab, setTab] = useState("news");
+
+  const contentList = mockData[tab];
+
+  return (
+    <div className="p-6 max-w-7xl mx-auto font-bold">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-4xl font-extrabold">🚀 Tech News & Opportunities</h1>
+        <Button className="font-extrabold">Submit Opportunity</Button>
+      </div>
+
+      {/* Tabs */}
+      <Tabs value={tab} onValueChange={setTab} className="mb-6">
+        <TabsList>
+          <TabsTrigger value="news" className="font-extrabold">
+            📰 News
+          </TabsTrigger>
+          <TabsTrigger value="internships" className="font-extrabold">
+            💼 Internships
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+
+      {/* Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {contentList.map((item, idx) => (
+          <Card
+            key={idx}
+            className="hover:shadow-lg transition-shadow duration-200 font-bold"
+          >
+            <img
+              src={item.image}
+              alt={item.title}
+              className="w-full h-40 object-cover rounded-t-2xl"
+            />
+            <CardContent className="p-4">
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-lg font-extrabold">{item.title}</h2>
+                <Badge className="font-bold">{item.tag}</Badge>
+              </div>
+              <p className="text-gray-800 text-sm font-semibold mb-3">
+                {item.description}
+              </p>
+              <a
+                href={item.link}
+                className="text-blue-800 text-sm font-extrabold hover:underline"
+              >
+                Read More →
+              </a>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
