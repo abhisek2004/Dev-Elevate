@@ -1,4 +1,6 @@
+.env
 # Logs
+
 logs
 *.log
 npm-debug.log*
@@ -22,9 +24,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Environment variables
-.env
-.env.development.local
-.env.test.local
-.env.production.local
