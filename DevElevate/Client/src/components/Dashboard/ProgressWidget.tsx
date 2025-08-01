@@ -95,6 +95,7 @@ const ProgressWidget: React.FC = () => {
         })}
       </div>
     </div>
+    
   );
 };
 

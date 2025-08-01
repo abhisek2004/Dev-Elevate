@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import moment from "moment";
+import { fa } from "zod/v4/locales";
 dotenv.config();
 export const registerUser = async (req, res) => {
   try {
@@ -15,10 +16,10 @@ export const registerUser = async (req, res) => {
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
 
-    // Hash password
+    
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
+    
     const newUser = new User({
       name,
       email,
@@ -60,6 +61,7 @@ export const loginUser = async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // true in production
         sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax", // CSRF protection
+        
         maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days in ms
       })
       .status(200)

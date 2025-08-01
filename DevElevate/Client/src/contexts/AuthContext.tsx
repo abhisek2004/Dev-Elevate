@@ -275,6 +275,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           type: "LOGIN_SUCCESS",
           payload: { user, token: data.token },
         });
+        localStorage.setItem("token", data.token); 
+
       } else {
         throw new Error("Invalid response from server");
       }
@@ -369,6 +371,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
             type: "REGISTER_SUCCESS",
             payload: { user, token: loginData.token },
           });
+          localStorage.setItem("token", data.token); 
+
         } else {
           throw new Error("Registration successful but auto-login failed");
         }

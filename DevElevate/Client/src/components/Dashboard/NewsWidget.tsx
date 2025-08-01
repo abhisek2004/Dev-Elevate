@@ -170,6 +170,8 @@ const NewsWidget: React.FC = () => {
         </div>
       )}
     </div>
+    
+
   );
 };
 

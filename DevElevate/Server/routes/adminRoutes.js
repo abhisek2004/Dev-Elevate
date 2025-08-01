@@ -3,7 +3,7 @@ import {
   createAdminLog, 
   getAdminLogs
 } from "../controller/adminLogController.js";
-import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
+import { authenticateToken,requireAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
