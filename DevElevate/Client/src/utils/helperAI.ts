@@ -1,81 +1,87 @@
-// src/utils/gemini.ts
-
-export const generateGeminiResponse = async (
-  message: string,
-  selectedCategory: string
+// --- RAG + Ollama response ---
+const fetchOllamaRAGResponse = async (
+  query: string,
+  category: string
 ): Promise<string> => {
   try {
-    const prompt =
-      selectedCategory.toLowerCase() === "quiz"
-        ? `
+    const prompt = `
+You are Study Buddy, an AI mentor specializing in ${category} topics.
+
+User Question:
+"${query}"
+
+Respond clearly in Markdown. Be concise, insightful, and beginner-friendly.
+`;
+
+    const res = await fetch("http://localhost:11434/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "llama2", // Adjust if you're using another Ollama model
+        prompt: prompt.trim(),
+      }),
+    });
+
+    const data = await res.json();
+    return data?.response?.trim() || "No response from Ollama.";
+  } catch (error) {
+    console.error("Ollama RAG Error:", error);
+    return "Something went wrong while fetching RAG response.";
+  }
+};
+
+// --- Gemini quiz generation ---
+const fetchGeminiQuizResponse = async (topic: string): Promise<string> => {
+  const prompt = `
 You are Study Buddy, an AI mentor specializing in DSA quizzes.
 
-Generate **6 deep-level MCQ (multiple choice questions)** based on the topic: "${message}".  
-Make sure the questions test strong understanding, not just definitions.  
-Each question should have 4 options and clearly mark the **correct answer**.
+Generate **6 deep-level MCQs** on: "${topic}"  
+Each question should test conceptual understanding.  
+Include 4 options per question and **clearly mark the correct answer**.
 
 Format:
-1. Question text  
+1. Question  
    A) Option A  
    B) Option B  
    C) Option C  
    D) Option D  
    ✅ Correct Answer: X
 
-Only provide the quiz — no explanation or extra text.
-        `
-        : `
-You are Study Buddy, an AI mentor who gives concise, clear, and structured answers for ${selectedCategory} questions.
-
-Respond using Markdown with the following format:
-
-## 📌 Summary  
-Brief 1-line summary of the concept.
-
-## Key Concepts
-- Important point 1
-- Important point 2
-
-## 💡 Example
-
-\`\`\`ts
-// Relevant code or example here
-\`\`\`
-
-## ✅ Conclusion  
-Wrap up with a useful tip or reminder.
-
-User: ${message}
+Only provide the quiz — no extra explanations.
 `;
 
+  try {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
         import.meta.env.VITE_GEMINI_API_KEY
       }`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: prompt }],
-            },
-          ],
+          contents: [{ role: "user", parts: [{ text: prompt }] }],
         }),
       }
     );
 
     const data = await res.json();
-
-    const responseText =
-      data.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
-
-    return responseText;
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || "No quiz generated.";
   } catch (error) {
-    console.error("Error fetching Gemini response:", error);
-    return "Something went wrong. Please try again.";
+    console.error("Gemini Quiz Error:", error);
+    return "Error while generating quiz.";
   }
+};
+
+// --- Master response router ---
+export const generateChatbotResponse = async (
+  message: string,
+  selectedCategory: string
+): Promise<string> => {
+  const category = selectedCategory.toLowerCase();
+
+  if (category === "quiz") {
+    return await fetchGeminiQuizResponse(message);
+  }
+
+  return await fetchOllamaRAGResponse(message, category);
 };

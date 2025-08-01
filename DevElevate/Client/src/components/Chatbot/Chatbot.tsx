@@ -11,7 +11,7 @@ import {
   MessageCircleQuestion ,
 } from "lucide-react";
 import { useGlobalState } from "../../contexts/GlobalContext";
-import { generateGeminiResponse } from "../../utils/helperAI";
+import { generateChatbotResponse } from "../../utils/helperAI";
 // import { toast } from "sonner";
 
 const Chatbot: React.FC = () => {
@@ -93,7 +93,7 @@ const Chatbot: React.FC = () => {
     setIsTyping(true);
 
     try {
-      const aiReply = await generateGeminiResponse(message, selectedCategory);
+      const aiReply = await generateChatbotResponse(message, selectedCategory);
       console.log("AI Response:", aiReply);
 
       const botMessage = {
