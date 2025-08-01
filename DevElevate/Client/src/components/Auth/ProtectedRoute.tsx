@@ -17,18 +17,17 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 }) => {
   const { state } = useAuth();
 
-  // TEMPORARY: Disable all route protection for development
-  // if (requireAuth && !state.isAuthenticated) {
-  //   return <Navigate to={redirectTo} replace />;
-  // }
+  if (requireAuth && !state.isAuthenticated) {
+    return <Navigate to={redirectTo} replace />;
+  }
 
-  // if (requireAdmin && (!state.user || state.user.role !== 'admin')) {
-  //   return <Navigate to="/" replace />;
-  // }
+  if (requireAdmin && (!state.user || state.user.role !== 'admin')) {
+    return <Navigate to="/" replace />;
+  }
 
-  // if (!requireAuth && state.isAuthenticated) {
-  //   return <Navigate to="/" replace />;
-  // }
+  if (!requireAuth && state.isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
 
   return <>{children}</>;
 };
