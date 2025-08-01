@@ -2,6 +2,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { GlobalProvider } from './contexts/GlobalContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
 import ScrollToTop from './components/Layout/ScrollToTop';
@@ -24,6 +25,9 @@ import Settings from './components/Settings/Settings';
 import PremiumPage from './components/premium/PremiumPage';
 import PaymentPage from './components/Payment/PaymentPage';
 import ProjectRecommender from './components/ProjectRecommender/ProjectRecommender';
+import OtpForm from "./components/Auth/OtpForm"; // if App.tsx is in src/
+
+
 function App() {
   return (
     <AuthProvider>
@@ -41,6 +45,9 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
+              {/* OTP Form Route */}
+              <Route path="/otp" element={<OtpForm />} />
 
               {/* Protected Routes */}
               <Route
