@@ -1,3 +1,4 @@
+import { baseUrl } from "../config/routes.js";
 import React, {
   createContext,
   useContext,
@@ -155,7 +156,6 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       return state;
   }
 };
-
 const AuthContext = createContext<{
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
@@ -212,7 +212,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     dispatch({ type: "LOGIN_START" });
     try {
       // Make API call to backend login endpoint
-      const response = await fetch("http://localhost:4000/api/v1/auth/login", {
+      console.log(baseUrl);
+      
+      const response = await fetch(`${baseUrl}/api/v1/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -299,7 +301,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
     try {
       // Make API call to backend register endpoint
-      const response = await fetch("http://localhost:4000/api/v1/auth/signup", {
+      const response = await fetch(`${baseUrl}/api/v1/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -318,7 +320,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       if (data.message === "User registered successfully") {
         // Auto-login after successful registration
         const loginResponse = await fetch(
-          "http://localhost:4000/api/v1/auth/login",
+          `${baseUrl}/api/v1/auth/login`,
           {
             method: "POST",
             headers: {

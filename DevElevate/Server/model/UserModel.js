@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required:true,
+      required: true,
       trim: true,
     },
     email: {
@@ -21,6 +21,27 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+
+    dayStreak: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "VisitingWebsite",
+      },
+    ],
+    currentStreak: {
+      type: Number,
+      default: 0,
+    },
+    longestStreak: {
+      type: Number,
+      default: 0,
+    },
+    streakStartDate: {
+      type: Date,
+    },
+    streakEndDate: {
+      type: Date,
     },
   },
   {

@@ -74,7 +74,10 @@ const Chatbot: React.FC = () => {
 
 
   useEffect(() => {
-    scrollToBottom();
+    // Only scroll to bottom if there are messages and we're not at the initial load
+    if (state.chatHistory.length > 0) {
+      scrollToBottom();
+    }
   }, [state.chatHistory]); // 👈 This should match what you're rendering
 
   const sendMessage = async () => {

@@ -1,5 +1,5 @@
+// FeedbackController.js
 import Feedback from '../model/Feedback.js';
-
 // GET all feedbacks
 export const getAllFeedbacks = async (req, res) => {
   try {

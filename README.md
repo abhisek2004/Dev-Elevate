@@ -95,6 +95,7 @@ Click the link below to explore the complete guide:
 <!-- New Login Flow GIF -->
 <img src="DevElevate/login-flow.gif" alt="Login Flow Demo" width="100%">
 
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 ### 🔐 **Login / Sign Up Now Live!**
 
@@ -103,21 +104,24 @@ Click the link below to explore the complete guide:
 * 👤 **Users**
 * 🛡️ **Admins**
 
-✅ **What Works:**
+---
 
-* You can **navigate, explore**, and use the interface smoothly.
-* Role-based views and pages are **set up and ready**.
+### ✅ **What Works:**
 
-⚠️ **What’s Pending:**
+* 🔄 You can now **register and log in** using role-based access.
+* 🧭 Full **navigation** and **role-based dashboards** are active.
+* 🖥️ **Frontend and Backend are now successfully connected**.
 
-* 📂 **Database Integration** (MongoDB Atlas) is **not connected** by default.
-* 🔄 To make authentication work completely (i.e., store user credentials, prevent duplicate signups, etc.), you must **connect your own MongoDB database**.
+---
 
-🧪 **Developer Note:**
+### ⚠️ **Important Notes:**
 
-> The current setup uses dummy credentials without DB persistence. You need to set your `MONGODB_URI` in the backend `.env` to activate full backend functionality.
+### 🔐 **Final Reminder:**
 
-📌 Until then, login and signup forms are **just for frontend exploration**.
+➡️ You **must register first** (as either user or admin) to access protected pages.
+🚫 **Do not change or delete any existing code** not related to your issue.
+
+❗ If your PR alters core logic without a valid reason, it **will not be merged**.
 
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
