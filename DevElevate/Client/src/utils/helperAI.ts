@@ -1,34 +1,4 @@
-// --- RAG + Ollama response ---
-// const fetchOllamaRAGResponse = async (
-//   query: string,
-//   category: string
-// ): Promise<string> => {
-//   try {
-//     const prompt = `
-// You are Study Buddy, an AI mentor specializing in ${category} topics.
 
-// User Question:
-// "${query}"
-
-// Respond clearly in Markdown. Be concise, insightful, and beginner-friendly.
-// `;
-
-//     const res = await fetch("http://localhost:11434/api/generate", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({
-//         model: "llama2", // Adjust if you're using another Ollama model
-//         prompt: prompt.trim(),
-//       }),
-//     });
-
-//     const data = await res.text();
-//     return data.trim() || "No response from Ollama.";
-//   } catch (error) {
-//     console.error("Ollama RAG Error:", error);
-//     return "Something went wrong while fetching RAG response.";
-//   }
-// };
 // --- RAG + Ollama response (STREAM-FRIENDLY) ---
 const fetchOllamaRAGResponse = async (
   query: string,
