@@ -1,4 +1,4 @@
-// ��� User.js - Mongoose model for User
+//  User.js - Mongoose model for User
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
@@ -43,6 +43,33 @@ const userSchema = new mongoose.Schema(
     streakEndDate: {
       type: Date,
     },
+    // New fields for dashboard stats
+    totalPoints: {
+      type: Number,
+      default: 0,
+    },
+    completedGoals: {
+      type: Number,
+      default: 0,
+    },
+    learningProgress: {
+      dsa: {
+        completed: { type: Number, default: 0 },
+        total: { type: Number, default: 12 }
+      },
+      java: {
+        completed: { type: Number, default: 0 },
+        total: { type: Number, default: 10 }
+      },
+      mern: {
+        completed: { type: Number, default: 0 },
+        total: { type: Number, default: 15 }
+      },
+      aiml: {
+        completed: { type: Number, default: 0 },
+        total: { type: Number, default: 18 }
+      }
+    }
   },
   {
     timestamps: true,

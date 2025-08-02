@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home,
@@ -21,7 +21,11 @@ import SearchModal from "./SearchModal";
 import NotificationPanel from "./NotificationPanel";
 import ProfileDropdown from "./ProfileDropdown";
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  toggleSidebar: () => void;    
+}
+
+const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
   const { state: authState } = useAuth();
   const { state, dispatch } = useGlobalState();
   const location = useLocation();
@@ -41,6 +45,14 @@ const Navbar: React.FC = () => {
     { path: "/projects", icon: Lightbulb, label: "AI Projects" },
     { path: "/payment", icon: CreditCard, label: "Pricing" },
   ];
+
+  useEffect(() => {
+  if (state.darkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+}, [state.darkMode]);
 
   const isActive = (path: string) => location.pathname === path;
 

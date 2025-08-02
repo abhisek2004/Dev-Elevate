@@ -1,9 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import { useAuth } from "../../contexts/AuthContext";
 
-const Layout = ({ children }) => {
+interface LayoutProps { 
+  children: React.ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children } : LayoutProps) => {
   const [showSidebar, setShowSidebar] = useState(false);
+
+  const {state:authState} = useAuth();    
+  const theme = authState.user?.preferences?.theme || "light";
+
+  useEffect(() => {
+  const localAuth = localStorage.getItem("devElevateAuth");
+  let savedTheme = "light";
+
+  try {
+    if (localAuth) {
+      const parsed = JSON.parse(localAuth);
+      savedTheme = parsed.user?.preferences?.theme || "light";
+    }
+  } catch (err) {
+    console.error("Error parsing devElevateAuth:", err);
+  }
+
+  // Fallback + context-aware theme update
+  const finalTheme = authState.user?.preferences?.theme || savedTheme;
+
+  if (finalTheme === "dark") {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+}, [authState.user?.preferences?.theme]);
+
+  
+
 
   return (
     <div className="h-screen overflow-hidden">
@@ -24,8 +58,8 @@ const Layout = ({ children }) => {
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto ml-0  h-[calc(100vh-4rem)]">
-          {children}
+        <div className="flex-1 overflow-y-auto ml-0 h-[calc(100vh-4rem)]">
+          {children}{" "}
         </div>
       </div>
     </div>

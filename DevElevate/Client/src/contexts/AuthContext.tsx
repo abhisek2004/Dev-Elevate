@@ -1,4 +1,5 @@
 import { baseUrl } from "../config/routes";
+
 import React, {
   createContext,
   useContext,
@@ -11,6 +12,7 @@ import React, {
 export interface User {
   id: string;
   name: string;
+  username?: string; // Optional for backward compatibility
   email: string;
   avatar?: string;
   role: "user" | "admin";
@@ -201,7 +203,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   // Save auth state to localStorage
   useEffect(() => {
-    localStorage.setItem("devElevateAuth", JSON.stringify(state));
+    if (state.isAuthenticated && state.user && state.sessionToken) {
+      localStorage.setItem("devElevateAuth", JSON.stringify(state));
+    }
   }, [state]);
 
   const login = async (
@@ -213,7 +217,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     try {
       // Make API call to backend login endpoint
       console.log(baseUrl);
-      
       const response = await fetch(`${baseUrl}/auth/login`, {
         method: "POST",
         headers: {
@@ -286,11 +289,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-
-
-
-
-
   const register = async (
     name: string,
     email: string,
@@ -319,16 +317,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       // The backend doesn't return a token on signup, so we login immediately
       if (data.message === "User registered successfully") {
         // Auto-login after successful registration
-        const loginResponse = await fetch(
-          `${baseUrl}/api/v1/auth/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password }),
-          }
-        );
+        const loginResponse = await fetch(`${baseUrl}/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
 
         const loginData = await loginResponse.json();
 
@@ -385,13 +380,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       });
     }
   };
-
-
-
-
-
-
-
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });

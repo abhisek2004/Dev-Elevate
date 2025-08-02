@@ -30,6 +30,8 @@ import PaymentPage from "./components/Payment/PaymentPage";
 import ProjectRecommender from "./components/ProjectRecommender/ProjectRecommender";
 import Layout from "./components/Layout/Layout";
 import OtpForm from "./components/Auth/OtpForm"; // OTP component
+import Post from "./components/NewsPost/Post";
+import AddPost from "./components/NewsPost/AddPost";
 
 function App() {
   return (
@@ -76,6 +78,9 @@ function App() {
                             <Route path="/terms" element={<TermsOfService />} />
                             <Route path="/creator" element={<CreatorPage />} />
                             <Route path="/disclaimer" element={<Disclaimer />} />
+                            <Route path="/news/:newsId" element={<Post />} />
+                            <Route path="news/add-post" element={<AddPost />} />
+
                           </Routes>
                         </main>
                         <Footer />

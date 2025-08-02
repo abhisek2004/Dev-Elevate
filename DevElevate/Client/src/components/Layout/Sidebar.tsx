@@ -26,6 +26,7 @@ const Sidebar: React.FC = () => {
 
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { notifications } = useNotificationContext();
+  const [showProfile, setShowProfile] = useState(false)
 
   const navItems = [
     { path: "/", icon: Home, label: "Dashboard" },
