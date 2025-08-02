@@ -1,64 +1,71 @@
-import express from "express"
-import dotenv from "dotenv"
-import connectDB from "./config/db.js";
-import cors from "cors"
-import userRoutes from './routes/userRoutes.js'
-import adminRoutes from './routes/adminRoutes.js'
-import cookieParser from "cookie-parser";
-import authorize from "./middleware/authorize.js";
-import { authenticateToken } from "./middleware/authMiddleware.js";
-import courseRoutes from "./routes/courseRoutes.js";
+// ✅ Top-level imports and configuration
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+
+import connectDB from './config/connectDB.js';
+
+import userRoutes from './routes/userRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import courseRoutes from './routes/courseRoutes.js';
 import adminFeedbackRoutes from './routes/adminFeedbackRoutes.js';
+import dotenv from 'dotenv';
+import express from 'express';
+
+import otpRoutes from './routes/otpRoutes.js';
 import newsRoutes from './routes/newsRoutes.js';
-import commentRoutes from './routes/commentRoutes.js'
+import commentRoutes from './routes/commentRoutes.js';
+
+import authorize from './middleware/authorize.js';
+import { authenticateToken } from './middleware/authMiddleware.js';
+
+import connectDB from './config/db.js'; // Assuming this is where connectDB is defined
+
+// ✅ Load environment variables first
+dotenv.config();
+
+// ✅ Initialize app
+const app = express();
+
+// ✅ Connect to MongoDB
 connectDB();
-// Connect to MongoDB only if MONGO_URI is available
+
 if (process.env.MONGO_URI) {
   connectDB();
 } else {
   console.log('MongoDB connection skipped - PDF routes will work without database');
 }
 
-// Load environment variables
-dotenv.config();
-
-const app = express();
-const PORT = process.env.PORT || 3001;
-
-// Middleware
+// ✅ Middleware
 app.use(cors({
-  origin: "http://localhost:5173", // or wherever your FrontEnd or test.html is served
+origin: "http://localhost:5173", // or wherever your frontend (e.g. Vite) is served
+
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 app.use(cookieParser());
-
-
 app.set('trust proxy', true);
 
-// Routes
+// ✅ Routes
 app.use("/api/v1", userRoutes);
-
-
 app.use("/api/admin", adminRoutes);
 app.use("/api/admin/courses", courseRoutes);
-app.use('/admin', adminFeedbackRoutes);
-app.use("/api/news", newsRoutes)
-app.use("/api/comments", commentRoutes);
+app.use("/admin", adminFeedbackRoutes);       // Admin feedback routes
+app.use("/", userRoutes);                     // General user routes (like auth)
+app.use("/api", otpRoutes);                   // OTP-related routes
+app.use("/api/news", newsRoutes);             // News posts routes
+app.use("/api/comments", commentRoutes);      // Comments routes
 
 
-app.use("/",userRoutes)
-
-
-// Sample Usage of authenticate and authorize middleware for roleBased Features
+// ✅ Protected route example
 app.get("/api/admin/dashboard", authenticateToken, authorize("admin"), (req, res) => {
   res.send("Hello Admin");
 });
 
-
-// Error handling middleware
+// ✅ Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ 
@@ -68,7 +75,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 handler
+// ✅ 404 handler
 app.use((req, res) => {
   res.status(404).json({ 
     success: false, 
@@ -76,8 +83,8 @@ app.use((req, res) => {
   });
 });
 
-
-// Start server
+// ✅ Start the server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });
