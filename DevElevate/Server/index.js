@@ -11,6 +11,7 @@ import courseRoutes from "./routes/courseRoutes.js";
 import adminFeedbackRoutes from './routes/adminFeedbackRoutes.js';
 import newsRoutes from './routes/newsRoutes.js';
 import commentRoutes from './routes/commentRoutes.js'
+import rateLimit from "express-rate-limit";
 connectDB();
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
@@ -24,7 +25,18 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per 15 mins
+  message: {
+    status: 429,
+    error: "Too many requests from this IP. Please try again after 15 minutes."
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
+app.use(limiter);
 // Middleware
 app.use(cors({
   origin: "http://localhost:5173", // or wherever your FrontEnd or test.html is served
