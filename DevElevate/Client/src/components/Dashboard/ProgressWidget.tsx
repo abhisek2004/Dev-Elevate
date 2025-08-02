@@ -55,14 +55,11 @@ const ProgressWidget: React.FC = () => {
           Learning Progress
         </h3>
  fix-my-change
-        <button className="flex items-center gap-1 text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors duration-150">
-          <span>View All</span>
-          <ArrowRight className='w-4 h-4'/>
-
-        <button className="text-blue-500 hover:text-blue-600 text-sm font-medium" onClick={handleViewAllClick}>
-          View All
- main
-        </button>
+<button className="flex items-center gap-1 text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors duration-150"
+  onClick={handleViewAllClick}>
+  <span>View All</span>
+  <ArrowRight className='w-4 h-4'/>
+</button>
       </div>
 
       <div className="space-y-4">

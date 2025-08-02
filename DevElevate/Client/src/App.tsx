@@ -7,7 +7,7 @@ import LearningHub from './components/LearningHub/LearningHub';
 import Chatbot from './components/Chatbot/Chatbot';
 import TechFeed from './components/TechFeed/TechFeed';
 import ResumeBuilder from './components/ResumeBuilder/ResumeBuilder';
-import PlacementPrep from './components/PlacementPrep/PlacementPrep.tsx';
+import { PlacementPrep } from './components/PlacementPrep/PlacementPrep.tsx';
 import UserProfile from './components/Profile/UserProfile';
 import PrivacyPolicy from './components/Legal/PrivacyPolicy';
 import TermsOfService from './components/Legal/TermsOfService';

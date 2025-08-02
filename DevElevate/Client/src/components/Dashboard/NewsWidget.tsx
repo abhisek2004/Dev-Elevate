@@ -31,15 +31,13 @@ const NewsWidget: React.FC = () => {
         <h3 className={`text-2xl font-semibold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
           Latest Tech News & Updates
         </h3>
-fix-my-change
-        <button className="flex items-center gap-1 text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors duration-150">
-          <span>View All</span>
-          <ArrowRight className='w-4 h-5'/>
-
-        <button className="text-blue-500 hover:text-blue-600 text-sm font-medium" onClick={handleClick}>
-          View All
- main
-        </button>
+<button
+  className="flex items-center gap-1 text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors duration-150"
+  onClick={handleClick}
+>
+  <span>View All</span>
+  <ArrowRight className='w-4 h-5'/>
+</button>
       </div>
 
       <div className="space-y-4">
@@ -77,4 +75,3 @@ fix-my-change
 export default NewsWidget;
 
 
--
