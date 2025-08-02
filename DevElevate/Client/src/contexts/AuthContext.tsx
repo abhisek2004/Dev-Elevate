@@ -1,4 +1,3 @@
-
 import { baseUrl } from "../config/routes";
 
 import React, {
@@ -218,7 +217,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     try {
       // Make API call to backend login endpoint
       console.log(baseUrl);
-      
       const response = await fetch(`${baseUrl}/auth/login`, {
         method: "POST",
         headers: {
@@ -319,16 +317,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       // The backend doesn't return a token on signup, so we login immediately
       if (data.message === "User registered successfully") {
         // Auto-login after successful registration
-        const loginResponse = await fetch(
-          `${baseUrl}/api/v1/auth/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password }),
-          }
-        );
+        const loginResponse = await fetch(`${baseUrl}/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
 
         const loginData = await loginResponse.json();
 
