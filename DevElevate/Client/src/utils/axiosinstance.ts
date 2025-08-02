@@ -1,7 +1,11 @@
 import axios from 'axios';
 
 const instance = axios.create({
+<<<<<<< Updated upstream
   baseURL: import.meta.env.VITE_API_URL || `http://localhost:5000/api/v1`,
+=======
+  baseURL: `http://localhost:4000/api`, // e.g. http://localhost:5000/api/v1
+>>>>>>> Stashed changes
   headers: {
     'Content-Type': 'application/json',
   },
