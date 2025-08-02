@@ -37,7 +37,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ initialData, onClose, onSaved, dark
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           });
           const fullQuiz = res.data.quiz;
-          // Map questions to include a unique ID and other properties
+         
           setQuestions((fullQuiz.questions || []).map((q: any) => ({ ...q, id: q._id })));
         } catch (err: any) {
           alert(err.response?.data?.message || 'Failed to fetch quiz questions');
@@ -45,14 +45,14 @@ const QuizForm: React.FC<QuizFormProps> = ({ initialData, onClose, onSaved, dark
       };
       fetchQuizQuestions();
     } else {
-      // For a new quiz, initialize with one empty question
+      
       setQuestions([
         type === 'MCQ'
           ? { questionText: '', options: ['', '', '', ''], correctAnswer: '', isNew: true }
           : { questionText: '', expectedOutput: '', isNew: true },
       ]);
     }
-  }, [initialData, type]); // Added 'type' to the dependency array
+  }, [initialData, type]); 
 
   const handleChange = (index: number, field: keyof QuizQuestion, value: any) => {
     setQuestions(prev => prev.map((q, i) => (i === index ? { ...q, [field]: value } : q)));

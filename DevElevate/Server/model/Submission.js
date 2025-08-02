@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const answerSchema = new mongoose.Schema({
   questionId: {
-    type: mongoose.Schema.Types.ObjectId, // references a question's _id
+    type: mongoose.Schema.Types.ObjectId, 
     required: true,
   },
   givenAnswer: {
@@ -11,7 +11,7 @@ const answerSchema = new mongoose.Schema({
     required: true,
   },
   output: {
-    type: String, // optional, for code-based question outputs
+    type: String,
   },
 });
 

@@ -20,7 +20,6 @@ router.use(authenticateToken, requireAdmin);
 // Quiz-level routes
 router.post("/", createQuiz);
 router.get("/", getAllQuizzes);
-// router.get("/:quizId",getQuizById)
 router.put("/:id", updateQuizInfo);
 router.delete("/:id", deleteQuiz);
 

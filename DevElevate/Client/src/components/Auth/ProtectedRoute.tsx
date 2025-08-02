@@ -16,7 +16,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   redirectTo = '/login'
 }) => {
   const { state } = useAuth();
-
+  // TEMPORARY: Disable all route protection for development
   // if (requireAuth && !state.isAuthenticated) {
   //   return <Navigate to={redirectTo} replace />;
   // }
