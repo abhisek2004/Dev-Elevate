@@ -3,12 +3,14 @@ import dotenv from "dotenv"
 import connectDB from "./config/db.js";
 import cors from "cors"
 import userRoutes from './routes/userRoutes.js'
-import adminRoutes from './routes/adminRoutes.js'
+// import adminRoutes from './routes/adminRoutes.js'
 import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorize.js";
 import authenticate from "./middleware/authMiddleware.js";
-import cors from "cors";
 import courseRoutes from "./routes/courseRoutes.js";
+import counselorRoutes from './routes/counselor.route.js';
+
+
 connectDB();
 
 // Load environment variables
@@ -38,8 +40,9 @@ app.set('trust proxy', true);
 
 // Routes
 app.use("/api/v1/auth", userRoutes);
-app.use("/api/admin", adminRoutes);
+// app.use("/api/admin", adminRoutes);
 app.use("/api/admin/courses", courseRoutes);
+app.use('/api/counselor', counselorRoutes);
 
 // Basic route
 app.get('/', (req, res) => {

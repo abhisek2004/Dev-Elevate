@@ -15,6 +15,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { Compass } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import SearchModal from "./SearchModal";
@@ -37,6 +38,7 @@ const Navbar: React.FC = () => {
     { path: "/news", icon: Newspaper, label: "Tech Feed" },
     { path: "/resume", icon: FileText, label: "Resume Builder" },
     { path: "/placement", icon: Target, label: "Placement Prep" },
+    { path: "/career-counselor", icon: Compass, label: "Career Counselor" },
   ];
 
   const isActive = (path: string) => location.pathname === path;

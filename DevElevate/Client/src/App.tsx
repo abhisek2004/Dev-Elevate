@@ -7,7 +7,7 @@ import LearningHub from './components/LearningHub/LearningHub';
 import Chatbot from './components/Chatbot/Chatbot';
 import TechFeed from './components/TechFeed/TechFeed';
 import ResumeBuilder from './components/ResumeBuilder/ResumeBuilder';
-import PlacementPrep from './components/PlacementPrep/PlacementPrep';
+import PlacementPrep from './components/PlacementPrep/PlacementPrep.tsx';
 import UserProfile from './components/Profile/UserProfile';
 import PrivacyPolicy from './components/Legal/PrivacyPolicy';
 import TermsOfService from './components/Legal/TermsOfService';
@@ -20,6 +20,7 @@ import LoginRegister from './components/Auth/LoginRegister';
 import Dashboard from './components/Dashboard/Dashboard';
 import Settings from './components/Settings/Settings';
 import PremiumPage from './components/premium/PremiumPage';
+import CareerCounselor from './pages/CareerCounselor';
 function App() {
   return (
     <AuthProvider>
@@ -58,6 +59,7 @@ function App() {
                         <Route path="/terms" element={<TermsOfService />} />
                         <Route path="/creator" element={<CreatorPage />} />
                         <Route path="/disclaimer" element={<Disclaimer />} />
+                        <Route path="/career-counselor" element={<CareerCounselor />} />
                       </Routes>
                     </main>
                     <Footer />
@@ -91,3 +93,8 @@ function App() {
 }
 
 export default App;
+
+// Import your new page at the top
+
+
+// ... inside your Router/Routes setup

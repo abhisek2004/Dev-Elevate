@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import StatsCards from './StatsCards';
-import ProgressWidget from './ProgressWidget';
-import NewsWidget from './NewsWidget';
+// import ProgressWidget from './ProgressWidget.tsx/index.ts';
+// import NewsWidget from './NewsWidget.tsx';
 import QuickActions from './QuickActions';
 import StreakCalendar from './StreakCalendar';
 import DailyGoals from './DailyGoals';
@@ -80,8 +80,8 @@ const Dashboard: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-6">
-            <ProgressWidget />
-            <NewsWidget />
+            {/* <ProgressWidget />
+            <NewsWidget /> */}
           </div>
 
           {/* Right Column */}
