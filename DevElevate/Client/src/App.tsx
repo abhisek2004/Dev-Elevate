@@ -24,6 +24,9 @@ import Settings from './components/Settings/Settings';
 import PremiumPage from './components/premium/PremiumPage';
 import PaymentPage from './components/Payment/PaymentPage';
 import ProjectRecommender from './components/ProjectRecommender/ProjectRecommender';
+import AdminNewsletterSender from './components/Newsletter/AdminNewsletterSender';
+import NewsletterLogs from "./components/Newsletter/NewsletterLogs";
+
 function App() {
   return (
     <AuthProvider>
@@ -66,6 +69,8 @@ function App() {
                           <Route path="/terms" element={<TermsOfService />} />
                           <Route path="/creator" element={<CreatorPage />} />
                           <Route path="/disclaimer" element={<Disclaimer />} />
+                          <Route path="/admin/newsletter/send" element={<AdminNewsletterSender />} />
+                          <Route path="/admin/newsletter/logs" element={<NewsletterLogs />} />
                         </Routes>
                       </main>
                       <Footer />

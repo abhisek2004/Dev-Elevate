@@ -1,4 +1,3 @@
-// ��� User.js - Mongoose model for User
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
@@ -21,6 +20,10 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    isSubscribed: {
+      type: Boolean,
+      default: true,
     },
 
     dayStreak: [

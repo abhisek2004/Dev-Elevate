@@ -20,6 +20,7 @@ import {
   AlertTriangle,
   Save,
   X,
+  Send,
   Calendar,
   TrendingUp,
   Activity,
@@ -34,6 +35,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AdminFeedback from './AdminFeedback';
+
 
 type Course = {
   id: string;
@@ -116,6 +118,33 @@ const [filters, setFilters] = useState<FeedbackFilter>({
   dateFrom: '',
   dateTo: '',
 });
+const goToSendNewsletter = () => {
+  navigate("/admin/newsletter/send");
+};
+
+const goToEmailLogs = () => {
+  navigate("/admin/newsletter/logs");
+};
+
+const renderNewsletter = () => (
+  <div className="space-y-4">
+    <h2 className="text-xl font-semibold">Newsletter Management</h2>
+    <div className="flex gap-4">
+      <button
+        onClick={goToSendNewsletter}
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        Send Newsletter
+      </button>
+      <button
+        onClick={goToEmailLogs}
+        className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+      >
+        View Logs
+      </button>
+    </div>
+  </div>
+);
 
 const [feedback, setFeedback] = useState<any[]>([]);
   const [showFilter, setShowFilter] = useState(false);
@@ -218,6 +247,7 @@ const [feedback, setFeedback] = useState<any[]>([]);
     { id: 'news', label: 'News & Updates', icon: Newspaper },
     { id: 'analytics', label: 'Analytics', icon: TrendingUp },
     { id: 'logs', label: 'System Logs', icon: Database },
+    { id: 'newsletter', label: 'Newsletter', icon: Send },
     { id: 'settings', label: 'System Settings', icon: Settings },
     { id: 'feedback', label:'Feedback', icon: MessageCircle }
   ];
@@ -1635,6 +1665,8 @@ const [feedback, setFeedback] = useState<any[]>([]);
         return renderNewsManagement();
       case 'analytics':
         return renderAnalytics();
+      case 'newsletter':
+        return renderNewsletter(); 
       case 'settings':
         return renderSystemSettings();
       default:

@@ -9,6 +9,8 @@ import authorize from "./middleware/authorize.js";
 import { authenticateToken } from "./middleware/authMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import adminFeedbackRoutes from './routes/adminFeedbackRoutes.js';
+import emailRoutes from "./routes/emailRoutes.js";
+
 connectDB();
 
 // Load environment variables
@@ -16,10 +18,14 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+app.use((req, res, next) => {
+  console.log('👉 Incoming request cookies:', req.cookies);
+  next();
+});
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: 'http://localhost:5173',
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -32,20 +38,15 @@ app.set('trust proxy', true);
 // Routes
 app.use("/api/v1", userRoutes);
 
+app.use("/api/email", emailRoutes);
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/admin/courses", courseRoutes);
 app.use('/admin', adminFeedbackRoutes);
 
-
-app.use("/",userRoutes)
-
-
-// Sample Usage of authenticate and authorize middleware for roleBased Features
-app.get("/api/admin/dashboard", authenticateToken, authorize("admin"), (req, res) => {
+app.get("/api/v1/admin/dashboard", authenticateToken, authorize("admin"), (req, res) => {
   res.send("Hello Admin");
 });
-
 
 // Error handling middleware
 app.use((err, req, res, next) => {
