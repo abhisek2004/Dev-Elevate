@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { FileText, Download, Users, Calendar, Target, BookOpen, ExternalLink} from 'lucide-react';
 import { Code } from 'lucide-react';
 const PlacementPrep: React.FC = () => {
   const { state } = useGlobalState();
+  const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState('opportunities');
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -32,32 +34,71 @@ const PlacementPrep: React.FC = () => {
       location: 'Mountain View, CA',
       type: 'Full-time',
       deadline: '2024-03-15',
-      description: 'Join our team to build products that help create opportunities for everyone.',
-      requirements: ['BS/MS in Computer Science', '3+ years experience', 'Strong coding skills'],
+      description: 'Join our team to build products that help create opportunities for everyone. Work on cutting-edge technologies.',
+      requirements: ['BS/MS in Computer Science', '3+ years experience', 'Strong coding skills', 'System design experience'],
       salary: '$120,000 - $180,000',
-      category: 'Product Based'
+      category: 'Product Based',
+      applyUrl: 'https://careers.google.com/jobs/results/?q=software%20engineer'
     },
     {
       company: 'Microsoft',
-      position: 'AI Engineer',
-      location: 'Seattle, WA',
+      position: 'Software Engineer',
+      location: 'Redmond, WA',
       type: 'Full-time',
       deadline: '2024-03-20',
-      description: 'Work on cutting-edge AI technologies and machine learning systems.',
-      requirements: ['MS in AI/ML', 'Experience with Python/TensorFlow', 'Research background'],
+      description: 'Build and maintain software solutions for Microsoft products. Work on Azure, Office, and other platforms.',
+      requirements: ['BS/MS in Computer Science', 'C#/Java experience', 'Cloud platforms', 'Problem-solving skills'],
       salary: '$130,000 - $200,000',
-      category: 'Product Based'
+      category: 'Product Based',
+      applyUrl: 'https://careers.microsoft.com/us/en/search-results?keywords=software%20engineer'
     },
     {
       company: 'Amazon',
-      position: 'SDE Intern',
-      location: 'Multiple Locations',
-      type: 'Internship',
+      position: 'Software Development Engineer',
+      location: 'Seattle, WA',
+      type: 'Full-time',
       deadline: '2024-02-28',
-      description: 'Summer internship program for software development engineers.',
-      requirements: ['Currently pursuing CS degree', 'Strong programming skills', 'Problem-solving ability'],
-      salary: '$8,000/month',
-      category: 'Internship'
+      description: 'Design and build scalable software solutions for Amazon services. Work on AWS, e-commerce, and logistics.',
+      requirements: ['BS/MS in Computer Science', 'Java/Python experience', 'System design', 'Leadership skills'],
+      salary: '$140,000 - $220,000',
+      category: 'Product Based',
+      applyUrl: 'https://www.amazon.jobs/en/search?base_query=software%20development%20engineer'
+    },
+    {
+      company: 'Meta',
+      position: 'Software Engineer',
+      location: 'Menlo Park, CA',
+      type: 'Full-time',
+      deadline: '2024-04-01',
+      description: 'Build products that connect billions of people. Work on Facebook, Instagram, WhatsApp, and VR platforms.',
+      requirements: ['BS/MS in Computer Science', 'C++/Python experience', 'Large-scale systems', 'Innovation mindset'],
+      salary: '$150,000 - $250,000',
+      category: 'Product Based',
+      applyUrl: 'https://www.metacareers.com/jobs/?q=software%20engineer'
+    },
+    {
+      company: 'Netflix',
+      position: 'Senior Software Engineer',
+      location: 'Los Gatos, CA',
+      type: 'Full-time',
+      deadline: '2024-03-25',
+      description: 'Build the future of entertainment. Work on streaming platform, recommendation systems, and content delivery.',
+      requirements: ['5+ years experience', 'Java/Go expertise', 'Microservices', 'High-scale systems'],
+      salary: '$180,000 - $300,000',
+      category: 'Product Based',
+      applyUrl: 'https://jobs.netflix.com/jobs/search?q=software%20engineer'
+    },
+    {
+      company: 'Apple',
+      position: 'Software Engineer',
+      location: 'Cupertino, CA',
+      type: 'Full-time',
+      deadline: '2024-03-30',
+      description: 'Create innovative software for iPhone, iPad, Mac, and Apple Watch. Work on iOS, macOS, and developer tools.',
+      requirements: ['BS/MS in Computer Science', 'Swift/Objective-C', 'Apple frameworks', 'User experience focus'],
+      salary: '$140,000 - $220,000',
+      category: 'Product Based',
+      applyUrl: 'https://jobs.apple.com/en-us/search?job=software%20engineer'
     },
     {
       company: 'TCS',
@@ -65,10 +106,107 @@ const PlacementPrep: React.FC = () => {
       location: 'Bangalore, India',
       type: 'Full-time',
       deadline: '2024-04-01',
-      description: 'Join our digital transformation initiatives across various industries.',
-      requirements: ['BE/BTech in any stream', 'Good communication skills', 'Aptitude for programming'],
+      description: 'Join our digital transformation initiatives across various industries. Work on enterprise solutions and consulting.',
+      requirements: ['BE/BTech in any stream', 'Java/.NET experience', 'Good communication', 'Problem-solving skills'],
       salary: '₹3.5 - 7 LPA',
-      category: 'Mass Recruiter'
+      category: 'Mass Recruiter',
+      applyUrl: 'https://www.tcs.com/careers/india'
+    },
+    {
+      company: 'Infosys',
+      position: 'Systems Engineer',
+      location: 'Bangalore, India',
+      type: 'Full-time',
+      deadline: '2024-04-15',
+      description: 'Work on digital transformation projects for global clients. Develop and maintain software solutions.',
+      requirements: ['BE/BTech degree', 'Programming fundamentals', 'Database knowledge', 'Good communication'],
+      salary: '₹3.25 - 6.5 LPA',
+      category: 'Mass Recruiter',
+      applyUrl: 'https://career.infosys.com/jobdesc/jobdescription'
+    },
+    {
+      company: 'Adobe',
+      position: 'Software Engineer',
+      location: 'San Jose, CA',
+      type: 'Full-time',
+      deadline: '2024-03-25',
+      description: 'Create innovative software solutions for creative professionals. Work on Photoshop, Illustrator, and Creative Cloud.',
+      requirements: ['BS/MS in Computer Science', 'C++/JavaScript experience', 'Creative software development', 'User experience focus'],
+      salary: '$130,000 - $200,000',
+      category: 'Product Based',
+      applyUrl: 'https://careers.adobe.com/us/en/search-results?keywords=software%20engineer'
+    },
+    {
+      company: 'Salesforce',
+      position: 'Software Engineer',
+      location: 'San Francisco, CA',
+      type: 'Full-time',
+      deadline: '2024-03-30',
+      description: 'Build the future of CRM and cloud computing. Work on Salesforce platform and enterprise solutions.',
+      requirements: ['BS/MS in Computer Science', 'Java/Apex experience', 'Cloud platforms', 'Enterprise software'],
+      salary: '$140,000 - $220,000',
+      category: 'Product Based',
+      applyUrl: 'https://salesforce.wd1.myworkdayjobs.com/en-US/External_Career_Site?q=software%20engineer'
+    },
+    {
+      company: 'Oracle',
+      position: 'Software Engineer',
+      location: 'Austin, TX',
+      type: 'Full-time',
+      deadline: '2024-04-01',
+      description: 'Develop enterprise software solutions and cloud infrastructure. Work on Oracle Cloud and database technologies.',
+      requirements: ['BS/MS in Computer Science', 'Java/Python experience', 'Database systems', 'Cloud architecture'],
+      salary: '$120,000 - $180,000',
+      category: 'Product Based',
+      applyUrl: 'https://careers.oracle.com/jobs/#en/sites/jobsearch/jobs?keyword=software%20engineer'
+    },
+    {
+      company: 'Intel',
+      position: 'Software Engineer',
+      location: 'Santa Clara, CA',
+      type: 'Full-time',
+      deadline: '2024-03-28',
+      description: 'Develop software for Intel processors and hardware. Work on drivers, firmware, and system software.',
+      requirements: ['BS/MS in Computer Science', 'C/C++ experience', 'System programming', 'Hardware knowledge'],
+      salary: '$130,000 - $190,000',
+      category: 'Product Based',
+      applyUrl: 'https://jobs.intel.com/en/search-jobs?keywords=software%20engineer'
+    },
+    {
+      company: 'IBM',
+      position: 'Software Developer',
+      location: 'Armonk, NY',
+      type: 'Full-time',
+      deadline: '2024-04-05',
+      description: 'Build enterprise solutions and AI-powered software. Work on IBM Cloud, Watson, and enterprise tools.',
+      requirements: ['BS/MS in Computer Science', 'Java/Python experience', 'Cloud platforms', 'AI/ML knowledge'],
+      salary: '$110,000 - $170,000',
+      category: 'Product Based',
+      applyUrl: 'https://careers.ibm.com/job-search/?q=software%20developer'
+    },
+    {
+      company: 'Cisco',
+      position: 'Software Engineer',
+      location: 'San Jose, CA',
+      type: 'Full-time',
+      deadline: '2024-03-22',
+      description: 'Develop networking software and security solutions. Work on routers, switches, and network infrastructure.',
+      requirements: ['BS/MS in Computer Science', 'C/C++ experience', 'Networking protocols', 'System programming'],
+      salary: '$125,000 - $185,000',
+      category: 'Product Based',
+      applyUrl: 'https://jobs.cisco.com/jobs/SearchJobs/?keyword=software%20engineer'
+    },
+    {
+      company: 'Wipro',
+      position: 'Software Engineer',
+      location: 'Bangalore, India',
+      type: 'Full-time',
+      deadline: '2024-04-10',
+      description: 'Work on digital transformation projects and consulting services. Develop enterprise solutions for global clients.',
+      requirements: ['BE/BTech degree', 'Java/.NET experience', 'Good communication', 'Problem-solving skills'],
+      salary: '₹3.2 - 6.8 LPA',
+      category: 'Mass Recruiter',
+      applyUrl: 'https://careers.wipro.com/careers-home/jobs'
     }
   ];
 
@@ -221,7 +359,7 @@ const PlacementPrep: React.FC = () => {
 );
 
   const renderOpportunities = () => {
-    const filteredJobs = jobOpportunities.filter((job) => {
+    const filteredJobs = jobOpportunities.filter((job: any) => {
       const matchesCategory =
         selectedCategory === 'All Categories' || job.category === selectedCategory;
 
@@ -229,7 +367,7 @@ const PlacementPrep: React.FC = () => {
         job.position.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
         job.company.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
         job.description.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-        job.requirements.some(req => req.toLowerCase().includes(debouncedSearch.toLowerCase()));
+        job.requirements.some((req: string) => req.toLowerCase().includes(debouncedSearch.toLowerCase()));
 
       return matchesCategory && matchesSearch;
     });
@@ -237,9 +375,11 @@ const PlacementPrep: React.FC = () => {
     return (
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-            Latest Job Opportunities
-          </h3>
+          <div className="flex items-center gap-3">
+            <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+              Latest Job Opportunities
+            </h3>
+          </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
             {/* Category Filter */}
             <select
@@ -280,7 +420,7 @@ const PlacementPrep: React.FC = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredJobs.map((job, index) => (
+          {filteredJobs.map((job: any, index) => (
             <div
               key={index}
               className={`p-6 rounded-2xl border shadow-sm hover:shadow-lg transition-all duration-200  ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} hover:shadow-md transition-shadow`}
@@ -310,7 +450,7 @@ const PlacementPrep: React.FC = () => {
                   Requirements:
                 </h5>
                 <ul className="text-sm space-y-1 pl-1">
-                  {job.requirements.map((req, reqIndex) => (
+                  {job.requirements.map((req: string, reqIndex: number) => (
                     <li key={reqIndex} className={`flex items-start space-x-2 ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                       <div className="w-1 h-1 bg-current rounded-full shrink-0"></div>
                       <span>{req}</span>
@@ -327,13 +467,25 @@ const PlacementPrep: React.FC = () => {
                     Deadline: {job.deadline}
                   </p>
                 </div>
-                <button className="flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium transition-colors">
+                <button 
+                  onClick={() => {
+                    console.log(`Applying to ${job.position} at ${job.company}`);
+                    if (job.applyUrl && job.applyUrl !== '#') {
+                      // Open real job application URL in new tab
+                      window.open(job.applyUrl, '_blank', 'noopener,noreferrer');
+                    } else {
+                      // Fallback for mock data or invalid URLs
+                      alert(`🚧 Coming Soon!\n\nJob application feature for ${job.position} at ${job.company} will be available soon.\n\nFor now, please visit the company's career page directly.`);
+                    }
+                  }}
+                  className="flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium transition-colors"
+                >
                   <ExternalLink className="w-4 h-4" />
                   <span>Apply</span>
                 </button>
               </div>
-            </div>
-          ))}
+                          </div>
+            ))}
         </div>
       </div>
     );
@@ -362,10 +514,28 @@ const PlacementPrep: React.FC = () => {
                 </div>
               ))}
             </div>
-            <button className="w-full mt-5 px-4 py-2 text-sm font-medium rounded-xl 
+            <button 
+              onClick={() => {
+                console.log(`Viewing all ${category.category} questions`);
+                // Open external resources with curated questions based on category
+                const questionUrls = {
+                  'Technical': 'https://github.com/DopplerHQ/awesome-interview-questions#technical-questions',
+                  'HR': 'https://www.indeed.com/career-advice/interviewing/hr-interview-questions',
+                  'Behavioral': 'https://www.indeed.com/career-advice/interviewing/behavioral-interview-questions'
+                };
+                
+                const url = questionUrls[category.category as keyof typeof questionUrls];
+                if (url) {
+                  window.open(url, '_blank', 'noopener,noreferrer');
+                } else {
+                  // Fallback for unknown categories
+                  alert(`🚧 Coming Soon!\n\nDetailed ${category.category} questions page will be available soon.\n\nFor now, you can see the sample questions above.`);
+                }
+              }}
+              className="w-full mt-5 px-4 py-2 text-sm font-medium rounded-xl 
     bg-blue-500 hover:bg-blue-600 text-white transition-colors 
     focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
-              View All {category.category} Questions
+              Practice {category.category} Questions
             </button>
           </div>
         ))}
@@ -404,7 +574,34 @@ const PlacementPrep: React.FC = () => {
                       ⬇️ {resource.downloads} downloads
                     </span>
                   </div>
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition-all">
+                  <button 
+                    onClick={() => {
+                      console.log(`Downloading ${resource.title}`);
+                      // Open actual downloadable resources based on the resource title
+                      const downloadUrls = {
+                        'Complete Interview Preparation Guide': 'http://localhost:3001/api/pdf/interview-guide',
+                        'System Design Interview Handbook': 'http://localhost:3001/api/pdf/system-design',
+                        'DSA Cheat Sheet': 'http://localhost:3001/api/pdf/dsa-cheatsheet',
+                        'Behavioral Interview Questions Bank': 'http://localhost:3001/api/pdf/behavioral-questions'
+                      };
+                      
+                      const url = downloadUrls[resource.title as keyof typeof downloadUrls];
+                      if (url) {
+                        // Create a temporary link element to trigger download without opening page
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = `${resource.title.toLowerCase().replace(/\s+/g, '-')}.pdf`;
+                        link.style.display = 'none';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      } else {
+                        // Fallback for unknown resources
+                        alert(`🚧 Coming Soon!\n\nDownload feature for "${resource.title}" will be available soon.\n\nFile: ${resource.type} • ${resource.size}\nDownloads: ${resource.downloads}`);
+                      }
+                    }}
+                    className="flex items-center space-x-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition-all"
+                  >
                     <Download className="w-4 h-4" />
                     <span>Download</span>
                   </button>
@@ -444,7 +641,14 @@ const PlacementPrep: React.FC = () => {
               <span className="text-sm text-green-500 font-medium">Available</span>
             </div>
           </div>
-          <button className="w-full mt-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-150">
+          <button 
+            onClick={() => {
+              console.log('Starting AI Mock Interview');
+              // For now, show a "Coming Soon" alert. In the future, this could navigate to the AI mock interview interface
+              alert(`🚧 Coming Soon!\n\nAI Mock Interview feature will be available soon.\n\nThis will include:\n• Technical Questions\n• HR Questions\n• Behavioral Questions\n• Instant Feedback`);
+            }}
+            className="w-full mt-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-150"
+          >
            🚀 Start AI Mock Interview
           </button>
         </div>
@@ -469,7 +673,14 @@ const PlacementPrep: React.FC = () => {
               <span className="text-green-500 font-medium">156</span>
             </div>
           </div>
-          <button className="w-full mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-all duration-150">
+          <button 
+            onClick={() => {
+              console.log('Finding Interview Partner');
+              // For now, show a "Coming Soon" alert. In the future, this could navigate to the peer interview matching interface
+              alert(`🚧 Coming Soon!\n\nPeer Interview Partner feature will be available soon.\n\nThis will include:\n• Find interview partners\n• Real-time practice sessions\n• Turn-based interviewing\n• Community feedback`);
+            }}
+            className="w-full mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-all duration-150"
+          >
             Find Interview Partner
           </button>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, X, Check, CheckCheck, Trash2, Settings, Filter, Calendar, BookOpen, Target, MessageSquare, Star, AlertCircle, Info } from 'lucide-react';
+import { Bell, X, Check, Trash2, Settings,  Calendar,  MessageSquare, Star, AlertCircle, Info } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { useNotificationContext } from "../../contexts/NotificationContext";
 import { format, formatDistanceToNow } from 'date-fns';
