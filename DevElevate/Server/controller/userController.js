@@ -197,3 +197,215 @@ export const feedback = async (req, res) => {
     console.log(error.message);
   }
 };
+
+// New function to get dashboard stats
+export const getDashboardStats = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "User not found" 
+      });
+    }
+
+    // Calculate total modules completed
+    const totalModulesCompleted = Object.values(user.learningProgress)
+      .reduce((total, track) => total + track.completed, 0);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        totalPoints: user.totalPoints || 0,
+        currentStreak: user.currentStreak || 0,
+        completedGoals: user.completedGoals || 0,
+        learningProgress: user.learningProgress || {
+          dsa: { completed: 0, total: 12 },
+          java: { completed: 0, total: 10 },
+          mern: { completed: 0, total: 15 },
+          aiml: { completed: 0, total: 18 }
+        },
+        totalModulesCompleted
+      }
+    });
+  } catch (error) {
+    console.error('Dashboard stats error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to fetch dashboard stats", 
+      error: error.message 
+    });
+  }
+};
+
+// Function to update user points
+export const updateUserPoints = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const { points } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "User not found" 
+      });
+    }
+
+    user.totalPoints = (user.totalPoints || 0) + points;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Points updated successfully",
+      data: { totalPoints: user.totalPoints }
+    });
+  } catch (error) {
+    console.error('Update points error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to update points", 
+      error: error.message 
+    });
+  }
+};
+
+// Function to update learning progress
+export const updateLearningProgress = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const { track, moduleId, completed } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "User not found" 
+      });
+    }
+
+    // Initialize learningProgress if it doesn't exist
+    if (!user.learningProgress) {
+      user.learningProgress = {
+        dsa: { completed: 0, total: 12 },
+        java: { completed: 0, total: 10 },
+        mern: { completed: 0, total: 15 },
+        aiml: { completed: 0, total: 18 }
+      };
+    }
+
+    // Update the specific track
+    if (user.learningProgress[track]) {
+      if (completed) {
+        user.learningProgress[track].completed += 1;
+      } else {
+        user.learningProgress[track].completed = Math.max(0, user.learningProgress[track].completed - 1);
+      }
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Learning progress updated successfully",
+      data: { learningProgress: user.learningProgress }
+    });
+  } catch (error) {
+    console.error('Update learning progress error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to update learning progress", 
+      error: error.message 
+    });
+  }
+};
+
+// Function to update completed goals
+export const updateCompletedGoals = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const { completed } = req.body; // true to add, false to remove
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "User not found" 
+      });
+    }
+
+    if (completed) {
+      user.completedGoals = (user.completedGoals || 0) + 1;
+    } else {
+      user.completedGoals = Math.max(0, (user.completedGoals || 0) - 1);
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Completed goals updated successfully",
+      data: { completedGoals: user.completedGoals }
+    });
+  } catch (error) {
+    console.error('Update completed goals error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to update completed goals", 
+      error: error.message 
+    });
+  }
+};
+
+// Function to complete a module and earn points
+export const completeModule = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const { track, moduleId, pointsEarned = 50 } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "User not found" 
+      });
+    }
+
+    // Update learning progress
+    if (!user.learningProgress) {
+      user.learningProgress = {
+        dsa: { completed: 0, total: 12 },
+        java: { completed: 0, total: 10 },
+        mern: { completed: 0, total: 15 },
+        aiml: { completed: 0, total: 18 }
+      };
+    }
+
+    if (user.learningProgress[track]) {
+      user.learningProgress[track].completed += 1;
+    }
+
+    // Update points
+    user.totalPoints = (user.totalPoints || 0) + pointsEarned;
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Module completed successfully",
+      data: { 
+        totalPoints: user.totalPoints,
+        learningProgress: user.learningProgress
+      }
+    });
+  } catch (error) {
+    console.error('Complete module error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to complete module", 
+      error: error.message 
+    });
+  }
+};
