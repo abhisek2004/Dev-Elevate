@@ -94,7 +94,3 @@ function App() {
 
 export default App;
 
-// Import your new page at the top
-
-
-// ... inside your Router/Routes setup

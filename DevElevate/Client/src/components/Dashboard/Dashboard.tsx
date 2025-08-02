@@ -80,8 +80,7 @@ const Dashboard: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-6">
-            {/* <ProgressWidget />
-            <NewsWidget /> */}
+            {<><ProgressWidget /><NewsWidget /></> }
           </div>
 
           {/* Right Column */}
