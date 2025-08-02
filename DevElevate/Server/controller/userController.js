@@ -100,7 +100,7 @@ export const googleUser = async (req, res) => {
         name,
         email,
         role,
-        password: "google-oauth", 
+        password: "google-oauth", // Dummy password for Google users because in MongoDB User Schema requires a password
       });
       await user.save();
       console.log("New Google user created:", user);
