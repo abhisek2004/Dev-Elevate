@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface ProtectedRouteProps {
@@ -13,22 +13,26 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requireAuth = true,
   requireAdmin = false,
-  redirectTo = '/login'
+  redirectTo = '/login',
 }) => {
   const { state } = useAuth();
+  const location = useLocation();
+  const { isAuthenticated, user } = state;
 
-  // TEMPORARY: Disable all route protection for development
-  // if (requireAuth && !state.isAuthenticated) {
-  //   return <Navigate to={redirectTo} replace />;
-  // }
+  // Not logged in → redirect to login
+  if (requireAuth && !isAuthenticated) {
+    return <Navigate to={redirectTo} state={{ from: location }} replace />;
+  }
 
-  // if (requireAdmin && (!state.user || state.user.role !== 'admin')) {
-  //   return <Navigate to="/" replace />;
-  // }
+  // Admin accessing non-admin routes → redirect to /admin
+  if (!requireAdmin && user?.role === 'admin' && location.pathname !== '/admin') {
+    return <Navigate to="/admin" replace />;
+  }
 
-  // if (!requireAuth && state.isAuthenticated) {
-  //   return <Navigate to="/" replace />;
-  // }
+  // Non-admin accessing admin route → redirect to home (/)
+  if (requireAdmin && user?.role !== 'admin') {
+    return <Navigate to="/" replace />;
+  }
 
   return <>{children}</>;
 };

@@ -83,6 +83,63 @@ export const loginUser = async (req, res) => {
   }
 };
 
+export const googleUser = async (req, res) => {
+  try {
+    console.log("Received Google login request. req.body:", req.body);
+
+    const { name, email, role } = req.body;
+
+    // Check if user already exists
+    let user = await User.findOne({ email });
+    console.log("User found in DB:", user);
+
+    if (!user) {
+      user = new User({
+        name,
+        email,
+        role,
+        password: "google-oauth", // Dummy password for Google users because in MongoDB User Schema requires a password
+      });
+      await user.save();
+      console.log("New Google user created:", user);
+    }
+
+    // JWT token
+    const JWT_SECRET = process.env.JWT_SECRET;
+    const JWT_EXPIRES = "3d";
+    const payLode = { userId: user._id };
+    const token = jwt.sign(payLode, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+    console.log("JWT token generated:", token);
+
+    // Set token in cookie and send response
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
+        maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
+      })
+      .status(200)
+      .json({
+        message: "Google login successful",
+        userId: user._id,
+        token: token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      });
+    console.log("Google login response sent.");
+  } catch (error) {
+    console.error("Google login error:", error);
+    res
+      .status(500)
+      .json({ message: "Something went wrong", error: error.message });
+  }
+};
+
 export const logout = async (req, res) => {
   try {
     const token = req.cookies.token;
