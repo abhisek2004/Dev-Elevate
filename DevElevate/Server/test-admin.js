@@ -15,7 +15,7 @@ console.log('Generated JWT Token:', token);
 // Test creating a log entry
 const testLog = async () => {
   try {
-    const response = await fetch('http://localhost:5000/api/admin/system-log', {
+    const response = await fetch('http://localhost:4000/api/admin/system-log', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const testLog = async () => {
     console.log('Create log response:', data);
 
     // Test getting logs
-    const getResponse = await fetch('http://localhost:5000/api/admin/system-logs?page=1&limit=10', {
+    const getResponse = await fetch('http://localhost:4000/api/admin/system-logs?page=1&limit=10', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,

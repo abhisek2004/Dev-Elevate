@@ -7,7 +7,7 @@ import NewsWidget from "./NewsWidget";
 import QuickActions from "./QuickActions";
 import StreakCalendar from "./StreakCalendar";
 import DailyGoals from "./DailyGoals";
-import axiosInstance from "../../utils/axiosinstance";
+import axios from 'axios';
 
 // Type for dashboard stats response
 interface DashboardStatsResponse {
@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
   // Function to fetch and update dashboard stats
   const fetchStats = async () => {
     try {
-      const res = await axiosInstance.get("/dashboard-stats");
+      const res =await axios.get('/api/admin/dashboard-stats');
       const data = res.data as DashboardStatsResponse;
       if (data.success) {
         dispatch({ type: "SET_DASHBOARD_STATS", payload: data.data });
@@ -132,7 +132,8 @@ const Dashboard: React.FC = () => {
 // Export the refresh function so other components can use it
 export const refreshDashboardStats = async () => {
   try {
-    const res = await axiosInstance.get("/dashboard-stats");
+    const res =await axios.get('/api/admin/dashboard-stats');
+    
     const data = res.data as DashboardStatsResponse;
     if (data.success) {
       // This will be called from other components that need to refresh stats

@@ -7,6 +7,7 @@ const AdminNewsletterSender = () => {
     const [subject, setSubject] = useState('');
     const [body, setBody] = useState('');
     const [targetGroup, setTargetGroup] = useState('all');
+    const [isSending, setIsSending] = useState(false);
 
     const { state: { user } } = useAuth();
     const { setNotifications } = useNotificationContext();
@@ -31,6 +32,8 @@ const AdminNewsletterSender = () => {
 
     const sendNewsletter = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSending(true);
+
         try {
             const response = await instance.post('/api/email/send', {
                 subject,
@@ -46,6 +49,8 @@ const AdminNewsletterSender = () => {
         } catch (error) {
             console.error('Error sending newsletter', error);
             addNotification('Failed to send newsletter.', 'error');
+        } finally {
+            setIsSending(false);
         }
     };
 
@@ -90,9 +95,10 @@ const AdminNewsletterSender = () => {
                 </div>
                 <button
                     type="submit"
-                    className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                    disabled={isSending}
+                    className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    Send Newsletter
+                    {isSending ? 'Sending...' : 'Send Newsletter'}
                 </button>
             </form>
         </div>

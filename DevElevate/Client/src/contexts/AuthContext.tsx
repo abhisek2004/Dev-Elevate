@@ -314,13 +314,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }
       if (data.message === "User registered successfully") {
         // Auto-login after successful registration
-        const loginResponse = await fetch(`${baseUrl}/auth/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        });
+        const loginResponse = await fetch(
+          `${baseUrl}/api/v1/auth/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          }
+        );
 
         const loginData = await loginResponse.json();
 
