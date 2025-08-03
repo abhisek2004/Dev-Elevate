@@ -8,8 +8,6 @@ import {
   FileText,
   Target,
   CreditCard,
-  Moon,
-  Sun,
   Bell,
   Search,
   Menu,
@@ -23,7 +21,11 @@ import SearchModal from "./SearchModal";
 import NotificationPanel from "./NotificationPanel";
 import ProfileDropdown from "./ProfileDropdown";
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  toggleSidebar: () => void;    
+}
+
+const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
   const { state: authState } = useAuth();
   const { state, dispatch } = useGlobalState();
   const location = useLocation();
@@ -43,6 +45,14 @@ const Navbar: React.FC = () => {
     { path: "/projects", icon: Lightbulb, label: "AI Projects" },
     { path: "/payment", icon: CreditCard, label: "Pricing" },
   ];
+
+  useEffect(() => {
+  if (state.darkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+}, [state.darkMode]);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -76,7 +86,7 @@ const Navbar: React.FC = () => {
             : "bg-white border-gray-200"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
@@ -95,27 +105,7 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-1">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                      isActive(item.path)
-                        ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 shadow-sm"
-                        : state.darkMode
-                        ? "text-gray-300 hover:text-white hover:bg-gray-800"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span className="hidden xl:block">{item.label}</span>
-                  </Link>
-                );
-              })}
-            </div>
+          
 
             {/* Right side actions */}
             <div className="flex items-center space-x-2">
@@ -153,21 +143,6 @@ const Navbar: React.FC = () => {
               </button>
 
               {/* Dark mode toggle */}
-              <button
-                onClick={() => dispatch({ type: "TOGGLE_DARK_MODE" })}
-                className={`p-2 rounded-lg transition-colors ${
-                  state.darkMode
-                    ? "hover:bg-gray-800 text-gray-400 hover:text-white"
-                    : "hover:bg-gray-100 text-gray-600 hover:text-gray-900"
-                }`}
-                title="Toggle theme"
-              >
-                {state.darkMode ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </button>
 
               {/* User Profile */}
               <div className="relative">

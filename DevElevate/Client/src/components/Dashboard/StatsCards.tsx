@@ -4,18 +4,17 @@ import { useGlobalState } from '../../contexts/GlobalContext';
 
 const StatsCards: React.FC = () => {
   const { state } = useGlobalState();
-
   const stats = [
     {
       title: 'Total Points',
-      value: state.user?.totalPoints || 0,
+      value: state.dashboardStats?.totalPoints ?? 0,
       icon: Award,
       color: 'from-blue-500 to-cyan-500',
       textColor: 'text-blue-600'
     },
     {
       title: 'Current Streak',
-      value: state.user?.streak || 0,
+      value: state.dashboardStats?.currentStreak ?? 0,
       icon: Calendar,
       color: 'from-green-500 to-teal-500',
       textColor: 'text-green-600',
@@ -23,14 +22,14 @@ const StatsCards: React.FC = () => {
     },
     {
       title: 'Completed Goals',
-      value: state.completedGoals.length,
+      value: state.dashboardStats?.completedGoals ?? 0,
       icon: Target,
       color: 'from-purple-500 to-pink-500',
       textColor: 'text-purple-600'
     },
     {
       title: 'Learning Progress',
-      value: Object.keys(state.learningProgress).length,
+      value: state.dashboardStats?.totalModulesCompleted ?? 0,
       icon: TrendingUp,
       color: 'from-orange-500 to-red-500',
       textColor: 'text-orange-600',
@@ -54,12 +53,8 @@ const StatsCards: React.FC = () => {
                 <Icon className="w-6 h-6 text-white" />
               </div>
               <div className="text-right">
-                <p className={`text-2xl font-semibold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                  {stat.value}{stat.suffix || ''}
-                </p>
-                <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {stat.title}
-                </p>
+                <p className={`text-2xl font-semibold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>{stat.value}{stat.suffix || ''}</p>
+                <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{stat.title}</p>
               </div>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">

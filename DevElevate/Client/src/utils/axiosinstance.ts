@@ -14,51 +14,72 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-instance.interceptors.request.use(
-  (config) => {
-    // Correctly get the entire auth state string from localStorage
-    const authStateString = localStorage.getItem("devElevateAuth");
-    let token = null;
-
-    if (authStateString) {
-      try {
-        // Parse the JSON string to get the state object
-        const authState: AuthStateInStorage = JSON.parse(authStateString);
-        // Extract the sessionToken
-        token = authState.sessionToken;
-      } catch (error) {
-        console.error("Error parsing auth state from localStorage:", error);
+// Helper function to add auth token to requests
+const addAuthToken = (config: any) => {
+  try {
+    const authData = localStorage.getItem('devElevateAuth');
+    if (authData) {
+      const parsedAuth = JSON.parse(authData);
+      if (parsedAuth.sessionToken) {
+        config.headers.Authorization = `Bearer ${parsedAuth.sessionToken}`;
       }
     }
-
-    // Ensure headers exists before assigning Authorization
-    config.headers = config.headers || {};
-
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-      console.log("✅ Authorization token attached:", config.headers.Authorization);
-    } else {
-      console.warn("⚠️ No authorization token found. This request may fail.");
-    }
-
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
-instance.interceptors.response.use(
-  response => response,
-  error => {
-    console.error("Axios error config:", error.config);
-    console.error("Axios error response:", error.response?.data || error.message);
-    
-    if (error.response?.status === 401) {
-      console.warn('Unauthorized. Please login again.');
-    } else if (error.response?.status === 403) {
-        console.warn('Forbidden. You do not have the necessary permissions for this action.');
-    }
-    return Promise.reject(error);
+  } catch (error) {
+    console.error('Error adding auth token:', error);
   }
-);
+  return config;
+};
+
+// Add auth token to all requests
+instance.interceptors.request.use(addAuthToken);
+
+// API functions for updating dashboard stats
+export const updateUserPoints = async (points: number) => {
+  try {
+    const response = await instance.post('/update-points', { points });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating points:', error);
+    throw error;
+  }
+};
+
+export const updateLearningProgress = async (track: string, moduleId: string, completed: boolean) => {
+  try {
+    const response = await instance.post('/update-learning-progress', { 
+      track, 
+      moduleId, 
+      completed 
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating learning progress:', error);
+    throw error;
+  }
+};
+
+export const updateCompletedGoals = async (completed: boolean) => {
+  try {
+    const response = await instance.post('/update-completed-goals', { completed });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating completed goals:', error);
+    throw error;
+  }
+};
+
+export const completeModule = async (track: string, moduleId: string, pointsEarned: number = 50) => {
+  try {
+    const response = await instance.post('/complete-module', { 
+      track, 
+      moduleId, 
+      pointsEarned 
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error completing module:', error);
+    throw error;
+  }
+};
 
 export default instance;

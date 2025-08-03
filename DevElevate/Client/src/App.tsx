@@ -1,7 +1,12 @@
 import { AuthProvider } from './contexts/AuthContext';
 import { GlobalProvider } from './contexts/GlobalContext';
 import { NotificationProvider } from './contexts/NotificationContext';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
 import ScrollToTop from './components/Layout/ScrollToTop';
@@ -24,6 +29,9 @@ import Settings from './components/Settings/Settings';
 import PremiumPage from './components/premium/PremiumPage';
 import PaymentPage from './components/Payment/PaymentPage';
 import ProjectRecommender from './components/ProjectRecommender/ProjectRecommender';
+import Layout from "./components/Layout/Layout";
+import Post from "./components/NewsPost/Post";
+import AddPost from "./components/NewsPost/AddPost";
 import AdminNewsletterSender from './components/Newsletter/AdminNewsletterSender';
 import NewsletterLogs from "./components/Newsletter/NewsletterLogs";
 
@@ -44,7 +52,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               {/* Protected Routes */}
               <Route
                 path="/*"
@@ -55,6 +62,10 @@ function App() {
                       <main className="flex-1">
                         <Routes>
                           <Route path="/" element={<Dashboard />} />
+                          <Route
+                              path="*"
+                              element={<Navigate to="/" replace />}
+                            />
                           <Route path="/learning" element={<LearningHub />} />
                           <Route path="/chatbot" element={<Chatbot />} />
                           <Route path="/news" element={<TechFeed />} />
@@ -69,6 +80,8 @@ function App() {
                           <Route path="/terms" element={<TermsOfService />} />
                           <Route path="/creator" element={<CreatorPage />} />
                           <Route path="/disclaimer" element={<Disclaimer />} />
+                          <Route path="/news/:newsId" element={<Post/>} />
+                          <Route path="news/add-post" element={<AddPost/>}/>
                           <Route path="/admin/newsletter/send" element={<AdminNewsletterSender />} />
                           <Route path="/admin/newsletter/logs" element={<NewsletterLogs />} />
                         </Routes>

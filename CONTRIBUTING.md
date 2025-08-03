@@ -9,6 +9,9 @@ DevElevate is built to empower students, developers, and career seekers with int
 
 Please also make sure to read and follow our [Code of Conduct](CODE_OF_CONDUCT.md). 💖
 
+> 🗺️ **Want an architecture overview or onboarding tips? Check out [LEARN.md](LEARN.md) for a detailed contributor roadmap!**
+
+
 ---
 
 ## 📌 Contribution Philosophy

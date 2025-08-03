@@ -103,6 +103,19 @@ export interface Notification {
   type?: string;
 }
 
+export interface DashboardStats {
+  totalPoints: number;
+  currentStreak: number;
+  completedGoals: number;
+  learningProgress: {
+    dsa: { completed: number; total: number };
+    java: { completed: number; total: number };
+    mern: { completed: number; total: number };
+    aiml: { completed: number; total: number };
+  };
+  totalModulesCompleted: number;
+}
+
 export interface GlobalState {
   user: User | null;
   learningProgress: LearningProgress;
@@ -116,7 +129,8 @@ export interface GlobalState {
   dailyGoals: string[];
   completedGoals: string[];
   streakData: { [date: string]: boolean };
-  notifications: Notification[]; // <-- Added notifications property
+  notifications: Notification[];
+  dashboardStats?: DashboardStats;
 }
 
 // Actions
@@ -144,6 +158,7 @@ type GlobalAction =
   | { type: "MARK_NOTIFICATION_READ"; payload: string }
   | { type: "MARK_ALL_NOTIFICATIONS_READ" }
   | { type: "SET_NOTIFICATIONS"; payload: Notification[] }
+  | { type: "SET_DASHBOARD_STATS"; payload: DashboardStats };
 
 // Initial state
 const initialState: GlobalState = {
@@ -178,6 +193,7 @@ const initialState: GlobalState = {
   completedGoals: [],
   streakData: {},
   notifications: [], // <-- Initialize notifications as empty array
+  dashboardStats: undefined,
 };
 
 // Reducer
@@ -330,6 +346,9 @@ const globalReducer = (
         ...state,
         notifications: action.payload,
       };
+
+    case "SET_DASHBOARD_STATS":
+      return { ...state, dashboardStats: action.payload };
 
     default:
       return state;
