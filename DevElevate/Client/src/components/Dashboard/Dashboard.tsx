@@ -8,6 +8,8 @@ import QuickActions from './QuickActions';
 import StreakCalendar from './StreakCalendar';
 import DailyGoals from './DailyGoals';
 import { User } from '../../contexts/GlobalContext';
+import { demoNewsItems } from "../../components/News/DemoNews";
+
 
 const Dashboard: React.FC = () => {
   const { state: authState } = useAuth();
@@ -27,39 +29,41 @@ const Dashboard: React.FC = () => {
       };
       dispatch({ type: 'SET_USER', payload: defaultUser });
     }
-
+}, [state.user, state.newsItems.length, dispatch]);
     // Initialize sample news items
+  //   if (state.newsItems.length === 0) {
+  //     const sampleNews = [
+  //       {
+  //         id: '1',
+  //         title: 'React 18.3 Released with New Features',
+  //         summary: 'Latest React version brings performance improvements and new hooks',
+  //         url: '#',
+  //         publishDate: new Date().toISOString(),
+  //         category: 'tech' as const
+  //       },
+  //       {
+  //         id: '2',
+  //         title: 'Google Summer Internship 2024',
+  //         summary: 'Applications open for software engineering internships',
+  //         url: '#',
+  //         publishDate: new Date().toISOString(),
+  //         category: 'internships' as const
+  //       },
+  //       {
+  //         id: '3',
+  //         title: 'AI/ML Engineer Positions at Microsoft',
+  //         summary: 'Multiple openings for machine learning specialists',
+  //         url: '#',
+  //         publishDate: new Date().toISOString(),
+  //         category: 'jobs' as const
+  //       }
+  //     ];
+  //     dispatch({ type: 'UPDATE_NEWS', payload: sampleNews });
+  //   }
+  // }, [state.user, state.newsItems.length, dispatch]);
     if (state.newsItems.length === 0) {
-      const sampleNews = [
-        {
-          id: '1',
-          title: 'React 18.3 Released with New Features',
-          summary: 'Latest React version brings performance improvements and new hooks',
-          url: '#',
-          publishDate: new Date().toISOString(),
-          category: 'tech' as const
-        },
-        {
-          id: '2',
-          title: 'Google Summer Internship 2024',
-          summary: 'Applications open for software engineering internships',
-          url: '#',
-          publishDate: new Date().toISOString(),
-          category: 'internships' as const
-        },
-        {
-          id: '3',
-          title: 'AI/ML Engineer Positions at Microsoft',
-          summary: 'Multiple openings for machine learning specialists',
-          url: '#',
-          publishDate: new Date().toISOString(),
-          category: 'jobs' as const
-        }
-      ];
-      dispatch({ type: 'UPDATE_NEWS', payload: sampleNews });
+      dispatch({type: 'UPDATE_NEWS', payload: demoNewsItems} );
     }
-  }, [state.user, state.newsItems.length, dispatch]);
-
   return (
     <div className={`min-h-screen transition-colors duration-300  ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

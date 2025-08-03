@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, ExternalLink, Filter, Search, Bookmark, BookmarkCheck } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { format } from 'date-fns';
+import { demoNewsItems } from "../../components/News/DemoNews";
+
 
 const TechFeed: React.FC = () => {
   const { state, dispatch } = useGlobalState();
@@ -16,60 +18,11 @@ const TechFeed: React.FC = () => {
     { id: 'events', label: 'Events', count: state.newsItems.filter(item => item.category === 'events').length }
   ];
 
-  const sampleNewsItems = [
-    {
-      id: '1',
-      title: 'React 18.3 Released with New Concurrent Features',
-      summary: 'The latest React version brings improved performance with concurrent rendering and automatic batching capabilities.',
-      url: '#',
-      publishDate: new Date().toISOString(),
-      category: 'tech' as const
-    },
-    {
-      id: '2',
-      title: 'Google Software Engineer Intern - Summer 2024',
-      summary: 'Applications are now open for software engineering internships at Google. Deadline: March 15th.',
-      url: '#',
-      publishDate: new Date(Date.now() - 86400000).toISOString(),
-      category: 'internships' as const
-    },
-    {
-      id: '3',
-      title: 'Microsoft Hiring 500+ AI Engineers',
-      summary: 'Microsoft is expanding its AI division with opportunities for machine learning engineers and AI researchers.',
-      url: '#',
-      publishDate: new Date(Date.now() - 172800000).toISOString(),
-      category: 'jobs' as const
-    },
-    {
-      id: '4',
-      title: 'DevFest 2024 - Global Developer Conference',
-      summary: 'Join developers worldwide for the biggest tech conference of the year. Virtual and in-person options available.',
-      url: '#',
-      publishDate: new Date(Date.now() - 259200000).toISOString(),
-      category: 'events' as const
-    },
-    {
-      id: '5',
-      title: 'OpenAI Introduces GPT-4 Turbo with Vision',
-      summary: 'New multimodal capabilities allow GPT-4 to understand and generate content from images and text.',
-      url: '#',
-      publishDate: new Date(Date.now() - 345600000).toISOString(),
-      category: 'tech' as const
-    },
-    {
-      id: '6',
-      title: 'Amazon SDE Positions - Multiple Locations',
-      summary: 'Amazon is hiring software development engineers across Seattle, Austin, and remote positions.',
-      url: '#',
-      publishDate: new Date(Date.now() - 432000000).toISOString(),
-      category: 'jobs' as const
-    }
-  ];
+  
 
   useEffect(() => {
     if (state.newsItems.length === 0) {
-      dispatch({ type: 'UPDATE_NEWS', payload: sampleNewsItems });
+      dispatch({ type: 'UPDATE_NEWS', payload: demoNewsItems });
     }
   }, [state.newsItems.length, dispatch]);
 
