@@ -34,7 +34,23 @@ export const getAllQuizzes = async (req, res) => {
   }
 };
 
+export const getQuizById = async (req, res) => {
+  try {
+    const { quizId } = req.params;
+    const quiz = await Quiz.findById(quizId)
+      .populate("questions")
+      .populate("createdBy", "username email");
+      
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
 
+    res.status(200).json(quiz);
+  } catch (error) {
+    console.error("Error fetching quiz by ID:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
 // Update quiz metadata only
 export const updateQuizInfo = async (req, res) => {

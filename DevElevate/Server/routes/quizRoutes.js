@@ -8,6 +8,7 @@ import {
   addQuestion,
   updateQuestion,
   deleteQuestion,
+  getQuizById,
 } from "../controller/quizController.js";
 import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
 import {  getAllSubmissionsDetailed } from "../controller/submissionController.js";
@@ -28,5 +29,6 @@ router.post("/:quizId/questions", addQuestion);
 router.put("/:quizId/questions/:questionId", updateQuestion);
 router.delete("/:quizId/questions/:questionId", deleteQuestion);
 router.get("/submissions",getAllSubmissionsDetailed)
+router.get("/:quizId",getQuizById)
 
 export default router;

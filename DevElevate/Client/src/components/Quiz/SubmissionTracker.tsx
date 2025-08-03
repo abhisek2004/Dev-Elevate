@@ -68,7 +68,7 @@ const SubmissionTracker: React.FC<SubmissionTrackerProps> = ({ darkMode }) => {
         <p className="text-gray-500">No quizzes found.</p>
       )}
 
-      {data.map((quizBlock) => (
+      {Array.isArray(data) && data.map((quizBlock) => (
         <div key={quizBlock.quizId} className={`rounded-xl border shadow p-6 ${darkMode ? 'border-gray-700 bg-gray-900' : 'bg-white'}`}>
           <h3 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{quizBlock.quiz}</h3>
           <p className="text-sm text-gray-400 mb-4">Topic: {quizBlock.topic || 'N/A'} | Type: {quizBlock.type}</p>

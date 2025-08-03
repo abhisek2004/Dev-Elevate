@@ -1,8 +1,8 @@
 // NOTE: This version fully connects to backend update/add/delete question APIs
 // Uses:
-// PUT    /admin/quiz/:id             -> update quiz metadata
-// POST   /admin/quiz/:quizId/questions         -> add question
-// PUT    /admin/quiz/:quizId/questions/:questionId -> update question
+// PUT     /admin/quiz/:id            -> update quiz metadata
+// POST    /admin/quiz/:quizId/questions          -> add question
+// PUT     /admin/quiz/:quizId/questions/:questionId -> update question
 // DELETE /admin/quiz/:quizId/questions/:questionId -> delete question
 
 import React, { useEffect, useState } from 'react';
@@ -64,7 +64,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ initialData, onClose, onSaved, dark
           : { questionText: '', expectedOutput: '', isNew: true },
       ]);
     }
-  }, [initialData]);
+  }, [initialData, type]);
 
   const handleChange = (index: number, field: keyof QuizQuestion, value: any) => {
     setQuestions(prev => prev.map((q, i) => i === index ? { ...q, [field]: value } : q));
@@ -90,17 +90,17 @@ const QuizForm: React.FC<QuizFormProps> = ({ initialData, onClose, onSaved, dark
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !difficulty || !type || !level) return alert('Missing required quiz details');
+    if (!title || !difficulty || !type) return alert('Missing required quiz details');
 
     setSaving(true);
     try {
       let quizId = initialData?.id;
       if (initialData) {
-        await instance.put(`/admin/quiz/${quizId}`, { title, topic, difficulty, level, type }, {
+        await instance.put(`/admin/quiz/${quizId}`, { title, topic, difficulty, type, level }, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
       } else {
-        const res = await instance.post('/admin/quiz', { title, topic, difficulty, level, type }, {
+        const res = await instance.post('/admin/quiz', { title, topic, difficulty, type, level }, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         quizId = res.data.quiz._id;
@@ -121,6 +121,9 @@ const QuizForm: React.FC<QuizFormProps> = ({ initialData, onClose, onSaved, dark
           });
         }
       }
+      
+      // Dispatch the custom event to trigger a re-fetch in the QuizList component
+      window.dispatchEvent(new CustomEvent('quiz-updated'));
 
       onSaved?.();
       onClose();
@@ -157,9 +160,6 @@ const QuizForm: React.FC<QuizFormProps> = ({ initialData, onClose, onSaved, dark
           <input value={topic} onChange={e => setTopic(e.target.value)} placeholder="Topic" disabled={saving}
             className="w-full mb-3 p-2 border rounded" />
 
-          <input value={level} onChange={e => setLevel(e.target.value)} placeholder="Level" required disabled={saving}
-            className="w-full mb-3 p-2 border rounded" />
-
           <select value={difficulty} onChange={e => setDifficulty(e.target.value as any)} required disabled={saving}
             className="w-full mb-3 p-2 border rounded">
             <option value="">Select difficulty</option>
@@ -167,7 +167,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ initialData, onClose, onSaved, dark
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
           </select>
-
+          
           <select value={type} onChange={e => setType(e.target.value as 'MCQ' | 'Code')} disabled={!!initialData || saving}
             className="w-full mb-3 p-2 border rounded">
             <option value="MCQ">MCQ</option>
