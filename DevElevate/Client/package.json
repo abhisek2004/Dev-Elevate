@@ -18,12 +18,17 @@
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "firebase": "^12.0.0",
     "framer-motion": "^12.23.0",
     "jspdf": "^3.0.1",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+<<<<<<< HEAD
     "react-infinite-scroll-component": "^6.1.0",
+=======
+    "react-icons": "^5.5.0",
+>>>>>>> upstream/main
     "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.7.0",
