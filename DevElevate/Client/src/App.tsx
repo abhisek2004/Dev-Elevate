@@ -30,6 +30,7 @@ import PremiumPage from "./components/premium/PremiumPage";
 import PaymentPage from "./components/Payment/PaymentPage";
 import ProjectRecommender from "./components/ProjectRecommender/ProjectRecommender";
 import Layout from "./components/Layout/Layout";
+import Technews from "./pages/technews/technews"
 function App() {
   return (
     <AuthProvider>
@@ -64,7 +65,7 @@ function App() {
                             />
                             <Route path="/learning" element={<LearningHub />} />
                             <Route path="/chatbot" element={<Chatbot />} />
-                            <Route path="/news" element={<TechFeed />} />
+                            <Route path="/news" element={<Technews />} />
                             <Route path="/resume" element={<ResumeBuilder />} />
                             <Route
                               path="/placement"
