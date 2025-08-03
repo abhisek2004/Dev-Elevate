@@ -1,7 +1,10 @@
+// File: controller/emailController.js
 import nodemailer from "nodemailer";
-import EmailLog from "../model/EmailLog.js";
-import User from "../model/UserModel.js";
+import EmailLog from "../model/EmailLog.js"; // Correct path to your model
+import User from "../model/UserModel.js"; // Correct path to your user model
 import dotenv from "dotenv";
+
+dotenv.config();
 
 export const sendNewsletter = async (req, res) => {
   try {
@@ -20,10 +23,11 @@ export const sendNewsletter = async (req, res) => {
       console.error("❌ ERROR: Email credentials (EMAIL_USER or EMAIL_PASS) not found in .env file.");
       return res.status(500).json({ success: false, message: "Server configuration error: Email credentials missing." });
     }
+
     let userFilter = {};
     if (targetGroup === 'newsletter_subscribers') {
         userFilter = { isSubscribed: true };
-    } else if (targetGroup === 'admin_users') { 
+    } else if (targetGroup === 'admin_users') {
         userFilter = { role: 'admin' };
     } else {
         userFilter = {};
@@ -33,7 +37,7 @@ export const sendNewsletter = async (req, res) => {
     const recipients = users.map(user => user.email);
 
     if (recipients.length === 0) {
-      console.error(" No recipients found for the selected group. Email not sent.");
+      console.error("No recipients found for the selected group. Email not sent.");
       return res.status(400).json({ success: false, message: "No recipients found for the selected group." });
     }
 
@@ -60,13 +64,13 @@ export const sendNewsletter = async (req, res) => {
     const info = await transporter.sendMail(mailOptions);
     console.log("Newsletter sent successfully:", info.messageId);
 
+    // Create and save the log entry
     const log = new EmailLog({
       subject,
       content,
-      recipients,
+      recipients, // Recipients is an array of strings, as defined in your schema
       sentBy: senderId,
     });
-
     await log.save();
 
     res.status(200).json({ success: true, message: "Newsletter sent!" });
@@ -78,7 +82,10 @@ export const sendNewsletter = async (req, res) => {
 
 export const getEmailLogs = async (req, res) => {
   try {
-    const logs = await EmailLog.find().populate("sentBy", "name email").sort({ sentAt: -1 });
+    const logs = await EmailLog.find()
+      .populate("sentBy", "name email") // Populate the sentBy field with the user's name and email
+      .sort({ sentAt: -1 });
+
     res.status(200).json({ success: true, logs });
   } catch (error) {
     console.error("Error fetching logs", error);

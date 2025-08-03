@@ -1,15 +1,21 @@
+// File: Client/src/components/Admin/AdminNewsletterSender.tsx
 import React, { useState } from 'react';
 import instance from '../../utils/axiosinstance';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNotificationContext, Notification } from '../../contexts/NotificationContext';
+// Import ReactQuill and its styles for the rich text editor
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const AdminNewsletterSender = () => {
     const [subject, setSubject] = useState('');
-    const [body, setBody] = useState('');
+    // State for the rich text editor content
+    const [content, setContent] = useState('');
     const [targetGroup, setTargetGroup] = useState('all');
+    // New state to manage the sending status
     const [isSending, setIsSending] = useState(false);
-
-    const { state: { user } } = useAuth();
+    
+    const { state: { user } } = useAuth(); 
     const { setNotifications } = useNotificationContext();
 
     const addNotification = (message: string, type: 'success' | 'error' | 'info') => {
@@ -32,25 +38,24 @@ const AdminNewsletterSender = () => {
 
     const sendNewsletter = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSending(true);
-
+        setIsSending(true); // Set sending state to true
         try {
-            const response = await instance.post('/api/email/send', {
-                subject,
-                content: body,
+            const response = await instance.post('/api/email/send', { 
+                subject, 
+                content,
                 targetGroup
             });
 
             addNotification('Newsletter sent successfully!', 'success');
             console.log('Newsletter sent:', response.data);
             setSubject('');
-            setBody('');
+            setContent(''); // Clears the rich text editor content
             setTargetGroup('all');
         } catch (error) {
-            console.error('Error sending newsletter', error);
+            console.error('❌ Error sending newsletter', error);
             addNotification('Failed to send newsletter.', 'error');
         } finally {
-            setIsSending(false);
+            setIsSending(false); // Reset sending state regardless of outcome
         }
     };
 
@@ -70,9 +75,20 @@ const AdminNewsletterSender = () => {
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="group" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Target Group</label>
+                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Body</label>
+                    <div className="mt-1">
+                        <ReactQuill 
+                            theme="snow" 
+                            value={content} 
+                            onChange={setContent} 
+                            className="bg-white dark:bg-gray-700 rounded-md"
+                        />
+                    </div>
+                </div>
+                <div className="mb-6">
+                    <label htmlFor="targetGroup" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Target Group</label>
                     <select
-                        id="group"
+                        id="targetGroup"
                         value={targetGroup}
                         onChange={(e) => setTargetGroup(e.target.value)}
                         className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-100 focus:ring focus:ring-blue-200 focus:border-blue-500"
@@ -82,21 +98,10 @@ const AdminNewsletterSender = () => {
                         <option value="admin_users">Admin Users</option>
                     </select>
                 </div>
-                <div className="mb-4">
-                    <label htmlFor="body" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Body</label>
-                    <textarea
-                        id="body"
-                        value={body}
-                        onChange={(e) => setBody(e.target.value)}
-                        rows={10}
-                        className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-100 focus:ring focus:ring-blue-200 focus:border-blue-500"
-                        required
-                    ></textarea>
-                </div>
                 <button
                     type="submit"
-                    disabled={isSending}
                     className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isSending} // Disable the button while sending
                 >
                     {isSending ? 'Sending...' : 'Send Newsletter'}
                 </button>
