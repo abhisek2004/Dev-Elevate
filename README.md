@@ -159,12 +159,6 @@ To help learners and aspiring professionals master skills like DSA, Java, MERN S
 
 ---
 
-### 📌 **Click on the section below to view full project details:**
-
-<details>
-
- <summary>🔍 Full Project Description – DevElevate</summary>
-
 ## ⚠️ **🚨 All Pages Below Are Mandatory and Must Be Fully Functional Without Bugs**
 
 > ⚙️ **Each page must be implemented with complete functionality, bug-free execution, proper routing, clean UI/UX, and complete backend integration.**
@@ -613,7 +607,6 @@ Includes:
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-</details>
 
 ### 🙌 **Thank You, Contributors!**
 

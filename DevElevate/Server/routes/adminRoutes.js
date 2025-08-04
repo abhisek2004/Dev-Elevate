@@ -1,16 +1,20 @@
 import express from "express";
 import { 
   createAdminLog, 
-  getAdminLogs
+  getAdminLogs,getAllUserRegister
 } from "../controller/adminLogController.js";
 import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
 
+
 const router = express.Router();
 
-router.use(authenticateToken, requireAdmin);
 
-router.post("/system-log", createAdminLog);
+router.post("/system-log",authenticateToken,requireAdmin, createAdminLog);
 
-router.get("/system-logs", getAdminLogs);
+router.get("/system-logs",authenticateToken,requireAdmin, getAdminLogs);
+
+router.get("/all-users",authenticateToken,requireAdmin,getAllUserRegister)
+
+
 
 export default router;

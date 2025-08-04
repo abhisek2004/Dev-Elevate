@@ -1,11 +1,20 @@
 import express from "express";
-import { createCourse, editCourse, deleteCourse, getAllCourses } from "../controller/courseController.js";
-import { requireAdmin } from "../middleware/authMiddleware.js";
 const router = express.Router();
+import { requireAdmin } from "../middleware/authMiddleware.js";
+import { createCourse, deleteCourse, editCourse, getAllCourses } from"../controller/courseController.js"
 
-router.route("/").post(requireAdmin, createCourse);
-router.route("/").get(requireAdmin, getAllCourses);
-router.route("/:courseId").delete(requireAdmin, deleteCourse);
-router.route("/:courseId/module/:moduleId").post(requireAdmin, editCourse);
+
+
+// Create a new course
+router.post("/", requireAdmin, createCourse);
+
+// Get all courses
+router.get("/", requireAdmin, getAllCourses);
+
+// Delete a specific course
+router.delete("/:courseId", requireAdmin, deleteCourse);
+
+// Edit a module inside a specific course
+router.post("/:courseId/module/:moduleId", requireAdmin, editCourse);
 
 export default router;

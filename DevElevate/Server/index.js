@@ -36,15 +36,19 @@ app.use(cookieParser());
 app.set('trust proxy', true);
 
 // Routes
+// USER ROUTES
 app.use("/api/v1", userRoutes);
 
 
-app.use("/api/admin", adminRoutes);
-app.use("/api/admin/courses", courseRoutes);
-app.use('/admin', adminFeedbackRoutes);
 
 
-app.use("/",userRoutes)
+
+// ADMIN ROUTES
+app.use("/api/v1/admin", adminRoutes); // general admin stuff like login, profile
+app.use("/api/v1/admin/courses", courseRoutes); // course create/delete/edit
+app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
+
+
 
 
 // Sample Usage of authenticate and authorize middleware for roleBased Features

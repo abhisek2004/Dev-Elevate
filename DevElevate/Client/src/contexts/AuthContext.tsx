@@ -212,10 +212,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     dispatch({ type: "LOGIN_START" });
     try {
       // Make API call to backend login endpoint
-      console.log(baseUrl);
-      
-      const response = await fetch(`${baseUrl}/auth/login`, {
+       const response = await fetch(`${baseUrl}/auth/login`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -286,11 +285,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-
-
-
-
-
   const register = async (
     name: string,
     email: string,
@@ -303,6 +297,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       // Make API call to backend register endpoint
       const response = await fetch(`${baseUrl}/auth/signup`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -323,6 +318,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           `${baseUrl}/api/v1/auth/login`,
           {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
@@ -385,14 +381,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       });
     }
   };
-
-
-
-
-
-
-
-
   const logout = () => {
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("devElevateAuth");

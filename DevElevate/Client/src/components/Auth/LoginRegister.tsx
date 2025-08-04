@@ -117,6 +117,8 @@ const LoginRegister: React.FC = () => {
     }
   };
 
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     dispatch({ type: "CLEAR_ERROR" });
@@ -438,4 +440,4 @@ const LoginRegister: React.FC = () => {
   );
 };
 
-export default LoginRegister;
+export default LoginRegister

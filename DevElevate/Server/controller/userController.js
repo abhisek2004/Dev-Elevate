@@ -100,7 +100,9 @@ export const loginUser = async (req, res) => {
 // GOOGLE LOGIN USER
 export const googleUser = async (req, res) => {
   try {
+
     console.log("[GOOGLE LOGIN] Request received:", req.body);
+
     const { name, email, role } = req.body;
 
     let user = await User.findOne({ email });
@@ -182,8 +184,10 @@ export const logout = async (req, res) => {
 // TRACK CURRENT STREAK OF DAILY VISITS
 export const currentStreak = async (req, res) => {
   try {
+
     console.log("[STREAK] Checking streak for user:", req.user);
-    const userId = req.user._id.toString();
+    const userId = req.user._id.toString();   
+    console.log(userId);
 
     const user = await User.findById(userId).populate("dayStreak");
     if (!user) {

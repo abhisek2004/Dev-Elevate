@@ -1,13 +1,13 @@
 import { AuthProvider } from "./contexts/AuthContext";
 import { GlobalProvider } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
+import { AdminProvider } from "./contexts/AdminContext";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import ScrollToTop from "./components/Layout/ScrollToTop";
 import LearningHub from "./components/LearningHub/LearningHub";
@@ -30,6 +30,7 @@ import PremiumPage from "./components/premium/PremiumPage";
 import PaymentPage from "./components/Payment/PaymentPage";
 import ProjectRecommender from "./components/ProjectRecommender/ProjectRecommender";
 import Layout from "./components/Layout/Layout";
+
 function App() {
   return (
     <AuthProvider>
@@ -102,7 +103,9 @@ function App() {
                 path="/admin"
                 element={
                   <ProtectedRoute requireAdmin={true}>
-                    <AdminDashboard />
+                    <AdminProvider>
+                      <AdminDashboard />
+                    </AdminProvider>
                   </ProtectedRoute>
                 }
               />
@@ -110,7 +113,9 @@ function App() {
                 path="/admin/logs"
                 element={
                   <ProtectedRoute requireAdmin={true}>
-                    <AdminSystemLogs />
+                    <AdminProvider>
+                      <AdminSystemLogs />
+                    </AdminProvider>
                   </ProtectedRoute>
                 }
               />

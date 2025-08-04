@@ -1,4 +1,5 @@
 import AdminLog from "../model/AdminLog.js";
+import User from "../model/UserModel.js";
 
 // CREATE A NEW ADMIN LOG ENTRY
 export const createAdminLog = async (req, res) => {
@@ -16,6 +17,7 @@ export const createAdminLog = async (req, res) => {
           "Missing required fields: actionType, userId, userRole, message",
       });
     }
+
 
     // GET IP ADDRESS AND USER AGENT FROM REQUEST
     const ipAddress =
@@ -113,6 +115,7 @@ export const getAdminLogs = async (req, res) => {
     const hasNextPage = parseInt(page) < totalPages;
     const hasPrevPage = parseInt(page) > 1;
 
+
     // TRANSFORM LOGS TO MATCH FRONTEND EXPECTED FORMAT
     const transformedLogs = logs.map((log) => ({
       _id: log._id,
@@ -151,6 +154,34 @@ export const getAdminLogs = async (req, res) => {
       success: false,
       message: "Failed to fetch admin logs",
       error: error.message,
+
+    });
+  }
+};
+
+//Get all-user in the  database
+export const getAllUserRegister = async (req, res) => {
+  try {
+    console.log("hello - fetching all registered users");
+
+    const users = await User.find().sort({ createdAt: -1 });
+    const totalUsers = await User.countDocuments({ role: "user" });
+    const totalAdmins = await User.countDocuments({ role: "admin" });
+
+    res.status(200).json({
+      success: true,
+      message: "All registered users fetched successfully",
+      totalUsers,
+      users,
+      totalAdmins,
+    });
+  } catch (error) {
+    console.error("Error fetching users:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch users",
+      error: error.message,
+
     });
   }
 };

@@ -16,10 +16,8 @@ router.post("/auth/login", loginUser);
 router.get("/logout", authenticateToken, logout);
 router.post("/auth/google", googleUser);
 router.post("/feedback", authenticateToken, feedback);
+router.get("/user/streak",authenticateToken,currentStreak)
 
 
-
-
-router.get("/", authenticateToken, currentStreak);
 
 export default router;
