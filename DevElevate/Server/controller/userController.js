@@ -58,13 +58,13 @@ export const loginUser = async (req, res) => {
 
     console.log("token from login: ", token)
     // Set token in cookie
-    res
-      .cookie("accessToken", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // true in production
-        sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax", // CSRF protection
-        maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days in ms
-      })
+  res.cookie("token", token, {
+  httpOnly: true,
+  secure: true, // Always true in production (Render is HTTPS)
+  sameSite: "None", // ✅ Needed for cross-origin cookies (Vercel ↔ Render)
+  maxAge: 3 * 24 * 60 * 60 * 1000,
+})
+
       .status(200)
       .json({
         message: "Login successful",
@@ -87,7 +87,6 @@ export const loginUser = async (req, res) => {
 
 export const googleUser = async (req, res) => {
   try {
-    console.log("Received Google login request. req.body:", req.body);
 
     const { name, email, role } = req.body;
 
@@ -100,7 +99,7 @@ export const googleUser = async (req, res) => {
         name,
         email,
         role,
-        password: "google-oauth", 
+        password: "google-oauth", // Dummy password for Google users because in MongoDB User Schema requires a password
       });
       await user.save();
       console.log("New Google user created:", user);
@@ -169,7 +168,11 @@ export const logout = async (req, res) => {
 
 export const currentStreak = async (req, res) => {
   try {
-    const { userId } = req.user;
+    console.log(req.user);
+    
+    const userId = req.user._id.toString();
+    console.log(userId);
+    
     const user = await User.findById(userId).populate("dayStreak");
 
     if (!user) {

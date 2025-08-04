@@ -23,21 +23,9 @@ router.post("/auth/login", loginUser);
 router.get("/logout", authenticateToken, logout);
 router.post("/auth/google", googleUser);
 router.post("/feedback", authenticateToken, feedback);
+router.get("/user/streak",authenticateToken,currentStreak)
 
-// Dashboard stats
-router.get("/dashboard-stats", authenticateToken, getDashboardStats);
 
-// Update functions
-router.post("/update-points", authenticateToken, updateUserPoints);
-router.post(
-  "/update-learning-progress",
-  authenticateToken,
-  updateLearningProgress
-);
-router.post("/update-completed-goals", authenticateToken, updateCompletedGoals);
-router.post("/complete-module", authenticateToken, completeModule);
-
-router.get("/", authenticateToken, currentStreak);
 
 router.route("/login").post(loginUser);
 export default router;

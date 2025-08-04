@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 import connectDB from "./config/db.js";
 import cors from "cors"
 import userRoutes from './routes/userRoutes.js'
-import adminRoutes from './routes/adminRoutes.js'
+import adminRoutes from './routes/adminRoutes.js';
 import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorize.js";
 import { authenticateToken } from "./middleware/authMiddleware.js";
@@ -39,17 +39,19 @@ app.use(cookieParser());
 app.set('trust proxy', true);
 
 // Routes
+// USER ROUTES
 app.use("/api/v1", userRoutes);
 
 
-app.use("/api/admin", adminRoutes);
-app.use("/api/admin/courses", courseRoutes);
-app.use('/admin', adminFeedbackRoutes);
-app.use("/api/news", newsRoutes)
-app.use("/api/comments", commentRoutes);
 
 
-app.use("/",userRoutes)
+
+// ADMIN ROUTES
+app.use("/api/v1/admin", adminRoutes); // general admin stuff like login, profile
+app.use("/api/v1/admin/courses", courseRoutes); // course create/delete/edit
+app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
+
+
 
 
 // Sample Usage of authenticate and authorize middleware for roleBased Features

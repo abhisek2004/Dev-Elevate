@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import axios from '../../utils/axiosinstance';
+import axios from '../../api/axiosinstance';
 
 
 import { useGlobalState } from '../../contexts/GlobalContext';

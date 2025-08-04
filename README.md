@@ -1,6 +1,6 @@
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-### Join Telegram for discussion and issues ok --- https://t.me/+0flFWEewz-djNGE1
+### Join Discord for discussion and issues ok --- https://discord.gg/DPE2Vvj3
 
 <h1 align="center">🚀 Dev_Elevate_GSSoC-2025 </h1>
 
@@ -158,12 +158,6 @@ Click the link below to explore the complete guide:
 To help learners and aspiring professionals master skills like DSA, Java, MERN Stack, AI/ML, and Data Science while also preparing for placements through an AI-driven, highly personalized, and community-powered platform.
 
 ---
-
-### 📌 **Click on the section below to view full project details:**
-
-<details>
-
- <summary>🔍 Full Project Description – DevElevate</summary>
 
 ## ⚠️ **🚨 All Pages Below Are Mandatory and Must Be Fully Functional Without Bugs**
 
@@ -613,7 +607,6 @@ Includes:
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-</details>
 
 ### 🙌 **Thank You, Contributors!**
 

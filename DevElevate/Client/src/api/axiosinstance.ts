@@ -1,12 +1,19 @@
 import axios from 'axios';
+import { baseUrl } from "../config/routes";
 
 const instance = axios.create({
+<<<<<<< HEAD:DevElevate/Client/src/utils/axiosinstance.ts
   baseURL: import.meta.env.VITE_API_URL || `http://localhost:5000/api/v1`,
+=======
+  baseURL: baseUrl,
+>>>>>>> 2bce4321cb943de3c0ee55880c17a00aaf2cd102:DevElevate/Client/src/api/axiosinstance.ts
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, 
 });
 
+<<<<<<< HEAD:DevElevate/Client/src/utils/axiosinstance.ts
 // Helper function to add auth token to requests
 const addAuthToken = (config: any) => {
   try {
@@ -76,3 +83,6 @@ export const completeModule = async (track: string, moduleId: string, pointsEarn
 };
 
 export default instance;
+=======
+export default instance;
+>>>>>>> 2bce4321cb943de3c0ee55880c17a00aaf2cd102:DevElevate/Client/src/api/axiosinstance.ts

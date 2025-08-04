@@ -1,6 +1,7 @@
 import { AuthProvider } from "./contexts/AuthContext";
 import { GlobalProvider } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
+import { AdminProvider } from "./contexts/AdminContext";
 import {
   BrowserRouter as Router,
   Routes,
@@ -29,8 +30,12 @@ import PremiumPage from "./components/premium/PremiumPage";
 import PaymentPage from "./components/Payment/PaymentPage";
 import ProjectRecommender from "./components/ProjectRecommender/ProjectRecommender";
 import Layout from "./components/Layout/Layout";
+<<<<<<< HEAD
 import Post from "./components/NewsPost/Post";
 import AddPost from "./components/NewsPost/AddPost";
+=======
+
+>>>>>>> 2bce4321cb943de3c0ee55880c17a00aaf2cd102
 function App() {
   return (
     <AuthProvider>
@@ -48,6 +53,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               {/* Protected Routes */}
               <Route
                 path="/*"
@@ -104,7 +110,9 @@ function App() {
                 path="/admin"
                 element={
                   <ProtectedRoute requireAdmin={true}>
-                    <AdminDashboard />
+                    <AdminProvider>
+                      <AdminDashboard />
+                    </AdminProvider>
                   </ProtectedRoute>
                 }
               />
@@ -112,7 +120,9 @@ function App() {
                 path="/admin/logs"
                 element={
                   <ProtectedRoute requireAdmin={true}>
-                    <AdminSystemLogs />
+                    <AdminProvider>
+                      <AdminSystemLogs />
+                    </AdminProvider>
                   </ProtectedRoute>
                 }
               />

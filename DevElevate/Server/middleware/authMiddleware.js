@@ -9,8 +9,7 @@ dotenv.config()
 //   const token = req.cookies.token || req.header("Authorization")?.replace("Bearer ", "");
 // =======
 export const authenticateToken = async (req, res, next) => {
-  const token =
-    req.cookies?.accessToken || req.header("Authorization").split(" ")[1]
+  const token = req.cookies?.token || req.header("Authorization")?.replace("Bearer", "").trim();
 
   if (!token) {
     return res.status(401).json({ message: "Unauthorized request" });

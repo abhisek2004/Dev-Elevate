@@ -216,9 +216,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     dispatch({ type: "LOGIN_START" });
     try {
       // Make API call to backend login endpoint
+<<<<<<< HEAD
       console.log(baseUrl);
       const response = await fetch(`${baseUrl}/auth/login`, {
+=======
+       const response = await fetch(`${baseUrl}/api/v1/auth/login`, {
+>>>>>>> 2bce4321cb943de3c0ee55880c17a00aaf2cd102
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -299,8 +304,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
     try {
       // Make API call to backend register endpoint
-      const response = await fetch(`${baseUrl}/auth/signup`, {
+      const response = await fetch(`${baseUrl}/api/v1/auth/signup`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -317,6 +323,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       // The backend doesn't return a token on signup, so we login immediately
       if (data.message === "User registered successfully") {
         // Auto-login after successful registration
+<<<<<<< HEAD
         const loginResponse = await fetch(`${baseUrl}/auth/login`, {
           method: "POST",
           headers: {
@@ -324,6 +331,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           },
           body: JSON.stringify({ email, password }),
         });
+=======
+        const loginResponse = await fetch(
+          `${baseUrl}/api/v1/auth/login`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          }
+        );
+>>>>>>> 2bce4321cb943de3c0ee55880c17a00aaf2cd102
 
         const loginData = await loginResponse.json();
 
@@ -380,7 +400,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       });
     }
   };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2bce4321cb943de3c0ee55880c17a00aaf2cd102
   const logout = () => {
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("devElevateAuth");
