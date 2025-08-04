@@ -1,9 +1,12 @@
 import Course from "../model/Course.js";
 import LearningModule from "../model/LearningModule.js";
 
+// CREATE NEW COURSE
 export const createCourse = async (req, res) => {
   try {
     const { courseTitle, description, tags } = req.body;
+
+    // VALIDATE REQUIRED FIELDS
     if (!courseTitle || !description || !tags) {
       return res.status(400).json({
         message: "Course title and category are required.",
@@ -17,18 +20,20 @@ export const createCourse = async (req, res) => {
       createdBy: req.id,
     });
 
+    console.log("Course created successfully");
     return res.status(201).json({
       course,
       message: "Course created.",
     });
   } catch (error) {
-    console.log(error);
+    console.error("Error creating course:", error);
     return res.status(500).json({
       message: "failed to create course",
     });
   }
 };
 
+// EDIT COURSE AND OPTIONALLY A MODULE
 export const editCourse = async (req, res) => {
   try {
     const { courseId, moduleId } = req.params;
@@ -42,10 +47,12 @@ export const editCourse = async (req, res) => {
       moduleTitle,
       videoUrl,
       resourceLinks,
-      duration
+      duration,
     } = req.body;
 
     let course = await Course.findById(courseId);
+
+    // CHECK IF COURSE EXISTS
     if (!course) {
       return res.status(404).json({
         message: "Course not found!",
@@ -61,9 +68,13 @@ export const editCourse = async (req, res) => {
       courseThumbnail,
     };
 
-    const updatedCourse = await Course.findByIdAndUpdate(courseId, updatedCourseData, {
-      new: true,
-    });
+    const updatedCourse = await Course.findByIdAndUpdate(
+      courseId,
+      updatedCourseData,
+      {
+        new: true,
+      }
+    );
 
     let updatedModule = null;
     if (moduleId) {
@@ -73,17 +84,22 @@ export const editCourse = async (req, res) => {
         resourceLinks,
         duration,
       };
-      updatedModule = await LearningModule.findByIdAndUpdate(moduleId, moduleData, {
-        new: true,
-      });
+      updatedModule = await LearningModule.findByIdAndUpdate(
+        moduleId,
+        moduleData,
+        {
+          new: true,
+        }
+      );
     }
+
+    console.log("Course updated successfully");
 
     return res.status(200).json({
       course: updatedCourse,
       module: updatedModule,
       message: "Course updated successfully.",
     });
-
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -92,12 +108,13 @@ export const editCourse = async (req, res) => {
   }
 };
 
+// FETCH ALL COURSES
 export const getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find()
       .populate("modules")
       .populate("createdBy");
-
+    console.log(`Fetched ${courses.length} courses successfully`);
     return res.status(200).json({
       courses,
       message: "All courses fetched successfully",
@@ -110,11 +127,14 @@ export const getAllCourses = async (req, res) => {
   }
 };
 
+// DELETE COURSE AND ITS MODULES
 export const deleteCourse = async (req, res) => {
   try {
     const { courseId } = req.params;
 
     const course = await Course.findById(courseId);
+
+    // CHECK IF COURSE EXISTS
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
     }

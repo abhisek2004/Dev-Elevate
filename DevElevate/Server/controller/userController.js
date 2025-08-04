@@ -6,122 +6,77 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import moment from "moment";
 dotenv.config();
+
+// REGISTER NEW USER
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
-    if (existingUser)
-      return res.status(400).json({ message: "User already exists" });
+    if (existingUser) {
+      console.warn(
+        `[REGISTER] Failed: User with email "${email}" already exists`
+      );
+      return res
+        .status(400)
+        .json({ message: "User already exists. Please login instead." });
+    }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create new user
-    const newUser = new User({
-      name,
-      email,
-      role,
-      password: hashedPassword,
-    });
-
+    const newUser = new User({ name, email, role, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully", newUser });
+    console.log(`[REGISTER] Success: Registered user "${newUser.email}"`);
+    return res
+      .status(201)
+      .json({ message: "User registered successfully", newUser });
   } catch (error) {
-    res
+    console.error(`[REGISTER] Error: ${error.message}`);
+    return res
       .status(500)
-      .json({ message: "Something went wrong", error: error.message });
+      .json({
+        message: "Registration failed. Please try again.",
+        error: error.message,
+      });
   }
 };
 
+// LOGIN USER
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(401).json({ message: "Invalid credentials" });
-    const JWT_SECRET = process.env.JWT_SECRET;
-    const JWT_EXPIRES = "3d";
-    // Create JWT token
-    const payLode = {
-      userId: user._id,
-    };
-    const token = jwt.sign(payLode, JWT_SECRET, { expiresIn: JWT_EXPIRES });
-
-    // Set token in cookie
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // true in production
-        sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax", // CSRF protection
-        maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days in ms
-      })
-      .status(200)
-      .json({
-        message: "Login successful",
-        userId: user._id,
-        token: token,
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        },
-      });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong", error: error.message });
-  }
-};
-
-export const googleUser = async (req, res) => {
-  try {
-    console.log("Received Google login request. req.body:", req.body);
-
-    const { name, email, role } = req.body;
-
-    // Check if user already exists
-    let user = await User.findOne({ email });
-    console.log("User found in DB:", user);
-
     if (!user) {
-      user = new User({
-        name,
-        email,
-        role,
-        password: "google-oauth", // Dummy password for Google users because in MongoDB User Schema requires a password
-      });
-      await user.save();
-      console.log("New Google user created:", user);
+      console.warn(`[LOGIN] Failed: No user found with email "${email}"`);
+      return res
+        .status(404)
+        .json({ message: "User not found. Please register first." });
     }
 
-    // JWT token
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      console.warn(`[LOGIN] Failed: Incorrect password for "${email}"`);
+      return res.status(401).json({ message: "Invalid email or password." });
+    }
+
     const JWT_SECRET = process.env.JWT_SECRET;
     const JWT_EXPIRES = "3d";
     const payLode = { userId: user._id };
     const token = jwt.sign(payLode, JWT_SECRET, { expiresIn: JWT_EXPIRES });
-    console.log("JWT token generated:", token);
 
-    // Set token in cookie and send response
     res
       .cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
-        maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
+        maxAge: 3 * 24 * 60 * 60 * 1000,
       })
       .status(200)
       .json({
-        message: "Google login successful",
+        message: "Login successful",
         userId: user._id,
-        token: token,
+        token,
         user: {
           id: user._id,
           name: user.name,
@@ -129,21 +84,81 @@ export const googleUser = async (req, res) => {
           role: user.role,
         },
       });
-    console.log("Google login response sent.");
+
+    console.log(`[LOGIN] Success: User logged in with email "${email}"`);
   } catch (error) {
-    console.error("Google login error:", error);
-    res
+    console.error(`[LOGIN] Error: ${error.message}`);
+    return res
       .status(500)
-      .json({ message: "Something went wrong", error: error.message });
+      .json({
+        message: "Login failed. Please try again.",
+        error: error.message,
+      });
   }
 };
 
+// GOOGLE LOGIN USER
+export const googleUser = async (req, res) => {
+  try {
+    console.log("[GOOGLE LOGIN] Request received:", req.body);
+    const { name, email, role } = req.body;
+
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = new User({ name, email, role, password: "google-oauth" });
+      await user.save();
+      console.log(`[GOOGLE LOGIN] Created new Google user: "${email}"`);
+    } else {
+      console.log(`[GOOGLE LOGIN] Existing Google user found: "${email}"`);
+    }
+
+    const JWT_SECRET = process.env.JWT_SECRET;
+    const JWT_EXPIRES = "3d";
+    const payLode = { userId: user._id };
+    const token = jwt.sign(payLode, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
+        maxAge: 3 * 24 * 60 * 60 * 1000,
+      })
+      .status(200)
+      .json({
+        message: "Google login successful",
+        userId: user._id,
+        token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      });
+
+    console.log(`[GOOGLE LOGIN] Success: User logged in with email "${email}"`);
+  } catch (error) {
+    console.error(`[GOOGLE LOGIN] Error: ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: "Google login failed. Please try again.",
+        error: error.message,
+      });
+  }
+};
+
+// LOGOUT USER
 export const logout = async (req, res) => {
   try {
     const token = req.cookies.token;
 
     if (!token) {
-      return res.status(401).json({ message: "User already logout" });
+      console.warn(
+        "[LOGOUT] Attempted logout but user was already logged out."
+      );
+      return res.status(401).json({ message: "User already logged out." });
     }
 
     res.clearCookie("token", {
@@ -151,24 +166,28 @@ export const logout = async (req, res) => {
       secure: true,
       sameSite: "None",
     });
-
-    return res.status(200).json({
-      message: "Logout successful",
-    });
+    console.log("[LOGOUT] Success: User logged out.");
+    return res.status(200).json({ message: "Logout successful" });
   } catch (error) {
-    return res.status(500).json({
-      message: "Something went wrong",
-      error: error.message,
-    });
+    console.error(`[LOGOUT] Error: ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: "Logout failed. Please try again.",
+        error: error.message,
+      });
   }
 };
 
+// TRACK CURRENT STREAK OF DAILY VISITS
 export const currentStreak = async (req, res) => {
   try {
-    const { userId } = req.user;
-    const user = await User.findById(userId).populate("dayStreak");
+    console.log("[STREAK] Checking streak for user:", req.user);
+    const userId = req.user._id.toString();
 
+    const user = await User.findById(userId).populate("dayStreak");
     if (!user) {
+      console.warn(`[STREAK] User not found: ID "${userId}"`);
       return res.status(404).json({ message: "User not found" });
     }
 
@@ -183,13 +202,11 @@ export const currentStreak = async (req, res) => {
         dateOfVisiting: Date.now(),
         visit: true,
       });
-
       user.dayStreak.push(visit._id);
     }
 
     await user.populate("dayStreak");
 
-    // Sort all visits by date
     const sortedVisits = user.dayStreak
       .map((v) => moment(v.dateOfVisiting).startOf("day"))
       .sort((a, b) => a - b);
@@ -211,7 +228,7 @@ export const currentStreak = async (req, res) => {
         }
       } else if (diff > 1) {
         currentStreak = 1;
-        tempStartDate = sortedVisits[i]; // reset tempStart
+        tempStartDate = sortedVisits[i];
       }
     }
 
@@ -221,6 +238,9 @@ export const currentStreak = async (req, res) => {
     user.streakEndDate = endDate;
     await user.save();
 
+    console.log(
+      `[STREAK] Updated streak for user "${user.email}". Current: ${currentStreak}, Max: ${maxStreak}`
+    );
     return res.status(200).json({
       message: `✅ Welcome back, ${user.name}`,
       currentStreakData: {
@@ -233,24 +253,32 @@ export const currentStreak = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    console.error(`[STREAK] Error: ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: "Failed to fetch streak data. Please try again.",
+        error: error.message,
+      });
   }
 };
 
+// HANDLE USER FEEDBACK
 export const feedback = async (req, res) => {
   try {
     const { message } = req.body;
     const { userId } = req.user;
 
-    const newFeedback = await Feedback.create({
-      message: message,
-      userId: userId,
-    });
-
-    return res.status(200).json({
-      newFeedback,
-    });
+    const newFeedback = await Feedback.create({ message, userId });
+    console.log(`[FEEDBACK] Received feedback from user ID "${userId}"`);
+    return res.status(200).json({ newFeedback });
   } catch (error) {
-    console.log(error.message);
+    console.error(`[FEEDBACK] Error: ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: "Failed to submit feedback. Please try again.",
+        error: error.message,
+      });
   }
 };

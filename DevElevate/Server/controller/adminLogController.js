@@ -1,21 +1,26 @@
 import AdminLog from "../model/AdminLog.js";
 
-// Create a new admin log entry
+// CREATE A NEW ADMIN LOG ENTRY
 export const createAdminLog = async (req, res) => {
   try {
     const { actionType, userId, userRole, message, additionalData } = req.body;
 
-    // Validate required fields
+    // VALIDATE REQUIRED FIELDS
     if (!actionType || !userId || !userRole || !message) {
+      console.error(
+        "Validation failed: Missing required fields in createAdminLog"
+      );
       return res.status(400).json({
         success: false,
-        message: "Missing required fields: actionType, userId, userRole, message"
+        message:
+          "Missing required fields: actionType, userId, userRole, message",
       });
     }
 
-    // Get IP address and user agent from request
-    const ipAddress = req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
-    const userAgent = req.get('User-Agent');
+    // GET IP ADDRESS AND USER AGENT FROM REQUEST
+    const ipAddress =
+      req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
+    const userAgent = req.get("User-Agent");
 
     const logEntry = new AdminLog({
       actionType,
@@ -24,45 +29,46 @@ export const createAdminLog = async (req, res) => {
       message,
       ipAddress,
       userAgent,
-      additionalData
+      additionalData,
     });
 
     await logEntry.save();
 
+    console.log("Admin log entry created successfully");
     res.status(201).json({
       success: true,
       message: "Log entry created successfully",
-      log: logEntry
+      log: logEntry,
     });
   } catch (error) {
     console.error("Error creating admin log:", error);
     res.status(500).json({
       success: false,
       message: "Failed to create log entry",
-      error: error.message
+      error: error.message,
     });
   }
 };
 
-// Get admin logs with filtering and pagination
+// GET ADMIN LOGS WITH FILTERING AND PAGINATION
 export const getAdminLogs = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 20, 
-      actionType, 
-      userId, 
-      userRole, 
-      dateFrom, 
+    const {
+      page = 1,
+      limit = 20,
+      actionType,
+      userId,
+      userRole,
+      dateFrom,
       dateTo,
-      sortBy = 'createdAt',
-      sortOrder = 'desc'
+      sortBy = "createdAt",
+      sortOrder = "desc",
     } = req.query;
 
-    // Build filter object
+    // BUILD FILTER OBJECT
     const filter = {};
 
-    if (actionType && actionType !== 'all') {
+    if (actionType && actionType !== "all") {
       filter.actionType = actionType;
     }
 
@@ -70,48 +76,45 @@ export const getAdminLogs = async (req, res) => {
       filter.userId = userId;
     }
 
-    if (userRole && userRole !== 'all') {
+    if (userRole && userRole !== "all") {
       filter.userRole = userRole;
     }
 
-    // Date range filter
+    // DATE RANGE FILTER
     if (dateFrom || dateTo) {
       filter.createdAt = {};
       if (dateFrom) {
         filter.createdAt.$gte = new Date(dateFrom);
       }
       if (dateTo) {
-        // Add 24 hours to include the entire day
         const endDate = new Date(dateTo);
+
+        //INCLUDE ENTIRE DAY
         endDate.setHours(23, 59, 59, 999);
         filter.createdAt.$lte = endDate;
       }
     }
 
-    // Calculate skip value for pagination
+    // CALCULATE SKIP VALUE FOR PAGINATION
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
-    // Build sort object
+    // BUILD SORT OBJECT
     const sort = {};
-    sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+    sort[sortBy] = sortOrder === "desc" ? -1 : 1;
 
-    // Execute query with pagination
+    // EXECUTE QUERY WITH PAGINATION
     const [logs, totalCount] = await Promise.all([
-      AdminLog.find(filter)
-        .sort(sort)
-        .skip(skip)
-        .limit(parseInt(limit))
-        .lean(),
-      AdminLog.countDocuments(filter)
+      AdminLog.find(filter).sort(sort).skip(skip).limit(parseInt(limit)).lean(),
+      AdminLog.countDocuments(filter),
     ]);
 
-    // Calculate pagination info
+    // CALCULATE PAGINATION INFO
     const totalPages = Math.ceil(totalCount / parseInt(limit));
     const hasNextPage = parseInt(page) < totalPages;
     const hasPrevPage = parseInt(page) > 1;
 
-    // Transform logs to match frontend expected format
-    const transformedLogs = logs.map(log => ({
+    // TRANSFORM LOGS TO MATCH FRONTEND EXPECTED FORMAT
+    const transformedLogs = logs.map((log) => ({
       _id: log._id,
       actionType: log.actionType,
       userId: log.userId,
@@ -120,9 +123,9 @@ export const getAdminLogs = async (req, res) => {
       timestamp: log.createdAt,
       ipAddress: log.ipAddress,
       userAgent: log.userAgent,
-      additionalData: log.additionalData
+      additionalData: log.additionalData,
     }));
-
+    console.log(`Fetched ${logs.length} admin logs successfully`);
     res.status(200).json({
       success: true,
       logs: transformedLogs,
@@ -132,23 +135,22 @@ export const getAdminLogs = async (req, res) => {
         totalCount,
         hasNextPage,
         hasPrevPage,
-        limit: parseInt(limit)
+        limit: parseInt(limit),
       },
       filters: {
         actionType,
         userId,
         userRole,
         dateFrom,
-        dateTo
-      }
+        dateTo,
+      },
     });
-
   } catch (error) {
     console.error("Error fetching admin logs:", error);
     res.status(500).json({
       success: false,
       message: "Failed to fetch admin logs",
-      error: error.message
+      error: error.message,
     });
   }
 };
