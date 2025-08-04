@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Plus, Check } from "lucide-react";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import { updateCompletedGoals } from "../../utils/axiosinstance";
+import { useNotificationService } from "../../services/notificationService";
 
 const DailyGoals: React.FC = () => {
   const { state, dispatch } = useGlobalState();
+  const notificationService = useNotificationService();
   const [newGoal, setNewGoal] = useState("");
   const [showAddForm, setShowAddForm] = useState(false);
   const [loadingGoals, setLoadingGoals] = useState<Set<string>>(new Set());
@@ -30,6 +32,13 @@ const DailyGoals: React.FC = () => {
       } else {
         // Complete goal
         dispatch({ type: "COMPLETE_DAILY_GOAL", payload: goal });
+
+        // Add notification for goal completion
+        notificationService.notifyAchievement(
+          "🎯 Goal Completed!",
+          `You've completed: "${goal}". Keep up the great work!`,
+          "Goals"
+        );
 
         // Update backend
         const result = await updateCompletedGoals(true);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useGlobalState } from "../../contexts/GlobalContext";
+import { useNotificationService } from "../../services/notificationService";
 import {
   BookOpen,
   Code,
@@ -14,6 +15,7 @@ import { completeModule } from "../../utils/axiosinstance";
 
 const LearningHub: React.FC = () => {
   const { state, dispatch } = useGlobalState();
+  const notificationService = useNotificationService();
   const [selectedTrack, setSelectedTrack] = useState("dsa");
   const [toastMessage, setToastMessage] = useState("");
   const [loadingModules, setLoadingModules] = useState<Set<string>>(new Set());
@@ -45,6 +47,9 @@ const LearningHub: React.FC = () => {
       const result = await completeModule(selectedTrack, moduleId, 50);
 
       if (result.success) {
+        // Trigger module completion notification
+        notificationService.notifyModuleCompletion(moduleTitle);
+        
         // Update local state to show module as completed
         const updatedModules = learningTracks[
           selectedTrack as keyof typeof learningTracks

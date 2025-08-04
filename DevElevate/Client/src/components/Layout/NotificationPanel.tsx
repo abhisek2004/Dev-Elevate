@@ -27,75 +27,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
   const [filter, setFilter] = useState<'all' | 'unread' | 'achievements' | 'reminders'>('all');
   const [selectedNotifications, setSelectedNotifications] = useState<string[]>([]);
 
-  // Sample notifications
-  useEffect(() => {
-    const sampleNotifications: Notification[] = [
-      {
-        id: '1',
-        type: 'achievement',
-        title: '🎉 Streak Milestone!',
-        message: 'Congratulations! You\'ve maintained a 7-day learning streak. Keep it up!',
-        timestamp: new Date(Date.now() - 300000).toISOString(), // 5 minutes ago
-        read: false,
-        priority: 'high',
-        category: 'Learning'
-      },
-      {
-        id: '2',
-        type: 'reminder',
-        title: '📚 Daily Goal Reminder',
-        message: 'You have 2 pending goals for today. Complete them to maintain your streak!',
-        timestamp: new Date(Date.now() - 1800000).toISOString(), // 30 minutes ago
-        read: false,
-        actionUrl: '/',
-        priority: 'medium',
-        category: 'Goals'
-      },
-      {
-        id: '3',
-        type: 'update',
-        title: '🚀 New Feature: AI Mock Interviews',
-        message: 'Practice interviews with our new AI interviewer. Get personalized feedback!',
-        timestamp: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
-        read: true,
-        actionUrl: '/placement',
-        priority: 'medium',
-        category: 'Features'
-      },
-      {
-        id: '4',
-        type: 'social',
-        title: '👥 Study Group Invitation',
-        message: 'You\'ve been invited to join the "React Developers" study group.',
-        timestamp: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
-        read: false,
-        priority: 'low',
-        category: 'Community'
-      },
-      {
-        id: '5',
-        type: 'system',
-        title: '🔧 Scheduled Maintenance',
-        message: 'Platform maintenance scheduled for tonight 2:00 AM - 4:00 AM IST.',
-        timestamp: new Date(Date.now() - 14400000).toISOString(), // 4 hours ago
-        read: true,
-        priority: 'low',
-        category: 'System'
-      },
-      {
-        id: '6',
-        type: 'achievement',
-        title: '⭐ Course Completed!',
-        message: 'You\'ve successfully completed "Arrays and Strings" module. Great job!',
-        timestamp: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
-        read: true,
-        priority: 'high',
-        category: 'Learning'
-      }
-    ];
-
-    setNotifications(sampleNotifications);
-  }, []);
+  // Remove the useEffect with sample notifications - notifications will come from context
 
   const filteredNotifications = notifications.filter((notification) => {
     switch (filter) {

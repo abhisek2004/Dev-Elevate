@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import StatsCards from "./StatsCards";
@@ -8,6 +8,7 @@ import QuickActions from "./QuickActions";
 import StreakCalendar from "./StreakCalendar";
 import DailyGoals from "./DailyGoals";
 import axiosInstance from "../../utils/axiosinstance";
+import { useNotificationService } from '../../services/notificationService';
 
 // Type for dashboard stats response
 interface DashboardStatsResponse {
@@ -29,6 +30,9 @@ interface DashboardStatsResponse {
 const Dashboard: React.FC = () => {
   const { state, dispatch } = useGlobalState();
   const { state: authState } = useAuth();
+  const notificationService = useNotificationService();
+  const [lastNotifiedStreak, setLastNotifiedStreak] = useState(0);
+  const [lastNotifiedGoals, setLastNotifiedGoals] = useState(0);
 
   // Function to fetch and update dashboard stats
   const fetchStats = async () => {
@@ -80,6 +84,23 @@ const Dashboard: React.FC = () => {
       dispatch({ type: "UPDATE_NEWS", payload: sampleNews });
     }
   }, [authState.sessionToken, state.newsItems.length, dispatch]);
+
+  // Example: Trigger notifications based on user actions
+  useEffect(() => {
+    // Check for streak milestones (avoid duplicate notifications)
+    const currentStreak = state.dashboardStats?.currentStreak || 0;
+    if (currentStreak > 0 && currentStreak % 7 === 0 && currentStreak !== lastNotifiedStreak) {
+      notificationService.notifyStreakMilestone(currentStreak);
+      setLastNotifiedStreak(currentStreak);
+    }
+
+    // Check for pending daily goals (avoid spam)
+    const pendingGoals = state.dailyGoals.length - state.completedGoals.length;
+    if (pendingGoals > 0 && pendingGoals !== lastNotifiedGoals) {
+      notificationService.notifyDailyGoalReminder(pendingGoals);
+      setLastNotifiedGoals(pendingGoals);
+    }
+  }, [state.dashboardStats?.currentStreak, state.dailyGoals.length, state.completedGoals.length, notificationService, lastNotifiedStreak, lastNotifiedGoals]);
 
   return (
     <div
@@ -144,3 +165,6 @@ export const refreshDashboardStats = async () => {
 };
 
 export default Dashboard;
+
+
+
