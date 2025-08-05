@@ -2,23 +2,25 @@ import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema(
   {
-    id: mongoose.Schema.Types.ObjectId,
     courseTitle: {
       type: String,
       required: true,
+      trim: true,
     },
-    subTitle: { type: String },
+    subTitle: { type: String, trim: true },
     description: { type: String },
-    dificulty: {
+    difficulty: {
       type: String,
+      enum: ['Beginner', 'Intermediate', 'Advanced'], // If not needed, just keep type: String
     },
-    modules:{
+    modules: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "LearningModule"
-    },
+    }],
     tags: [String],
     coursePrice: {
       type: Number,
+      default: 0
     },
     courseThumbnail: {
       type: String,
@@ -26,14 +28,10 @@ const courseSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",
-    },
-    createdAt: {
-      type: Date,
-    },
+    }
   },
   { timestamps: true }
 );
 
 const Course = mongoose.model("Course", courseSchema);
-
 export default Course;
