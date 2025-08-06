@@ -6,18 +6,16 @@ export const createAdminLog = async (req, res) => {
   try {
     const { actionType, userId, userRole, message, additionalData } = req.body;
 
-    // Validate required fields
     if (!actionType || !userId || !userRole || !message) {
       return res.status(400).json({
         success: false,
         message:
-          "Missing required fields: actionType, userId, userRole, message",
+          "Missing required fields: 'actionType', 'userId', 'userRole', and 'message'. Please ensure all required fields are provided.",
       });
     }
 
-    // Get IP address and user agent from request
     const ipAddress =
-      req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
+      req.ip || req.connection?.remoteAddress || req.socket?.remoteAddress;
     const userAgent = req.get("User-Agent");
 
     const logEntry = new AdminLog({
@@ -34,14 +32,17 @@ export const createAdminLog = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "Log entry created successfully",
+      message: "Admin log entry created successfully.",
       log: logEntry,
     });
   } catch (error) {
-    console.error("Error creating admin log:", error);
+    console.error(
+      `[AdminLog Error] Failed to create admin log: ${error.message}`
+    );
     res.status(500).json({
       success: false,
-      message: "Failed to create log entry",
+      message:
+        "An unexpected error occurred while creating the admin log entry. Please try again.",
       error: error.message,
     });
   }
@@ -62,7 +63,6 @@ export const getAdminLogs = async (req, res) => {
       sortOrder = "desc",
     } = req.query;
 
-    // Build filter object
     const filter = {};
 
     if (actionType && actionType !== "all") {
@@ -77,39 +77,30 @@ export const getAdminLogs = async (req, res) => {
       filter.userRole = userRole;
     }
 
-    // Date range filter
     if (dateFrom || dateTo) {
       filter.createdAt = {};
       if (dateFrom) {
         filter.createdAt.$gte = new Date(dateFrom);
       }
       if (dateTo) {
-        // Add 24 hours to include the entire day
         const endDate = new Date(dateTo);
         endDate.setHours(23, 59, 59, 999);
         filter.createdAt.$lte = endDate;
       }
     }
 
-    // Calculate skip value for pagination
     const skip = (parseInt(page) - 1) * parseInt(limit);
+    const sort = { [sortBy]: sortOrder === "desc" ? -1 : 1 };
 
-    // Build sort object
-    const sort = {};
-    sort[sortBy] = sortOrder === "desc" ? -1 : 1;
-
-    // Execute query with pagination
     const [logs, totalCount] = await Promise.all([
       AdminLog.find(filter).sort(sort).skip(skip).limit(parseInt(limit)).lean(),
       AdminLog.countDocuments(filter),
     ]);
 
-    // Calculate pagination info
     const totalPages = Math.ceil(totalCount / parseInt(limit));
     const hasNextPage = parseInt(page) < totalPages;
     const hasPrevPage = parseInt(page) > 1;
 
-    // Transform logs to match frontend expected format
     const transformedLogs = logs.map((log) => ({
       _id: log._id,
       actionType: log.actionType,
@@ -142,19 +133,20 @@ export const getAdminLogs = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching admin logs:", error);
+    console.error(`[AdminLog Error] Failed to fetch logs: ${error.message}`);
     res.status(500).json({
       success: false,
-      message: "Failed to fetch admin logs",
+      message:
+        "Unable to fetch admin logs. Please check your filters or try again later.",
       error: error.message,
     });
   }
 };
 
-//Get all-user in the  database
+// Get all users in the database
 export const getAllUserRegister = async (req, res) => {
   try {
-    console.log("hello - fetching all registered users");
+    console.log("[User Fetch] Retrieving all registered users...");
 
     const users = await User.find().sort({ createdAt: -1 });
     const totalUsers = await User.countDocuments({ role: "user" });
@@ -162,16 +154,19 @@ export const getAllUserRegister = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "All registered users fetched successfully",
+      message: "Successfully fetched all registered users.",
       totalUsers,
       users,
       totalAdmins,
     });
   } catch (error) {
-    console.error("Error fetching users:", error.message);
+    console.error(
+      `[User Fetch Error] Failed to retrieve users: ${error.message}`
+    );
     res.status(500).json({
       success: false,
-      message: "Failed to fetch users",
+      message:
+        "An error occurred while fetching registered users. Please try again later.",
       error: error.message,
     });
   }

@@ -4,9 +4,11 @@ import LearningModule from "../model/LearningModule.js";
 export const createCourse = async (req, res) => {
   try {
     const { courseTitle, description, tags } = req.body;
+
     if (!courseTitle || !description || !tags) {
       return res.status(400).json({
-        message: "Course title and category are required.",
+        message:
+          "Missing required fields: 'courseTitle', 'description', and 'tags'.",
       });
     }
 
@@ -19,12 +21,13 @@ export const createCourse = async (req, res) => {
 
     return res.status(201).json({
       course,
-      message: "Course created.",
+      message: "Course created successfully.",
     });
   } catch (error) {
-    console.log(error);
+    console.error(`[CreateCourse Error] ${error.message}`);
     return res.status(500).json({
-      message: "failed to create course",
+      message: "Failed to create course. Please try again.",
+      error: error.message,
     });
   }
 };
@@ -36,19 +39,19 @@ export const editCourse = async (req, res) => {
       courseTitle,
       subTitle,
       description,
-      dificulty,
+      difficulty,
       coursePrice,
       courseThumbnail,
       moduleTitle,
       videoUrl,
       resourceLinks,
-      duration
+      duration,
     } = req.body;
 
-    let course = await Course.findById(courseId);
+    const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({
-        message: "Course not found!",
+        message: "Course not found. Please check the course ID.",
       });
     }
 
@@ -56,14 +59,18 @@ export const editCourse = async (req, res) => {
       courseTitle,
       subTitle,
       description,
-      dificulty,
+      difficulty,
       coursePrice,
       courseThumbnail,
     };
 
-    const updatedCourse = await Course.findByIdAndUpdate(courseId, updatedCourseData, {
-      new: true,
-    });
+    const updatedCourse = await Course.findByIdAndUpdate(
+      courseId,
+      updatedCourseData,
+      {
+        new: true,
+      }
+    );
 
     let updatedModule = null;
     if (moduleId) {
@@ -73,9 +80,13 @@ export const editCourse = async (req, res) => {
         resourceLinks,
         duration,
       };
-      updatedModule = await LearningModule.findByIdAndUpdate(moduleId, moduleData, {
-        new: true,
-      });
+      updatedModule = await LearningModule.findByIdAndUpdate(
+        moduleId,
+        moduleData,
+        {
+          new: true,
+        }
+      );
     }
 
     return res.status(200).json({
@@ -83,11 +94,11 @@ export const editCourse = async (req, res) => {
       module: updatedModule,
       message: "Course updated successfully.",
     });
-
   } catch (error) {
-    console.log(error);
+    console.error(`[EditCourse Error] ${error.message}`);
     return res.status(500).json({
-      message: "Failed to update course",
+      message: "Failed to update course. Please try again.",
+      error: error.message,
     });
   }
 };
@@ -100,12 +111,13 @@ export const getAllCourses = async (req, res) => {
 
     return res.status(200).json({
       courses,
-      message: "All courses fetched successfully",
+      message: "All courses fetched successfully.",
     });
   } catch (error) {
-    console.error("Failed to fetch courses:", error);
+    console.error(`[GetAllCourses Error] ${error.message}`);
     return res.status(500).json({
-      message: "Internal server error while fetching courses",
+      message: "Internal server error while fetching courses.",
+      error: error.message,
     });
   }
 };
@@ -116,20 +128,22 @@ export const deleteCourse = async (req, res) => {
 
     const course = await Course.findById(courseId);
     if (!course) {
-      return res.status(404).json({ message: "Course not found" });
+      return res.status(404).json({
+        message: "Course not found. Please verify the course ID.",
+      });
     }
 
     await LearningModule.deleteMany({ _id: { $in: course.modules } });
-
     await Course.findByIdAndDelete(courseId);
 
     return res.status(200).json({
-      message: "Course and its modules deleted successfully",
+      message: "Course and its modules deleted successfully.",
     });
   } catch (error) {
-    console.error("Delete error:", error);
+    console.error(`[DeleteCourse Error] ${error.message}`);
     return res.status(500).json({
-      message: "Failed to delete course",
+      message: "Failed to delete course. Please try again.",
+      error: error.message,
     });
   }
 };

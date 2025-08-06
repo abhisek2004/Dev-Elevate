@@ -7,7 +7,9 @@ export const getAllSubmissionsDetailed = async (req, res) => {
     const quizzes = await Quiz.find();
 
     if (!quizzes || quizzes.length === 0) {
-      return res.status(200).json({ message: "No quizzes found", submissions: [] });
+      return res
+        .status(200)
+        .json({ message: "No quizzes found in the database", submissions: [] });
     }
 
     const results = [];
@@ -15,7 +17,10 @@ export const getAllSubmissionsDetailed = async (req, res) => {
     for (const quiz of quizzes) {
       if (!quiz._id || !Array.isArray(quiz.questions)) continue;
 
-      const submissions = await Submission.find({ quizId: quiz._id }).populate("userId", "name email");
+      const submissions = await Submission.find({ quizId: quiz._id }).populate(
+        "userId",
+        "name email"
+      );
 
       if (!submissions || submissions.length === 0) {
         results.push({
@@ -32,30 +37,36 @@ export const getAllSubmissionsDetailed = async (req, res) => {
       const detailedSubs = submissions.map((submission) => {
         let totalScore = 0;
 
-        const detailedAnswers = submission.answers.map((ans) => {
-          const question = quiz.questions.find(
-            (q) => q._id.toString() === ans.questionId.toString()
-          );
+        const detailedAnswers = submission.answers
+          .map((ans) => {
+            const question = quiz.questions.find(
+              (q) => q._id.toString() === ans.questionId.toString()
+            );
 
-          if (!question) return null;
+            if (!question) return null;
 
-          let isCorrect = false;
+            let isCorrect = false;
 
-          if (quiz.type === "MCQ") {
-            isCorrect = question.correctAnswer === ans.givenAnswer;
-          } else if (quiz.type === "Code") {
-            isCorrect = question.expectedOutput?.trim() === ans.output?.trim();
-          }
+            if (quiz.type === "MCQ") {
+              isCorrect = question.correctAnswer === ans.givenAnswer;
+            } else if (quiz.type === "Code") {
+              isCorrect =
+                question.expectedOutput?.trim() === ans.output?.trim();
+            }
 
-          if (isCorrect) totalScore += 1;
+            if (isCorrect) totalScore += 1;
 
-          return {
-            questionText: question.questionText,
-            givenAnswer: ans.givenAnswer,
-            expected: quiz.type === "MCQ" ? question.correctAnswer : question.expectedOutput,
-            result: isCorrect ? "✅ Correct" : "❌ Incorrect",
-          };
-        }).filter(Boolean); // Removes nulls
+            return {
+              questionText: question.questionText,
+              givenAnswer: ans.givenAnswer,
+              expected:
+                quiz.type === "MCQ"
+                  ? question.correctAnswer
+                  : question.expectedOutput,
+              result: isCorrect ? "✅ Correct" : "❌ Incorrect",
+            };
+          })
+          .filter(Boolean); // Remove nulls caused by missing questions
 
         return {
           student: submission.userId?.name || "Unknown",
@@ -77,7 +88,12 @@ export const getAllSubmissionsDetailed = async (req, res) => {
 
     res.status(200).json(results);
   } catch (err) {
-    console.error("❌ Error fetching all submissions:", err);
-    res.status(500).json({ message: "Failed to fetch all quiz submissions" });
+    console.error("❌ Failed to fetch detailed quiz submissions:", err.message);
+    res
+      .status(500)
+      .json({
+        message: "An error occurred while retrieving quiz submissions",
+        error: err.message,
+      });
   }
 };

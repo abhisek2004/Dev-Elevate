@@ -7,20 +7,22 @@ import dotenv from "dotenv";
 import moment from "moment";
 import sendWelcomeEmail from "../utils/mailer.js";
 import generateWelcomeEmail from "../utils/welcomeTemplate.js";
+
 dotenv.config();
+
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
-    if (existingUser)
-      return res.status(400).json({ message: "User already exists" });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "User with this email already exists." });
+    }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
     const newUser = new User({
       name,
       email,
@@ -29,20 +31,21 @@ export const registerUser = async (req, res) => {
     });
 
     const html = generateWelcomeEmail(newUser.name);
-
-    // await sendWelcomeEmail(newUser.email, html);
+    // await sendWelcomeEmail(newUser.email, html); // Uncomment in production
 
     await newUser.save();
 
+    console.log(`✅ New user registered: ${newUser.email}`);
     res.status(201).json({
       message: "User registered successfully",
       newUser,
-      send: "Mali send successfully",
+      send: "Mail sent successfully",
     });
   } catch (error) {
+    console.error("❌ Registration error:", error.message);
     res
       .status(500)
-      .json({ message: "Something went wrong", error: error.message });
+      .json({ message: "Registration failed", error: error.message });
   }
 };
 
@@ -51,33 +54,35 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user)
+      return res
+        .status(404)
+        .json({ message: "User not found. Please register." });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res
+        .status(401)
+        .json({ message: "Incorrect password. Please try again." });
+
     const JWT_SECRET = process.env.JWT_SECRET;
     const JWT_EXPIRES = "3d";
-    // Create JWT token
-    const payLode = {
-      userId: user._id,
-    };
+    const payLode = { userId: user._id };
     const token = jwt.sign(payLode, JWT_SECRET, { expiresIn: JWT_EXPIRES });
 
-    // Set token in cookie
+    console.log(`✅ Login successful for user: ${user.email}`);
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: true, // Always true in production (Render is HTTPS)
-        sameSite: "None", // ✅ Needed for cross-origin cookies (Vercel ↔ Render)
+        secure: true,
+        sameSite: "None",
         maxAge: 3 * 24 * 60 * 60 * 1000,
       })
-
       .status(200)
       .json({
         message: "Login successful",
         userId: user._id,
-        token: token,
+        token,
         user: {
           id: user._id,
           name: user.name,
@@ -86,9 +91,8 @@ export const loginUser = async (req, res) => {
         },
       });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong", error: error.message });
+    console.error("❌ Login error:", error.message);
+    res.status(500).json({ message: "Login failed", error: error.message });
   }
 };
 
@@ -96,41 +100,40 @@ export const googleUser = async (req, res) => {
   try {
     const { name, email, role } = req.body;
 
-    // Check if user already exists
     let user = await User.findOne({ email });
-    console.log("User found in DB:", user);
+    console.log(
+      "🔍 Checking if Google user exists:",
+      user?.email || "Not found"
+    );
 
     if (!user) {
       user = new User({
         name,
         email,
         role,
-        password: "google-oauth", // Dummy password for Google users because in MongoDB User Schema requires a password
+        password: "google-oauth",
       });
       await user.save();
-      console.log("New Google user created:", user);
+      console.log("✅ New Google user created:", user.email);
     }
 
-    // JWT token
     const JWT_SECRET = process.env.JWT_SECRET;
     const JWT_EXPIRES = "3d";
     const payLode = { userId: user._id };
     const token = jwt.sign(payLode, JWT_SECRET, { expiresIn: JWT_EXPIRES });
-    console.log("JWT token generated:", token);
 
-    // Set token in cookie and send response
     res
       .cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
-        maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
+        maxAge: 3 * 24 * 60 * 60 * 1000,
       })
       .status(200)
       .json({
         message: "Google login successful",
         userId: user._id,
-        token: token,
+        token,
         user: {
           id: user._id,
           name: user.name,
@@ -138,12 +141,13 @@ export const googleUser = async (req, res) => {
           role: user.role,
         },
       });
-    console.log("Google login response sent.");
+
+    console.log("✅ Google login response sent for:", user.email);
   } catch (error) {
-    console.error("Google login error:", error);
+    console.error("❌ Google login error:", error.message);
     res
       .status(500)
-      .json({ message: "Something went wrong", error: error.message });
+      .json({ message: "Google login failed", error: error.message });
   }
 };
 
@@ -152,7 +156,7 @@ export const logout = async (req, res) => {
     const token = req.cookies.token;
 
     if (!token) {
-      return res.status(401).json({ message: "User already logout" });
+      return res.status(401).json({ message: "User already logged out." });
     }
 
     res.clearCookie("token", {
@@ -161,28 +165,23 @@ export const logout = async (req, res) => {
       sameSite: "None",
     });
 
-    return res.status(200).json({
-      message: "Logout successful",
-    });
+    console.log("✅ Logout successful");
+    return res.status(200).json({ message: "Logout successful" });
   } catch (error) {
-    return res.status(500).json({
-      message: "Something went wrong",
-      error: error.message,
-    });
+    console.error("❌ Logout error:", error.message);
+    return res
+      .status(500)
+      .json({ message: "Logout failed", error: error.message });
   }
 };
 
 export const currentStreak = async (req, res) => {
   try {
-    console.log(req.user);
-
     const userId = req.user._id.toString();
-    console.log(userId);
-
     const user = await User.findById(userId).populate("dayStreak");
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found." });
     }
 
     const today = moment().startOf("day");
@@ -196,13 +195,11 @@ export const currentStreak = async (req, res) => {
         dateOfVisiting: Date.now(),
         visit: true,
       });
-
       user.dayStreak.push(visit._id);
     }
 
     await user.populate("dayStreak");
 
-    // Sort all visits by date
     const sortedVisits = user.dayStreak
       .map((v) => moment(v.dateOfVisiting).startOf("day"))
       .sort((a, b) => a - b);
@@ -224,7 +221,7 @@ export const currentStreak = async (req, res) => {
         }
       } else if (diff > 1) {
         currentStreak = 1;
-        tempStartDate = sortedVisits[i]; // reset tempStart
+        tempStartDate = sortedVisits[i];
       }
     }
 
@@ -234,6 +231,7 @@ export const currentStreak = async (req, res) => {
     user.streakEndDate = endDate;
     await user.save();
 
+    console.log(`📅 Streak updated for ${user.name}`);
     return res.status(200).json({
       message: `✅ Welcome back, ${user.name}`,
       currentStreakData: {
@@ -246,7 +244,10 @@ export const currentStreak = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    console.error("❌ Error calculating streak:", error.message);
+    return res
+      .status(500)
+      .json({ message: "Streak calculation failed", error: error.message });
   }
 };
 
@@ -255,15 +256,17 @@ export const feedback = async (req, res) => {
     const { message } = req.body;
     const { userId } = req.user;
 
-    const newFeedback = await Feedback.create({
-      message: message,
-      userId: userId,
-    });
+    const newFeedback = await Feedback.create({ message, userId });
 
+    console.log(`📝 Feedback received from user: ${userId}`);
     return res.status(200).json({
+      message: "Feedback submitted successfully",
       newFeedback,
     });
   } catch (error) {
-    console.log(error.message);
+    console.error("❌ Feedback submission error:", error.message);
+    res
+      .status(500)
+      .json({ message: "Failed to submit feedback", error: error.message });
   }
 };

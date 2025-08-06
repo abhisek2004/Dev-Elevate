@@ -7,18 +7,23 @@ const authorize = (...roles) => {
       if (!req.user) {
         return res
           .status(401)
-          .json({ message: "Unauthorized: No user info found" });
-      }      // Check if the user's role is included in the allowed roles
-      if (!roles.includes(req.user.role)) {
-        return res.status(403).json({ message: "Forbidden" });
+          .json({ message: "Unauthorized: User information not found" });
       }
+
+      // Check if the user's role is included in the allowed roles
+      if (!roles.includes(req.user.role)) {
+        return res
+          .status(403)
+          .json({ message: "Access denied: Insufficient role privileges" });
+      }
+
       // If authorized, move to the next middleware/handler
       next();
     } catch (error) {
-      console.error("Error in authorize middleware:", error);
+      console.error("❌ Error in authorize middleware:", error.message);
       return res
         .status(500)
-        .json({ message: "Internal server errror while authorizing" });
+        .json({ message: "Internal server error during authorization" });
     }
   };
 };

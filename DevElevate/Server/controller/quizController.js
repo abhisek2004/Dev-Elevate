@@ -1,6 +1,5 @@
 import Quiz from "../model/Quiz.js";
 
-
 // Create a quiz with questions
 export const createQuiz = async (req, res) => {
   try {
@@ -14,12 +13,18 @@ export const createQuiz = async (req, res) => {
       questions,
       createdBy,
     });
-
     await quiz.save();
-    res.status(201).json({ message: "Quiz created successfully", quiz });
+
+    res.status(201).json({
+      message: "Quiz created successfully.",
+      quiz,
+    });
   } catch (error) {
-    console.error("Error creating quiz:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(`[CreateQuiz Error] ${error.message}`);
+    res.status(500).json({
+      message: "Failed to create quiz. Please try again later.",
+      error: error.message,
+    });
   }
 };
 
@@ -29,26 +34,36 @@ export const getAllQuizzes = async (req, res) => {
     const quizzes = await Quiz.find().populate("createdBy", "username email");
     res.status(200).json(quizzes);
   } catch (error) {
-    console.error("Error fetching quizzes:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(`[GetAllQuizzes Error] ${error.message}`);
+    res.status(500).json({
+      message: "Failed to fetch quizzes. Please try again later.",
+      error: error.message,
+    });
   }
 };
 
+// Get quiz by ID
 export const getQuizById = async (req, res) => {
   try {
     const { quizId } = req.params;
+
     const quiz = await Quiz.findById(quizId)
       .populate("questions")
       .populate("createdBy", "username email");
-      
+
     if (!quiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+      return res
+        .status(404)
+        .json({ message: "Quiz not found. Invalid quiz ID." });
     }
 
     res.status(200).json(quiz);
   } catch (error) {
-    console.error("Error fetching quiz by ID:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(`[GetQuizById Error] ${error.message}`);
+    res.status(500).json({
+      message: "Failed to fetch quiz. Please try again later.",
+      error: error.message,
+    });
   }
 };
 
@@ -56,23 +71,30 @@ export const getQuizById = async (req, res) => {
 export const updateQuizInfo = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, topic, difficulty} = req.body;
+    const { title, topic, difficulty } = req.body;
 
     const quiz = await Quiz.findById(id);
     if (!quiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+      return res
+        .status(404)
+        .json({ message: "Quiz not found. Invalid quiz ID." });
     }
 
     if (title !== undefined) quiz.title = title;
     if (topic !== undefined) quiz.topic = topic;
     if (difficulty !== undefined) quiz.difficulty = difficulty;
-    // if (type !== undefined) quiz.type = type;
 
     await quiz.save();
-    res.status(200).json({ message: "Quiz metadata updated", quiz });
+    res.status(200).json({
+      message: "Quiz metadata updated successfully.",
+      quiz,
+    });
   } catch (error) {
-    console.error("Error updating quiz:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(`[UpdateQuizInfo Error] ${error.message}`);
+    res.status(500).json({
+      message: "Failed to update quiz. Please try again later.",
+      error: error.message,
+    });
   }
 };
 
@@ -80,14 +102,21 @@ export const updateQuizInfo = async (req, res) => {
 export const deleteQuiz = async (req, res) => {
   try {
     const { id } = req.params;
+
     const quiz = await Quiz.findByIdAndDelete(id);
     if (!quiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+      return res
+        .status(404)
+        .json({ message: "Quiz not found. It may have already been deleted." });
     }
-    res.status(200).json({ message: "Quiz deleted successfully" });
+
+    res.status(200).json({ message: "Quiz deleted successfully." });
   } catch (error) {
-    console.error("Error deleting quiz:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(`[DeleteQuiz Error] ${error.message}`);
+    res.status(500).json({
+      message: "Failed to delete quiz. Please try again later.",
+      error: error.message,
+    });
   }
 };
 
@@ -99,16 +128,24 @@ export const addQuestion = async (req, res) => {
 
     const quiz = await Quiz.findById(quizId);
     if (!quiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+      return res
+        .status(404)
+        .json({ message: "Quiz not found. Invalid quiz ID." });
     }
 
     quiz.questions.push(newQuestion);
     await quiz.save();
 
-    res.status(200).json({ message: "Question added", quiz });
+    res.status(200).json({
+      message: "Question added to quiz successfully.",
+      quiz,
+    });
   } catch (error) {
-    console.error("Error adding question:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(`[AddQuestion Error] ${error.message}`);
+    res.status(500).json({
+      message: "Failed to add question. Please try again later.",
+      error: error.message,
+    });
   }
 };
 
@@ -120,21 +157,31 @@ export const updateQuestion = async (req, res) => {
 
     const quiz = await Quiz.findById(quizId);
     if (!quiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+      return res
+        .status(404)
+        .json({ message: "Quiz not found. Invalid quiz ID." });
     }
 
     const question = quiz.questions.id(questionId);
     if (!question) {
-      return res.status(404).json({ message: "Question not found" });
+      return res
+        .status(404)
+        .json({ message: "Question not found. Invalid question ID." });
     }
 
     Object.assign(question, updatedFields);
     await quiz.save();
 
-    res.status(200).json({ message: "Question updated", quiz });
+    res.status(200).json({
+      message: "Question updated successfully.",
+      quiz,
+    });
   } catch (error) {
-    console.error("Error updating question:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(`[UpdateQuestion Error] ${error.message}`);
+    res.status(500).json({
+      message: "Failed to update question. Please try again later.",
+      error: error.message,
+    });
   }
 };
 
@@ -145,20 +192,30 @@ export const deleteQuestion = async (req, res) => {
 
     const quiz = await Quiz.findById(quizId);
     if (!quiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+      return res
+        .status(404)
+        .json({ message: "Quiz not found. Invalid quiz ID." });
     }
 
     const question = quiz.questions.id(questionId);
     if (!question) {
-      return res.status(404).json({ message: "Question not found" });
+      return res
+        .status(404)
+        .json({ message: "Question not found. Invalid question ID." });
     }
 
     quiz.questions.pull(questionId);
     await quiz.save();
 
-    res.status(200).json({ message: "Question deleted", quiz });
+    res.status(200).json({
+      message: "Question deleted successfully from quiz.",
+      quiz,
+    });
   } catch (error) {
-    console.error("Error deleting question:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(`[DeleteQuestion Error] ${error.message}`);
+    res.status(500).json({
+      message: "Failed to delete question. Please try again later.",
+      error: error.message,
+    });
   }
 };
