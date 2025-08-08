@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, ExternalLink, Filter, Search, Bookmark, BookmarkCheck } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { format } from 'date-fns';
+import { motion, useInView} from 'framer-motion'
 
 const TechFeed: React.FC = () => {
   const { state, dispatch } = useGlobalState();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'tech' | 'jobs' | 'internships' | 'events'>('all');
+  
+  const ref=useRef(null);
+  const inView=useInView(ref, {once:true})
+  const headingText='Tech Feed & Career Updates';
+  const paraText='Stay updated with the latest in tech news, jobs, and opportunities'
 
   const categories = [
     { id: 'all', label: 'All Updates', count: state.newsItems.length },
@@ -103,16 +109,84 @@ const TechFeed: React.FC = () => {
     }
   };
 
+
+  // for dyanmic page title
+      useEffect(()=>{
+        document.title='DevElevate-Tech News'
+      },[])
+
+  const containerVariants={
+    hidden:{},
+    visible:{
+      transition:{staggerChildren:0.03}
+    }
+  }
+
+  const textVariant={
+    hidden:{opacity:0, x:-20},
+    visible:{opacity:1, x:0},
+    transition:{
+      type:'spring',
+      stiffness:100,
+      damping:12
+    }
+  }
+
+  const categoryContainerVar={
+    hidden:{},
+    visible:{transition:{staggerChildren:0.2, delayChildren:0.2}}
+  }
+
+  const categoryVariants={
+    hidden:{opacity:0, y:-12, scale:0.5},
+    visible:{opacity:1, y:0, scale:1},
+    transition:{type:'spring', stiffness:50, damping:5}
+  }
+
+  const cardVariant={
+    hidden:{opacity:0, scale:0.8},
+    visible:{opacity:1, scale:1},
+    transition:{type:'spring', stiffness:50, damping:20}
+  }
+
   return (
-    <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
+    <motion.div 
+     initial={{opacity:0, y:20}}
+     animate={{opacity:1, y:0}}
+     transition={{type:'spring', stiffness:50, damping:5}}
+    className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-10">
-          <h1 className={`text-4xl font-bold  tracking-tight leading-tight mb-3 transition-colors duration-200 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-            Tech Feed & Career Updates
-          </h1>
-          <p className={`text-lg font-medium transition-colors duration-200 ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Stay updated with the latest in tech news, jobs, and opportunities
-          </p>
+          <motion.h1
+          ref={ref}
+           variants={containerVariants}
+           initial='hidden'
+           animate={inView? 'visible':'hidden'}
+          className={`text-4xl font-bold  tracking-tight leading-tight mb-3 transition-colors duration-200 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+            {headingText.split('').map((charItem, i)=>(
+              <motion.span
+               variants={textVariant}
+              key={i}
+              >
+                {charItem}
+              </motion.span>
+            ))}
+          </motion.h1>
+          <motion.p 
+           ref={ref}
+           variants={containerVariants}
+           initial='hidden'
+           animate={inView? 'visible':'hidden'}
+          className={`text-lg font-medium transition-colors duration-200 ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            {paraText.split('').map((charItem, i)=>(
+              <motion.span
+               variants={textVariant}
+              key={i}
+              >
+                {charItem}
+              </motion.span>
+            ))}
+          </motion.p>
         </div>
 
         {/* Search and Filter */}
@@ -152,9 +226,15 @@ const TechFeed: React.FC = () => {
         </div>
 
         {/* Category Tabs */}
-        <div className="mb-8 flex flex-wrap gap-2">
+        <motion.div 
+         ref={ref}
+         variants={categoryContainerVar}
+         initial='hidden'
+         animate={inView? 'visible':'hidden'}
+        className="mb-8 flex flex-wrap gap-2">
           {categories.map(category => (
-            <button
+            <motion.button
+             variants={categoryVariants}
               key={category.id}
               onClick={() => setSelectedCategory(category.id as any)}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
@@ -166,14 +246,20 @@ const TechFeed: React.FC = () => {
               }`}
             >
               {category.label} ({category.count})
-            </button>
+            </motion.button>
           ))}
-        </div>
+        </motion.div>
 
         {/* News Items */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+        ref={ref}
+        variants={categoryContainerVar}
+        initial='hidden'
+        animate={inView ? 'visible': 'hidden'}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.map(item => (
-            <div
+            <motion.div
+             variants={cardVariant}
               key={item.id}
               className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow`}
             >
@@ -226,9 +312,9 @@ const TechFeed: React.FC = () => {
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {filteredItems.length === 0 && (
           <div className="text-center py-12">
@@ -242,7 +328,7 @@ const TechFeed: React.FC = () => {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

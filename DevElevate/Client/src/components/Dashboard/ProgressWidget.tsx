@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { BookOpen, Code, Brain, Database, ArrowRight } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { useNavigate } from 'react-router-dom';
+import {motion, useInView} from 'framer-motion'
+
 const ProgressWidget: React.FC = () => {
   const { state } = useGlobalState();
   const navigate= useNavigate()
+
+  const ref=useRef(null)
+  const inView=useInView(ref, {once:true})
+
 
   const learningTracks = [
     {
@@ -48,26 +54,71 @@ const ProgressWidget: React.FC = () => {
     navigate("/learning")
   }
 
+  const containerVariant={
+    hidden:{},
+    visible:{transition:{staggerChildren:0.2, delayChildren:0.2}}
+  }
+
+  const childVariant={
+    hidden:{opacity:0, x:-20},
+    visible:{opacity:1, x:0},
+    transition:{type:'spring',
+      damping:5, 
+      stiffness:200
+    }
+    
+  }
+
   return (
-    <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
+    <motion.div 
+    ref={ref}
+     initial={{opacity:0, x:-20}}
+     animate={inView? {opacity:1, x:0}:{opacity:0, x:-20}}
+     transition={{duration:0.5, delay:0.5}}
+    className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
       <div className="flex items-center justify-between mb-6">
-        <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+        <motion.h3 
+        ref={ref}
+        initial={{opacity:0, y:-12}}
+      animate={inView? {opacity:1, y:0}:{opacity:0, y:-12}}
+      transition={{delay:0.3,
+        type:'spring',
+        stiffness:100,
+        damping:6}}
+        className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
           Learning Progress
-        </h3>
+        </motion.h3>
 <button
   className="flex items-center gap-1 text-sm font-medium text-blue-500 transition-colors duration-150 hover:text-blue-600"
   onClick={handleViewAllClick}
 >
-  <span>View All</span>
+  <motion.span
+      ref={ref}
+      initial={{opacity:0, y:-12}}
+      animate={inView?{opacity:1, y:0}:{opacity:0, y:-12}}
+      transition={{delay:0.5,
+        type:'spring',
+        stiffness:100,
+        damping:5
+      }} 
+  >
+    View All
+  </motion.span>
   <ArrowRight className='w-4 h-4'/>
 </button>
       </div>
 
-      <div className="space-y-4">
+      <motion.div
+      ref={ref} 
+      initial='hidden'
+      animate={inView? 'visible':'hidden'}
+      className="space-y-4">
         {learningTracks.map((track) => {
           const Icon = track.icon;
           return (
-            <div key={track.id} className="flex items-center space-x-4">
+            <motion.div 
+             variants={childVariant}
+            key={track.id} className="flex items-center space-x-4">
               <div className={`p-3 rounded-lg bg-gradient-to-r ${track.color}`}>
                 <Icon className="w-5 h-5 text-white" />
               </div>
@@ -90,11 +141,11 @@ const ProgressWidget: React.FC = () => {
                   {track.progress}% Complete
                 </p>
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

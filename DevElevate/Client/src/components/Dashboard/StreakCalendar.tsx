@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Calendar, Flame, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
+import { useInView, motion } from 'framer-motion';
 
 const StreakCalendar: React.FC = () => {
   const { state } = useGlobalState();
+
+  const ref=useRef(null);
+  const inView=useInView(ref, {once:true})
 
   // Current view date (month + year)
   const [viewDate, setViewDate] = useState(new Date());
@@ -68,7 +72,13 @@ const StreakCalendar: React.FC = () => {
   const yearOptions = Array.from({ length: 11 }, (_, i) => today.getFullYear() - 5 + i);
 
   return (
-    <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow duration-200`}>
+    <motion.div
+     ref={ref}
+     initial={{opacity:0, x:-12}}
+     animate={inView? {opacity:1, x:0,
+      transition:{delay:0.5, type:'spring'}
+     }:{opacity:0, x:-12}}
+    className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow duration-200`}>
       <div className="flex items-center justify-between mb-4">
         <h3 className={`text-xl font-semibold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
           Learning Streak
@@ -151,8 +161,9 @@ const StreakCalendar: React.FC = () => {
           <span className={state.darkMode ? 'text-gray-400' : 'text-gray-600'}>Today</span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
+
 };
 
 export default StreakCalendar;

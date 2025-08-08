@@ -20,6 +20,14 @@ import { useNotificationContext } from "../../contexts/NotificationContext";
 import SearchModal from "./SearchModal";
 import NotificationPanel from "./NotificationPanel";
 import ProfileDropdown from "./ProfileDropdown";
+import {
+  AnimatePresence,
+  easeIn,
+  easeInOut,
+  easeOut,
+  motion,
+  stagger,
+} from "framer-motion";
 
 const Navbar: React.FC = () => {
   const { state: authState } = useAuth();
@@ -65,10 +73,44 @@ const Navbar: React.FC = () => {
     setShowNotifications(false);
   };
 
+  // animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: "-100%" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        when: "beforeChildren",
+        staggerChildren: 0.2,
+        staggerDirection: 1,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: "-100%",
+      transition: {
+        duration: 0.3,
+        when: "afterChildren",
+        staggerChildren: 0.08,
+        staggerDirection: -1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: easeOut } },
+    exit: { opacity: 0, x: -20, transition: { duration: 0.2, ease: easeIn } },
+  };
+
   return (
     <>
-      <nav
-        className={`sticky top-0 z-40 backdrop-blur-md border-b transition-colors duration-200 bg-opacity-40 ${
+      <motion.nav
+        initial={{ y: 12, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: easeInOut }}
+        className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-colors duration-200 bg-opacity-40 ${
           state.darkMode
             ? "bg-gray-900/90 border-gray-800"
             : "bg-white border-gray-200"
@@ -79,26 +121,52 @@ const Navbar: React.FC = () => {
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3, ease: easeOut }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9, opacity: 0.8 }}
+                  className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
+                >
                   <BookOpen className="w-5 h-5 text-white" />
-                </div>
-                <span
+                </motion.div>
+                <motion.span
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.3, ease: easeIn, delay: 0.3 }}
                   className={`text-xl font-bold ${
                     state.darkMode ? "text-white" : "text-gray-900"
                   }`}
                 >
                   DevElevate
-                </span>
+                </motion.span>
               </Link>
             </div>
 
             {/* Desktop Navigation Links */}
-          
 
             {/* Right side actions */}
-            <div className="flex items-center space-x-2">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                transition: {
+                  when: "beforeChildren",
+                  delayChildren: 0.5,
+                  staggerChildren: 1,
+                  ease: easeInOut,
+                },
+              }}
+              transition={{ duration: 1, ease: easeInOut, delay: 1 }}
+              className="flex items-center space-x-2"
+            >
               {/* Search Button */}
-              <button
+              <motion.button
+                initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
                 onClick={handleSearchOpen}
                 className={`p-2 rounded-lg transition-colors ${
                   state.darkMode
@@ -108,10 +176,13 @@ const Navbar: React.FC = () => {
                 title="Search (Ctrl+K)"
               >
                 <Search className="w-5 h-5" />
-              </button>
+              </motion.button>
 
               {/* Notifications Button */}
-              <button
+              <motion.button
+                initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.3 }}
                 onClick={handleNotificationsToggle}
                 className={`relative p-2 rounded-lg transition-colors ${
                   showNotifications
@@ -128,12 +199,17 @@ const Navbar: React.FC = () => {
                     {unreadCount > 9 ? "9+" : unreadCount}
                   </span>
                 )}
-              </button>
+              </motion.button>
 
               {/* Dark mode toggle */}
 
               {/* User Profile */}
-              <div className="relative">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.3 }}
+                className="relative"
+              >
                 <button
                   onClick={handleProfileToggle}
                   className={`flex items-center space-x-2 p-1 rounded-lg transition-colors ${
@@ -174,7 +250,7 @@ const Navbar: React.FC = () => {
                   isOpen={showProfile}
                   onClose={() => setShowProfile(false)}
                 />
-              </div>
+              </motion.div>
 
               {/* Mobile menu button */}
               <button
@@ -191,42 +267,48 @@ const Navbar: React.FC = () => {
                   <Menu className="w-5 h-5" />
                 )}
               </button>
-            </div>
+            </motion.div>
           </div>
 
           {/* Mobile Navigation Menu */}
-          {showMobileMenu && (
-            <div
-              className={`lg:hidden border-t ${
-                state.darkMode ? "border-gray-700" : "border-gray-200"
-              } py-4`}
-            >
-              <div className="space-y-1">
+          <AnimatePresence>
+            {showMobileMenu && (
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={containerVariants}
+                className={`lg:hidden border-t ${
+                  state.darkMode ? "border-gray-700" : "border-gray-200"
+                } py-4`}
+              >
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      onClick={() => setShowMobileMenu(false)}
-                      className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        isActive(item.path)
-                          ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
-                          : state.darkMode
-                          ? "text-gray-300 hover:text-white hover:bg-gray-800"
-                          : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                      }`}
-                    >
-                      <Icon className="w-5 h-5" />
-                      <span>{item.label}</span>
-                    </Link>
+                    <motion.div variants={itemVariants}>
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        onClick={() => setShowMobileMenu(false)}
+                        className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          isActive(item.path)
+                            ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                            : state.darkMode
+                            ? "text-gray-300 hover:text-white hover:bg-gray-800"
+                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                        }`}
+                      >
+                        <Icon className="w-5 h-5" />
+                        <span>{item.label}</span>
+                      </Link>
+                    </motion.div>
                   );
                 })}
-              </div>
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Search Modal */}
       <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />

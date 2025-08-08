@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   ExternalLink,
   Calendar,
@@ -10,6 +10,7 @@ import {
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import {motion, useInView} from 'framer-motion'
 
 const NewsWidget: React.FC = () => {
   const { state } = useGlobalState();
@@ -21,6 +22,8 @@ const NewsWidget: React.FC = () => {
   const API_KEY =`5197b7b314d04c1080a2092f0496c165` ;
   const NEWS_API = `https://newsapi.org/v2/top-headlines?sources=bbc-news&pageSize=9&apiKey=${API_KEY}
 `;
+   const ref=useRef(null)
+   const inView=useInView(ref, {once:true})
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -48,9 +51,38 @@ const NewsWidget: React.FC = () => {
   };
   console.log(articles);
   
+  const newsVariants={
+    hidden:{opacity:0, x:-12},
+    visible:{opacity:1, x:0},
+    transition:{
+      type:'tween',
+      duration:0.5,
+      ease:'easeInOut'
+    }
+  }
+
+  const containerVariant={
+    hidden:{},
+    visible:{transition:{staggerChildren:0.2 }}
+
+  }
+
+  const childVariant={
+    hidden:{opacity:0, y:-10},
+    visible:{opacity:1, y:0, },
+    transition:{
+      type: "inertia",
+  velocity: 20,
+  bounceStiffness: 200,
+  bounceDamping: 20
+  }}
 
   return (
-    <div
+    <motion.div
+     ref={ref}
+     variants={newsVariants}
+     initial='hidden'
+     animate={inView? 'visible':'hidden'}
       className={`${
         state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
       } rounded-xl p-6 border shadow-sm transition-colors duration-200`}
@@ -97,7 +129,10 @@ const NewsWidget: React.FC = () => {
           <Loader2 className="animate-spin w-6 h-6 text-blue-500" />
         </div>
       ) : (
-        <div
+        <motion.div
+         variants={containerVariant}
+         initial='hidden'
+         animate={inView? 'visible':'hidden'}
           className={
             viewMode === 'card'
               ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'
@@ -105,7 +140,8 @@ const NewsWidget: React.FC = () => {
           }
         >
           {articles.map((item, index) => (
-            <div
+            <motion.div
+              variants={childVariant}
               key={item.url ?? index}
               className={`border rounded-lg overflow-hidden bg-white dark:bg-gray-900 ${
                 viewMode === 'card'
@@ -165,11 +201,11 @@ const NewsWidget: React.FC = () => {
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

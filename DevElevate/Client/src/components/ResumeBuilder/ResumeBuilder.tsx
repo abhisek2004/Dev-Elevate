@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { Download, Save, Edit, Eye } from 'lucide-react';
 import PersonalInfoForm from './PersonalInfoForm';
@@ -9,6 +9,7 @@ import SkillsForm from './SkillsForm';
 import ResumePreview from './ResumePreview';
 import ATSScanner from './ATSScanner';
 import jsPDF from 'jspdf';
+import { useInView, motion } from 'framer-motion';
 
 const ResumeBuilder: React.FC = () => {
   const { state, dispatch } = useGlobalState();
@@ -22,6 +23,34 @@ const ResumeBuilder: React.FC = () => {
     projects: true,
     skills: true,
   });
+
+  // for animations
+  const ref=useRef(null);
+  const inView=useInView(ref, {once:true})
+  const paraText='Create an ATS-friendly resume that gets you noticed';
+
+  // for dyanmic page title
+        useEffect(()=>{
+          document.title='DevElevate-Resume Builder'
+        },[])
+
+  const containerVariants={
+    hidden:{},
+    visible:{
+      transition:{staggerChildren:0.03}
+    }
+  }
+
+  const textVariant={
+    hidden:{opacity:0, x:-20},
+    visible:{opacity:1, x:0},
+    transition:{
+      type:'spring',
+      stiffness:100,
+      damping:12
+    }
+  }
+
 
   const sections = [
     { id: 'personal', label: 'Personal Info', icon: Edit },
@@ -209,31 +238,70 @@ const ResumeBuilder: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <motion.div 
+     initial={{opacity:0, y:20}}
+     animate={{opacity:1, y:0}}
+     transition={{type:'spring', stiffness:50, damping:5}}
+     className={`min-h-screen transition-colors duration-300 ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* heading */}
         <div className="mb-8">
-          <h1 className={`text-4xl font-extrabold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-3 transition-colors`}>
-            Resume Builder
-          </h1>
-          <p className={`text-lg ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Create an ATS-friendly resume that gets you noticed
-          </p>
+          <motion.h1
+           ref={ref}
+           variants={containerVariants}
+           initial='hidden'
+           animate={inView? 'visible':'hidden'}
+          className={`text-4xl font-extrabold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-3 transition-colors`}>
+            {'Resume Builder'.split('').map((charItem, i)=>(
+              <motion.span
+               variants={textVariant}
+               key={i}>
+                {charItem}
+              </motion.span>
+            ))}
+          </motion.h1>
+          <motion.p 
+          ref={ref}
+           variants={containerVariants}
+           initial='hidden'
+           animate={inView? 'visible':'hidden'}
+          className={`text-lg ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            {paraText.split('').map((charItem, i)=>(
+              <motion.span
+               variants={textVariant}
+               key={i}>
+                {charItem}
+              </motion.span>
+            ))}
+          </motion.p>
         </div>
 
         {/* Action Buttons */}
         <div className="mb-10 flex flex-wrap gap-4">
-          <button onClick={() => setShowPreview(!showPreview)} className="flex items-center space-x-2 px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white rounded-xl shadow-sm transition-all">
+          <motion.button 
+           initial={{scale:0.8, opacity:0}}
+           animate={inView? {scale:1, opacity:1}:{scale:0.8, opacity:0}}
+           transition={{delay:0.5}}
+          onClick={() => setShowPreview(!showPreview)} className="flex items-center space-x-2 px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white rounded-xl shadow-sm transition-all">
             <Eye className="w-4 h-4" />
             <span>{showPreview ? 'Hide Preview' : 'Preview Resume'}</span>
-          </button>
-          <button onClick={saveResume} className="flex items-center space-x-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow-sm transition-all">
+          </motion.button>
+          <motion.button 
+          initial={{scale:0.8, opacity:0}}
+           animate={inView? {scale:1, opacity:1}:{scale:0.8, opacity:0}}
+           transition={{delay:0.6,}}
+          onClick={saveResume} className="flex items-center space-x-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow-sm transition-all">
             <Save className="w-4 h-4" />
             <span>Save Resume</span>
-          </button>
-          <button onClick={downloadResume} className="flex items-center space-x-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl shadow-sm transition-all">
+          </motion.button>
+          <motion.button 
+          initial={{scale:0.8, opacity:0}}
+           animate={inView? {scale:1, opacity:1}:{scale:0.8, opacity:0}}
+           transition={{delay:0.7}}
+          onClick={downloadResume} className="flex items-center space-x-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl shadow-sm transition-all">
             <Download className="w-4 h-4" />
             <span>Download PDF</span>
-          </button>
+          </motion.button>
         </div>
 
         {showPreview ? (
@@ -244,7 +312,12 @@ const ResumeBuilder: React.FC = () => {
           <>
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
               {/* Left Nav */}
-              <div className="lg:col-span-1">
+              <motion.div 
+              ref={ref} 
+           initial={{opacity:0, x:-12}}
+           animate={inView ? {opacity:1, x:0}:{opacity:0, x:-12}}
+           transition={{delay:0.4, type:'spring', stiffness:50, damping:5}}
+              className="lg:col-span-1">
                 <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
                   <h3 className={`text-lg font-semibold mb-4 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
                     Resume Sections
@@ -273,24 +346,31 @@ const ResumeBuilder: React.FC = () => {
                     })}
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Form Content */}
-              <div className="lg:col-span-3">
+              <motion.div 
+              ref={ref} 
+           initial={{opacity:0, x:-12}}
+           animate={inView ? {opacity:1, x:0}:{opacity:0, x:-12}}
+           transition={{delay:0.6, type:'spring', stiffness:50, damping:5}}
+              className="lg:col-span-3">
                 <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
                   <div ref={previewRef}>{renderActiveSection()}</div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* ATS Scanner UI */}
-            <div className="mt-10">
+            <div 
+            
+            className="mt-10">
               <ATSScanner />
             </div>
           </>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

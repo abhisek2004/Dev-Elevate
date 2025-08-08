@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Lightbulb, Sparkles, RefreshCw, BookOpen, Github, Tag, Clock, Save, Play, Users } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import PreferenceForm from './PreferenceForm';
 import ProjectCard from './ProjectCard';
 import CommunityShowcase from './CommunityShowcase';
@@ -47,6 +47,47 @@ const ProjectRecommender: React.FC = () => {
   useEffect(() => {
     setSavedProjects(getSavedProjects());
   }, []);
+
+  // for dyanmic page title
+      useEffect(()=>{
+        document.title='DevElevate-AI Recommendations'
+      },[])
+
+  // for animations
+  const ref=useRef(null)
+  const inView=useInView(ref, {once:true})
+  const heading='AI Project Recommender'
+  const para=` Get personalized project recommendations powered by AI to accelerate your skill growth 
+  and build an impressive portfolio`
+
+  const containerVariants={
+    hidden:{},
+    visible:{
+      transition:{staggerChildren:0.03}
+    }
+  }
+
+  const textVariant={
+    hidden:{opacity:0, x:-20},
+    visible:{opacity:1, x:0},
+    transition:{
+      type:'spring',
+      stiffness:100,
+      damping:12
+    }
+  }
+
+
+  const categoryContainerVar={
+    hidden:{},
+    visible:{transition:{staggerChildren:0.2, delayChildren:0.2}}
+  }
+
+  const categoryVariants={
+    hidden:{opacity:0, y:-12, scale:0.5},
+    visible:{opacity:1, y:0, scale:1},
+    transition:{type:'spring', stiffness:50, damping:5}
+  }
 
   const handlePreferencesSubmit = async (prefs: UserPreferences) => {
     setPreferences(prefs);
@@ -163,7 +204,11 @@ const ProjectRecommender: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-200 ${
+    <motion.div
+    initial={{opacity:0, y:20}}
+     animate={{opacity:1, y:0}}
+     transition={{type:'spring', stiffness:50, damping:5}}
+    className={`min-h-screen transition-colors duration-200 ${
       state.darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -171,30 +216,63 @@ const ProjectRecommender: React.FC = () => {
         <div className="text-center mb-10">
           <div className="flex items-center justify-center mb-6">
             <div className="relative">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-xl">
+              <motion.div
+              initial={{rotate:0}}
+              animate={{rotate:360}}
+              transition={{delay:0.2, duration:0.5}}
+              className="w-16 h-16 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-xl">
                 <Lightbulb className="w-8 h-8 text-white" />
-              </div>
+              </motion.div>
               <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-pulse"></div>
               <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-green-400 rounded-full animate-bounce"></div>
             </div>
           </div>
-          <h1 className={`text-5xl font-bold mb-6 ${
+          <motion.h1 
+          ref={ref}
+           variants={containerVariants}
+           initial='hidden'
+           animate={inView? 'visible':'hidden'}
+          className={`text-5xl font-bold mb-6 ${
             state.darkMode
               ? 'text-white'
               : 'bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent'
           }`}>
-            AI Project Recommender
-          </h1>
-          <p className={`text-xl max-w-4xl mx-auto leading-relaxed ${
+            {heading.split('').map((charItem, i)=>(
+                          <motion.span
+                           variants={textVariant}
+                          key={i}
+                          >
+                            {charItem}
+                          </motion.span>
+                        ))}
+          </motion.h1>
+          <motion.p
+           ref={ref}
+           variants={containerVariants}
+           initial='hidden'
+           animate={inView? 'visible':'hidden'}
+          className={`text-xl max-w-4xl mx-auto leading-relaxed ${
             state.darkMode ? 'text-gray-300' : 'text-gray-700'
           }`}>
-            Get personalized project recommendations powered by AI to accelerate your skill growth and build an impressive portfolio
-          </p>
+           {para.split('').map((charItem, i)=>(
+                          <motion.span
+                           variants={textVariant}
+                          key={i}
+                          >
+                            {charItem}
+                          </motion.span>
+                        ))}
+          </motion.p>
         </div>
 
         {/* Navigation Tabs */}
         <div className="flex justify-center mb-10">
-          <div className={`flex rounded-2xl p-1.5 border shadow-lg ${
+          <motion.div 
+           ref={ref}
+         variants={categoryContainerVar}
+         initial='hidden'
+         animate={inView? 'visible':'hidden'}
+          className={`flex rounded-2xl p-1.5 border shadow-lg ${
             state.darkMode
               ? 'bg-gray-800 border-gray-700'
               : 'bg-white/80 backdrop-blur-sm border-gray-200/50'
@@ -207,7 +285,8 @@ const ProjectRecommender: React.FC = () => {
             ].map((tab) => {
               const Icon = tab.icon;
               return (
-                <button
+                <motion.button
+                 variants={categoryVariants}
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`flex items-center space-x-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
@@ -220,10 +299,10 @@ const ProjectRecommender: React.FC = () => {
                 >
                   <Icon className="w-4 h-4" />
                   <span>{tab.label}</span>
-                </button>
+                </motion.button>
               );
             })}
-          </div>
+          </motion.div>
         </div>
 
         {/* Content */}
@@ -389,7 +468,7 @@ const ProjectRecommender: React.FC = () => {
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Github, ExternalLink, Code, Globe, Linkedin } from "lucide-react";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import { Link } from "react-router-dom";
-
+import { motion, useInView } from "framer-motion";
 
 type Contributor = {
   login: string;
@@ -15,6 +15,9 @@ const Footer: React.FC = () => {
   const { state } = useGlobalState();
   const [contributors, setContributors] = useState<Contributor[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
 
   useEffect(() => {
     const fetchContributors = async () => {
@@ -78,7 +81,11 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer
+    <motion.footer
+      ref={ref}
+      initial={{ opacity: 0, y: 100 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
+      transition={{ type: "spring", stiffness: 50, damping: 12, delay: 0.4 }}
       className={`${
         state.darkMode
           ? "bg-gray-900 border-gray-700"
@@ -87,7 +94,16 @@ const Footer: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
         {/* Disclaimer Section */}
-        <div
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 100 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
+          transition={{
+            type: "spring",
+            stiffness: 50,
+            damping: 12,
+            delay: 0.6,
+          }}
           className={`p-6 rounded-xl border mb-8 ${
             state.darkMode
               ? "bg-gray-800 border-gray-700"
@@ -123,8 +139,14 @@ const Footer: React.FC = () => {
                     https://abhisekpanda072.vercel.app/
                   </a>
                   <br />
-                   <strong>🟢Live Link:</strong> 
-                  <a href="https://develevate-ai.vercel.app/" target="_blank" rel="noopener noreferrer">Develevate-ai</a>
+                  <strong>🟢Live Link:</strong>
+                  <a
+                    href="https://develevate-ai.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Develevate-ai
+                  </a>
                 </p>
                 <p>
                   <strong>🚧 Important Note:</strong> This website has been
@@ -149,10 +171,21 @@ const Footer: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Contributors Section */}
-        <div className="mb-12">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 100 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
+          transition={{
+            type: "spring",
+            stiffness: 50,
+            damping: 12,
+            delay: 0.8,
+          }}
+          className="mb-12"
+        >
           <div className="flex items-center justify-between mb-6">
             <h3
               className={`text-xl font-bold ${
@@ -236,10 +269,14 @@ const Footer: React.FC = () => {
               )}
             </div>
           )}
-        </div>
+        </motion.div>
 
         {/* Main Footer Content */}
-        <div
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 100 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
+          transition={{ type: "spring", stiffness: 50, damping: 12, delay: 1 }}
           className={`border-t w-full ${
             state.darkMode ? "border-gray-800" : "border-gray-200"
           }`}
@@ -385,7 +422,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         <div
           className={`border-t w-full ${
@@ -403,7 +440,7 @@ const Footer: React.FC = () => {
           </p>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

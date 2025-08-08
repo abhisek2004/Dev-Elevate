@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { 
@@ -49,6 +49,11 @@ const UserProfile: React.FC = () => {
       console.error('Failed to update profile:', error);
     }
   };
+
+   // for dyanmic page title
+             useEffect(()=>{
+               document.title='DevElevate-My Profile'
+             },[])
 
   const handleCancelEdit = () => {
     // Reset form data to original user data
