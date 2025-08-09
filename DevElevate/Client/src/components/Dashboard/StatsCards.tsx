@@ -1,6 +1,7 @@
 import React from 'react';
 import { TrendingUp, Award, Calendar, Target } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
+import {motion} from 'framer-motion';
 
 const StatsCards: React.FC = () => {
   const { state } = useGlobalState();
@@ -38,12 +39,37 @@ const StatsCards: React.FC = () => {
     }
   ];
 
+  // animations
+   const containerVariants={
+    hidden:{},
+    visible:{transition:{staggerChildren:0.2}}
+
+  }
+
+  const childVariants={
+    hidden:{opacity:0, y:-10},
+    visible:{opacity:1, y:0, },
+    transition:{
+      type: "inertia",
+  velocity: 20,
+  bounceStiffness: 200,
+  bounceDamping: 20
+      
+    }
+  }
+
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <motion.div 
+    variants={containerVariants}
+    initial='hidden'
+    animate='visible'
+    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {stats.map((stat, index) => {
         const Icon = stat.icon;
         return (
-          <div
+          <motion.div
+            variants={childVariants}
             key={index}
             className={`${
               state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
@@ -68,10 +94,10 @@ const StatsCards: React.FC = () => {
                 style={{ width: `${Math.min(100, (stat.value / 100) * 100)}%` }}
               ></div>
             </div>
-          </div>
+          </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 };
 

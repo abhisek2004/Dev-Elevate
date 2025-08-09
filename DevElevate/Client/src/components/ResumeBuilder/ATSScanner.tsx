@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Upload, ScanLine, CheckCircle2, AlertCircle } from 'lucide-react';
+import {motion, useInView} from 'framer-motion'
 
 // Inline Button Component
 const Button = ({
@@ -34,9 +35,18 @@ const ATSScanner: React.FC = () => {
     // Simulate scan logic
     setScanTriggered(true);
   };
+ 
+  //  for animations
+  const ref=useRef(null);
+  const inView=useInView(ref, {once:true})
 
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border dark:border-gray-700">
+    <motion.div
+      ref={ref} 
+      initial={{opacity:0, y:-12}}
+      animate={inView ? {opacity:1, y:0}:{opacity:0, y:-12}}
+      transition={{delay:0.4, type:'spring', stiffness:50, damping:5}}
+    className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border dark:border-gray-700">
       <h2 className="text-2xl font-bold mb-4 dark:text-white flex items-center gap-2">
         <ScanLine className="w-6 h-6 text-blue-500" />
         ATS Scanner
@@ -83,7 +93,7 @@ const ATSScanner: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

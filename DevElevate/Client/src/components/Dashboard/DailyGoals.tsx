@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Plus, Check } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
+import { delay, scale, useInView } from 'framer-motion';
+import {motion} from 'framer-motion';
 
 const DailyGoals: React.FC = () => {
   const { state, dispatch } = useGlobalState();
   const [newGoal, setNewGoal] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
+
+   const ref=useRef(null)
+  const inView=useInView(ref, {once:true})
 
   const addGoal = () => {
     if (newGoal.trim()) {
@@ -23,19 +28,56 @@ const DailyGoals: React.FC = () => {
     }
   };
 
+  const containerVariant={
+    hidden:{opacity:0, x:20},
+    visible:{opacity:1, x:0},
+    transition:{
+     delay:0.2}
+    
+
+  }
+
+  const childVariant={
+    hidden:{opacity:0, y:-12},
+    visible:{opacity:1, y:0},
+    transition:{delay:0.5, ease:'easeOut'}
+  }
+  
   return (
-    <div className={`rounded-2xl p-6 border transition-all duration-300 ease-in-out shadow-md ${state.darkMode ? 'bg-gray-900 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-900'} `}>
+    <motion.div 
+     ref={ref}
+     variants={containerVariant}
+     initial='hidden'
+     animate={inView? 'visible': 'hidden'}
+    className={`rounded-2xl p-6 border transition-all duration-300 ease-in-out shadow-md ${state.darkMode ? 'bg-gray-900 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-900'} `}>
       <div className="flex items-center justify-between mb-6">
-        <h3 className={`text-2xl font-semibold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+        <motion.h3 
+        ref={ref}
+        variants={childVariant}
+        initial='hidden'
+        animate={inView? 'visible':'hidden' }
+        
+
+        className={`text-2xl font-semibold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
           Daily Goals
-        </h3>
-        <button
+        </motion.h3>
+        <motion.button
+         ref={ref}
+         initial={{}}
+         animate={inView? {transition:{staggerChildren:0.2,
+           delayChildren:0.2}}:{}}
           onClick={() => setShowAddForm(!showAddForm)}
           className="flex items-center gap-1 px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow hover:shadow-lg transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
-          <span className="text-sm hidden sm:inline">Add</span>
-        </button>
+          <motion.span
+           initial={{opacity:0, y:-12}}
+           animate={{opacity:1, y:0}}
+           transition={{delay:0.5, type:'spring', stiffness:200, damping:6}}
+
+          className="text-sm hidden sm:inline">Add
+          </motion.span>
+      </motion.button>
       </div>
 
       {showAddForm && (
@@ -119,7 +161,7 @@ const DailyGoals: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

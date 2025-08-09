@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { BookOpen, Code, Database, Brain, PlayCircle, FileText, CheckCircle } from 'lucide-react';
 import Toast from '../Layout/Toast';
+import {inView, motion, useInView} from 'framer-motion';
 
 const LearningHub: React.FC = () => {
   const { state, dispatch } = useGlobalState();
   const [selectedTrack, setSelectedTrack] = useState('dsa');
   const [toastMessage, setToastMessage] = useState("");
+  const paraText='Master the skills you need for your tech career';
+
+
+  // for animations 
+  const ref=useRef(null)
+  const inView=useInView(ref, {once:true})
+
+  // for dyanmic page title
+  useEffect(()=>{
+    document.title='DevElevate-Learning Hub'
+  },[])
 
   const alertHandler = (module: { id: string; title: string; topics: string[]; completed: boolean }, type?: string) => {
     let message = "";
@@ -84,6 +96,24 @@ const LearningHub: React.FC = () => {
     });
   };
 
+  const containerVariants={
+    hidden:{},
+    visible:{
+      transition:{staggerChildren:0.03}
+    }
+  }
+
+  const textVariant={
+    hidden:{opacity:0, x:-20},
+    visible:{opacity:1, x:0},
+    transition:{
+      type:'spring',
+      stiffness:100,
+      damping:12
+    }
+  }
+
+
   return (
     <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
         {/* Displays toast notification */}
@@ -92,17 +122,43 @@ const LearningHub: React.FC = () => {
         )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-10">
-          <h1 className={`text-3xl font-extrabold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-            Learning Hub
-          </h1>
-          <p className={`text-lg leading-relaxed  ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Master the skills you need for your tech career
-          </p>
+          <motion.h1
+          variants={containerVariants}
+         initial='hidden'
+         animate='visible'
+          className={`text-3xl font-extrabold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
+           {'Learning Hub'.split('').map((charItem, i)=>(
+            <motion.span
+             variants={textVariant}
+            key={i}>
+              {charItem}
+            </motion.span>
+           ))} 
+          </motion.h1>
+          <motion.p 
+          variants={containerVariants}
+         initial='hidden'
+         animate='visible'
+          className={`text-lg leading-relaxed  ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            {
+             paraText.split('').map((charItem, i)=>(
+              <motion.span
+               key={i}
+               variants={textVariant}>
+                {charItem}
+              </motion.span>
+             ))}
+          </motion.p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Track Selection */}
-          <div className="lg:col-span-1">
+          <motion.div
+          ref={ref} 
+           initial={{opacity:0, x:-12}}
+           animate={inView ? {opacity:1, x:0}:{opacity:0, x:-12}}
+           transition={{delay:0.4, type:'spring', stiffness:50, damping:5}}
+          className="lg:col-span-1">
             <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
               <h3 className={`text-lg font-semibold mb-4 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
                 Learning Tracks
@@ -136,10 +192,15 @@ const LearningHub: React.FC = () => {
                 })}
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Module Content */}
-          <div className="lg:col-span-3">
+          <motion.div
+            ref={ref} 
+           initial={{opacity:0, x:-12}}
+           animate={inView ? {opacity:1, x:0}:{opacity:0, x:-12}}
+           transition={{delay:0.6, type:'spring', stiffness:50, damping:5}}
+          className="lg:col-span-3">
             <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm transition-all duration-200`}>
               <div className="flex items-center space-x-3 mb-6">
                 <div className={`p-3 rounded-lg bg-gradient-to-r ${currentTrack.color} shadow-md`}>
@@ -238,7 +299,7 @@ const LearningHub: React.FC = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

@@ -8,10 +8,14 @@ import QuickActions from './QuickActions';
 import StreakCalendar from './StreakCalendar';
 import DailyGoals from './DailyGoals';
 import { User } from '../../contexts/GlobalContext';
+import {motion} from 'framer-motion';
 
 const Dashboard: React.FC = () => {
   const { state: authState } = useAuth();
   const { state, dispatch } = useGlobalState();
+
+  const headingText=`Welcome back, ${authState.user?.name || 'Developer'}!`
+  const paraText='Ready to continue your learning journey?'
 
   useEffect(() => {
     // Initialize user if not exists
@@ -60,17 +64,72 @@ const Dashboard: React.FC = () => {
     }
   }, [state.user, state.newsItems.length, dispatch]);
 
+  // animations 
+  const dashboardVariants={
+     hidden:{opacity:0 ,y:50},
+     visible:{opacity:1, y:0,},
+     transition:{duration:0.5, ease:'easeInOut'}
+  }
+
+  const containerVariants={
+    hidden:{},
+    visible:{
+      transition:{staggerChildren:0.03}
+    }
+  }
+
+  const textVariant={
+    hidden:{opacity:0, x:-20},
+    visible:{opacity:1, x:0},
+    transition:{
+      type:'spring',
+      stiffness:100,
+      damping:12
+    }
+  }
+
+ 
   return (
-    <div className={`min-h-screen transition-colors duration-300  ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <motion.div
+     variants={dashboardVariants} 
+     initial='hidden'
+     animate='visible'
+     whileInView={{opacity:1, scale:1}}
+    className={`min-h-screen transition-colors duration-300  ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
+      <div 
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Welcome Section */}
-        <div className="mb-10">
-          <h1 className={`text-4xl font-extrabold tracking-tight mb-3 ${state.darkMode ? 'text-white' : 'text-gray-900'} `}>
-            Welcome back, {authState.user?.name || 'Developer'}! 👋
-          </h1>
-          <p className={`text-lg sm:text-xl font-medium leading-relaxed ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Ready to continue your learning journey?
-          </p>
+        <div className=''>
+          {/* heading */}
+        <motion.h1 
+         variants={containerVariants}
+         initial='hidden'
+         animate='visible'
+         className='mb-5'>
+          {headingText.split('').map((charItem, index)=>(
+            <motion.span 
+            variants={textVariant}
+            key={index}
+          className={`text-4xl font-extrabold tracking-tight mb-3 ${state.darkMode ? 'text-white' : 'text-gray-900'} `}>
+           {charItem}
+          </motion.span>
+          ))}
+        </motion.h1>
+        {/* para */}
+         <motion.p 
+         variants={containerVariants}
+         initial='hidden'
+         animate='visible'
+         className='mb-5'>
+          {paraText.split('').map((charItem, index)=>(
+            <motion.span 
+            variants={textVariant}
+            key={index}
+          className={`text-lg sm:text-xl font-medium leading-relaxed ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+           {charItem}
+          </motion.span>
+          ))}
+        </motion.p>
         </div>
 
         {/* Stats Cards */}
@@ -92,8 +151,10 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 export default Dashboard;
+
+// 

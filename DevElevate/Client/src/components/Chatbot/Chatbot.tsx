@@ -8,10 +8,12 @@ import {
   Briefcase,
   CheckIcon,
   CopyIcon,
-  MessageCircleQuestion ,
+  MessageCircleQuestion, 
+  ImageIcon,
 } from "lucide-react";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import { generateGeminiResponse } from "../../utils/helperAI";
+import {delay, motion, useInView} from 'framer-motion'
 // import { toast } from "sonner";
 
 const Chatbot: React.FC = () => {
@@ -26,12 +28,21 @@ const Chatbot: React.FC = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
+  const ref=useRef(null)
+  const inView=useInView(ref, {once:true})
+  const paraText='Your 24/7 AI mentor for learning and career guidance';
+
   const categories = [
     { id: "learning", label: "Learning Help", icon: BookOpen },
     { id: "career", label: "Career Advice", icon: Briefcase },
     { id: "quiz", label: "quiz", icon: MessageCircleQuestion  },
     { id: "general", label: "General Chat", icon: Sparkles },
   ];
+
+   // for dyanmic page title
+    useEffect(()=>{
+      document.title='DevElevate-StudyBuddy AI'
+    },[])
 
   const suggestedQuestions = {
     learning: [
@@ -138,6 +149,35 @@ const Chatbot: React.FC = () => {
     }, 3000); // 3 seconds
   };
 
+  const containerVariants={
+    hidden:{},
+    visible:{
+      transition:{staggerChildren:0.03}
+    }
+  }
+
+  const textVariant={
+    hidden:{opacity:0, x:-20},
+    visible:{opacity:1, x:0},
+    transition:{
+      type:'spring',
+      stiffness:100,
+      damping:12
+    }
+  }
+
+  const chatVariant={
+    hidden:{opacity:0, x:-12},
+    visible:{opacity:1, x:0},
+    transition:{type:'spring', stiffness:50, damping:5}
+  }
+
+  const headingVariant={
+    hidden:{opacity:0, y:-12},
+    visible:{opacity:1, y:0},
+    transition:{type:'spring', stiffness:50, damping:5}
+  }
+
   return (
     <div
       className={`min-h-screen ${
@@ -146,25 +186,55 @@ const Chatbot: React.FC = () => {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1
+
+          <motion.h1
+          ref={ref}
+          variants={containerVariants}
+         initial='hidden'
+         animate={inView? 'visible':'hidden'}
             className={`text-3xl font-bold ${
               state.darkMode ? "text-white" : "text-gray-900"
             } mb-2`}
           >
-            Study Buddy AI
-          </h1>
-          <p
+            {'Study Buddy AI'.split('').map((charItem, i)=>(
+              <motion.span
+              key={i}
+               variants={textVariant}>
+                {charItem}
+              </motion.span>
+            ))}
+            
+          </motion.h1>
+
+
+          <motion.p
+            ref={ref}
+            variants={containerVariants}
+            initial='hidden'
+            animate={inView? 'visible':'hidden'}
             className={`text-lg ${
               state.darkMode ? "text-gray-300" : "text-gray-600"
             }`}
           >
-            Your 24/7 AI mentor for learning and career guidance
-          </p>
+            {paraText.split('').map((charItem, i)=>(
+              <motion.span
+               variants={textVariant}
+               key={i}>
+                {charItem}
+              </motion.span>
+            ))}
+          </motion.p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Chat Categories */}
-          <div className="lg:col-span-1">
+          <motion.div 
+           ref={ref}
+           variants={chatVariant}
+           initial='hidden'
+           animate={inView? 'visible':'hidden'}
+           transition={{delay:0.4}}
+          className="lg:col-span-1">
             <div
               className={`${
                 state.darkMode
@@ -204,13 +274,18 @@ const Chatbot: React.FC = () => {
               </div>
 
               <div className="mt-6">
-                <h4
+                <motion.h4
+                  ref={ref}
+                  variants={headingVariant}
+                  initial='hidden'
+                  animate={inView? 'visible':'hidden'}
+                  transition={{delay:0.4, }}
                   className={`text-sm font-medium mb-3 ${
                     state.darkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
                   Suggested Questions
-                </h4>
+                </motion.h4>
                 <div className="space-y-2">
                   {suggestedQuestions[selectedCategory].map(
                     (question, index) => (
@@ -230,10 +305,16 @@ const Chatbot: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Chat Interface */}
-          <div className="lg:col-span-3">
+          <motion.div 
+          ref={ref}
+           variants={chatVariant}
+           initial='hidden'
+           animate={inView? 'visible':'hidden'}
+           transition={{delay:0.6}}
+          className="lg:col-span-3">
             <div
               className={`${
                 state.darkMode
@@ -253,21 +334,31 @@ const Chatbot: React.FC = () => {
                         state.darkMode ? "text-gray-400" : "text-gray-500"
                       }`}
                     />
-                    <h3
+                    <motion.h3
+                    ref={ref}
+                    variants={headingVariant}
+                    initial='hidden'
+                    animate={inView? 'visible':'hidden'}
+                    transition={{delay:0.4 }}
                       className={`text-lg font-medium mb-2 ${
                         state.darkMode ? "text-white" : "text-gray-900"
                       }`}
                     >
                       Welcome to Study Buddy!
-                    </h3>
-                    <p
+                    </motion.h3>
+                    <motion.p
+                    ref={ref}
+                    variants={headingVariant}
+                    initial='hidden'
+                    animate={inView? 'visible':'hidden'}
+                    transition={{delay:0.6 }}
                       className={`${
                         state.darkMode ? "text-gray-400" : "text-gray-600"
                       }`}
                     >
                       Ask me anything about learning, career advice, or tech
                       topics.
-                    </p>
+                    </motion.p>
                   </div>
                 ) : (
                   state.chatHistory.map((msg, index) => (
@@ -403,7 +494,7 @@ const Chatbot: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

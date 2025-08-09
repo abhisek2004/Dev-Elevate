@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { MessageSquare, FileText, Target, Code } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { useNavigate } from 'react-router-dom';
+import {motion, useInView}from 'framer-motion'
 
 const QuickActions: React.FC = () => {
   const { state } = useGlobalState();
   const navigate = useNavigate();
+
+  const ref=useRef(null)
+  const inView=useInView(ref, {once:true})
+  
 
   const actions = [
     {
@@ -38,17 +43,48 @@ const QuickActions: React.FC = () => {
     }
   ];
 
+  const containerVariant={
+    hidden:{},
+    visible:{transition:{staggerChildren:0.2, delayChildren:0.2}}
+
+  }
+
+  const childVariants={
+    hidden:{opacity:0, y:-20},
+    visible:{opacity:1, y:0},
+    transition:{type:'spring', damping:5, stiffness:200}
+  }
+
   return (
-    <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm transition-colors duration-300`}>
-      <h3 className={`text-2xl font-semibold tracking-tight mb-6 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+    <motion.div 
+    ref={ref}
+    initial={{opacity:0, x:20}}
+     animate={inView?{opacity:1, x:0}:{opacity:0, x:20}}
+     transition={{duration:0.5, delay:0.5}}
+    className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm transition-colors duration-300`}>
+      <motion.h3
+       ref={ref}
+      initial={{opacity:0, y:-12}}
+      animate={inView? {opacity:1, y:0}:{opacity:0, y:-12}}
+      transition={{delay:0.2,
+        type:'spring',
+        stiffness:100,
+        damping:6
+      }} 
+      className={`text-2xl font-semibold tracking-tight mb-6 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
         Quick Actions
-      </h3>
-      
-      <div className="grid grid-cols-1 gap-4">
+      </motion.h3>
+      <motion.div 
+       ref={ref}
+       variants={containerVariant}
+       initial='hidden'
+       animate={inView? 'visible':'hidden'}
+      className="grid grid-cols-1 gap-4">
         {actions.map((action, index) => {
           const Icon = action.icon;
           return (
-            <button
+            <motion.button
+              variants={childVariants}
               key={index}
               onClick={action.onClick}
               className={`p-4 rounded-xl border w-full text-left ${state.darkMode ? 'border-gray-700 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'} transition-all hover:shadow-md group`}
@@ -66,11 +102,11 @@ const QuickActions: React.FC = () => {
                   </p>
                 </div>
               </div>
-            </button>
+            </motion.button>
           );
         })}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

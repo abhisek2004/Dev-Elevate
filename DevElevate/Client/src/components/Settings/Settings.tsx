@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { 
@@ -61,6 +61,11 @@ const Settings: React.FC = () => {
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'preferences', label: 'Preferences', icon: SettingsIcon }
   ];
+
+  // for dyanmic page title
+               useEffect(()=>{
+                 document.title='DevElevate-Settings'
+               },[])
 
   const handleProfileUpdate = async () => {
     setIsLoading(true);

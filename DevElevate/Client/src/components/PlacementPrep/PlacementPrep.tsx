@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { FileText, Download, Users, Calendar, Target, BookOpen, ExternalLink} from 'lucide-react';
 import { Code } from 'lucide-react';
+import {motion, useInView} from 'framer-motion'
+
+
 const PlacementPrep: React.FC = () => {
   const { state } = useGlobalState();
   const navigate = useNavigate();
@@ -10,6 +13,51 @@ const PlacementPrep: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Categories');
+
+  const ref=useRef(null)
+  const inView=useInView(ref, {once:true})
+  const headingText='Placement Preparation Arena';
+  const paraText='Everything you need to ace your job interviews and land your dream job'
+
+
+  const containerVariants={
+    hidden:{},
+    visible:{
+      transition:{staggerChildren:0.03}
+    }
+  }
+
+  const textVariant={
+    hidden:{opacity:0, x:-20},
+    visible:{opacity:1, x:0},
+    transition:{
+      type:'spring',
+      stiffness:100,
+      damping:12
+    }
+  }
+
+  const categoryContainerVar={
+    hidden:{},
+    visible:{transition:{staggerChildren:0.1, delayChildren:0.2}}
+  }
+
+  const categoryVariants={
+    hidden:{opacity:0, scale:0.8},
+    visible:{opacity:1, scale:1},
+    transition:{type:'spring', stiffness:100, damping:5}
+  }
+
+  const cardVariant={
+    hidden:{opacity:0, scale:0.8},
+    visible:{opacity:1, scale:1},
+    transition:{type:'spring', stiffness:50, damping:20}
+  }
+
+  // for dyanmic page title
+          useEffect(()=>{
+            document.title='DevElevate-Placement Support'
+          },[])
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -340,9 +388,15 @@ const PlacementPrep: React.FC = () => {
 
   // --- Tab Renderers ---
   const renderPractice = () => (
-  <div className="grid md:grid-cols-3 gap-6">
+  <motion.div 
+  ref={ref}
+        variants={categoryContainerVar}
+        initial='hidden'
+        animate={inView ? 'visible': 'hidden'}
+  className="grid md:grid-cols-3 gap-6">
     {dsaTopics.map((topic, index) => (
-      <a
+      <motion.a
+      variants={cardVariant}
         key={index}
         href={topic.url}
         target="_blank"
@@ -353,9 +407,9 @@ const PlacementPrep: React.FC = () => {
       >
         <h4 className="text-lg font-semibold mb-2">{topic.name}</h4>
         <p className="text-sm !text-black dark:text-gray-300">{topic.description}</p>
-      </a>
+      </motion.a>
     ))}
-  </div>
+  </motion.div>
 );
 
   const renderOpportunities = () => {
@@ -376,9 +430,14 @@ const PlacementPrep: React.FC = () => {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+            <motion.h3
+              ref={ref} 
+              initial={{opacity:0, y:-12}}
+              animate={{opacity:1, y:0}}
+              transition={{type:'spring', stiffness:10, damping:5}}
+            className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
               Latest Job Opportunities
-            </h3>
+            </motion.h3>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
             {/* Category Filter */}
@@ -419,9 +478,15 @@ const PlacementPrep: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <motion.div
+        ref={ref}
+        variants={categoryContainerVar}
+        initial='hidden'
+        animate={inView ? 'visible': 'hidden'}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredJobs.map((job: any, index) => (
-            <div
+            <motion.div
+            variants={cardVariant}
               key={index}
               className={`p-6 rounded-2xl border shadow-sm hover:shadow-lg transition-all duration-200  ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} hover:shadow-md transition-shadow`}
             >
@@ -484,18 +549,24 @@ const PlacementPrep: React.FC = () => {
                   <span>Apply</span>
                 </button>
               </div>
-                          </div>
+                </motion.div>
             ))}
-        </div>
+        </motion.div>
       </div>
     );
   };
 
   const renderInterviews = () => (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <motion.div
+      ref={ref}
+        variants={categoryContainerVar}
+        initial='hidden'
+        animate={inView ? 'visible': 'hidden'}
+      className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {interviewQuestions.map((category, index) => (
-          <div
+          <motion.div
+          variants={cardVariant}
             key={index}
             className={`p-6 rounded-2xl shadow-sm border transition-all hover:shadow-md ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
           >
@@ -537,9 +608,9 @@ const PlacementPrep: React.FC = () => {
     focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
               Practice {category.category} Questions
             </button>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 
@@ -548,9 +619,15 @@ const PlacementPrep: React.FC = () => {
       <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
         Download Resources
       </h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <motion.div
+       ref={ref}
+        variants={categoryContainerVar}
+        initial='hidden'
+        animate={inView ? 'visible': 'hidden'}
+      className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {resources.map((resource, index) => (
-          <div
+          <motion.div
+          variants={cardVariant}
             key={index}
             className={`p-6 rounded-lg border  transform transition-all duration-200  ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} hover:shadow-lg transition-y-1`}
           >
@@ -608,9 +685,9 @@ const PlacementPrep: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 
@@ -620,7 +697,13 @@ const PlacementPrep: React.FC = () => {
         Mock Interview Practice
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className={`p-6 rounded-2xl border shadow-sm transition-all duration-200 ${state.darkMode ? 'bg-gray-800 border-gray-700 hover:shadow-md' : 'bg-white border-gray-200 hover:shadow-lg'}`}>
+        <motion.div 
+         ref={ref}
+         variants={cardVariant}
+         initial='hidden'
+         animate={inView? 'visible':'hidden'}
+         transition={{delay:0.2}}
+        className={`p-6 rounded-2xl border shadow-sm transition-all duration-200 ${state.darkMode ? 'bg-gray-800 border-gray-700 hover:shadow-md' : 'bg-white border-gray-200 hover:shadow-lg'}`}>
           <h4 className={`text-xl font-semibold mb-3 tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             🤖 AI Mock Interview
           </h4>
@@ -651,8 +734,14 @@ const PlacementPrep: React.FC = () => {
           >
            🚀 Start AI Mock Interview
           </button>
-        </div>
-        <div className={`p-6 rounded-2xl border shadow-sm transition-all duration-200 ${state.darkMode ? 'bg-gray-800 border-gray-700 hover:shadow-md' : 'bg-white border-gray-200 hover:shadow-lg'}`}>
+        </motion.div>
+        <motion.div 
+         ref={ref}
+         variants={cardVariant}
+         initial='hidden'
+         animate={inView? 'visible':'hidden'}
+         transition={{delay:0.4}}
+        className={`p-6 rounded-2xl border shadow-sm transition-all duration-200 ${state.darkMode ? 'bg-gray-800 border-gray-700 hover:shadow-md' : 'bg-white border-gray-200 hover:shadow-lg'}`}>
           <h4 className={`text-xl font-semibold mb-3 tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             👥 Peer Mock Interview
           </h4>
@@ -683,30 +772,62 @@ const PlacementPrep: React.FC = () => {
           >
             Find Interview Partner
           </button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
 
   // --- Main Render ---
   return (
-    <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gradient-to-b from-sky-50 to-white'} transition-colors duration-300`}>
+    <motion.div
+    initial={{opacity:0, y:20}}
+     animate={{opacity:1, y:0}}
+     transition={{type:'spring', stiffness:50, damping:5}}
+    className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gradient-to-b from-sky-50 to-white'} transition-colors duration-300`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
-          <h1 className={`text-3xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-           Placement Preparation Arena
-          </h1>
-          <p className={`text-lg sm:text-xl ${state.darkMode ? 'text-gray-300' : 'text-gray-700'} max-w-3xl`}>
-            Everything you need to ace your job interviews and land your dream job
-          </p>
+          <motion.h1
+           ref={ref}
+           variants={containerVariants}
+           initial='hidden'
+           animate={inView? 'visible':'hidden'}
+          className={`text-3xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
+           {headingText.split('').map((charItem, i)=>(
+            <motion.span
+             key={i}
+             variants={textVariant}
+            >
+              {charItem}
+          </motion.span>))}
+          </motion.h1>
+          <motion.p 
+           ref={ref}
+           variants={containerVariants}
+           initial='hidden'
+           animate={inView? 'visible':'hidden'}
+           className={`text-lg sm:text-xl ${state.darkMode ? 'text-gray-300' : 'text-gray-700'} max-w-3xl`}>
+                        {paraText.split('').map((charItem, i)=>(
+                          <motion.span
+                           variants={textVariant}
+                          key={i}
+                          >
+                            {charItem}
+                          </motion.span>))}
+          </motion.p>
         </div>
         {/* Tabs */}
         <div className="mb-8">
-          <div className="flex flex-wrap gap-3">
+          <motion.div 
+           ref={ref}
+         variants={categoryContainerVar}
+         initial='hidden'
+         animate={inView? 'visible':'hidden'}
+          className="flex flex-wrap gap-3">
             {tabs.map(tab => {
               const Icon = tab.icon;
               return (
-                <button
+                <motion.button
+                  variants={categoryVariants}
                   key={tab.id}
                   onClick={() => setSelectedTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium shadow-sm transition-all duration-200 border ${
@@ -719,10 +840,10 @@ const PlacementPrep: React.FC = () => {
                 >
                   <Icon className="w-5 h-5" />
                   <span>{tab.label}</span>
-                </button>
+                </motion.button>
               );
             })}
-          </div>
+          </motion.div >
         </div>
         {/* Tab Content */}
         <div className={`rounded-2xl p-6 transition-all duration-300 shadow-md border ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} `}>
@@ -734,7 +855,7 @@ const PlacementPrep: React.FC = () => {
 
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

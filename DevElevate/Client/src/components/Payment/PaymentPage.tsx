@@ -1,10 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CreditCard, Check, Star, Zap, Shield, Users } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
+import {motion, useInView} from 'framer-motion'
 
 const PaymentPage: React.FC = () => {
   const { state } = useGlobalState();
   const [selectedPlan, setSelectedPlan] = useState<'basic' | 'premium'>('basic');
+
+  // for animations 
+  const ref=useRef(null)
+  const inView=useInView(ref, {once:true})
+
+  const categoryContainerVar={
+    hidden:{},
+    visible:{transition:{staggerChildren:0.2, delayChildren:0.2}}
+  }
+  const cardVariant={
+    hidden:{opacity:0, scale:0.8},
+    visible:{opacity:1, scale:1},
+    transition:{type:'spring', stiffness:50, damping:5}
+  }
+   const priceVariant={
+    hidden:{opacity:0, x:-12},
+    visible:{opacity:1, x:0},
+    transition:{type:'spring', stiffness:50, damping:5}
+  }
+
+  // for dyanmic page title
+        useEffect(()=>{
+          document.title='DevElevate-Pricing Plans'
+        },[])
 
   const plans = [
     {
@@ -73,28 +98,46 @@ const PaymentPage: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${
+    <motion.div
+     initial={{opacity:0, y:20}}
+     animate={{opacity:1, y:0}}
+     transition={{type:'spring', stiffness:50, damping:5}}
+    className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${
       state.darkMode ? 'bg-gray-900' : 'bg-gray-50'
     }`}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className={`text-4xl md:text-5xl font-bold mb-6 ${
+          <motion.h1 
+          initial={{opacity:0, y:-50}}
+          animate={{opacity:1, y:0}}
+          transition={{type:'spring', stiffness:50, damping:20}}
+          className={`text-4xl md:text-5xl font-bold mb-6 ${
             state.darkMode ? 'text-white' : 'text-gray-900'
           }`}>
             Choose Your <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">DevElevate</span> Plan
-          </h1>
-          <p className={`text-xl max-w-2xl mx-auto ${
+          </motion.h1>
+          <motion.p
+          initial={{opacity:0, y:-50}}
+          animate={{opacity:1, y:0}}
+          transition={{type:'spring', stiffness:50, damping:5}}
+          className={`text-xl max-w-2xl mx-auto ${
             state.darkMode ? 'text-gray-300' : 'text-gray-600'
           }`}>
             Unlock your potential with our comprehensive learning platform designed to accelerate your tech career
-          </p>
+          </motion.p>
         </div>
 
         {/* Benefits Section */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <motion.div
+         ref={ref}
+         variants={categoryContainerVar}
+         initial='hidden'
+         animate={inView? 'visible':'hidden'}
+        className="grid md:grid-cols-3 gap-8 mb-16">
           {benefits.map((benefit, index) => (
-            <div
+            <motion.div
+             variants={cardVariant}
               key={index}
               className={`text-center p-6 rounded-xl ${
                 state.darkMode 
@@ -115,14 +158,20 @@ const PaymentPage: React.FC = () => {
               }`}>
                 {benefit.description}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Pricing Plans */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <motion.div 
+          ref={ref}
+         variants={categoryContainerVar}
+         initial='hidden'
+         animate={inView? 'visible':'hidden'}
+        className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {plans.map((plan) => (
-            <div
+            <motion.div
+              variants={priceVariant}
               key={plan.id}
               className={`relative rounded-2xl p-8 ${
                 plan.popular
@@ -196,9 +245,9 @@ const PaymentPage: React.FC = () => {
               >
                 Get Started with {plan.name}
               </button>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* FAQ or Additional Info */}
         <div className="mt-16 text-center">
@@ -227,7 +276,7 @@ const PaymentPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

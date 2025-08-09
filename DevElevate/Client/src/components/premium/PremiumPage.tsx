@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { Check, Star, Zap, Shield, Users, Crown, ArrowRight } from 'lucide-react';
 
+
 const PremiumPage: React.FC = () => {
   const { state } = useGlobalState();
   const navigate = useNavigate();
+
+  
 
   const pricingPlans = [
     {
@@ -79,6 +82,10 @@ const PremiumPage: React.FC = () => {
       window.open('mailto:sales@develevate.com?subject=Enterprise Plan Inquiry', '_blank');
     }
   };
+  // for dyanmic page title
+            useEffect(()=>{
+              document.title='DevElevate-Premium'
+            },[])
 
   const featureComparison = [
     { feature: 'Learning Resources', free: 'Basic', pro: 'Unlimited', enterprise: 'Unlimited + Custom' },
@@ -115,7 +122,8 @@ const PremiumPage: React.FC = () => {
   ];
 
   return (
-    <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
+    <div
+    className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
