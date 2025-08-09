@@ -9,6 +9,9 @@ DevElevate is built to empower students, developers, and career seekers with int
 
 Please also make sure to read and follow our [Code of Conduct](CODE_OF_CONDUCT.md). 💖
 
+> 🗺️ **Want an architecture overview or onboarding tips? Check out [LEARN.md](LEARN.md) for a detailed contributor roadmap!**
+
+
 ---
 
 ## 📌 Contribution Philosophy
@@ -209,7 +212,7 @@ Check out these handy resources:
 - Or ask in our Discussions/Discord group! 💬
 
 You can also contact Project Owner:
-**Abhisek Panda** – [abhisek2004panda@gmail.com](mailto:abhisek2004panda@gmail.com)
+**Abhisek Panda** – [officialdevelevate@gmail.com](mailto:officialdevelevate@gmail.com)
 
 ---
 

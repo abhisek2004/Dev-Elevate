@@ -1,4 +1,6 @@
+import bcrypt from "bcryptjs";
 import AdminLog from "../model/AdminLog.js";
+import User from "../model/UserModel.js";
 
 // Create a new admin log entry
 export const createAdminLog = async (req, res) => {
@@ -9,13 +11,15 @@ export const createAdminLog = async (req, res) => {
     if (!actionType || !userId || !userRole || !message) {
       return res.status(400).json({
         success: false,
-        message: "Missing required fields: actionType, userId, userRole, message"
+        message:
+          "Missing required fields: actionType, userId, userRole, message",
       });
     }
 
     // Get IP address and user agent from request
-    const ipAddress = req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
-    const userAgent = req.get('User-Agent');
+    const ipAddress =
+      req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
+    const userAgent = req.get("User-Agent");
 
     const logEntry = new AdminLog({
       actionType,
@@ -24,7 +28,7 @@ export const createAdminLog = async (req, res) => {
       message,
       ipAddress,
       userAgent,
-      additionalData
+      additionalData,
     });
 
     await logEntry.save();
@@ -32,14 +36,14 @@ export const createAdminLog = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Log entry created successfully",
-      log: logEntry
+      log: logEntry,
     });
   } catch (error) {
     console.error("Error creating admin log:", error);
     res.status(500).json({
       success: false,
       message: "Failed to create log entry",
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -47,22 +51,22 @@ export const createAdminLog = async (req, res) => {
 // Get admin logs with filtering and pagination
 export const getAdminLogs = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 20, 
-      actionType, 
-      userId, 
-      userRole, 
-      dateFrom, 
+    const {
+      page = 1,
+      limit = 20,
+      actionType,
+      userId,
+      userRole,
+      dateFrom,
       dateTo,
-      sortBy = 'createdAt',
-      sortOrder = 'desc'
+      sortBy = "createdAt",
+      sortOrder = "desc",
     } = req.query;
 
     // Build filter object
     const filter = {};
 
-    if (actionType && actionType !== 'all') {
+    if (actionType && actionType !== "all") {
       filter.actionType = actionType;
     }
 
@@ -70,7 +74,7 @@ export const getAdminLogs = async (req, res) => {
       filter.userId = userId;
     }
 
-    if (userRole && userRole !== 'all') {
+    if (userRole && userRole !== "all") {
       filter.userRole = userRole;
     }
 
@@ -93,16 +97,12 @@ export const getAdminLogs = async (req, res) => {
 
     // Build sort object
     const sort = {};
-    sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+    sort[sortBy] = sortOrder === "desc" ? -1 : 1;
 
     // Execute query with pagination
     const [logs, totalCount] = await Promise.all([
-      AdminLog.find(filter)
-        .sort(sort)
-        .skip(skip)
-        .limit(parseInt(limit))
-        .lean(),
-      AdminLog.countDocuments(filter)
+      AdminLog.find(filter).sort(sort).skip(skip).limit(parseInt(limit)).lean(),
+      AdminLog.countDocuments(filter),
     ]);
 
     // Calculate pagination info
@@ -111,7 +111,7 @@ export const getAdminLogs = async (req, res) => {
     const hasPrevPage = parseInt(page) > 1;
 
     // Transform logs to match frontend expected format
-    const transformedLogs = logs.map(log => ({
+    const transformedLogs = logs.map((log) => ({
       _id: log._id,
       actionType: log.actionType,
       userId: log.userId,
@@ -120,7 +120,7 @@ export const getAdminLogs = async (req, res) => {
       timestamp: log.createdAt,
       ipAddress: log.ipAddress,
       userAgent: log.userAgent,
-      additionalData: log.additionalData
+      additionalData: log.additionalData,
     }));
 
     res.status(200).json({
@@ -132,23 +132,83 @@ export const getAdminLogs = async (req, res) => {
         totalCount,
         hasNextPage,
         hasPrevPage,
-        limit: parseInt(limit)
+        limit: parseInt(limit),
       },
       filters: {
         actionType,
         userId,
         userRole,
         dateFrom,
-        dateTo
-      }
+        dateTo,
+      },
     });
-
   } catch (error) {
     console.error("Error fetching admin logs:", error);
     res.status(500).json({
       success: false,
       message: "Failed to fetch admin logs",
-      error: error.message
+      error: error.message,
     });
   }
 };
+
+//Get all-user in the  database
+export const getAllUserRegister = async (req, res) => {
+  try {
+    console.log("hello - fetching all registered users");
+
+    const users = await User.find().sort({ createdAt: -1 });
+    const totalUsers = await User.countDocuments({ role: "user" });
+    const totalAdmins = await User.countDocuments({ role: "admin" });
+
+    res.status(200).json({
+      success: true,
+      message: "All registered users fetched successfully",
+      totalUsers,
+      users,
+      totalAdmins,
+    });
+  } catch (error) {
+    console.error("Error fetching users:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch users",
+      error: error.message,
+    });
+  }
+};
+
+export const addUser = async (req, res) => {
+  try {
+    const { name, email, password, role } = req.body;
+
+    if (!name || !email || !password || !role) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role,
+    });
+
+    return res.status(201).json({
+      message: "User created successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Failed to create user",
+      error: error.message,
+    });
+  }
+};
+

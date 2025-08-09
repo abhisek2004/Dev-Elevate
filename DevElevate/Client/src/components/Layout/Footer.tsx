@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
           : "bg-gray-50 border-gray-200"
       } border-t border-opacity-40 transition-colors duration-200`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
+      <div className="px-4 pt-6 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {/* Disclaimer Section */}
         <motion.div
           ref={ref}
@@ -172,6 +172,56 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </motion.div>
+    <span className="text-2xl">⚠️</span>
+    <div>
+      <h3
+        className={`text-lg font-bold mb-2 ${
+          state.darkMode ? "text-white" : "text-gray-900"
+        }`}
+      >
+        Disclaimer & Acknowledgement 💻🌐
+      </h3>
+      <div
+        className={`text-sm space-y-2 ${
+          state.darkMode ? "text-gray-300" : "text-gray-700"
+        }`}
+      >
+        <p>
+          <strong>👨‍💻 Website Creator:</strong> Abhisek Panda
+        </p>
+        <p>
+          <strong>🌍 Portfolio:</strong>
+          <a
+            href="https://abhisekpanda072.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-1 text-blue-500 hover:underline"
+          >
+            abhisekpanda072.vercel.app
+          </a>
+          <br />
+          <strong>🟢 Live Link:</strong>{" "}
+          <a
+            href="https://develevate-ai.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-1 text-blue-500 hover:underline"
+          >
+            develevate-ai.vercel.app
+          </a>
+        </p>
+        <p>
+          <strong>🚧 Important Note:</strong> The backend is already deployed on Render and the frontend is live on Vercel — everything is working properly.
+        </p>
+        <div className="mt-4">
+          <p className="font-semibold text-red-500">
+            ⚠️ Do not remove or change any existing code unrelated to your issue! If your PR modifies or deletes any core code without purpose, it will not be merged.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+        </div>
 
         {/* Contributors Section */}
         <motion.div
@@ -198,7 +248,7 @@ const Footer: React.FC = () => {
               href="https://github.com/abhisek2004/Dev-Elevate.git"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors"
+              className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
             >
               <Github className="w-4 h-4" />
               <span>View on GitHub</span>
@@ -207,8 +257,8 @@ const Footer: React.FC = () => {
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <div className="flex items-center justify-center py-8">
+              <div className="w-8 h-8 border-b-2 border-blue-500 rounded-full animate-spin"></div>
             </div>
           ) : (
             <div className="flex flex-wrap items-center gap-3">
@@ -218,13 +268,13 @@ const Footer: React.FC = () => {
                   href={contributor.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative"
+                  className="relative group"
                   title={`${contributor.login} - ${contributor.contributions} contributions`}
                 >
                   <img
                     src={contributor.avatar_url}
                     alt={contributor.login}
-                    className="w-12 h-12 rounded-full border-2 border-blue-500 hover:border-blue-400 transition-all duration-200 hover:scale-110 shadow-lg"
+                    className="w-12 h-12 transition-all duration-200 border-2 border-blue-500 rounded-full shadow-lg hover:border-blue-400 hover:scale-110"
                   />
                   <div
                     className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full text-xs flex items-center justify-center font-bold ${
@@ -247,7 +297,7 @@ const Footer: React.FC = () => {
                     }`}
                   >
                     {contributor.login}
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                    <div className="absolute w-0 h-0 transform -translate-x-1/2 border-t-4 border-l-4 border-r-4 border-transparent top-full left-1/2 border-t-gray-900"></div>
                   </div>
                 </a>
               ))}
@@ -281,11 +331,11 @@ const Footer: React.FC = () => {
             state.darkMode ? "border-gray-800" : "border-gray-200"
           }`}
         >
-          <div className="pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          <div className="grid grid-cols-1 gap-8 pt-6 mb-12 md:grid-cols-2 lg:grid-cols-4">
             {/* Brand Section */}
             <div className="lg:col-span-1">
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="flex items-center mb-4 space-x-2">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600">
                   <Code className="w-5 h-5 text-white" />
                 </div>
                 <span
@@ -304,7 +354,7 @@ const Footer: React.FC = () => {
                 AI-powered education and career advancement platform for
                 developers and students.
               </p>
-              <div className="flex flex-wrap items-center gap-3 text-sm mt-4">
+              <div className="flex flex-wrap items-center gap-3 mt-4 text-sm">
                 {/* Social/Profile Links */}
                 <div className="flex items-center gap-x-0.5 text-purple-600">
                   <a

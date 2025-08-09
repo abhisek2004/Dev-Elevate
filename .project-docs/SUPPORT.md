@@ -14,7 +14,7 @@ If you encounter any issues while contributing or using the platform, you can se
 
 You can also email the project lead directly:
 
-📩 **Abhisek Panda** – [abhisek2004panda@gmail.com](mailto:abhisek2004panda@gmail.com)
+📩 **Abhisek Panda** – [officialdevelevate@gmail.com](mailto:officialdevelevate@gmail.com)
 
 ## 🔹 First-Time Contributor?
 

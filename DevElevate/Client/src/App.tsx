@@ -1,13 +1,13 @@
 import { AuthProvider } from "./contexts/AuthContext";
 import { GlobalProvider } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
+import { AdminProvider } from "./contexts/AdminContext";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import ScrollToTop from "./components/Layout/ScrollToTop";
 import LearningHub from "./components/LearningHub/LearningHub";
@@ -30,6 +30,9 @@ import PremiumPage from "./components/premium/PremiumPage";
 import PaymentPage from "./components/Payment/PaymentPage";
 import ProjectRecommender from "./components/ProjectRecommender/ProjectRecommender";
 import Layout from "./components/Layout/Layout";
+import CommunityForum from "./components/Community/CommunityForum";
+import LandingPage from "./pages/Landing/LandingPage";
+
 function App() {
   return (
     <AuthProvider>
@@ -47,6 +50,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route path="/" element={<LandingPage />} />
 
               {/* Protected Routes */}
               <Route
@@ -57,14 +61,19 @@ function App() {
                       <div className="flex-1 bg-white dark:bg-gray-900">
                         <main className="flex-1">
                           <Routes>
-                            <Route path="/" element={<Dashboard />} />
+                            <Route path="dashboard" element={<Dashboard />} />
                             <Route
                               path="*"
-                              element={<Navigate to="/" replace />}
+                              element={<Navigate to="/dashboard" replace />}
                             />
                             <Route path="/learning" element={<LearningHub />} />
                             <Route path="/chatbot" element={<Chatbot />} />
                             <Route path="/news" element={<TechFeed />} />
+                            <Route
+                              path="/community/*"
+                              element={<CommunityForum />}
+                            />
+
                             <Route path="/resume" element={<ResumeBuilder />} />
                             <Route
                               path="/placement"
@@ -102,7 +111,9 @@ function App() {
                 path="/admin"
                 element={
                   <ProtectedRoute requireAdmin={true}>
-                    <AdminDashboard />
+                    <AdminProvider>
+                      <AdminDashboard />
+                    </AdminProvider>
                   </ProtectedRoute>
                 }
               />
@@ -110,7 +121,9 @@ function App() {
                 path="/admin/logs"
                 element={
                   <ProtectedRoute requireAdmin={true}>
-                    <AdminSystemLogs />
+                    <AdminProvider>
+                      <AdminSystemLogs />
+                    </AdminProvider>
                   </ProtectedRoute>
                 }
               />

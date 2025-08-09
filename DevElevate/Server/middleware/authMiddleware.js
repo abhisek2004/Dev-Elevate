@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import user from "../model/UserModel.js";
 
 export const authenticateToken = async (req, res, next) => {
-  const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer", "").trim();
+  const token = req.cookies?.token || req.header("Authorization")?.replace("Bearer", "").trim();
 
   if (!token) {
     return res.status(401).json({ message: "User not logged in" });

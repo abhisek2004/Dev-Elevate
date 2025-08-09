@@ -76,7 +76,7 @@ This also includes interactions when a person represents the community in public
 If you experience or witness unacceptable behavior, please report it immediately to:
 
 📧 **Abhisek Panda**
-📬 Email: **[abhisek2004panda@gmail.com](mailto:abhisek2004panda@gmail.com)**
+📬 Email: **[officialdevelevate@gmail.com](mailto:officialdevelevate@gmail.com)**
 All complaints will be handled with **confidentiality**, **sincerity**, and **swift resolution**.
 
 ---

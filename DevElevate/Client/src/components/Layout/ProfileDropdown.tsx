@@ -67,6 +67,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     {
       section: "Account",
       items: [
+
         {
           icon: User,
           label: "View Profile",
@@ -83,6 +84,10 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           action: () => navigate("/settings/notifications"),
         },
       ],
+
+        { icon: User, label: 'View Profile', action: () => navigate('/profile') },
+        { icon: Settings, label: 'Account Settings', action: () => navigate('/settings') },
+      ]
     },
     {
       section: "Learning",
@@ -218,6 +223,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
       </div>
 
       {/* Quick Stats */}
+
       <div
         className={`p-4 border-b ${
           state.darkMode ? "border-gray-700" : "border-gray-200"
@@ -274,6 +280,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           </div>
         </div>
       </div>
+
 
       {/* Menu Items */}
       <div className="max-h-80 overflow-y-auto">

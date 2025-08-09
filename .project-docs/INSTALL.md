@@ -143,7 +143,7 @@ Manual testing is being done during this stage. Automated testing framework (e.g
 Feel free to reach out:
 
 - 💬 [GitHub Discussions](https://github.com/abhisek2004/Dev-Elevate/discussions)
-- 📧 [abhisek2004panda@gmail.com](mailto:abhisek2004panda@gmail.com)
+- 📧 [officialdevelevate@gmail.com](mailto:officialdevelevate@gmail.com)
 - 🧑‍💻 Project Maintainer: Abhisek Panda
 
 ---

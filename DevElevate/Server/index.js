@@ -3,12 +3,14 @@ import dotenv from "dotenv"
 import connectDB from "./config/db.js";
 import cors from "cors"
 import userRoutes from './routes/userRoutes.js'
-import adminRoutes from './routes/adminRoutes.js'
+import adminRoutes from './routes/adminRoutes.js';
 import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorize.js";
 import { authenticateToken } from "./middleware/authMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import adminFeedbackRoutes from './routes/adminFeedbackRoutes.js';
+import communityRoutes from './routes/communityRoutes.js';
+import quizRoutes from './routes/quizRoutes.js'
 
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
@@ -36,15 +38,19 @@ app.use(cookieParser());
 app.set('trust proxy', true);
 
 // Routes
+// USER ROUTES
 app.use("/api/v1", userRoutes);
 
-
-app.use("/api/admin", adminRoutes);
-app.use("/api/admin/courses", courseRoutes);
-app.use('/admin', adminFeedbackRoutes);
+app.use("/api/v1/community", communityRoutes); // Community routes for questions and answers
 
 
-app.use("/",userRoutes)
+
+// ADMIN ROUTES
+app.use("/api/v1/admin", adminRoutes); // general admin stuff like login, profile
+app.use("/api/v1/admin/courses", courseRoutes); // course create/delete/edit
+app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
+app.use("/api/v1/admin/quiz", quizRoutes); //quiz-related
+
 
 
 // Sample Usage of authenticate and authorize middleware for roleBased Features
@@ -56,8 +62,8 @@ app.get("/api/admin/dashboard", authenticateToken, authorize("admin"), (req, res
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ 
-    success: false, 
+  res.status(500).json({
+    success: false,
     message: 'Something went wrong!',
     error: process.env.NODE_ENV === 'development' ? err.message : undefined
   });
@@ -65,9 +71,9 @@ app.use((err, req, res, next) => {
 
 // 404 handler
 app.use((req, res) => {
-  res.status(404).json({ 
-    success: false, 
-    message: 'Route not found' 
+  res.status(404).json({
+    success: false,
+    message: 'Route not found'
   });
 });
 

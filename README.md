@@ -1,4 +1,7 @@
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+### Join Discord for discussion and issues ok --- https://discord.gg/DPE2Vvj3
+
 <h1 align="center">🚀 Dev_Elevate_GSSoC-2025 </h1>
 
 <!--- Welcome back, Developer! 👋 Ready to continue your learning journey? -->
@@ -156,12 +159,6 @@ To help learners and aspiring professionals master skills like DSA, Java, MERN S
 
 ---
 
-### 📌 **Click on the section below to view full project details:**
-
-<details>
-
- <summary>🔍 Full Project Description – DevElevate</summary>
-
 ## ⚠️ **🚨 All Pages Below Are Mandatory and Must Be Fully Functional Without Bugs**
 
 > ⚙️ **Each page must be implemented with complete functionality, bug-free execution, proper routing, clean UI/UX, and complete backend integration.**
@@ -208,6 +205,7 @@ A personalized profile section with full account control:
 - 🧠 Study Buddy Chat Access
 - 📥 Assignments Uploaded (track submission)
 - 🚀 Daily Goal Reminders + Streak Calendar
+- 🌎 Community Forum (Q&A section)
 
 ---
 
@@ -259,6 +257,12 @@ A powerful admin dashboard to manage the platform without code:
   - Most popular courses/modules
   - Assignment success rate
 
+- 🌎 **Community Management**:
+
+  - Moderate forum discussions
+  - Delete or resolve questions
+  - Accept and highlight best answers
+
 #### 🛡️ Security & Stability
 
 - 🔒 Protected admin routes
@@ -283,25 +287,12 @@ Every time a new **user** or **admin** signs up, they’ll receive an instant we
 * 💬 A friendly greeting and motivation to explore the platform
 * 🔁 Reset password option (via email)
 
-All this is powered by our mail system connected to the admin email:
-
-```
-my_email = "nicdelhi2024@gmail.com"
-code = "zuff vkvx pamt kdor"  # App-specific password for secure SMTP (Gmail)
-```
-
 ---
 
 📂 **Data Storage – MongoDB Atlas**
 All user/admin credentials and email logs are safely stored using **MongoDB Atlas** 💾
 
-Here's the current connection setup:
-
-```
-MONGODB_URI=mongodb+srv://<your-username>:<your-password>@cluster0.0khgj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-
-)
-```
+---
 
 🧪 **Test Locally First**
 Before pushing to production, test the signup + mail flow on **localhost**. Make sure emails are triggered, and data is saved correctly in the DB.
@@ -610,7 +601,6 @@ Includes:
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-</details>
 
 ### 🙌 **Thank You, Contributors!**
 

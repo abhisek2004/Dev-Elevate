@@ -56,6 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({showSidebar, setShowSidebar}) => {
     setShowNotifications(false);
     setShowProfile(false);
   };
+
  
   const sidebarVariants={
     open:{
@@ -68,6 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({showSidebar, setShowSidebar}) => {
     }
   }
 
+
 const itemVariants={
   hidden:{opacity:1, x:0, 
     transition:{type:'spring', stiffness:50, damping:5}},
@@ -77,6 +79,7 @@ const itemVariants={
   return (
     <>
       {/* Sidebar */}
+
       <motion.div
         layout
         variants={sidebarVariants}
@@ -94,6 +97,7 @@ const itemVariants={
                 <Link
                   key={item.path}
                   to={item.path}
+
                   className={`flex items-center ${showSidebar? 'w-full':'w-fit'} space-x-3 px-2 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive(item.path)
                     ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
                     : state.darkMode
