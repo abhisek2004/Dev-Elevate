@@ -11,7 +11,7 @@ interface NotificationPanelProps {
 
 interface Notification {
   id: string;
-  type: 'achievement' | 'reminder' | 'update' | 'system' | 'social';
+  type: 'welcome' | 'feature_intro' | 'getting_started' | 'tip' | 'reminder' | 'update';
   title: string;
   message: string;
   timestamp: string;
@@ -29,70 +29,71 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, onClose }
 
   // Sample notifications
   useEffect(() => {
-    const sampleNotifications: Notification[] = [
-      {
-        id: '1',
-        type: 'achievement',
-        title: '🎉 Streak Milestone!',
-        message: 'Congratulations! You\'ve maintained a 7-day learning streak. Keep it up!',
-        timestamp: new Date(Date.now() - 300000).toISOString(), // 5 minutes ago
-        read: false,
-        priority: 'high',
-        category: 'Learning'
-      },
-      {
-        id: '2',
-        type: 'reminder',
-        title: '📚 Daily Goal Reminder',
-        message: 'You have 2 pending goals for today. Complete them to maintain your streak!',
-        timestamp: new Date(Date.now() - 1800000).toISOString(), // 30 minutes ago
-        read: false,
-        actionUrl: '/',
-        priority: 'medium',
-        category: 'Goals'
-      },
-      {
-        id: '3',
-        type: 'update',
-        title: '🚀 New Feature: AI Mock Interviews',
-        message: 'Practice interviews with our new AI interviewer. Get personalized feedback!',
-        timestamp: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
-        read: true,
-        actionUrl: '/placement',
-        priority: 'medium',
-        category: 'Features'
-      },
-      {
-        id: '4',
-        type: 'social',
-        title: '👥 Study Group Invitation',
-        message: 'You\'ve been invited to join the "React Developers" study group.',
-        timestamp: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
-        read: false,
-        priority: 'low',
-        category: 'Community'
-      },
-      {
-        id: '5',
-        type: 'system',
-        title: '🔧 Scheduled Maintenance',
-        message: 'Platform maintenance scheduled for tonight 2:00 AM - 4:00 AM IST.',
-        timestamp: new Date(Date.now() - 14400000).toISOString(), // 4 hours ago
-        read: true,
-        priority: 'low',
-        category: 'System'
-      },
-      {
-        id: '6',
-        type: 'achievement',
-        title: '⭐ Course Completed!',
-        message: 'You\'ve successfully completed "Arrays and Strings" module. Great job!',
-        timestamp: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
-        read: true,
-        priority: 'high',
-        category: 'Learning'
-      }
-    ];
+   const sampleNotifications: Notification[] = [
+  {
+    id: '1',
+    type: 'welcome',
+    title: '👋 Welcome to Develevate!',
+    message: 'We\'re excited to have you here! Explore and start your journey with us.',
+    timestamp: new Date(Date.now() - 5000).toISOString(),
+    read: false,
+    priority: 'high',
+    category: 'Onboarding'
+  },
+  {
+    id: '2',
+    type: 'reminder',
+    title: '📅 Complete Your Profile',
+    message: 'Add your skills and interests to get better recommendations.',
+    timestamp: new Date(Date.now() - 5000).toISOString(),
+    read: false,
+    actionUrl: '/profile',
+    priority: 'medium',
+    category: 'Profile'
+  },
+  {
+    id: '3',
+    type: 'feature_intro',
+    title: '🚀 New Feature: AI Mock Interviews',
+    message: 'Practice with our AI interviewer and get instant feedback!',
+    timestamp: new Date(Date.now() - 5000).toISOString(),
+    read: true,
+    actionUrl: '/placement',
+    priority: 'medium',
+    category: 'Features'
+  },
+  {
+    id: '4',
+    type: 'getting_started',
+    title: '🛠 Start Your First Project',
+    message: 'Join a community project or create your own to kickstart your learning.',
+    timestamp: new Date(Date.now() - 5000).toISOString(),
+    read: false,
+    priority: 'low',
+    category: 'Projects'
+  },
+  {
+    id: '5',
+    type: 'tip',
+    title: '💡 Pro Tip: Join a Study Group',
+    message: 'Connect with peers and learn faster in dedicated study groups.',
+    timestamp: new Date(Date.now() - 5000).toISOString(),
+    read: true,
+    priority: 'low',
+    category: 'Learning'
+  },
+  {
+    id: '6',
+    type: 'update',
+    title: '🔔 New Learning Paths Added',
+    message: 'Check out our updated React and Node.js learning paths.',
+    timestamp: new Date(Date.now() - 5000).toISOString(),
+    read: true,
+    priority: 'high',
+    category: 'Updates'
+  }
+];
+
 
     setNotifications(sampleNotifications);
   }, []);
