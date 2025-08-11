@@ -1,10 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { 
-  ScanLine, CheckCircle2, AlertCircle, Loader2, Download, FileText, 
-  TrendingUp, BarChart, Target, BadgeCheck, ArrowUpRight, Lightbulb, 
-  CheckCircle, XCircle, Key, Gauge, ChevronDown, Zap, Award, Share2,
-  Clock, History, Save, RefreshCw, ArrowRight, PenLine, BarChart3 
-} from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { ScanLine, CheckCircle2, AlertCircle, Loader2, Download, FileText, TrendingUp, BarChart, Target, BadgeCheck, ArrowUpRight, Lightbulb, CheckCircle, XCircle, Key, Gauge, ChevronDown, Zap } from 'lucide-react';
 import axios from '../../api/axiosinstance';
 import resumeTemplates from '../../utils/resumeTemplates';
 import { Button } from '../ui/button';
@@ -136,88 +131,38 @@ const ATSScanner: React.FC = () => {
     }
   };
 
-  // New animations for score visualization
-  const [animatedScore, setAnimatedScore] = useState(0);
-  
-  // Animate the score when results are available
-  useEffect(() => {
-    if (scanResult) {
-      let start = 0;
-      const end = scanResult.score;
-      const duration = 1500; // Animation duration in ms
-      const startTime = Date.now();
-      
-      const animateScore = () => {
-        const currentTime = Date.now();
-        const elapsedTime = currentTime - startTime;
-        
-        if (elapsedTime < duration) {
-          const progress = elapsedTime / duration;
-          // Easing function for smooth animation
-          const easedProgress = progress < 0.5 
-            ? 4 * progress * progress * progress 
-            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-          
-          setAnimatedScore(Math.round(easedProgress * end));
-          requestAnimationFrame(animateScore);
-        } else {
-          setAnimatedScore(end);
-        }
-      };
-      
-      requestAnimationFrame(animateScore);
-    }
-  }, [scanResult]);
-  
   return (
-    <div className="relative p-8 rounded-2xl border border-gray-800 bg-gradient-to-b from-slate-900 via-gray-900 to-black shadow-2xl overflow-hidden">
-      {/* Enhanced background elements */}
+    <div className="relative p-6 rounded-xl border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-xl overflow-hidden">
+      {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-[10%] w-64 h-64 bg-purple-600/10 rounded-full filter blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-0 right-[10%] w-80 h-80 bg-blue-600/10 rounded-full filter blur-3xl animate-pulse-slow" style={{animationDelay: '1.5s'}}></div>
-        <div className="absolute top-1/2 left-[40%] w-48 h-48 bg-cyan-600/10 rounded-full filter blur-3xl animate-pulse-slow" style={{animationDelay: '0.7s'}}></div>
-        
-        {/* Animated lines for futuristic feel */}
-        <div className="absolute inset-0">
-          <div className="absolute top-[20%] left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
-          <div className="absolute top-[60%] left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/20 to-transparent"></div>
-        </div>
-        
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDYwIEwgNjAgNjAiIHN0cm9rZT0iIzJhMzQ0MSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48cGF0aCBkPSJNIDYwIDAgTCAwIDAiIHN0cm9rZT0iIzJhMzQ0MSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48cGF0aCBkPSJNIDYwIDYwIEwgNjAgMCIgc3Ryb2tlPSIjMmEzNDQxIiBzdHJva2Utd2lkdGg9IjAuNSIvPjxwYXRoIGQ9Ik0gMCAwIEwgMCA2MCIgc3Ryb2tlPSIjMmEzNDQxIiBzdHJva2Utd2lkdGg9IjAuNSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIgb3BhY2l0eT0iMC4xIi8+PC9zdmc+')] opacity-10"></div>
+        <div className="absolute top-0 left-[10%] w-40 h-40 bg-purple-900/20 rounded-full filter blur-3xl animate-pulse-glow"></div>
+        <div className="absolute bottom-0 right-[10%] w-60 h-60 bg-blue-900/20 rounded-full filter blur-3xl animate-pulse-glow" style={{animationDelay: '1s'}}></div>
       </div>
       
       <div className="relative z-10">
-        {/* Enhanced header with cleaner layout */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
+        <div className="flex justify-between items-center mb-6">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <div className="bg-gradient-to-r from-purple-600 to-blue-600 p-1.5 rounded-lg shadow-lg">
-                <ScanLine className="w-5 h-5 text-white" />
+            <div className="flex items-center gap-2 mb-1">
+              <div className="bg-purple-500/20 p-1 rounded">
+                <ScanLine className="w-5 h-5 text-purple-400" />
               </div>
-              <div className="text-xs font-semibold uppercase tracking-wider bg-gradient-to-r from-purple-400 to-blue-400 text-transparent bg-clip-text">
-                AI-Powered Resume Analysis
-              </div>
+              <div className="text-xs font-medium uppercase tracking-wider text-purple-300">AI-Powered</div>
             </div>
-            <h2 className="text-3xl font-extrabold bg-gradient-to-r from-purple-300 via-blue-300 to-cyan-300 bg-clip-text text-transparent drop-shadow-sm">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-300 via-blue-300 to-cyan-300 bg-clip-text text-transparent">
               ATS Resume Scanner
             </h2>
-            
-            <p className="mt-2 text-gray-300 max-w-2xl leading-relaxed">
-              Optimize your resume to pass Applicant Tracking Systems and increase your chances of landing interviews.
-            </p>
           </div>
           
-          <div className="flex flex-wrap gap-3">
+          <div className="flex gap-2">
             {scanResult && (
               <Button 
                 onClick={handleExportPDF}
                 variant="gradient"
                 size="sm"
-                className="flex items-center gap-2 rounded-lg shadow-md hover:shadow-lg transition-all"
+                className="flex items-center gap-1"
               >
                 <Download className="w-4 h-4" />
-                Export Report
+                Export PDF
               </Button>
             )}
             
@@ -226,37 +171,29 @@ const ATSScanner: React.FC = () => {
                 <Button 
                   variant="glowing"
                   size="sm"
-                  className="flex items-center gap-2 rounded-lg shadow-md hover:shadow-lg transition-all"
+                  className="flex items-center gap-1"
                 >
                   <FileText className="w-4 h-4" />
                   ATS Templates
                 </Button>
               </DialogTrigger>
-              <DialogContent className="border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-2xl">
+              <DialogContent>
                 <DialogHeader>
-                  <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent">
-                    ATS-Optimized Resume Templates
-                  </DialogTitle>
-                  <DialogDescription className="text-gray-300">
+                  <DialogTitle>ATS-Optimized Resume Templates</DialogTitle>
+                  <DialogDescription>
                     Select a template to start with a pre-formatted ATS-friendly resume
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid max-h-[60vh] overflow-y-auto py-4">
                   <Tabs defaultValue="softwareEngineer">
-                    <TabsList className="w-full mb-4 bg-gray-900/70 p-1 gap-1">
-                      <TabsTrigger value="softwareEngineer" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600/80 data-[state=active]:to-blue-600/80">
-                        Software Engineer
-                      </TabsTrigger>
-                      <TabsTrigger value="dataScientist" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600/80 data-[state=active]:to-blue-600/80">
-                        Data Scientist
-                      </TabsTrigger>
-                      <TabsTrigger value="productManager" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600/80 data-[state=active]:to-blue-600/80">
-                        Product Manager
-                      </TabsTrigger>
+                    <TabsList className="w-full mb-4">
+                      <TabsTrigger value="softwareEngineer">Software Engineer</TabsTrigger>
+                      <TabsTrigger value="dataScientist">Data Scientist</TabsTrigger>
+                      <TabsTrigger value="productManager">Product Manager</TabsTrigger>
                     </TabsList>
                     {Object.entries(resumeTemplates).map(([key, template]) => (
                       <TabsContent key={key} value={key} className="space-y-4">
-                        <div className="rounded-xl border border-gray-800 bg-gradient-to-b from-gray-900/80 to-black/80 backdrop-blur-sm p-5 hover:border-gray-700 transition-all hover:shadow-md">
+                        <div className="rounded-lg border border-gray-800 bg-black/50 p-4">
                           <h4 className="font-medium text-white mb-2">{template.title}</h4>
                           <p className="text-sm text-gray-400 line-clamp-3 mb-3">
                             {template.content.substring(0, 150)}...
@@ -265,7 +202,6 @@ const ATSScanner: React.FC = () => {
                             variant="gradient" 
                             size="sm" 
                             onClick={() => handleSelectTemplate(key)}
-                            className="w-full sm:w-auto"
                           >
                             Use this template
                           </Button>
@@ -276,316 +212,222 @@ const ATSScanner: React.FC = () => {
                 </div>
               </DialogContent>
             </Dialog>
+          </div>
         </div>
+        
+        <p className="mb-6 text-gray-300 max-w-3xl">
+          Optimize your resume for Applicant Tracking Systems. Higher scores increase your chances of passing automated resume screenings and landing interviews.
+        </p>
       </div>
       
-      {/* Enhanced input section with cards */}
-      <div className="relative z-10 grid md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-gradient-to-b from-gray-900/70 to-gray-900/40 backdrop-blur-sm p-6 rounded-xl border border-gray-800 hover:border-blue-800/50 transition-all hover:shadow-lg group">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-blue-900/30 p-2 rounded-lg group-hover:bg-blue-900/50 transition-colors">
-              <Target className="w-5 h-5 text-blue-400" />
-            </div>
+      <div className="relative z-10 grid md:grid-cols-2 gap-6 mb-6">
+        <div className="bg-gray-900/50 backdrop-blur-sm p-5 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors">
+          <div className="flex items-center gap-2 mb-4">
+            <Target className="w-5 h-5 text-blue-400" />
             <label className="font-medium text-white">Target Job Title</label>
           </div>
           <input
             value={jobTitle}
             onChange={(e) => setJobTitle(e.target.value)}
             placeholder="e.g. Frontend Developer, Data Scientist..."
-            className="w-full p-4 border border-gray-800 rounded-lg bg-black/40 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none"
+            className="w-full p-3 border border-gray-800 rounded-md bg-gray-900/70 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all outline-none"
           />
-          <div className="mt-4 text-sm text-blue-300/80 flex items-center gap-2">
+          <p className="mt-3 text-sm text-blue-300/80 flex items-center gap-1.5">
             <ArrowUpRight className="w-4 h-4" />
-            <span>Adding a specific job title increases accuracy by 30%</span>
-          </div>
+            Adding a job title customizes the analysis for specific roles
+          </p>
         </div>
         
-        <div className="bg-gradient-to-b from-gray-900/70 to-gray-900/40 backdrop-blur-sm p-6 rounded-xl border border-gray-800 hover:border-cyan-800/50 transition-all hover:shadow-lg group">
+        <div className="bg-gray-900/50 backdrop-blur-sm p-5 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors">
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="bg-cyan-900/30 p-2 rounded-lg group-hover:bg-cyan-900/50 transition-colors">
-                <FileText className="w-5 h-5 text-cyan-400" />
-              </div>
+            <div className="flex items-center gap-2">
+              <FileText className="w-5 h-5 text-cyan-400" />
               <label className="font-medium text-white">Resume Content</label>
             </div>
             {historyScans.length > 0 && (
-              <div className="flex items-center gap-1.5 bg-blue-900/30 px-2.5 py-1.5 rounded-lg text-blue-300">
-                <History className="w-3.5 h-3.5" />
-                <span className="text-xs font-medium">
-                  {historyScans.length} {historyScans.length === 1 ? 'scan' : 'scans'} history
-                </span>
-              </div>
+              <span className="text-xs bg-blue-900/30 px-2 py-1 rounded text-blue-300">
+                {historyScans.length} previous {historyScans.length === 1 ? 'scan' : 'scans'}
+              </span>
             )}
           </div>
           <textarea
             value={resumeText}
             onChange={(e) => setResumeText(e.target.value)}
             placeholder="Paste your full resume content here..."
-            className="w-full p-4 border border-gray-800 rounded-lg bg-black/40 text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all outline-none font-mono text-sm"
+            className="w-full p-3 border border-gray-800 rounded-md bg-gray-900/70 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all outline-none"
             rows={10}
-            style={{ resize: 'vertical' }}
           />
         </div>
       </div>
 
-      {/* Improved alerts and notifications */}
       {error && (
-        <div className="mb-6 p-4 bg-gradient-to-r from-red-900/30 to-red-900/10 border-l-4 border-red-600 text-red-300 rounded-lg flex items-center gap-2.5 animate-fade-in">
-          <div className="bg-red-900/30 p-1.5 rounded-full">
-            <AlertCircle className="w-4 h-4 text-red-400" />
-          </div>
-          <span>{error}</span>
+        <div className="mb-6 p-4 bg-red-900/20 border border-red-800 text-red-300 rounded-lg flex items-center gap-2">
+          <AlertCircle className="w-5 h-5 text-red-400" />
+          {error}
         </div>
       )}
 
       {historyScans.length > 1 && compareWithHistory()?.scoreDifference && (
-        <div className="mb-6 p-4 bg-gradient-to-r from-blue-900/30 to-blue-900/10 border-l-4 border-blue-600 text-blue-300 rounded-lg flex items-center gap-2.5 animate-fade-in">
-          <div className="bg-blue-900/30 p-1.5 rounded-full">
-            <TrendingUp className="w-4 h-4 text-blue-400" />
-          </div>
-          <div>
-            <span className="font-medium">Score improved by {compareWithHistory()?.scoreDifference.toFixed(1)}%</span>
-            <p className="text-sm text-blue-300/70 mt-1">
-              {compareWithHistory()?.newKeywords.length 
-                ? `Added ${compareWithHistory()?.newKeywords.length} new keywords` 
-                : 'Better formatting and structure detected'}
-            </p>
-          </div>
+        <div className="mb-6 p-4 bg-blue-900/20 border border-blue-800 text-blue-300 rounded-lg flex items-center gap-2">
+          <TrendingUp className="w-5 h-5 text-blue-400" />
+          <span>
+            Your ATS score has improved by {compareWithHistory()?.scoreDifference.toFixed(1)}% 
+            from your previous scan.
+          </span>
         </div>
       )}
 
-      {/* Improved scan button */}
-      <div className="text-center my-8 relative">
-        <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent -translate-y-1/2"></div>
+      <div className="text-center mt-6 mb-4">
         <Button 
           onClick={handleScan} 
           variant="gradient"
           size="lg"
-          className="font-semibold px-8 py-6 rounded-xl relative"
+          className="font-semibold"
           disabled={isLoading || !resumeText.trim()}
         >
           {isLoading ? (
             <>
               <Loader2 className="w-5 h-5 mr-2 animate-spin" /> 
-              <span className="text-base">Analyzing Resume...</span>
+              Analyzing Resume...
             </>
           ) : (
             <>
               <ScanLine className="w-5 h-5 mr-2" /> 
-              <span className="text-base">Scan Resume for ATS</span>
+              Scan Resume for ATS
             </>
           )}
         </Button>
-      </div>      {scanResult && (
+      </div>
+
+      {scanResult && (
         <div className="mt-10" id="scan-results" ref={resultRef}>
-          {/* Enhanced results header with animation */}
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-1.5 bg-gradient-to-b from-blue-400 via-purple-400 to-cyan-400 rounded-full"></div>
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent drop-shadow">
+              <div className="h-8 w-1 bg-gradient-to-b from-blue-400 to-cyan-400 rounded-full"></div>
+              <h3 className="text-2xl font-semibold bg-gradient-to-r from-blue-300 to-cyan-300 bg-clip-text text-transparent">
                 ATS Scan Results
               </h3>
             </div>
-            <div className="flex items-center gap-2">
-              <Button 
-                variant="outline" 
-                onClick={handleExportPDF}
-                className="border-blue-700 hover:bg-blue-900/30 text-blue-400 flex items-center gap-1.5 rounded-lg"
-              >
-                <Share2 className="w-4 h-4" /> 
-                Share
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={handleExportPDF}
-                className="border-blue-700 hover:bg-blue-900/30 text-blue-400 flex items-center gap-1.5 rounded-lg"
-              >
-                <Download className="w-4 h-4" /> 
-                Export PDF
-              </Button>
-            </div>
+            <Button 
+              variant="outline" 
+              onClick={handleExportPDF}
+              className="border-blue-700 hover:bg-blue-900/30 text-blue-400 flex items-center gap-1.5"
+            >
+              <Download className="w-4 h-4" /> 
+              Export PDF
+            </Button>
           </div>
           
-          {/* Enhanced score summary with animated gauge */}
-          <div className="relative bg-gradient-to-br from-slate-900 via-gray-900 to-black border border-gray-800 p-8 rounded-xl mb-10 backdrop-blur-sm overflow-hidden shadow-lg">
-            {/* Enhanced decorative elements */}
-            <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"></div>
-            <div className="absolute top-1/3 left-1/3 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl"></div>
+          {/* Score summary */}
+          <div className="relative bg-gray-900/70 border border-gray-800 p-6 rounded-xl mb-8 backdrop-blur-sm overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl"></div>
+            <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl"></div>
             
             <div className="relative z-10">
-              {/* Score gauge and metrics in a more attractive layout */}
-              <div className="grid md:grid-cols-3 gap-8 items-start">
-                {/* Left column: Score gauge */}
-                <div className="flex flex-col items-center justify-center md:col-span-1 bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 border border-gray-800 hover:border-gray-700 transition-colors">
-                  <div className="relative w-48 h-48">
-                    {/* Circular background */}
-                    <svg className="w-full h-full" viewBox="0 0 100 100">
-                      <circle 
-                        cx="50" 
-                        cy="50" 
-                        r="45" 
-                        fill="none" 
-                        stroke="#1e293b" 
-                        strokeWidth="10" 
-                      />
-                      <circle 
-                        cx="50" 
-                        cy="50" 
-                        r="45" 
-                        fill="none" 
-                        stroke={
-                          scanResult.score >= 70 ? '#22c55e' :
-                          scanResult.score >= 50 ? '#f59e0b' : '#ef4444'
-                        }
-                        strokeWidth="10" 
-                        strokeLinecap="round"
-                        strokeDasharray={`${scanResult.score * 2.83} 283`}
-                        strokeDashoffset="70.75"
-                        className="transition-all duration-1000 ease-out"
-                      />
-                    </svg>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-5 gap-4">
+                <h3 className="text-xl font-bold text-white">
+                  Overall ATS Score: <span className={getScoreColor(scanResult.score)}>
+                    {scanResult.score}%
+                  </span>
+                </h3>
+                
+                <div className="flex items-center gap-2">
+                  <ChevronDown className={`w-5 h-5 ${
+                    scanResult.score >= 70 ? 'text-green-400' : 
+                    scanResult.score >= 50 ? 'text-amber-400' : 'text-red-400'
+                  }`} />
+                  <span className={`text-sm ${
+                    scanResult.score >= 70 ? 'text-green-400' : 
+                    scanResult.score >= 50 ? 'text-amber-400' : 'text-red-400'
+                  }`}>
+                    {scanResult.score >= 70 
+                      ? 'High Compatibility' 
+                      : scanResult.score >= 50 
+                      ? 'Medium Compatibility' 
+                      : 'Low Compatibility'
+                    }
+                  </span>
+                </div>
+              </div>
+              
+              <Progress 
+                value={scanResult.score} 
+                className="h-2 mb-6"
+                indicatorClassName={`${
+                  scanResult.score >= 70 
+                    ? 'bg-gradient-to-r from-green-500 to-green-400' 
+                    : scanResult.score >= 50 
+                    ? 'bg-gradient-to-r from-amber-500 to-amber-400'
+                    : 'bg-gradient-to-r from-red-500 to-red-400'
+                }`}
+              />
+              
+              <div className="text-sm mb-6 text-gray-300 border-l-2 border-blue-500 pl-3">
+                {getSummaryBasedOnScore(scanResult.score)}
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-semibold mb-3 text-white flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                    Resume Sections
+                  </h4>
+                  <div className="space-y-2">
+                    {scanResult.passedSections.map((section, index) => (
+                      <div key={index} className="flex items-center justify-between p-2 rounded-md bg-gray-800/50">
+                        <span className="text-gray-300">{section}</span>
+                        <Badge variant="success" className="text-xs">Found</Badge>
+                      </div>
+                    ))}
                     
-                    {/* Center score display */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className={`text-4xl font-bold ${getScoreColor(scanResult.score)}`}>
-                        {animatedScore}%
-                      </span>
-                      <span className="text-gray-400 text-sm mt-1">ATS Score</span>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 flex items-center gap-2">
-                    <div className={`w-3 h-3 rounded-full ${
-                      scanResult.score >= 70 ? 'bg-green-400' : 
-                      scanResult.score >= 50 ? 'bg-amber-400' : 'bg-red-400'
-                    }`}></div>
-                    <span className={`text-sm font-medium ${
-                      scanResult.score >= 70 ? 'text-green-400' : 
-                      scanResult.score >= 50 ? 'text-amber-400' : 'text-red-400'
-                    }`}>
-                      {scanResult.score >= 70 
-                        ? 'High Compatibility' 
-                        : scanResult.score >= 50 
-                        ? 'Medium Compatibility' 
-                        : 'Low Compatibility'
-                      }
-                    </span>
+                    {/* Show missing important sections */}
+                    {['Experience', 'Education', 'Skills'].filter(
+                      section => !scanResult.passedSections.includes(section)
+                    ).map((section, index) => (
+                      <div key={`missing-${index}`} className="flex items-center justify-between p-2 rounded-md bg-gray-800/50">
+                        <span className="text-gray-300">{section}</span>
+                        <Badge variant="destructive" className="text-xs">Missing</Badge>
+                      </div>
+                    ))}
                   </div>
                 </div>
-
-                {/* Right column: Summary and details */}
-                <div className="md:col-span-2">
-                  {/* Summary box */}
-                  <div className="bg-blue-900/10 border border-blue-800/30 rounded-xl p-6 mb-6">
-                    <h4 className="font-medium text-blue-300 mb-3 flex items-center gap-2">
-                      <BarChart3 className="w-4 h-4" />
-                      Summary
-                    </h4>
-                    <p className="text-gray-300 leading-relaxed">
-                      {getSummaryBasedOnScore(scanResult.score)}
-                    </p>
-                  </div>
-                  
-                  {/* Key metrics grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-gray-900/50 p-5 rounded-xl border border-gray-800 hover:border-gray-700 transition-colors">
-                      <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-blue-400" />
-                        Resume Sections
-                      </h4>
-                      <div className="space-y-2.5">
-                        {scanResult.passedSections.map((section, index) => (
-                          <div key={index} className="flex items-center justify-between p-2 rounded-md bg-gray-800/50 hover:bg-gray-800/80 transition-colors">
-                            <span className="text-gray-300">{section}</span>
-                            <Badge variant="success" className="text-xs font-medium">Found</Badge>
-                          </div>
-                        ))}
-                        
-                        {/* Show missing important sections */}
-                        {['Experience', 'Education', 'Skills'].filter(
-                          section => !scanResult.passedSections.includes(section)
-                        ).map((section, index) => (
-                          <div key={`missing-${index}`} className="flex items-center justify-between p-2 rounded-md bg-gray-800/50 hover:bg-gray-800/80 transition-colors">
-                            <span className="text-gray-300">{section}</span>
-                            <Badge variant="destructive" className="text-xs font-medium">Missing</Badge>
-                          </div>
-                        ))}
-                      </div>
+                
+                <div>
+                  <h4 className="font-semibold mb-3 text-white flex items-center gap-2">
+                    <BarChart className="w-4 h-4 text-cyan-400" />
+                    Key Metrics
+                  </h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between p-2 rounded-md bg-gray-800/50">
+                      <span className="text-gray-300">Keyword Match</span>
+                      <span className="font-medium text-blue-400">
+                        {Math.round((scanResult.matchedKeywords.length / scanResult.totalKeywords) * 100)}%
+                      </span>
                     </div>
-                    
-                    <div className="bg-gray-900/50 p-5 rounded-xl border border-gray-800 hover:border-gray-700 transition-colors">
-                      <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
-                        <Gauge className="w-4 h-4 text-cyan-400" />
-                        Key Metrics
-                      </h4>
-                      <div className="space-y-2.5">
-                        <div className="flex flex-col rounded-md bg-gray-800/50 hover:bg-gray-800/80 transition-colors p-3">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-gray-300">Keyword Match</span>
-                            <span className="font-medium text-blue-400">
-                              {Math.round((scanResult.matchedKeywords.length / scanResult.totalKeywords) * 100)}%
-                            </span>
-                          </div>
-                          <Progress 
-                            value={Math.round((scanResult.matchedKeywords.length / scanResult.totalKeywords) * 100)}
-                            className="h-1.5"
-                            indicatorClassName="bg-blue-500"
-                          />
-                        </div>
-                        
-                        <div className="flex flex-col rounded-md bg-gray-800/50 hover:bg-gray-800/80 transition-colors p-3">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-gray-300">Format Score</span>
-                            <span className={
-                              scanResult.score < 60 
-                                ? 'font-medium text-red-400' 
-                                : scanResult.score < 80 
-                                ? 'font-medium text-amber-400' 
-                                : 'font-medium text-green-400'
-                            }>
-                              {(scanResult.score * 0.9).toFixed(0)}%
-                            </span>
-                          </div>
-                          <Progress 
-                            value={parseFloat((scanResult.score * 0.9).toFixed(0))}
-                            className="h-1.5"
-                            indicatorClassName={
-                              scanResult.score < 60 
-                                ? 'bg-red-500' 
-                                : scanResult.score < 80 
-                                ? 'bg-amber-500' 
-                                : 'bg-green-500'
-                            }
-                          />
-                        </div>
-                        
-                        <div className="flex flex-col rounded-md bg-gray-800/50 hover:bg-gray-800/80 transition-colors p-3">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-gray-300">Content Clarity</span>
-                            <span className={
-                              scanResult.score < 60 
-                                ? 'font-medium text-red-400' 
-                                : scanResult.score < 80 
-                                ? 'font-medium text-amber-400' 
-                                : 'font-medium text-green-400'
-                            }>
-                              {(scanResult.score * 0.8).toFixed(0)}%
-                            </span>
-                          </div>
-                          <Progress 
-                            value={parseFloat((scanResult.score * 0.8).toFixed(0))}
-                            className="h-1.5"
-                            indicatorClassName={
-                              scanResult.score < 60 
-                                ? 'bg-red-500' 
-                                : scanResult.score < 80 
-                                ? 'bg-amber-500' 
-                                : 'bg-green-500'
-                            }
-                          />
-                        </div>
-                      </div>
+                    <div className="flex items-center justify-between p-2 rounded-md bg-gray-800/50">
+                      <span className="text-gray-300">Format Score</span>
+                      <span className={
+                        scanResult.score < 60 
+                          ? 'font-medium text-red-400' 
+                          : scanResult.score < 80 
+                          ? 'font-medium text-amber-400' 
+                          : 'font-medium text-green-400'
+                      }>
+                        {(scanResult.score * 0.9).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 rounded-md bg-gray-800/50">
+                      <span className="text-gray-300">Content Clarity</span>
+                      <span className={
+                        scanResult.score < 60 
+                          ? 'font-medium text-red-400' 
+                          : scanResult.score < 80 
+                          ? 'font-medium text-amber-400' 
+                          : 'font-medium text-green-400'
+                      }>
+                        {(scanResult.score * 0.8).toFixed(0)}%
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -593,265 +435,175 @@ const ATSScanner: React.FC = () => {
             </div>
           </div>
           
-          {/* Enhanced tabs for detailed results */}
+          {/* Tabs for detailed results */}
           <div className="relative">
             <Tabs defaultValue="keywords" className="w-full">
-              <TabsList className="w-full justify-start bg-gray-900/70 border border-gray-800 mb-6 p-1 gap-1 rounded-lg">
-                <TabsTrigger 
-                  value="keywords" 
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-700/60 data-[state=active]:to-blue-500/60 data-[state=active]:text-white rounded-md"
-                >
+              <TabsList className="w-full justify-start bg-gray-900/70 border border-gray-800 mb-6">
+                <TabsTrigger value="keywords" className="data-[state=active]:bg-blue-900/30 data-[state=active]:text-blue-300">
                   <Key className="w-4 h-4 mr-2" /> Keywords
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="format" 
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-700/60 data-[state=active]:to-blue-500/60 data-[state=active]:text-white rounded-md"
-                >
+                <TabsTrigger value="format" className="data-[state=active]:bg-blue-900/30 data-[state=active]:text-blue-300">
                   <FileText className="w-4 h-4 mr-2" /> Format Analysis
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="tips" 
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-700/60 data-[state=active]:to-blue-500/60 data-[state=active]:text-white rounded-md"
-                >
+                <TabsTrigger value="tips" className="data-[state=active]:bg-blue-900/30 data-[state=active]:text-blue-300">
                   <Lightbulb className="w-4 h-4 mr-2" /> Improvement Tips
                 </TabsTrigger>
               </TabsList>
 
-              {/* Enhanced Keywords Tab */}
+              {/* Keywords Tab */}
               <TabsContent value="keywords">
-                <div className="bg-gradient-to-br from-gray-900/90 to-black/90 border border-gray-800 p-6 rounded-xl shadow-lg backdrop-blur-sm">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-gray-900/50 p-5 rounded-xl border border-gray-800">
-                      <h4 className="font-semibold mb-4 text-white flex items-center gap-2.5">
-                        <div className="bg-green-900/30 p-1.5 rounded-full">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                        </div>
-                        Keywords Found ({scanResult.matchedKeywords.length})
-                      </h4>
-                      {scanResult.matchedKeywords.length > 0 ? (
-                        <div className="flex flex-wrap gap-2">
-                          {scanResult.matchedKeywords.map((keyword, i) => (
-                            <span key={i} className="px-3 py-1.5 bg-green-900/30 border border-green-800/50 text-green-300 rounded-full text-sm font-medium hover:bg-green-900/40 transition-colors cursor-default">
-                              {keyword}
-                            </span>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-3 p-4 bg-red-900/20 border border-red-800/30 rounded-lg">
-                          <AlertCircle className="w-5 h-5 text-red-400" />
-                          <p className="text-red-300">
-                            No relevant keywords found in your resume!
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <div className="bg-gray-900/50 p-5 rounded-xl border border-gray-800">
-                      <h4 className="font-semibold mb-4 text-white flex items-center gap-2.5">
-                        <div className="bg-red-900/30 p-1.5 rounded-full">
-                          <XCircle className="w-4 h-4 text-red-400" />
-                        </div>
-                        Missing Keywords ({scanResult.missingKeywords.length})
-                      </h4>
-                      {scanResult.missingKeywords.length > 0 ? (
-                        <div className="flex flex-wrap gap-2">
-                          {scanResult.missingKeywords.map((keyword, i) => (
-                            <span key={i} className="px-3 py-1.5 bg-red-900/30 border border-red-800/50 text-red-300 rounded-full text-sm font-medium hover:bg-red-900/40 transition-colors cursor-default">
-                              {keyword}
-                            </span>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-3 p-4 bg-green-900/20 border border-green-800/30 rounded-lg">
-                          <CheckCircle className="w-5 h-5 text-green-400" />
-                          <p className="text-green-300">
-                            Great job! No missing keywords detected.
-                          </p>
-                        </div>
-                      )}
-                    </div>
+                <div className="bg-gray-900/70 border border-gray-800 p-6 rounded-xl backdrop-blur-sm">
+                  <div className="mb-6">
+                    <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      Keywords Found ({scanResult.matchedKeywords.length})
+                    </h4>
+                    {scanResult.matchedKeywords.length > 0 ? (
+                      <div className="flex flex-wrap gap-2">
+                        {scanResult.matchedKeywords.map((keyword, i) => (
+                          <span key={i} className="px-3 py-1 bg-green-900/40 border border-green-800/50 text-green-300 rounded-full text-sm">
+                            {keyword}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-red-400 bg-red-900/20 p-3 rounded-md border border-red-800/30">
+                        No relevant keywords found in your resume!
+                      </p>
+                    )}
                   </div>
                   
-                  <div className="mt-6 p-4 bg-blue-900/20 border border-blue-800/40 rounded-lg">
-                    <h5 className="font-medium text-blue-300 mb-2 flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4 text-blue-300" />
-                      Keyword Optimization Tip
-                    </h5>
-                    <p className="text-gray-300 text-sm">
-                      Including relevant keywords in your resume increases ATS match by up to 60%. Focus on incorporating 
-                      missing keywords naturally in your experience descriptions and skills sections.
-                    </p>
+                  <div>
+                    <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
+                      <XCircle className="w-4 h-4 text-red-400" />
+                      Missing Keywords ({scanResult.missingKeywords.length})
+                    </h4>
+                    {scanResult.missingKeywords.length > 0 ? (
+                      <div className="flex flex-wrap gap-2">
+                        {scanResult.missingKeywords.map((keyword, i) => (
+                          <span key={i} className="px-3 py-1 bg-red-900/40 border border-red-800/50 text-red-300 rounded-full text-sm">
+                            {keyword}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-green-400 bg-green-900/20 p-3 rounded-md border border-green-800/30">
+                        Great job! No missing keywords detected.
+                      </p>
+                    )}
                   </div>
                 </div>
               </TabsContent>
 
-              {/* Enhanced Format Analysis Tab */}
+              {/* Format Analysis Tab */}
               <TabsContent value="format">
-                <div className="bg-gradient-to-br from-gray-900/90 to-black/90 border border-gray-800 p-6 rounded-xl shadow-lg backdrop-blur-sm">
-                  <div className="mb-6 flex items-center justify-between">
-                    <h4 className="font-semibold text-white flex items-center gap-2.5">
-                      <div className="bg-blue-900/30 p-1.5 rounded-full">
-                        <Gauge className="w-4 h-4 text-blue-400" />
-                      </div>
-                      Format Analysis
+                <div className="bg-gray-900/70 border border-gray-800 p-6 rounded-xl backdrop-blur-sm">
+                  <div className="mb-5 flex items-center justify-between">
+                    <h4 className="font-semibold text-white flex items-center gap-2">
+                      <Gauge className="w-4 h-4 text-blue-400" />
+                      Format Score
                     </h4>
-                    <span className={`
-                      text-lg font-bold px-3 py-1 rounded-full 
-                      ${scanResult.score < 60 
-                          ? 'text-red-300 bg-red-900/20 border border-red-800/40' 
-                          : scanResult.score < 80 
-                          ? 'text-amber-300 bg-amber-900/20 border border-amber-800/40' 
-                          : 'text-green-300 bg-green-900/20 border border-green-800/40'
-                      }
-                    `}>
-                      {(scanResult.score * 0.9).toFixed(1)}% Format Score
+                    <span className={
+                      scanResult.score < 60 
+                        ? 'text-red-400 text-lg font-bold' 
+                        : scanResult.score < 80 
+                        ? 'text-amber-400 text-lg font-bold' 
+                        : 'text-green-400 text-lg font-bold'
+                    }>
+                      {(scanResult.score * 0.9).toFixed(1)}%
                     </span>
                   </div>
                   
-                  <div className="grid gap-3">
-                    {/* Format analysis cards with improved styling */}
-                    <div className={`flex items-start p-4 rounded-lg ${
-                      scanResult.passedSections.includes('Contact Information')
-                        ? 'bg-green-900/10 border border-green-800/30'
-                        : 'bg-amber-900/10 border border-amber-800/30'
-                    }`}>
-                      <div className={`p-2 rounded-full mr-4 flex-shrink-0 ${
-                        scanResult.passedSections.includes('Contact Information')
-                          ? 'bg-green-900/30'
-                          : 'bg-amber-900/30'
-                      }`}>
-                        {scanResult.passedSections.includes('Contact Information') ? (
-                          <CheckCircle className="w-5 h-5 text-green-400" />
-                        ) : (
-                          <AlertCircle className="w-5 h-5 text-amber-400" />
-                        )}
-                      </div>
-                      <div>
-                        <h5 className={`font-medium mb-1 ${
-                          scanResult.passedSections.includes('Contact Information')
-                            ? 'text-green-300'
-                            : 'text-amber-300'
-                        }`}>Contact Information</h5>
-                        <span className="text-gray-300">
-                          {scanResult.passedSections.includes('Contact Information')
-                            ? 'Contact information is clearly provided and properly formatted'
-                            : 'Contact information may be missing or not clearly formatted'
-                          }
-                        </span>
-                      </div>
+                  <div className="divide-y divide-gray-800">
+                    {/* Format analysis points */}
+                    <div className="flex items-start py-3 first:pt-0">
+                      {scanResult.passedSections.includes('Contact Information') ? (
+                        <div className="bg-green-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                          <CheckCircle className="w-4 h-4 text-green-400" />
+                        </div>
+                      ) : (
+                        <div className="bg-amber-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                          <AlertCircle className="w-4 h-4 text-amber-400" />
+                        </div>
+                      )}
+                      <span className="text-gray-300">
+                        {scanResult.passedSections.includes('Contact Information')
+                          ? 'Contact information is clearly provided and properly formatted'
+                          : 'Contact information may be missing or not clearly formatted'
+                        }
+                      </span>
                     </div>
                     
-                    <div className={`flex items-start p-4 rounded-lg ${
-                      scanResult.passedSections.includes('Experience')
-                        ? 'bg-green-900/10 border border-green-800/30'
-                        : 'bg-amber-900/10 border border-amber-800/30'
-                    }`}>
-                      <div className={`p-2 rounded-full mr-4 flex-shrink-0 ${
-                        scanResult.passedSections.includes('Experience')
-                          ? 'bg-green-900/30'
-                          : 'bg-amber-900/30'
-                      }`}>
-                        {scanResult.passedSections.includes('Experience') ? (
-                          <CheckCircle className="w-5 h-5 text-green-400" />
-                        ) : (
-                          <AlertCircle className="w-5 h-5 text-amber-400" />
-                        )}
-                      </div>
-                      <div>
-                        <h5 className={`font-medium mb-1 ${
-                          scanResult.passedSections.includes('Experience')
-                            ? 'text-green-300'
-                            : 'text-amber-300'
-                        }`}>Work Experience</h5>
-                        <span className="text-gray-300">
-                          {scanResult.passedSections.includes('Experience')
-                            ? 'Work experience section is well-structured with clear role descriptions'
-                            : 'Work experience section may be missing or poorly structured'
-                          }
-                        </span>
-                      </div>
+                    <div className="flex items-start py-3">
+                      {scanResult.passedSections.includes('Experience') ? (
+                        <div className="bg-green-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                          <CheckCircle className="w-4 h-4 text-green-400" />
+                        </div>
+                      ) : (
+                        <div className="bg-amber-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                          <AlertCircle className="w-4 h-4 text-amber-400" />
+                        </div>
+                      )}
+                      <span className="text-gray-300">
+                        {scanResult.passedSections.includes('Experience')
+                          ? 'Work experience section is well-structured with clear role descriptions'
+                          : 'Work experience section may be missing or poorly structured'
+                        }
+                      </span>
                     </div>
                     
-                    <div className={`flex items-start p-4 rounded-lg ${
-                      scanResult.score > 60
-                        ? 'bg-green-900/10 border border-green-800/30'
-                        : 'bg-amber-900/10 border border-amber-800/30'
-                    }`}>
-                      <div className={`p-2 rounded-full mr-4 flex-shrink-0 ${
-                        scanResult.score > 60
-                          ? 'bg-green-900/30'
-                          : 'bg-amber-900/30'
-                      }`}>
-                        {scanResult.score > 60 ? (
-                          <CheckCircle className="w-5 h-5 text-green-400" />
-                        ) : (
-                          <AlertCircle className="w-5 h-5 text-amber-400" />
-                        )}
-                      </div>
-                      <div>
-                        <h5 className={`font-medium mb-1 ${
-                          scanResult.score > 60
-                            ? 'text-green-300'
-                            : 'text-amber-300'
-                        }`}>Resume Format</h5>
-                        <span className="text-gray-300">
-                          {scanResult.score > 60
-                            ? 'Resume uses a clean, ATS-friendly format without complex tables or graphics'
-                            : 'Resume may contain elements that are difficult for ATS systems to parse'
-                          }
-                        </span>
-                      </div>
+                    <div className="flex items-start py-3">
+                      {scanResult.score > 60 ? (
+                        <div className="bg-green-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                          <CheckCircle className="w-4 h-4 text-green-400" />
+                        </div>
+                      ) : (
+                        <div className="bg-amber-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                          <AlertCircle className="w-4 h-4 text-amber-400" />
+                        </div>
+                      )}
+                      <span className="text-gray-300">
+                        {scanResult.score > 60
+                          ? 'Resume uses a clean, ATS-friendly format without complex tables or graphics'
+                          : 'Resume may contain elements that are difficult for ATS systems to parse'
+                        }
+                      </span>
                     </div>
                     
-                    <div className={`flex items-start p-4 rounded-lg ${
-                      scanResult.matchedKeywords.length > scanResult.totalKeywords * 0.6
-                        ? 'bg-green-900/10 border border-green-800/30'
-                        : 'bg-amber-900/10 border border-amber-800/30'
-                    }`}>
-                      <div className={`p-2 rounded-full mr-4 flex-shrink-0 ${
-                        scanResult.matchedKeywords.length > scanResult.totalKeywords * 0.6
-                          ? 'bg-green-900/30'
-                          : 'bg-amber-900/30'
-                      }`}>
-                        {scanResult.matchedKeywords.length > scanResult.totalKeywords * 0.6 ? (
-                          <CheckCircle className="w-5 h-5 text-green-400" />
-                        ) : (
-                          <AlertCircle className="w-5 h-5 text-amber-400" />
-                        )}
-                      </div>
-                      <div>
-                        <h5 className={`font-medium mb-1 ${
-                          scanResult.matchedKeywords.length > scanResult.totalKeywords * 0.6
-                            ? 'text-green-300'
-                            : 'text-amber-300'
-                        }`}>Keyword Optimization</h5>
-                        <span className="text-gray-300">
-                          {scanResult.matchedKeywords.length > scanResult.totalKeywords * 0.6
-                            ? 'Good keyword optimization for the target role'
-                            : 'Resume could use more relevant keywords for the target role'
-                          }
-                        </span>
-                      </div>
+                    <div className="flex items-start py-3 last:pb-0">
+                      {scanResult.matchedKeywords.length > scanResult.totalKeywords * 0.6 ? (
+                        <div className="bg-green-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                          <CheckCircle className="w-4 h-4 text-green-400" />
+                        </div>
+                      ) : (
+                        <div className="bg-amber-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                          <AlertCircle className="w-4 h-4 text-amber-400" />
+                        </div>
+                      )}
+                      <span className="text-gray-300">
+                        {scanResult.matchedKeywords.length > scanResult.totalKeywords * 0.6
+                          ? 'Good keyword optimization for the target role'
+                          : 'Resume could use more relevant keywords for the target role'
+                        }
+                      </span>
                     </div>
                   </div>
                 </div>
               </TabsContent>
 
-              {/* Enhanced Improvement Tips Tab */}
+              {/* Improvement Tips Tab */}
               <TabsContent value="tips">
-                <div className="bg-gradient-to-br from-gray-900/90 to-black/90 border border-gray-800 p-6 rounded-xl shadow-lg backdrop-blur-sm">
-                  <h4 className="font-semibold mb-5 text-white flex items-center gap-2.5">
-                    <div className="bg-yellow-900/30 p-1.5 rounded-full">
-                      <Zap className="w-4 h-4 text-yellow-400" />
-                    </div>
-                    Recommendations to Improve Your Resume
+                <div className="bg-gray-900/70 border border-gray-800 p-6 rounded-xl backdrop-blur-sm">
+                  <h4 className="font-semibold mb-5 text-white flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-yellow-400" />
+                    Recommendations to Improve
                   </h4>
                   
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
                     {scanResult.suggestions.map((tip, i) => (
-                      <div key={i} className="flex items-start p-4 bg-blue-900/20 border border-blue-800/40 rounded-lg hover:bg-blue-900/30 transition-colors">
-                        <div className="bg-blue-900/40 p-1.5 rounded-full mr-3 flex-shrink-0">
-                          <Lightbulb className="w-4 h-4 text-blue-300" />
+                      <div key={i} className="flex items-start p-3 bg-blue-900/20 border border-blue-800/30 rounded-lg">
+                        <div className="bg-yellow-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                          <Lightbulb className="w-4 h-4 text-yellow-400" />
                         </div>
                         <span className="text-gray-300">
                           {tip}
@@ -862,36 +614,20 @@ const ATSScanner: React.FC = () => {
                     {/* Add default suggestions if none provided */}
                     {scanResult.suggestions.length === 0 && (
                       <>
-                        <div className="flex items-start p-4 bg-blue-900/20 border border-blue-800/40 rounded-lg hover:bg-blue-900/30 transition-colors">
-                          <div className="bg-blue-900/40 p-1.5 rounded-full mr-3 flex-shrink-0">
-                            <Lightbulb className="w-4 h-4 text-blue-300" />
+                        <div className="flex items-start p-3 bg-blue-900/20 border border-blue-800/30 rounded-lg">
+                          <div className="bg-yellow-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                            <Lightbulb className="w-4 h-4 text-yellow-400" />
                           </div>
                           <span className="text-gray-300">
                             Include more industry-specific keywords that match the job description
                           </span>
                         </div>
-                        <div className="flex items-start p-4 bg-blue-900/20 border border-blue-800/40 rounded-lg hover:bg-blue-900/30 transition-colors">
-                          <div className="bg-blue-900/40 p-1.5 rounded-full mr-3 flex-shrink-0">
-                            <Lightbulb className="w-4 h-4 text-blue-300" />
+                        <div className="flex items-start p-3 bg-blue-900/20 border border-blue-800/30 rounded-lg">
+                          <div className="bg-yellow-900/30 p-1.5 rounded-full mr-3 flex-shrink-0">
+                            <Lightbulb className="w-4 h-4 text-yellow-400" />
                           </div>
                           <span className="text-gray-300">
                             Use standard section headings that ATS systems can easily recognize
-                          </span>
-                        </div>
-                        <div className="flex items-start p-4 bg-blue-900/20 border border-blue-800/40 rounded-lg hover:bg-blue-900/30 transition-colors">
-                          <div className="bg-blue-900/40 p-1.5 rounded-full mr-3 flex-shrink-0">
-                            <Lightbulb className="w-4 h-4 text-blue-300" />
-                          </div>
-                          <span className="text-gray-300">
-                            Quantify your achievements with specific metrics and results
-                          </span>
-                        </div>
-                        <div className="flex items-start p-4 bg-blue-900/20 border border-blue-800/40 rounded-lg hover:bg-blue-900/30 transition-colors">
-                          <div className="bg-blue-900/40 p-1.5 rounded-full mr-3 flex-shrink-0">
-                            <Lightbulb className="w-4 h-4 text-blue-300" />
-                          </div>
-                          <span className="text-gray-300">
-                            Use a clean, simple format that avoids complex tables, graphics, or unusual fonts
                           </span>
                         </div>
                       </>
@@ -902,64 +638,34 @@ const ATSScanner: React.FC = () => {
             </Tabs>
           </div>
           
-          {/* Enhanced Action section */}
-          <div className="mt-8 p-6 bg-gradient-to-br from-blue-900/30 to-purple-900/20 border border-blue-800/40 rounded-xl backdrop-blur-sm shadow-lg">
-            <h4 className="font-semibold mb-5 text-blue-300 flex items-center gap-2.5">
-              <div className="bg-blue-900/40 p-1.5 rounded-full">
-                <BadgeCheck className="w-5 h-5 text-blue-300" />
-              </div>
+          {/* Action section */}
+          <div className="mt-6 p-6 border border-blue-800/40 bg-blue-900/20 rounded-lg backdrop-blur-sm">
+            <h4 className="font-semibold mb-4 text-blue-300 flex items-center gap-2">
+              <BadgeCheck className="w-5 h-5" />
               Next Steps to Improve Your ATS Score
             </h4>
-            
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {scanResult.score < 70 && (
                 <>
-                  <li className="flex items-start gap-3 group">
-                    <div className="w-7 h-7 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white flex-shrink-0 shadow-md group-hover:from-blue-500 group-hover:to-purple-500 transition-all">1</div>
-                    <div className="bg-blue-900/20 p-3 rounded-lg border border-blue-800/30 flex-grow group-hover:bg-blue-900/30 transition-all">
-                      <span className="text-gray-300">
-                        Include more of the missing keywords in your resume, especially those relevant to your experience
-                      </span>
-                    </div>
+                  <li className="flex items-start gap-3">
+                    <span className="w-6 h-6 bg-blue-900/60 rounded-full flex items-center justify-center text-blue-300 flex-shrink-0 border border-blue-700/50">1</span>
+                    <span className="text-gray-300">Include more of the missing keywords in your resume, especially those relevant to your experience</span>
                   </li>
-                  <li className="flex items-start gap-3 group">
-                    <div className="w-7 h-7 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white flex-shrink-0 shadow-md group-hover:from-blue-500 group-hover:to-purple-500 transition-all">2</div>
-                    <div className="bg-blue-900/20 p-3 rounded-lg border border-blue-800/30 flex-grow group-hover:bg-blue-900/30 transition-all">
-                      <span className="text-gray-300">
-                        Add quantifiable achievements with metrics (e.g., "Improved performance by 30%")
-                      </span>
-                    </div>
+                  <li className="flex items-start gap-3">
+                    <span className="w-6 h-6 bg-blue-900/60 rounded-full flex items-center justify-center text-blue-300 flex-shrink-0 border border-blue-700/50">2</span>
+                    <span className="text-gray-300">Add quantifiable achievements with metrics (e.g., "Improved performance by 30%")</span>
                   </li>
-                  <li className="flex items-start gap-3 group">
-                    <div className="w-7 h-7 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white flex-shrink-0 shadow-md group-hover:from-blue-500 group-hover:to-purple-500 transition-all">3</div>
-                    <div className="bg-blue-900/20 p-3 rounded-lg border border-blue-800/30 flex-grow group-hover:bg-blue-900/30 transition-all">
-                      <span className="text-gray-300">
-                        Use standard section headings: "Experience," "Education," "Skills," etc.
-                      </span>
-                    </div>
+                  <li className="flex items-start gap-3">
+                    <span className="w-6 h-6 bg-blue-900/60 rounded-full flex items-center justify-center text-blue-300 flex-shrink-0 border border-blue-700/50">3</span>
+                    <span className="text-gray-300">Use standard section headings: "Experience," "Education," "Skills," etc.</span>
                   </li>
                 </>
               )}
-              <li className="flex items-start gap-3 group">
-                <div className="w-7 h-7 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white flex-shrink-0 shadow-md group-hover:from-blue-500 group-hover:to-purple-500 transition-all">{scanResult.score < 70 ? '4' : '1'}</div>
-                <div className="bg-blue-900/20 p-3 rounded-lg border border-blue-800/30 flex-grow group-hover:bg-blue-900/30 transition-all">
-                  <span className="text-gray-300">
-                    Export this report to PDF using the button above to save your analysis
-                  </span>
-                </div>
+              <li className="flex items-start gap-3">
+                <span className="w-6 h-6 bg-blue-900/60 rounded-full flex items-center justify-center text-blue-300 flex-shrink-0 border border-blue-700/50">{scanResult.score < 70 ? '4' : '1'}</span>
+                <span className="text-gray-300">Export this report to PDF using the button above to save your analysis</span>
               </li>
             </ul>
-            
-            <div className="mt-6 flex justify-end">
-              <Button 
-                onClick={handleExportPDF}
-                variant="gradient"
-                className="flex items-center gap-2"
-              >
-                <PenLine className="w-4 h-4" />
-                Edit Resume with Suggestions
-              </Button>
-            </div>
           </div>
         </div>
       )}
