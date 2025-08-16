@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { 
-  User, 
+  User as UserIcon,
   Mail, 
   Calendar, 
   Edit, 
@@ -17,8 +17,42 @@ import {
   Github,
   Linkedin,
   Twitter,
-  Globe
+  Globe,
+  Flame
 } from 'lucide-react';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  role: 'user' | 'admin';
+  bio?: string;
+  socialLinks?: {
+    linkedin?: string;
+    github?: string;
+    twitter?: string;
+  };
+  joinDate: string;
+  lastLogin: string;
+  isActive: boolean;
+  preferences: {
+    theme: 'light' | 'dark';
+    notifications: boolean;
+    language: 'en' | 'hi';
+    emailUpdates: boolean;
+  };
+  progress: {
+    coursesEnrolled: string[];
+    completedModules: number;
+    totalPoints: number;
+    streak: number;
+    longestStreak: number;
+    level: string;
+    streakStartDate?: string;
+    streakEndDate?: string;
+  };
+}
 
 const UserProfile: React.FC = () => {
   const { state: authState, updateProfile, changePassword } = useAuth();
@@ -51,7 +85,6 @@ const UserProfile: React.FC = () => {
   };
 
   const handleCancelEdit = () => {
-    // Reset form data to original user data
     setFormData({
       name: authState.user?.name || '',
       bio: authState.user?.bio || '',
@@ -95,10 +128,18 @@ const UserProfile: React.FC = () => {
   };
 
   if (!authState.user) {
-    return <div>Please log in to view your profile.</div>;
+    return <div className="flex items-center justify-center min-h-screen">
+      <p className="text-lg">Please log in to view your profile.</p>
+    </div>;
   }
 
   const { user } = authState;
+  const streakPercentage = Math.min(100, (user.progress.streak / 30) * 100);
+  const streakMessage = user.progress.streak >= 7 ? 
+    '🔥 Keep it up!' : 
+    user.progress.streak >= 3 ? 
+    'You\'re on a roll!' : 
+    'Complete daily goals to build your streak!';
 
   return (
     <div className={`min-h-screen ${globalState.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
@@ -125,7 +166,10 @@ const UserProfile: React.FC = () => {
                     alt={user.name}
                     className="w-24 h-24 rounded-full border-4 border-blue-500 shadow-lg"
                   />
-                  <button className="absolute bottom-0 right-0 w-8 h-8 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-colors">
+                  <button 
+                    onClick={() => setIsEditing(true)}
+                    className="absolute bottom-0 right-0 w-8 h-8 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-colors"
+                  >
                     <Camera className="w-4 h-4" />
                   </button>
                 </div>
@@ -166,9 +210,12 @@ const UserProfile: React.FC = () => {
                   <span className={`text-sm ${globalState.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                     Current Streak
                   </span>
-                  <span className={`text-sm font-medium ${globalState.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                    {user.progress.streak} days
-                  </span>
+                  <div className="flex items-center">
+                    <Flame className="w-4 h-4 text-orange-500 mr-1" />
+                    <span className={`text-sm font-medium ${globalState.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                      {user.progress.streak} days
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -412,7 +459,7 @@ const UserProfile: React.FC = () => {
                 Learning Progress
               </h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-3">
                     <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-300" />
@@ -448,6 +495,39 @@ const UserProfile: React.FC = () => {
                     Total Points
                   </p>
                 </div>
+
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Flame className="w-8 h-8 text-orange-600 dark:text-orange-300" />
+                  </div>
+                  <h4 className={`text-2xl font-bold ${globalState.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    {user.progress.streak}
+                  </h4>
+                  <p className={`text-sm ${globalState.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                    Day Streak
+                  </p>
+                </div>
+              </div>
+
+              {/* Streak Progress Visualization */}
+              <div className={`mt-6 p-4 rounded-lg ${globalState.darkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                <h4 className={`text-lg font-semibold mb-3 ${globalState.darkMode ? 'text-white' : 'text-gray-800'}`}>
+                  Streak Progress
+                </h4>
+                <div className="flex items-center">
+                  <div className="flex-1 bg-gray-300 dark:bg-gray-600 rounded-full h-4">
+                    <div 
+                      className="bg-orange-500 h-4 rounded-full" 
+                      style={{ width: `${streakPercentage}%` }}
+                    ></div>
+                  </div>
+                  <span className={`ml-3 text-sm ${globalState.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    {user.progress.streak}/30 days
+                  </span>
+                </div>
+                <p className={`mt-2 text-sm ${globalState.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                  {streakMessage}
+                </p>
               </div>
             </div>
           </div>
