@@ -1,16 +1,23 @@
 // controller/adminController.js
-import User from "../models/User.js";  // adjust the path if your User model is elsewhere
-import AdminLog from "../models/AdminLog.js"; // create this model if not already done
+import bcrypt from "bcryptjs";
+import User from "../models/User.js";       // ✅ adjust path if needed
+import AdminLog from "../models/AdminLog.js"; // ✅ ensure model exists
 
 // ✅ Create an admin log entry
 export const createAdminLog = async (req, res) => {
   try {
     const { action, details } = req.body;
+
+    if (!action || !details) {
+      return res.status(400).json({ message: "Action and details are required" });
+    }
+
     const log = new AdminLog({
       action,
       details,
-      performedBy: req.user.id, // comes from authenticateToken
+      performedBy: req.user.id, // comes from authenticateToken middleware
     });
+
     await log.save();
     res.status(201).json({ message: "Log created successfully", log });
   } catch (error) {
@@ -21,7 +28,10 @@ export const createAdminLog = async (req, res) => {
 // ✅ Get all admin logs
 export const getAdminLogs = async (req, res) => {
   try {
-    const logs = await AdminLog.find().populate("performedBy", "name email");
+    const logs = await AdminLog.find()
+      .populate("performedBy", "name email")
+      .sort({ createdAt: -1 });
+
     res.status(200).json(logs);
   } catch (error) {
     res.status(500).json({ message: "Error fetching logs", error: error.message });
@@ -42,10 +52,13 @@ export const addUser = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
+    // hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = new User({
       name,
       email,
-      password, // make sure you hash in User model pre-save hook
+      password: hashedPassword,
       role: role || "user",
     });
 
@@ -66,16 +79,12 @@ export const getAllUserRegister = async (req, res) => {
   }
 };
 
-// ✅ Delete user by ID
+// ✅ Delete user by ID (matches /delete-user/:id route)
 export const deleteUserById = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { id } = req.params;  // ✅ now uses params, not body
 
-    if (!userId) {
-      return res.status(400).json({ message: "User ID is required" });
-    }
-
-    const user = await User.findByIdAndDelete(userId);
+    const user = await User.findByIdAndDelete(id);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -86,5 +95,6 @@ export const deleteUserById = async (req, res) => {
     res.status(500).json({ message: "Error deleting user", error: error.message });
   }
 };
+
 
 
