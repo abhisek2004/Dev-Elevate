@@ -3,6 +3,7 @@ import { Plus, Check } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { Button } from '../ui/button';
 import { Modal } from '../ui/modal';
+import { useAuth } from "../../contexts/AuthContext";
 
 // ===== DEFAULTS for Focus Mode =====
 const DEFAULTS = {
@@ -162,6 +163,7 @@ const FocusMode: React.FC = () => {
 // ===== Daily Goals Component =====
 const DailyGoals: React.FC = () => {
   const { state, dispatch } = useGlobalState();
+  const { state: authState } = useAuth();
   const [newGoal, setNewGoal] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -173,21 +175,44 @@ const DailyGoals: React.FC = () => {
     }
   };
 
-  const toggleGoal = (goal: string) => {
+  const toggleGoal = async (goal: string) => {
     if (state.completedGoals.includes(goal)) {
       dispatch({ type: 'UNDO_DAILY_GOAL', payload: goal });
     } else {
       dispatch({ type: 'COMPLETE_DAILY_GOAL', payload: goal });
+      
+      // Update streak on backend when goal is completed
+      try {
+        const response = await fetch('/api/user/streak', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authState.sessionToken}`
+          },
+          body: JSON.stringify({ activity: goal })
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          dispatch({ 
+            type: 'SET_USER', 
+            payload: {
+              ...state.user,
+              streak: data.currentStreak
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error updating streak:', error);
+      }
     }
   };
 
   return (
     <>
-      {/* Focus Mode ABOVE Daily Goals */}
       <FocusMode />
-
-      {/* Daily Goals Box */}
-      <div className={`rounded-2xl p-6 border transition-all duration-300 ease-in-out shadow-md ${state.darkMode ? 'bg-gray-900 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-900'} `}>
+      
+      <div className={`rounded-2xl p-6 border transition-all duration-300 ease-in-out shadow-md ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
         <div className="flex justify-between items-center mb-6">
           <h3 className={`text-2xl font-semibold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             Daily Goals
@@ -209,10 +234,11 @@ const DailyGoals: React.FC = () => {
                 value={newGoal}
                 onChange={(e) => setNewGoal(e.target.value)}
                 placeholder="Enter your goal..."
-                className={`flex-1 px-4 py-2 rounded-lg border shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${state.darkMode
+                className={`flex-1 px-4 py-2 rounded-lg border shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  state.darkMode
                     ? 'bg-gray-800 border-gray-600 text-white placeholder-gray-400'
                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                  }`}
+                }`}
                 onKeyPress={(e) => e.key === 'Enter' && addGoal()}
               />
               <button
@@ -234,8 +260,9 @@ const DailyGoals: React.FC = () => {
             state.dailyGoals.map((goal, index) => (
               <div
                 key={index}
-                className={`flex items-center gap-4 p-4 rounded-xl border shadow-sm transition-all duration-200 ${state.darkMode ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' : 'bg-white border-gray-200 hover:bg-gray-100'
-                  }`}
+                className={`flex items-center gap-4 p-4 rounded-xl border shadow-sm transition-all duration-200 ${
+                  state.darkMode ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' : 'bg-white border-gray-200 hover:bg-gray-100'
+                }`}
               >
                 <button
                   onClick={() => toggleGoal(goal)}
@@ -260,8 +287,9 @@ const DailyGoals: React.FC = () => {
               {state.completedGoals.map((goal, index) => (
                 <div
                   key={index}
-                  className={`flex items-center gap-4 p-3 rounded-xl transition-all duration-200 ${state.darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
-                    }`}
+                  className={`flex items-center gap-4 p-3 rounded-xl transition-all duration-200 ${
+                    state.darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
+                  }`}
                 >
                   <button
                     onClick={() => toggleGoal(goal)}
