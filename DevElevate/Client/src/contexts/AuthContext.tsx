@@ -79,6 +79,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       return { ...state, isLoading: true, error: null };
 
     case "LOGIN_SUCCESS":
+      console.log("Reducer - LOGIN_SUCCESS payload:", action.payload);
       return {
         ...state,
         user: action.payload.user,
@@ -141,6 +142,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       return { ...state, ...action.payload };
 
     case "REGISTER_SUCCESS":
+      console.log("Reducer - REGISTER_SUCCESS payload:", action.payload);
       return {
         ...state,
         user: action.payload.user,
@@ -192,7 +194,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         const parsedAuth = JSON.parse(savedAuth);
         dispatch({ type: "HYDRATE_AUTH", payload: parsedAuth });
       } catch (error) {
-        // Silent error handling for auth state parsing
+        console.error("Error parsing saved auth state:", error);
       }
     }
   }, []);
@@ -210,7 +212,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     dispatch({ type: "LOGIN_START" });
     try {
       // Make API call to backend login endpoint
-      const response = await fetch(`${baseUrl}/api/v1/auth/login`, {
+      const response = await fetch(`${baseUrl}/api/v1/auth/login`,{
         method: "POST",
         credentials: "include",
         headers: {
@@ -265,7 +267,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           },
         };
 
-
+        console.log("Login successful - user:", user);
+        console.log("Login successful - token:", data.token);
 
         dispatch({
           type: "LOGIN_SUCCESS",
@@ -354,7 +357,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
             },
           };
 
-
+          console.log("Registration successful - user:", user);
+          console.log("Registration successful - token:", loginData.token);
 
           dispatch({
             type: "REGISTER_SUCCESS",
