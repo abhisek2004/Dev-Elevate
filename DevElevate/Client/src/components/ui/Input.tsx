@@ -1,4 +1,5 @@
 import React, { forwardRef, InputHTMLAttributes } from 'react';
+import { useGlobalState } from '../../contexts/GlobalContext';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -9,10 +10,14 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, icon, error, className = '', ...props }, ref) => {
+    const { state } = useGlobalState();
+    
     return (
       <div className="w-full">
         {label && (
-          <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className={`block mb-2 text-sm font-medium ${
+            state.darkMode ? 'text-gray-300' : 'text-gray-700'
+          }`}>
             {label}
           </label>
         )}
@@ -25,18 +30,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <input
             ref={ref}
             className={`
-              w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-              bg-white dark:bg-gray-800 text-gray-900 dark:text-white 
-              placeholder-gray-500 dark:placeholder-gray-400
+              w-full px-3 py-2 border rounded-lg 
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
               disabled:opacity-50 disabled:cursor-not-allowed
+              ${state.darkMode 
+                ? 'border-gray-600 bg-gray-800 text-white placeholder-gray-400' 
+                : 'border-gray-300 bg-white text-gray-900 placeholder-gray-500'
+              }
               ${icon ? 'pl-10' : ''}
               ${error ? 'border-red-500 focus:ring-red-500' : ''} ${className}`}
             {...props}
           />
         </div>
         {error && (
-          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
+          <p className={`mt-1 text-sm ${
+            state.darkMode ? 'text-red-400' : 'text-red-600'
+          }`}>{error}</p>
         )}
       </div>
     );
