@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Github, ExternalLink, Code, Globe, Linkedin } from "lucide-react";
+import { Github, ExternalLink, Code, Globe, Linkedin, Heart } from "lucide-react";
+import { SiMongodb, SiExpress, SiReact, SiNodedotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import { Link } from "react-router-dom";
-
 
 type Contributor = {
   login: string;
@@ -26,25 +26,11 @@ const Footer: React.FC = () => {
           const data = await response.json();
           setContributors(data.slice(0, 6));
         } else {
-          setContributors([
-            {
-              login: "abhisek2004",
-              avatar_url: "https://github.com/abhisek2004.png",
-              html_url: "https://github.com/abhisek2004",
-              contributions: 150,
-            },
-          ]);
+          setContributors([]);
         }
       } catch (error) {
         console.error("Error fetching contributors:", error);
-        setContributors([
-          {
-            login: "abhisek2004",
-            avatar_url: "https://github.com/abhisek2004.png",
-            html_url: "https://github.com/abhisek2004",
-            contributions: 150,
-          },
-        ]);
+        setContributors([]);
       } finally {
         setLoading(false);
       }
@@ -69,12 +55,12 @@ const Footer: React.FC = () => {
   ];
 
   const techStack = [
-    { name: "MongoDB", icon: "🧠" },
-    { name: "Express.js", icon: "🚀" },
-    { name: "React.js", icon: "⚛️" },
-    { name: "Node.js", icon: "🛠️" },
-    { name: "TypeScript", icon: "📘" },
-    { name: "Tailwind CSS", icon: "🎨" },
+    { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+    { name: "Express.js", icon: SiExpress, color: "#000000" },
+    { name: "React.js", icon: SiReact, color: "#61DAFB" },
+    { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
+    { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+    { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
   ];
 
   return (
@@ -86,8 +72,6 @@ const Footer: React.FC = () => {
       } border-t border-opacity-40 transition-colors duration-200`}
     >
       <div className="px-4 pt-6 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
-  
-
         {/* Contributors Section */}
         <div className="mb-12">
           <div className="flex items-center justify-between mb-6">
@@ -237,7 +221,7 @@ const Footer: React.FC = () => {
                   >
                     <Globe className="w-6 h-6" />
                   </a>
-                  {/* You can add more links here similarly */}
+
                 </div>
               </div>
             </div>
@@ -309,7 +293,7 @@ const Footer: React.FC = () => {
                       state.darkMode ? "bg-gray-800" : "bg-white"
                     }`}
                   >
-                    <span className="text-lg">{tech.icon}</span>
+                    <tech.icon className="w-4 h-4" style={{ color: tech.color }} />
                     <span
                       className={`text-xs ${
                         state.darkMode ? "text-gray-300" : "text-gray-700"
@@ -335,7 +319,7 @@ const Footer: React.FC = () => {
             }`}
           >
             © 2025 DevElevate. Built with{" "}
-            <span className="text-red-500">❤️</span> for the developer
+            <Heart className="inline w-4 h-4 text-red-500" /> for the developer
             community.
           </p>
         </div>
