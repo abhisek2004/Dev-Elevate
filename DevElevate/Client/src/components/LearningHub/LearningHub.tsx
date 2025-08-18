@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { BookOpen, Code, Database, Brain, PlayCircle, FileText, CheckCircle } from 'lucide-react';
 import Toast from '../Layout/Toast';
+import ModuleCards from './Java/ModuleCards';
 
 const LearningHub: React.FC = () => {
   const { state, dispatch } = useGlobalState();
@@ -41,11 +42,11 @@ const LearningHub: React.FC = () => {
       icon: BookOpen,
       color: 'from-orange-500 to-red-500',
       modules: [
-        { id: 'basics', title: 'Java Basics', topics: ['Syntax', 'Variables', 'Data Types', 'Operators'], completed: true },
-        { id: 'oop', title: 'Object-Oriented Programming', topics: ['Classes', 'Objects', 'Inheritance', 'Polymorphism'], completed: true },
-        { id: 'collections', title: 'Collections Framework', topics: ['List', 'Set', 'Map', 'Queue'], completed: false },
-        { id: 'threads', title: 'Multithreading', topics: ['Thread Basics', 'Synchronization', 'Executor Framework'], completed: false },
-        { id: 'java8', title: 'Java 8+ Features', topics: ['Lambda Expressions', 'Streams', 'Optional', 'Method References'], completed: false }
+        { id: 'basics', title: 'Java Basics', topics: ['JVM & JDK', 'Variables', 'Data Types', 'Type Casting'], completed: false },
+        { id: 'controlFlow', title: 'Control Flow & Loops', topics: ['If-Else', 'Switch', 'For Loop', 'While Loop'], completed: false },
+        { id: 'oop', title: 'Object-Oriented Programming', topics: ['Classes', 'Objects', 'Inheritance', 'Polymorphism'], completed: false },
+        { id: 'collections', title: 'Java Collections', topics: ['Arrays', 'ArrayList', 'HashMap', 'Set'], completed: false },
+        { id: 'exceptions', title: 'Exception Handling & File I/O', topics: ['Try-Catch', 'Finally', 'Custom Exceptions', 'File Operations'], completed: false }
       ]
     },
     mern: {
@@ -155,88 +156,92 @@ const LearningHub: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {currentTrack.modules.map((module, index) => (
-                  <div
-                    key={module.id}
-                    className={`p-6 rounded-lg border group transition-all duration-200 ${
-                      state.darkMode ? 'border-gray-700 bg-gray-800 hover:shadow-lg' : 'border-gray-200 bg-white hover:shadow-md'
-                    } hover:shadow-md transition-shadow`}
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center space-x-4">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm shadow-sm ${
-                          module.completed
-                            ? 'bg-green-500 text-white'
-                            : state.darkMode
-                            ? 'bg-gray-700 text-gray-300'
-                            : 'bg-gray-200 text-gray-600'
-                        }`}>
-                          {module.completed ? <CheckCircle className="w-5 h-5" /> : index + 1}
+              {selectedTrack === 'java' ? (
+                <ModuleCards modules={currentTrack.modules} />
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {currentTrack.modules.map((module, index) => (
+                    <div
+                      key={module.id}
+                      className={`p-6 rounded-lg border group transition-all duration-200 ${
+                        state.darkMode ? 'border-gray-700 bg-gray-800 hover:shadow-lg' : 'border-gray-200 bg-white hover:shadow-md'
+                      } hover:shadow-md transition-shadow`}
+                    >
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center space-x-4">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm shadow-sm ${
+                            module.completed
+                              ? 'bg-green-500 text-white'
+                              : state.darkMode
+                              ? 'bg-gray-700 text-gray-300'
+                              : 'bg-gray-200 text-gray-600'
+                          }`}>
+                            {module.completed ? <CheckCircle className="w-5 h-5" /> : index + 1}
+                          </div>
+                          <div>
+                            <h3 className={`font-semibold leading-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                              {module.title}
+                            </h3>
+                            <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                              {module.topics.length} topics
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className={`font-semibold leading-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                            {module.title}
-                          </h3>
-                          <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                            {module.topics.length} topics
-                          </p>
-                        </div>
+                        {module.completed && (
+                          <span className="px-2 py-0.5 bg-green-200 text-green-800 text-xs rounded-full font-medium">
+                            Complete
+                          </span>
+                        )}
                       </div>
-                      {module.completed && (
-                        <span className="px-2 py-0.5 bg-green-200 text-green-800 text-xs rounded-full font-medium">
-                          Complete
-                        </span>
-                      )}
-                    </div>
 
-                    <div className="mb-4">
-                      <h4 className={`text-sm font-semibold mb-3 tracking-wide ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                        Topics Covered:
-                      </h4>
-                      <ul className="space-y-1.5">
-                        {module.topics.map((topic, topicIndex) => (
-                          <li
-                            key={topicIndex}
-                            className={`text-sm flex items-center gap-2 ${
-                              state.darkMode ? 'text-gray-400' : 'text-gray-600'
-                            }`}
-                          >
-                           <span
-                            className={`w-2 h-2 rounded-full ${
-                            state.darkMode ? 'bg-gray-500' : 'bg-gray-400'
-                            }`}
-                            ></span>
-                          <span className="leading-snug">{topic}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                      <div className="mb-4">
+                        <h4 className={`text-sm font-semibold mb-3 tracking-wide ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                          Topics Covered:
+                        </h4>
+                        <ul className="space-y-1.5">
+                          {module.topics.map((topic, topicIndex) => (
+                            <li
+                              key={topicIndex}
+                              className={`text-sm flex items-center gap-2 ${
+                                state.darkMode ? 'text-gray-400' : 'text-gray-600'
+                              }`}
+                            >
+                             <span
+                              className={`w-2 h-2 rounded-full ${
+                              state.darkMode ? 'bg-gray-500' : 'bg-gray-400'
+                              }`}
+                              ></span>
+                            <span className="leading-snug">{topic}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-                    <div className="flex flex-wrap gap-3">
-                      <button
-                        onClick={() => startModule(module.id)}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors shadow-sm ${
-                          module.completed
-                            ? 'bg-green-500 hover:bg-green-600 text-white'
-                            : 'bg-blue-500 hover:bg-blue-600 text-white'
-                        }`}
-                      >
-                        <PlayCircle className="w-5 h-5" />
-                        <span onClick={() => alertHandler(module)}>{module.completed ? 'Review' : 'Start Learning'}</span>
-                      </button>
-                      <button className={`flex items-center gap-2 px-4 py-2 rounded-lg border font-medium transition-colors shadow-sm ${
-                        state.darkMode
-                          ? 'border-gray-600 text-gray-300 hover:bg-gray-700'
-                          : 'border-gray-300 text-gray-700 hover:bg-gray-100'
-                      }`}>
-                        <FileText className="w-5 h-5" />
-                        <span onClick={() => alertHandler(module, "Notes")}>Notes</span>
-                      </button>
+                      <div className="flex flex-wrap gap-3">
+                        <button
+                          onClick={() => startModule(module.id)}
+                          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors shadow-sm ${
+                            module.completed
+                              ? 'bg-green-500 hover:bg-green-600 text-white'
+                              : 'bg-blue-500 hover:bg-blue-600 text-white'
+                          }`}
+                        >
+                          <PlayCircle className="w-5 h-5" />
+                          <span onClick={() => alertHandler(module)}>{module.completed ? 'Review' : 'Start Learning'}</span>
+                        </button>
+                        <button className={`flex items-center gap-2 px-4 py-2 rounded-lg border font-medium transition-colors shadow-sm ${
+                          state.darkMode
+                            ? 'border-gray-600 text-gray-300 hover:bg-gray-700'
+                            : 'border-gray-300 text-gray-700 hover:bg-gray-100'
+                        }`}>
+                          <FileText className="w-5 h-5" />
+                          <span onClick={() => alertHandler(module, "Notes")}>Notes</span>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
