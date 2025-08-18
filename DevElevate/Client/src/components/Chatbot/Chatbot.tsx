@@ -94,7 +94,6 @@ const Chatbot: React.FC = () => {
           category: selectedCategory,
         });
         aiReply = (res.data as { reply?: string }).reply || "No response 🤖";
-        console.log(aiReply);
 
         success = true;
         break;
@@ -130,28 +129,24 @@ const Chatbot: React.FC = () => {
 
   return (
     <div
-      className={`w-full h-full flex flex-col ${
-        state.darkMode ? "bg-gray-900" : "bg-white"
-      } transition-colors duration-200`}
+      className={`w-full h-full flex flex-col ${state.darkMode ? "bg-gray-900" : "bg-white"
+        } transition-colors duration-200`}
     >
       {/* Header */}
       <header
-        className={`px-4 py-3 border-b ${
-          state.darkMode
+        className={`px-4 py-3 border-b ${state.darkMode
             ? "border-gray-700 bg-gray-900"
             : "border-gray-200 bg-white"
-        } flex items-center justify-center relative`}
+          } flex items-center justify-center relative`}
       >
         <div className="flex items-center space-x-2">
           <Bot
-            className={`w-6 h-6 ${
-              state.darkMode ? "text-green-400" : "text-green-600"
-            }`}
+            className={`w-6 h-6 ${state.darkMode ? "text-green-400" : "text-green-600"
+              }`}
           />
           <h1
-            className={`text-lg font-medium ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-lg font-medium ${state.darkMode ? "text-white" : "text-gray-900"
+              }`}
           >
             Study Buddy
           </h1>
@@ -165,20 +160,17 @@ const Chatbot: React.FC = () => {
           {state.chatHistory.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full px-4">
               <div
-                className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 ${
-                  state.darkMode ? "bg-gray-800" : "bg-gray-100"
-                }`}
+                className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 ${state.darkMode ? "bg-gray-800" : "bg-gray-100"
+                  }`}
               >
                 <Bot
-                  className={`w-8 h-8 ${
-                    state.darkMode ? "text-green-400" : "text-green-600"
-                  }`}
+                  className={`w-8 h-8 ${state.darkMode ? "text-green-400" : "text-green-600"
+                    }`}
                 />
               </div>
               <h2
-                className={`text-2xl font-semibold mb-4 ${
-                  state.darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-2xl font-semibold mb-4 ${state.darkMode ? "text-white" : "text-gray-900"
+                  }`}
               >
                 How can I help you today?
               </h2>
@@ -191,11 +183,10 @@ const Chatbot: React.FC = () => {
                     <button
                       key={index}
                       onClick={() => handleSuggestedQuestion(question)}
-                      className={`p-4 rounded-xl border text-left transition-all hover:bg-opacity-50 ${
-                        state.darkMode
+                      className={`p-4 rounded-xl border text-left transition-all hover:bg-opacity-50 ${state.darkMode
                           ? "border-gray-700 hover:border-gray-600 text-gray-300 hover:bg-gray-800"
                           : "border-gray-200 hover:border-gray-300 text-gray-700 hover:bg-gray-50"
-                      }`}
+                        }`}
                     >
                       <div className="text-sm font-medium">{question}</div>
                     </button>
@@ -210,13 +201,12 @@ const Chatbot: React.FC = () => {
                     <button
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id as any)}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-full border text-sm transition-all ${
-                        selectedCategory === category.id
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-full border text-sm transition-all ${selectedCategory === category.id
                           ? "bg-green-600 text-white border-green-600"
                           : state.darkMode
-                          ? "border-gray-700 hover:border-gray-600 text-gray-400 hover:text-gray-300"
-                          : "border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-900"
-                      }`}
+                            ? "border-gray-700 hover:border-gray-600 text-gray-400 hover:text-gray-300"
+                            : "border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-900"
+                        }`}
                     >
                       <Icon className="w-4 h-4" />
                       <span>{category.label}</span>
@@ -233,11 +223,10 @@ const Chatbot: React.FC = () => {
                     <div className="flex items-start space-x-4 ml-auto max-w-4xl">
                       <div className="flex-1 flex justify-end">
                         <div
-                          className={`max-w-3xl px-4 py-3 rounded-2xl ${
-                            state.darkMode
+                          className={`max-w-3xl px-4 py-3 rounded-2xl ${state.darkMode
                               ? "bg-gray-700 text-white"
                               : "bg-gray-100 text-gray-900"
-                          }`}
+                            }`}
                         >
                           <p className="whitespace-pre-wrap">{msg.content}</p>
                         </div>
@@ -249,18 +238,16 @@ const Chatbot: React.FC = () => {
                   ) : (
                     <div className="flex items-start space-x-4 max-w-4xl">
                       <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                          state.darkMode ? "bg-green-600" : "bg-green-600"
-                        }`}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${state.darkMode ? "bg-green-600" : "bg-green-600"
+                          }`}
                       >
                         <Bot className="w-4 h-4 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="relative group">
                           <div
-                            className={`prose max-w-none ${
-                              state.darkMode ? "prose-invert" : ""
-                            }`}
+                            className={`prose max-w-none ${state.darkMode ? "prose-invert" : ""
+                              }`}
                           >
                             <ReactMarkdown remarkPlugins={[remarkGfm]}>
                               {msg.content}
@@ -269,11 +256,10 @@ const Chatbot: React.FC = () => {
                           {/* Copy Button */}
                           <button
                             onClick={() => handleCopy(msg.content, index)}
-                            className={`absolute -bottom-8 left-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1 px-2 py-1 rounded text-xs ${
-                              state.darkMode
+                            className={`absolute -bottom-8 left-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1 px-2 py-1 rounded text-xs ${state.darkMode
                                 ? "text-gray-400 hover:text-gray-300"
                                 : "text-gray-600 hover:text-gray-900"
-                            }`}
+                              }`}
                           >
                             {copiedIndex === index ? (
                               <>
@@ -303,20 +289,17 @@ const Chatbot: React.FC = () => {
                   <div className="flex-1">
                     <div className="flex space-x-1">
                       <div
-                        className={`w-2 h-2 rounded-full animate-bounce ${
-                          state.darkMode ? "bg-gray-500" : "bg-gray-400"
-                        }`}
+                        className={`w-2 h-2 rounded-full animate-bounce ${state.darkMode ? "bg-gray-500" : "bg-gray-400"
+                          }`}
                       />
                       <div
-                        className={`w-2 h-2 rounded-full animate-bounce ${
-                          state.darkMode ? "bg-gray-500" : "bg-gray-400"
-                        }`}
+                        className={`w-2 h-2 rounded-full animate-bounce ${state.darkMode ? "bg-gray-500" : "bg-gray-400"
+                          }`}
                         style={{ animationDelay: "0.1s" }}
                       />
                       <div
-                        className={`w-2 h-2 rounded-full animate-bounce ${
-                          state.darkMode ? "bg-gray-500" : "bg-gray-400"
-                        }`}
+                        className={`w-2 h-2 rounded-full animate-bounce ${state.darkMode ? "bg-gray-500" : "bg-gray-400"
+                          }`}
                         style={{ animationDelay: "0.2s" }}
                       />
                     </div>
@@ -330,9 +313,8 @@ const Chatbot: React.FC = () => {
 
         {/* Input Bar */}
         <div
-          className={`px-4 py-4 border-t ${
-            state.darkMode ? "border-gray-700" : "border-gray-200"
-          }`}
+          className={`px-4 py-4 border-t ${state.darkMode ? "border-gray-700" : "border-gray-200"
+            }`}
         >
           <div className="max-w-4xl mx-auto">
             <div className="relative">
@@ -348,30 +330,27 @@ const Chatbot: React.FC = () => {
                   }
                 }}
                 placeholder="Message Study Buddy..."
-                className={`w-full px-4 py-3 pr-12 rounded-2xl border ${
-                  state.darkMode
+                className={`w-full px-4 py-3 pr-12 rounded-2xl border ${state.darkMode
                     ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-gray-600"
                     : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-gray-400"
-                } focus:outline-none transition-colors resize-none`}
+                  } focus:outline-none transition-colors resize-none`}
               />
               <button
                 onClick={sendMessage}
                 disabled={!message.trim() || isTyping}
-                className={`absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
-                  !message.trim() || isTyping
+                className={`absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${!message.trim() || isTyping
                     ? state.darkMode
                       ? "text-gray-600"
                       : "text-gray-400"
                     : "bg-green-600 hover:bg-green-700 text-white"
-                }`}
+                  }`}
               >
                 <Send className="w-4 h-4" />
               </button>
             </div>
             <p
-              className={`text-xs text-center mt-2 ${
-                state.darkMode ? "text-gray-500" : "text-gray-500"
-              }`}
+              className={`text-xs text-center mt-2 ${state.darkMode ? "text-gray-500" : "text-gray-500"
+                }`}
             >
               Study Buddy can make mistakes. Consider checking important
               information.

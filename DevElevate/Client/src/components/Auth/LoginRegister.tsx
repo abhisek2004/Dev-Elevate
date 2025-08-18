@@ -31,7 +31,6 @@ const LoginRegister: React.FC = () => {
   });
 
   useEffect(() => {
-    console.log("LoginRegister useEffect - state.user:", state.user);
     if (state.isAuthenticated && state.user) {
       if (state.user.role === "admin") {
         navigate("/admin");
@@ -53,7 +52,6 @@ const LoginRegister: React.FC = () => {
         password: "",
         role: role,
       };
-      console.log("user payload", userPayload);
       // Send to backend and get the response
       const response = await fetch(`${baseUrl}/api/v1/auth/google`, {
         method: "POST",
@@ -190,11 +188,10 @@ const LoginRegister: React.FC = () => {
             <button
               type="button"
               onClick={() => setRole("user")}
-              className={`flex flex-col items-center justify-center gap-1  px-3 py-2  rounded-xl border-2 transition-all duration-200 ${
-                role === "user"
+              className={`flex flex-col items-center justify-center gap-1  px-3 py-2  rounded-xl border-2 transition-all duration-200 ${role === "user"
                   ? "border-blue-500 bg-blue-100 dark:bg-blue-900/20"
                   : "border-gray-300 dark:border-gray-700 hover:border-blue-400"
-              }`}
+                }`}
             >
               <div className="flex items-center justify-center gap-3 ">
                 <UserIcon size={25} className="w-6 h-6 text-blue-500" />
@@ -208,11 +205,10 @@ const LoginRegister: React.FC = () => {
             <button
               type="button"
               onClick={() => setRole("admin")}
-              className={`flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl border-2 transition-all duration-200 ${
-                role === "admin"
+              className={`flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl border-2 transition-all duration-200 ${role === "admin"
                   ? "border-purple-500 bg-purple-100 dark:bg-purple-900/20"
                   : "border-gray-300 dark:border-gray-700 hover:border-purple-400"
-              }`}
+                }`}
             >
               <div className="flex items-center justify-center gap-3">
                 <Shield size={25} className="text-purple-600 " />
@@ -241,11 +237,10 @@ const LoginRegister: React.FC = () => {
               type="button"
               onClick={() => setAuthMethod("email")}
               className={`px-4 py-2 flex items-center font-semibold rounded-tl-lg rounded-bl-lg transition-all duration-200
-              ${
-                authMethod === "email"
+              ${authMethod === "email"
                   ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
                   : "bg-purple-100 text-blue-500 border border-blue-500 hover:bg-blue-50"
-              }`}
+                }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -262,11 +257,10 @@ const LoginRegister: React.FC = () => {
               type="button"
               onClick={() => setAuthMethod("google")}
               className={`px-4 py-2 flex items-center font-semibold rounded-tr-lg rounded-br-lg transition-all duration-200
-              ${
-                authMethod === "google"
+              ${authMethod === "google"
                   ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
                   : "bg-purple-100 text-blue-500 border border-blue-500 hover:bg-blue-50"
-              }`}
+                }`}
             >
               <svg className="w-5 h-5 mr-1" viewBox="0 0 24 24">
                 <path
