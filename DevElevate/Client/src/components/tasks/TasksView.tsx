@@ -15,6 +15,12 @@ const TasksView: React.FC = () => {
   const [viewMode, setViewMode] = useState<'list' | 'kanban'>('list');
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState({
+    status: 'all' as 'all' | Task['status'],
+    priority: 'all' as 'all' | Task['priority'],
+    assignedTo: 'all' as string,
+  });
   const [newTask, setNewTask] = useState({
     title: '',
     description: '',
@@ -36,11 +42,19 @@ const TasksView: React.FC = () => {
     );
   }
 
-  const filteredTasks = tasks.filter(task =>
-    task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    task.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    task.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredTasks = tasks.filter(task => {
+    const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      task.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    const matchesStatus = filters.status === 'all' || task.status === filters.status;
+    const matchesPriority = filters.priority === 'all' || task.priority === filters.priority;
+    const matchesAssignee = filters.assignedTo === 'all' || 
+      (filters.assignedTo === 'unassigned' && !task.assignedTo) ||
+      (task.assignedTo && task.assignedTo.toLowerCase().includes(filters.assignedTo.toLowerCase()));
+    
+    return matchesSearch && matchesStatus && matchesPriority && matchesAssignee;
+  });
 
   const tasksByStatus = {
     todo: filteredTasks.filter(task => task.status === 'todo'),
@@ -250,19 +264,90 @@ const TasksView: React.FC = () => {
       </div>
 
       {/* Search and Filters */}
-      <div className="flex items-center space-x-4">
-        <div className="flex-1">
-          <Input
-            placeholder="Search tasks..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            icon={<Search size={16} />}
-          />
+      <div className="space-y-4">
+        <div className="flex items-center space-x-4">
+          <div className="flex-1">
+            <Input
+              placeholder="Search tasks..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              icon={<Search size={16} />}
+            />
+          </div>
+          <Button 
+            variant="outline"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            <Filter size={16} className="mr-2" />
+            Filter
+          </Button>
         </div>
-        <Button variant="outline">
-          <Filter size={16} className="mr-2" />
-          Filter
-        </Button>
+        
+        {showFilters && (
+          <div className={`p-4 rounded-lg border ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Status
+                </label>
+                <select
+                  value={filters.status}
+                  onChange={(e) => setFilters({...filters, status: e.target.value as any})}
+                  className={`w-full p-2 rounded-md border ${state.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                >
+                  <option value="all">All Status</option>
+                  <option value="todo">To Do</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="done">Done</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Priority
+                </label>
+                <select
+                  value={filters.priority}
+                  onChange={(e) => setFilters({...filters, priority: e.target.value as any})}
+                  className={`w-full p-2 rounded-md border ${state.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                >
+                  <option value="all">All Priority</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Assignee
+                </label>
+                <select
+                  value={filters.assignedTo}
+                  onChange={(e) => setFilters({...filters, assignedTo: e.target.value})}
+                  className={`w-full p-2 rounded-md border ${state.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                >
+                  <option value="all">All Assignees</option>
+                  <option value="unassigned">Unassigned</option>
+                  {Array.from(new Set(tasks.filter(t => t.assignedTo).map(t => t.assignedTo))).map(assignee => (
+                    <option key={assignee} value={assignee}>{assignee}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            
+            <div className="flex justify-end mt-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setFilters({ status: 'all', priority: 'all', assignedTo: 'all' })}
+              >
+                Clear Filters
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Tasks Display */}

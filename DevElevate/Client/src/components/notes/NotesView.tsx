@@ -28,6 +28,12 @@ import { formatDate, generateId } from '../../utils/helperAI';
   const [isEditing, setIsEditing] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState({
+    tag: 'all' as string,
+    dateRange: 'all' as 'all' | 'today' | 'week' | 'month',
+    hasAISummary: 'all' as 'all' | 'yes' | 'no',
+  });
   const [newNote, setNewNote] = useState({
     title: '',
     content: '',
@@ -46,11 +52,38 @@ import { formatDate, generateId } from '../../utils/helperAI';
     );
   }
 
-  const filteredNotes = notes.filter(note =>
-    note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    note.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredNotes = notes.filter(note => {
+    const matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      note.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    const matchesTag = filters.tag === 'all' || note.tags.includes(filters.tag);
+    
+    const matchesDate = (() => {
+      if (filters.dateRange === 'all') return true;
+      const now = new Date();
+      const noteDate = new Date(note.createdAt);
+      
+      switch (filters.dateRange) {
+        case 'today':
+          return noteDate.toDateString() === now.toDateString();
+        case 'week':
+          const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+          return noteDate >= weekAgo;
+        case 'month':
+          const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+          return noteDate >= monthAgo;
+        default:
+          return true;
+      }
+    })();
+    
+    const matchesAISummary = filters.hasAISummary === 'all' ||
+      (filters.hasAISummary === 'yes' && note.aiSummary) ||
+      (filters.hasAISummary === 'no' && !note.aiSummary);
+    
+    return matchesSearch && matchesTag && matchesDate && matchesAISummary;
+  });
 
   const handleCreateNote = async () => {
     if (!newNote.title.trim()) return;
@@ -266,19 +299,87 @@ import { formatDate, generateId } from '../../utils/helperAI';
       </div>
 
       {/* Search and Filters */}
-      <div className="flex items-center space-x-4">
-        <div className="flex-1">
-          <Input
-            placeholder="Search notes..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            icon={<Search size={16} />}
-          />
+      <div className="space-y-4">
+        <div className="flex items-center space-x-4">
+          <div className="flex-1">
+            <Input
+              placeholder="Search notes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              icon={<Search size={16} />}
+            />
+          </div>
+          <Button 
+            variant="outline"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            <Filter size={16} className="mr-2" />
+            Filter
+          </Button>
         </div>
-        <Button variant="outline">
-          <Filter size={16} className="mr-2" />
-          Filter
-        </Button>
+        
+        {showFilters && (
+          <div className={`p-4 rounded-lg border ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Tag
+                </label>
+                <select
+                  value={filters.tag}
+                  onChange={(e) => setFilters({...filters, tag: e.target.value})}
+                  className={`w-full p-2 rounded-md border ${state.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                >
+                  <option value="all">All Tags</option>
+                  {Array.from(new Set(notes.flatMap(note => note.tags))).map(tag => (
+                    <option key={tag} value={tag}>{tag}</option>
+                  ))}
+                </select>
+              </div>
+              
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Date Range
+                </label>
+                <select
+                  value={filters.dateRange}
+                  onChange={(e) => setFilters({...filters, dateRange: e.target.value as any})}
+                  className={`w-full p-2 rounded-md border ${state.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                >
+                  <option value="all">All Time</option>
+                  <option value="today">Today</option>
+                  <option value="week">Last Week</option>
+                  <option value="month">Last Month</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  AI Summary
+                </label>
+                <select
+                  value={filters.hasAISummary}
+                  onChange={(e) => setFilters({...filters, hasAISummary: e.target.value as any})}
+                  className={`w-full p-2 rounded-md border ${state.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                >
+                  <option value="all">All Notes</option>
+                  <option value="yes">With AI Summary</option>
+                  <option value="no">Without AI Summary</option>
+                </select>
+              </div>
+            </div>
+            
+            <div className="flex justify-end mt-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setFilters({ tag: 'all', dateRange: 'all', hasAISummary: 'all' })}
+              >
+                Clear Filters
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Notes Grid */}
