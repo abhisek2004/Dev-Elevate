@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { useAuth } from '../../contexts/AuthContext';
-import { 
-  Mic, 
-  MicOff, 
-  Video, 
-  VideoOff, 
+import {
+  Mic,
+  MicOff,
+  Video,
+  VideoOff,
   Settings,
   Play,
   Square,
@@ -19,10 +19,9 @@ const InterviewPage: React.FC = () => {
   const { state: authState } = useAuth();
   const isDarkMode = globalState.darkMode;
   const currentUser = authState.user;
-  
+
   // Mock function for adding interview results
   const addInterview = (interview: any) => {
-    console.log('Interview completed:', interview);
     // In a real app, this would save to a database
   };
   const [isRecording, setIsRecording] = useState(false);
@@ -36,7 +35,7 @@ const InterviewPage: React.FC = () => {
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [transcript, setTranscript] = useState('');
   const [aiResponse, setAiResponse] = useState('');
-  
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const timerRef = useRef<NodeJS.Timeout>();
 
@@ -126,7 +125,9 @@ const InterviewPage: React.FC = () => {
             videoRef.current.srcObject = stream;
           }
         })
-        .catch(err => console.log('Error accessing camera:', err));
+        .catch(err => {
+          // Silent error handling for camera access
+        });
     }
   }, [isVideoOn]);
 
@@ -135,7 +136,7 @@ const InterviewPage: React.FC = () => {
     setCurrentQuestion(0);
     setTimeElapsed(0);
     setTranscript('');
-    
+
     // Simulate AI welcome message
     setAiResponse("Hello! I'm your AI interviewer today. Let's begin with our first question. Take your time to think and answer clearly.");
   };
@@ -160,7 +161,7 @@ const InterviewPage: React.FC = () => {
 
     // Calculate mock score and create interview record
     const mockScore = Math.floor(Math.random() * 30) + 70; // 70-100 range
-    
+
     const newInterview = {
       id: `int_${Date.now()}`,
       candidateId: currentUser!.id,
@@ -201,11 +202,10 @@ const InterviewPage: React.FC = () => {
 
   return (
     <div className="mx-auto space-y-6 max-w-6xl">
-      <div className={`rounded-xl p-6 ${
-        isDarkMode 
-          ? 'bg-gradient-to-r from-purple-900 to-blue-900' 
+      <div className={`rounded-xl p-6 ${isDarkMode
+          ? 'bg-gradient-to-r from-purple-900 to-blue-900'
           : 'bg-gradient-to-r from-purple-600 to-blue-600'
-      } text-white`}>
+        } text-white`}>
         <h1 className="mb-2 text-3xl font-bold">DevElevate AI Interview Simulator</h1>
         <p className="text-purple-100">
           Practice real interviews with our advanced AI interviewer and get instant feedback
@@ -216,23 +216,20 @@ const InterviewPage: React.FC = () => {
         // Interview Setup
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Configuration Panel */}
-          <div className={`p-6 rounded-xl border ${
-            isDarkMode 
-              ? 'bg-gray-800 border-gray-700' 
+          <div className={`p-6 rounded-xl border ${isDarkMode
+              ? 'bg-gray-800 border-gray-700'
               : 'bg-white border-gray-200'
-          }`}>
-            <h2 className={`text-xl font-semibold mb-6 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
             }`}>
+            <h2 className={`text-xl font-semibold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
               Interview Configuration
             </h2>
 
             <div className="space-y-6">
               {/* Interview Type */}
               <div>
-                <label className={`block text-sm font-medium mb-3 ${
-                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <label className={`block text-sm font-medium mb-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                   Interview Type
                 </label>
                 <div className="grid grid-cols-3 gap-3">
@@ -240,13 +237,12 @@ const InterviewPage: React.FC = () => {
                     <button
                       key={type}
                       onClick={() => setInterviewType(type)}
-                      className={`p-3 rounded-lg border text-sm font-medium transition-all ${
-                        interviewType === type
+                      className={`p-3 rounded-lg border text-sm font-medium transition-all ${interviewType === type
                           ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
                           : isDarkMode
                             ? 'border-gray-600 bg-gray-700 text-gray-300 hover:bg-gray-600'
                             : 'border-gray-300 bg-gray-50 text-gray-700 hover:bg-gray-100'
-                      }`}
+                        }`}
                     >
                       {type.toUpperCase()}
                     </button>
@@ -256,9 +252,8 @@ const InterviewPage: React.FC = () => {
 
               {/* Difficulty */}
               <div>
-                <label className={`block text-sm font-medium mb-3 ${
-                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <label className={`block text-sm font-medium mb-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                   Difficulty Level
                 </label>
                 <div className="grid grid-cols-3 gap-3">
@@ -266,13 +261,12 @@ const InterviewPage: React.FC = () => {
                     <button
                       key={level}
                       onClick={() => setDifficulty(level)}
-                      className={`p-3 rounded-lg border text-sm font-medium transition-all ${
-                        difficulty === level
+                      className={`p-3 rounded-lg border text-sm font-medium transition-all ${difficulty === level
                           ? 'border-green-500 bg-green-50 text-green-700 dark:bg-green-900 dark:text-green-300'
                           : isDarkMode
                             ? 'border-gray-600 bg-gray-700 text-gray-300 hover:bg-gray-600'
                             : 'border-gray-300 bg-gray-50 text-gray-700 hover:bg-gray-100'
-                      }`}
+                        }`}
                     >
                       {level.charAt(0).toUpperCase() + level.slice(1)}
                     </button>
@@ -282,19 +276,17 @@ const InterviewPage: React.FC = () => {
 
               {/* Topic */}
               <div>
-                <label className={`block text-sm font-medium mb-3 ${
-                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <label className={`block text-sm font-medium mb-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                   Focus Topic
                 </label>
                 <select
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
-                  className={`w-full p-3 rounded-lg border ${
-                    isDarkMode 
-                      ? 'text-white bg-gray-700 border-gray-600' 
+                  className={`w-full p-3 rounded-lg border ${isDarkMode
+                      ? 'text-white bg-gray-700 border-gray-600'
                       : 'text-gray-900 bg-white border-gray-300'
-                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                    } focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
                 >
                   <option value="General HR Questions">General HR Questions</option>
                   <option value="JavaScript Development">JavaScript Development</option>
@@ -318,14 +310,12 @@ const InterviewPage: React.FC = () => {
           </div>
 
           {/* Camera Preview */}
-          <div className={`p-6 rounded-xl border ${
-            isDarkMode 
-              ? 'bg-gray-800 border-gray-700' 
+          <div className={`p-6 rounded-xl border ${isDarkMode
+              ? 'bg-gray-800 border-gray-700'
               : 'bg-white border-gray-200'
-          }`}>
-            <h2 className={`text-xl font-semibold mb-6 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
             }`}>
+            <h2 className={`text-xl font-semibold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
               Camera & Audio Setup
             </h2>
 
@@ -350,21 +340,19 @@ const InterviewPage: React.FC = () => {
               <div className="flex justify-center items-center space-x-4">
                 <button
                   onClick={() => setIsMuted(!isMuted)}
-                  className={`p-3 rounded-full ${
-                    isMuted 
-                      ? 'text-white bg-red-500' 
+                  className={`p-3 rounded-full ${isMuted
+                      ? 'text-white bg-red-500'
                       : 'text-gray-700 bg-gray-200 dark:bg-gray-700 dark:text-gray-300'
-                  } hover:scale-105 transition-all`}
+                    } hover:scale-105 transition-all`}
                 >
                   {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
                 </button>
                 <button
                   onClick={() => setIsVideoOn(!isVideoOn)}
-                  className={`p-3 rounded-full ${
-                    !isVideoOn 
-                      ? 'text-white bg-red-500' 
+                  className={`p-3 rounded-full ${!isVideoOn
+                      ? 'text-white bg-red-500'
                       : 'text-gray-700 bg-gray-200 dark:bg-gray-700 dark:text-gray-300'
-                  } hover:scale-105 transition-all`}
+                    } hover:scale-105 transition-all`}
                 >
                   {isVideoOn ? <Video className="w-5 h-5" /> : <VideoOff className="w-5 h-5" />}
                 </button>
@@ -379,11 +367,10 @@ const InterviewPage: React.FC = () => {
         // Interview Session
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* AI Interviewer */}
-          <div className={`lg:col-span-2 p-6 rounded-xl border ${
-            isDarkMode 
-              ? 'bg-gray-800 border-gray-700' 
+          <div className={`lg:col-span-2 p-6 rounded-xl border ${isDarkMode
+              ? 'bg-gray-800 border-gray-700'
               : 'bg-white border-gray-200'
-          }`}>
+            }`}>
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
               <div className="flex items-center space-x-4">
@@ -391,9 +378,8 @@ const InterviewPage: React.FC = () => {
                   <span className="font-bold text-white">AI</span>
                 </div>
                 <div>
-                  <h3 className={`font-semibold ${
-                    isDarkMode ? 'text-white' : 'text-gray-900'
-                  }`}>
+                  <h3 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'
+                    }`}>
                     AI Interviewer
                   </h3>
                   <p className="text-sm text-gray-500">
@@ -401,23 +387,20 @@ const InterviewPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div className={`px-3 py-1 rounded-lg ${
-                isDarkMode ? 'bg-gray-700' : 'bg-gray-100'
-              }`}>
+              <div className={`px-3 py-1 rounded-lg ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'
+                }`}>
                 <span className="font-mono text-sm">{formatTime(timeElapsed)}</span>
               </div>
             </div>
 
             {/* Current Question */}
-            <div className={`p-6 rounded-lg mb-6 ${
-              isDarkMode ? 'bg-gray-700' : 'bg-blue-50'
-            }`}>
+            <div className={`p-6 rounded-lg mb-6 ${isDarkMode ? 'bg-gray-700' : 'bg-blue-50'
+              }`}>
               <div className="flex items-start space-x-3">
                 <Volume2 className="mt-1 w-5 h-5 text-blue-600" />
                 <div>
-                  <p className={`text-lg font-medium mb-2 ${
-                    isDarkMode ? 'text-white' : 'text-gray-900'
-                  }`}>
+                  <p className={`text-lg font-medium mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'
+                    }`}>
                     {currentQ}
                   </p>
                   {aiResponse && (
@@ -430,18 +413,15 @@ const InterviewPage: React.FC = () => {
             </div>
 
             {/* Response Area */}
-            <div className={`p-4 rounded-lg border-2 border-dashed ${
-              isRecording 
-                ? 'bg-red-50 border-red-500 dark:bg-red-900/20' 
+            <div className={`p-4 rounded-lg border-2 border-dashed ${isRecording
+                ? 'bg-red-50 border-red-500 dark:bg-red-900/20'
                 : 'border-gray-300 dark:border-gray-600'
-            }`}>
+              }`}>
               <div className="text-center">
-                <Mic className={`h-12 w-12 mx-auto mb-3 ${
-                  isRecording ? 'text-red-500' : 'text-gray-400'
-                }`} />
-                <p className={`text-sm ${
-                  isRecording ? 'text-red-600 dark:text-red-400' : 'text-gray-500'
-                }`}>
+                <Mic className={`h-12 w-12 mx-auto mb-3 ${isRecording ? 'text-red-500' : 'text-gray-400'
+                  }`} />
+                <p className={`text-sm ${isRecording ? 'text-red-600 dark:text-red-400' : 'text-gray-500'
+                  }`}>
                   {isRecording ? 'Recording your response...' : 'Click to start recording your answer'}
                 </p>
               </div>
@@ -451,16 +431,15 @@ const InterviewPage: React.FC = () => {
             <div className="flex justify-center items-center mt-6 space-x-4">
               <button
                 onClick={() => setIsRecording(!isRecording)}
-                className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                  isRecording
+                className={`px-6 py-3 rounded-lg font-medium transition-all ${isRecording
                     ? 'text-white bg-red-500 hover:bg-red-600'
                     : 'text-white bg-blue-600 hover:bg-blue-700'
-                } flex items-center space-x-2`}
+                  } flex items-center space-x-2`}
               >
                 {isRecording ? <Square className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
                 <span>{isRecording ? 'Stop Recording' : 'Start Recording'}</span>
               </button>
-              
+
               <button
                 onClick={nextQuestion}
                 disabled={currentQuestion >= currentQuestions.length - 1}
@@ -481,14 +460,12 @@ const InterviewPage: React.FC = () => {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Progress */}
-            <div className={`p-4 rounded-xl border ${
-              isDarkMode 
-                ? 'bg-gray-800 border-gray-700' 
+            <div className={`p-4 rounded-xl border ${isDarkMode
+                ? 'bg-gray-800 border-gray-700'
                 : 'bg-white border-gray-200'
-            }`}>
-              <h4 className={`font-semibold mb-3 ${
-                isDarkMode ? 'text-white' : 'text-gray-900'
               }`}>
+              <h4 className={`font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'
+                }`}>
                 Progress
               </h4>
               <div className="space-y-3">
@@ -497,7 +474,7 @@ const InterviewPage: React.FC = () => {
                   <span>{currentQuestion + 1} / {currentQuestions.length}</span>
                 </div>
                 <div className="w-full h-2 bg-gray-200 rounded-full dark:bg-gray-700">
-                  <div 
+                  <div
                     className="h-2 bg-blue-600 rounded-full transition-all"
                     style={{ width: `${((currentQuestion + 1) / currentQuestions.length) * 100}%` }}
                   ></div>
@@ -506,14 +483,12 @@ const InterviewPage: React.FC = () => {
             </div>
 
             {/* Tips */}
-            <div className={`p-4 rounded-xl border ${
-              isDarkMode 
-                ? 'bg-gray-800 border-gray-700' 
+            <div className={`p-4 rounded-xl border ${isDarkMode
+                ? 'bg-gray-800 border-gray-700'
                 : 'bg-white border-gray-200'
-            }`}>
-              <h4 className={`font-semibold mb-3 ${
-                isDarkMode ? 'text-white' : 'text-gray-900'
               }`}>
+              <h4 className={`font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'
+                }`}>
                 Interview Tips
               </h4>
               <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
@@ -526,14 +501,12 @@ const InterviewPage: React.FC = () => {
             </div>
 
             {/* Your Video */}
-            <div className={`p-4 rounded-xl border ${
-              isDarkMode 
-                ? 'bg-gray-800 border-gray-700' 
+            <div className={`p-4 rounded-xl border ${isDarkMode
+                ? 'bg-gray-800 border-gray-700'
                 : 'bg-white border-gray-200'
-            }`}>
-              <h4 className={`font-semibold mb-3 ${
-                isDarkMode ? 'text-white' : 'text-gray-900'
               }`}>
+              <h4 className={`font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'
+                }`}>
                 Your Video
               </h4>
               <div className="overflow-hidden relative bg-gray-900 rounded-lg aspect-video">

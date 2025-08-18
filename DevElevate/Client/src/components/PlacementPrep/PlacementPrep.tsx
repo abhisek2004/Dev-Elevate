@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalState } from '../../contexts/GlobalContext';
-import { FileText, Download, Users, Calendar, Target, BookOpen, ExternalLink} from 'lucide-react';
+import { FileText, Download, Users, Calendar, Target, BookOpen, ExternalLink } from 'lucide-react';
 import { Code } from 'lucide-react';
 const PlacementPrep: React.FC = () => {
   const { state } = useGlobalState();
@@ -274,89 +274,88 @@ const PlacementPrep: React.FC = () => {
     }
   ];
   const dsaTopics = [
-  {
-    name: 'Arrays',
-    url: 'https://leetcode.com/tag/array/',
-    description: 'Array problems for all levels.',
-  },
-  {
-    name: 'Strings',
-    url: 'https://leetcode.com/tag/string/',
-    description: 'String manipulation and logic.',
-  },
-  {
-    name: 'Dynamic Programming',
-    url: 'https://leetcode.com/tag/dynamic-programming/',
-    description: 'Master optimal substructure patterns.',
-  },
-  {
-    name: 'Trees',
-    url: 'https://leetcode.com/tag/tree/',
-    description: 'Binary trees, traversals, and more.',
-  },
-  {
-    name: 'Graphs',
-    url: 'https://leetcode.com/tag/graph/',
-    description: 'DFS, BFS, shortest paths, etc.',
-  },
-  {
-    name: 'Heaps',
-    url: 'https://leetcode.com/tag/heap/',
-    description: 'Minimum and Maximum Heaps.',
-  },
-  {
-    name: 'Linked Lists',
-    url: 'https://leetcode.com/tag/linked-list/',
-    description: 'Singly and doubly linked list problems.',
-  },
-  {
-    name: 'Stacks',
-    url: 'https://leetcode.com/tag/stack/',
-    description: 'Stack-based logic and applications.',
-  },
-  {
-    name: 'Queues',
-    url: 'https://leetcode.com/tag/queue/',
-    description: 'Queue problems including circular and priority queues.',
-  },
-  {
-    name: 'Bit Manipulation',
-    url: 'https://leetcode.com/tag/bit-manipulation/',
-    description: 'Problems involving bits and bitmasks.',
-  },
-  {
-  name: 'Greedy',
-  url: 'https://leetcode.com/tag/greedy/',
-  description: 'Optimize step-by-step with local choices.',
-},
-{
-  name: 'Backtracking',
-  url: 'https://leetcode.com/tag/backtracking/',
-  description: 'Explore all possibilities using recursion.',
-}
-];
+    {
+      name: 'Arrays',
+      url: 'https://leetcode.com/tag/array/',
+      description: 'Array problems for all levels.',
+    },
+    {
+      name: 'Strings',
+      url: 'https://leetcode.com/tag/string/',
+      description: 'String manipulation and logic.',
+    },
+    {
+      name: 'Dynamic Programming',
+      url: 'https://leetcode.com/tag/dynamic-programming/',
+      description: 'Master optimal substructure patterns.',
+    },
+    {
+      name: 'Trees',
+      url: 'https://leetcode.com/tag/tree/',
+      description: 'Binary trees, traversals, and more.',
+    },
+    {
+      name: 'Graphs',
+      url: 'https://leetcode.com/tag/graph/',
+      description: 'DFS, BFS, shortest paths, etc.',
+    },
+    {
+      name: 'Heaps',
+      url: 'https://leetcode.com/tag/heap/',
+      description: 'Minimum and Maximum Heaps.',
+    },
+    {
+      name: 'Linked Lists',
+      url: 'https://leetcode.com/tag/linked-list/',
+      description: 'Singly and doubly linked list problems.',
+    },
+    {
+      name: 'Stacks',
+      url: 'https://leetcode.com/tag/stack/',
+      description: 'Stack-based logic and applications.',
+    },
+    {
+      name: 'Queues',
+      url: 'https://leetcode.com/tag/queue/',
+      description: 'Queue problems including circular and priority queues.',
+    },
+    {
+      name: 'Bit Manipulation',
+      url: 'https://leetcode.com/tag/bit-manipulation/',
+      description: 'Problems involving bits and bitmasks.',
+    },
+    {
+      name: 'Greedy',
+      url: 'https://leetcode.com/tag/greedy/',
+      description: 'Optimize step-by-step with local choices.',
+    },
+    {
+      name: 'Backtracking',
+      url: 'https://leetcode.com/tag/backtracking/',
+      description: 'Explore all possibilities using recursion.',
+    }
+  ];
 
 
 
   // --- Tab Renderers ---
   const renderPractice = () => (
-  <div className="grid md:grid-cols-3 gap-6">
-    {dsaTopics.map((topic, index) => (
-      <a
-        key={index}
-        href={topic.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`p-6 rounded-2xl shadow-sm border hover:shadow-lg transition-all duration-200 ${
-          state.darkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-900'
-        }`}
-      >
-        <h4 className="text-lg font-semibold mb-2">{topic.name}</h4>
-        <p className="text-sm !text-black dark:text-gray-300">{topic.description}</p>
-      </a>
-    ))}
-  </div>
-);
+    <div className="grid md:grid-cols-3 gap-6">
+      {dsaTopics.map((topic, index) => (
+        <a
+          key={index}
+          href={topic.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`p-6 rounded-2xl shadow-sm border hover:shadow-lg transition-all duration-200 ${state.darkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-900'
+            }`}
+        >
+          <h4 className="text-lg font-semibold mb-2">{topic.name}</h4>
+          <p className="text-sm !text-black dark:text-gray-300">{topic.description}</p>
+        </a>
+      ))}
+    </div>
+  );
 
   const renderOpportunities = () => {
     const filteredJobs = jobOpportunities.filter((job: any) => {
@@ -385,11 +384,10 @@ const PlacementPrep: React.FC = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className={`px-4 py-2 rounded-lg border ${
-                state.darkMode
+              className={`px-4 py-2 rounded-lg border ${state.darkMode
                   ? 'bg-gray-800 border-gray-700 text-white'
                   : 'bg-white border-gray-300 text-gray-900'
-              }`}
+                }`}
             >
               <option>All Categories</option>
               <option>Product Based</option>
@@ -403,16 +401,14 @@ const PlacementPrep: React.FC = () => {
                 placeholder="Search by role or tech stack..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full pr-10 px-4 py-2 rounded-lg border ${
-                  state.darkMode
+                className={`w-full pr-10 px-4 py-2 rounded-lg border ${state.darkMode
                     ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400'
                     : 'bg-white border-gray-300 text-gray-900'
-                }`}
+                  }`}
               />
               <span
-                className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-xl ${
-                  state.darkMode ? 'text-gray-400' : 'text-gray-500'
-                }`}
+                className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-xl ${state.darkMode ? 'text-gray-400' : 'text-gray-500'
+                  }`}
               >
                 🔍
               </span>
@@ -434,11 +430,10 @@ const PlacementPrep: React.FC = () => {
                     {job.company} • {job.location}
                   </p>
                 </div>
-                <span className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
-                  job.type === 'Internship'
+                <span className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap ${job.type === 'Internship'
                     ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
                     : 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300'
-                }`}>
+                  }`}>
                   {job.type}
                 </span>
               </div>
@@ -467,9 +462,8 @@ const PlacementPrep: React.FC = () => {
                     Deadline: {job.deadline}
                   </p>
                 </div>
-                <button 
+                <button
                   onClick={() => {
-                    console.log(`Applying to ${job.position} at ${job.company}`);
                     if (job.applyUrl && job.applyUrl !== '#') {
                       // Open real job application URL in new tab
                       window.open(job.applyUrl, '_blank', 'noopener,noreferrer');
@@ -484,8 +478,8 @@ const PlacementPrep: React.FC = () => {
                   <span>Apply</span>
                 </button>
               </div>
-                          </div>
-            ))}
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -514,16 +508,15 @@ const PlacementPrep: React.FC = () => {
                 </div>
               ))}
             </div>
-            <button 
+            <button
               onClick={() => {
-                console.log(`Viewing all ${category.category} questions`);
                 // Open external resources with curated questions based on category
                 const questionUrls = {
                   'Technical': 'https://github.com/DopplerHQ/awesome-interview-questions#technical-questions',
                   'HR': 'https://www.indeed.com/career-advice/interviewing/hr-interview-questions',
                   'Behavioral': 'https://www.indeed.com/career-advice/interviewing/behavioral-interview-questions'
                 };
-                
+
                 const url = questionUrls[category.category as keyof typeof questionUrls];
                 if (url) {
                   window.open(url, '_blank', 'noopener,noreferrer');
@@ -568,15 +561,14 @@ const PlacementPrep: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex flex-wrap items-center  gap-4 text-sm">
                     <span className={`${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                     📄 {resource.type} • {resource.size}
+                      📄 {resource.type} • {resource.size}
                     </span>
                     <span className={`${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                       ⬇️ {resource.downloads} downloads
                     </span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => {
-                      console.log(`Downloading ${resource.title}`);
                       // Open actual downloadable resources based on the resource title
                       const downloadUrls = {
                         'Complete Interview Preparation Guide': 'http://localhost:3001/api/pdf/interview-guide',
@@ -584,7 +576,7 @@ const PlacementPrep: React.FC = () => {
                         'DSA Cheat Sheet': 'http://localhost:3001/api/pdf/dsa-cheatsheet',
                         'Behavioral Interview Questions Bank': 'http://localhost:3001/api/pdf/behavioral-questions'
                       };
-                      
+
                       const url = downloadUrls[resource.title as keyof typeof downloadUrls];
                       if (url) {
                         // Create a temporary link element to trigger download without opening page
@@ -641,15 +633,14 @@ const PlacementPrep: React.FC = () => {
               <span className="text-sm text-green-500 font-medium">Available</span>
             </div>
           </div>
-          <button 
+          <button
             onClick={() => {
-              console.log('Starting AI Mock Interview');
               // For now, show a "Coming Soon" alert. In the future, this could navigate to the AI mock interview interface
               alert(`🚧 Coming Soon!\n\nAI Mock Interview feature will be available soon.\n\nThis will include:\n• Technical Questions\n• HR Questions\n• Behavioral Questions\n• Instant Feedback`);
             }}
             className="w-full mt-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-150"
           >
-           🚀 Start AI Mock Interview
+            🚀 Start AI Mock Interview
           </button>
         </div>
         <div className={`p-6 rounded-2xl border shadow-sm transition-all duration-200 ${state.darkMode ? 'bg-gray-800 border-gray-700 hover:shadow-md' : 'bg-white border-gray-200 hover:shadow-lg'}`}>
@@ -673,9 +664,8 @@ const PlacementPrep: React.FC = () => {
               <span className="text-green-500 font-medium">156</span>
             </div>
           </div>
-          <button 
+          <button
             onClick={() => {
-              console.log('Finding Interview Partner');
               // For now, show a "Coming Soon" alert. In the future, this could navigate to the peer interview matching interface
               alert(`🚧 Coming Soon!\n\nPeer Interview Partner feature will be available soon.\n\nThis will include:\n• Find interview partners\n• Real-time practice sessions\n• Turn-based interviewing\n• Community feedback`);
             }}
@@ -694,7 +684,7 @@ const PlacementPrep: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
           <h1 className={`text-3xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-           Placement Preparation Arena
+            Placement Preparation Arena
           </h1>
           <p className={`text-lg sm:text-xl ${state.darkMode ? 'text-gray-300' : 'text-gray-700'} max-w-3xl`}>
             Everything you need to ace your job interviews and land your dream job
@@ -709,13 +699,12 @@ const PlacementPrep: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setSelectedTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium shadow-sm transition-all duration-200 border ${
-                    selectedTab === tab.id
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium shadow-sm transition-all duration-200 border ${selectedTab === tab.id
                       ? 'bg-blue-600 text-white border-blue-600 scale-105'
                       : state.darkMode
-                      ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 border-gray-700'
-                      : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-300'
-                  }`}
+                        ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 border-gray-700'
+                        : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-300'
+                    }`}
                 >
                   <Icon className="w-5 h-5" />
                   <span>{tab.label}</span>

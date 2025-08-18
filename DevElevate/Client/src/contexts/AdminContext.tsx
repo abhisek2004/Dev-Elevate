@@ -59,28 +59,25 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
       }
 
       setUsers((prev) => [...prev, data.user]);
-      console.log("✅ User added:", data.user);
     } catch (error) {
       console.error("❌ Error adding user:", error);
       throw error;
     }
   };
 
-const deleteUserByAdmin = async (userId: string) => {
-  console.log(userId);
-  
-  try {
-    const data = await deleteUser({ userId });
+  const deleteUserByAdmin = async (userId: string) => {
+    try {
+      const data = await deleteUser({ userId });
 
-  
-    setUsers(prev => prev.filter(user => user._id !== userId));
 
-    return data;
-  } catch (error) {
-    console.error("❌ Error deleting user:", error);
-    throw error;
-  }
-};
+      setUsers(prev => prev.filter(user => user._id !== userId));
+
+      return data;
+    } catch (error) {
+      console.error("❌ Error deleting user:", error);
+      throw error;
+    }
+  };
 
 
   useEffect(() => {
