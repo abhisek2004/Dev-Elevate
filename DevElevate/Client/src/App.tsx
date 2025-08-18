@@ -1,5 +1,5 @@
 import { AuthProvider } from "./contexts/AuthContext";
-import { GlobalProvider } from "./contexts/GlobalContext";
+import { GlobalProvider, useGlobalState } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { AdminProvider } from "./contexts/AdminContext";
 import { AppProvider } from "./contexts/AppContext";
@@ -41,14 +41,13 @@ import InterviewPage from "./pages/Interview/InterviewPage";
 
 
 
-function App() {
+const AppContent = () => {
+  const { state } = useGlobalState();
+  
   return (
-    <AuthProvider>
-      <GlobalProvider>
-        <NotificationProvider>
-            <Router>
-              <ScrollToTop />
-              <Routes>
+    <Router>
+      <ScrollToTop />
+      <Routes>
                 {/* Public Routes */}
                 <Route
                   path="/login"
@@ -67,7 +66,7 @@ function App() {
                     <ProtectedRoute>
                       <AppProvider>
                         <Layout>
-                          <div className="flex-1 bg-white dark:bg-gray-900">
+                          <div className={`flex-1 ${state.darkMode ? 'bg-gray-900' : 'bg-white'}`}>
                             <main className="flex-1">
                               <Routes>
                                 <Route path="dashboard" element={<Dashboard />} />
@@ -142,8 +141,17 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-              </Routes>
-            </Router>
+      </Routes>
+    </Router>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <GlobalProvider>
+        <NotificationProvider>
+          <AppContent />
         </NotificationProvider>
       </GlobalProvider>
     </AuthProvider>
