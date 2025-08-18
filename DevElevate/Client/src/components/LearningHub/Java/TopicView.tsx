@@ -37,9 +37,9 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
           moduleId
         })
       });
-
+      
       if (response.ok) {
-        // Notes saved successfully
+        console.log('Notes saved successfully');
       }
     } catch (error) {
       console.error('Error saving notes:', error);
@@ -61,9 +61,9 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
           moduleId
         })
       });
-
+      
       if (response.ok) {
-        // Rating saved successfully
+        console.log('Rating saved successfully');
       }
     } catch (error) {
       console.error('Error saving rating:', error);
@@ -73,7 +73,7 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
   const handleProgressUpdate = async () => {
     const newProgress = Math.min(progress + 25, 100);
     setProgress(newProgress);
-
+    
     try {
       const response = await fetch(`/api/v1/learning/java/progress/${topicId}`, {
         method: 'PATCH',
@@ -87,9 +87,9 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
           completionPercentage: newProgress
         })
       });
-
+      
       if (response.ok) {
-        // Progress updated successfully
+        console.log('Progress updated successfully');
       }
     } catch (error) {
       console.error('Error updating progress:', error);
@@ -104,27 +104,29 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
           <div className="flex items-center justify-between mb-4">
             <button
               onClick={onBack}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105 ${state.darkMode
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105 ${
+                state.darkMode
                   ? 'bg-gray-700 text-gray-300 hover:bg-gray-600 border border-gray-600'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
-                }`}
+              }`}
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Modules
             </button>
-
+            
             <div className="flex items-center gap-4">
-              <div className={`px-4 py-2 rounded-full text-sm font-medium border-2 ${progress === 100
+              <div className={`px-4 py-2 rounded-full text-sm font-medium border-2 ${
+                progress === 100 
                   ? 'bg-green-100 text-green-800 border-green-300'
                   : progress > 50
-                    ? 'bg-blue-100 text-blue-800 border-blue-300'
-                    : 'bg-gray-100 text-gray-700 border-gray-300'
-                }`}>
+                  ? 'bg-blue-100 text-blue-800 border-blue-300'
+                  : 'bg-gray-100 text-gray-700 border-gray-300'
+              }`}>
                 🏆 Progress: {progress}%
               </div>
             </div>
           </div>
-
+          
           {/* Progress Bar */}
           <div className="w-full">
             <div className="flex items-center justify-between mb-2">
@@ -135,9 +137,10 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
                 {progress}% Complete
               </span>
             </div>
-            <div className={`w-full h-3 rounded-full overflow-hidden ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'
-              }`}>
-              <div
+            <div className={`w-full h-3 rounded-full overflow-hidden ${
+              state.darkMode ? 'bg-gray-700' : 'bg-gray-200'
+            }`}>
+              <div 
                 className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}
               ></div>
@@ -160,30 +163,33 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
                   <button
                     key={topic.id}
                     onClick={() => onTopicChange(topic.id)}
-                    className={`w-full text-left p-4 rounded-lg transition-all duration-200 border-2 ${topic.id === topicId
+                    className={`w-full text-left p-4 rounded-lg transition-all duration-200 border-2 ${
+                      topic.id === topicId
                         ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white border-transparent shadow-lg transform scale-105'
                         : state.darkMode
-                          ? 'text-gray-300 hover:bg-gray-700 border-gray-600 hover:border-gray-500'
-                          : 'text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-gray-300'
-                      }`}
+                        ? 'text-gray-300 hover:bg-gray-700 border-gray-600 hover:border-gray-500'
+                        : 'text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-gray-300'
+                    }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${topic.id === topicId
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                        topic.id === topicId
                           ? 'bg-white text-blue-600'
                           : state.darkMode
-                            ? 'bg-gray-700 text-gray-300'
-                            : 'bg-gray-100 text-gray-600'
-                        }`}>
+                          ? 'bg-gray-700 text-gray-300'
+                          : 'bg-gray-100 text-gray-600'
+                      }`}>
                         {index + 1}
                       </div>
                       <div className="flex-1 min-w-0">
                         <span className="font-medium block text-sm leading-tight">{topic.title}</span>
-                        <span className={`text-xs mt-1 block ${topic.id === topicId
+                        <span className={`text-xs mt-1 block ${
+                          topic.id === topicId
                             ? 'text-blue-100'
                             : state.darkMode
-                              ? 'text-gray-500'
-                              : 'text-gray-500'
-                          }`}>
+                            ? 'text-gray-500'
+                            : 'text-gray-500'
+                        }`}>
                           Click to learn
                         </span>
                       </div>
@@ -208,7 +214,7 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
                     </p>
                   </div>
                 </div>
-
+                
                 <div className="flex flex-wrap items-center gap-4">
                   <button
                     onClick={handleProgressUpdate}
@@ -217,7 +223,7 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
                     <CheckCircle className="w-5 h-5" />
                     Mark as Complete
                   </button>
-
+                  
                   <div className="flex items-center gap-2">
                     <span className={`text-sm font-medium ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                       Rate this topic:
@@ -227,8 +233,9 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
                         <button
                           key={star}
                           onClick={() => handleRating(star)}
-                          className={`p-1 rounded transition-all duration-200 hover:scale-110 ${star <= rating ? 'text-yellow-400' : state.darkMode ? 'text-gray-600' : 'text-gray-300'
-                            } hover:text-yellow-400`}
+                          className={`p-1 rounded transition-all duration-200 hover:scale-110 ${
+                            star <= rating ? 'text-yellow-400' : state.darkMode ? 'text-gray-600' : 'text-gray-300'
+                          } hover:text-yellow-400`}
                         >
                           <Star className="w-6 h-6 fill-current" />
                         </button>
@@ -262,14 +269,14 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <button
+                        <button 
                           onClick={() => navigator.clipboard.writeText(currentTopic.codeExample)}
                           className={`p-1.5 rounded hover:bg-opacity-80 transition-colors ${state.darkMode ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-200 text-gray-600'}`}
                           title="Copy code"
                         >
                           <Copy className="w-4 h-4" />
                         </button>
-                        <button
+                        <button 
                           onClick={() => {
                             const blob = new Blob([currentTopic.codeExample], { type: 'text/plain' });
                             const url = URL.createObjectURL(blob);
@@ -310,17 +317,19 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`group flex items-center gap-3 p-4 rounded-lg border-2 transition-all duration-200 hover:scale-105 ${state.darkMode
+                          className={`group flex items-center gap-3 p-4 rounded-lg border-2 transition-all duration-200 hover:scale-105 ${
+                            state.darkMode
                               ? 'border-gray-600 bg-gray-700 hover:border-blue-500 hover:bg-gray-600'
                               : 'border-gray-200 bg-gray-50 hover:border-blue-500 hover:bg-blue-50'
-                            }`}
+                          }`}
                         >
                           <div className="p-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600">
                             <ExternalLink className="w-4 h-4 text-white" />
                           </div>
                           <div className="flex-1">
-                            <span className={`font-medium group-hover:text-blue-600 transition-colors ${state.darkMode ? 'text-gray-200' : 'text-gray-800'
-                              }`}>
+                            <span className={`font-medium group-hover:text-blue-600 transition-colors ${
+                              state.darkMode ? 'text-gray-200' : 'text-gray-800'
+                            }`}>
                               {link.name}
                             </span>
                             <p className={`text-sm mt-1 ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -345,10 +354,11 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="✍️ Take notes while learning... Write down key concepts, questions, or insights!"
-                    className={`w-full h-40 p-4 rounded-lg border-2 resize-none transition-all focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${state.darkMode
+                    className={`w-full h-40 p-4 rounded-lg border-2 resize-none transition-all focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      state.darkMode
                         ? 'bg-gray-900 border-gray-600 text-gray-300 placeholder-gray-500'
                         : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'
-                      }`}
+                    }`}
                   />
                   <div className="flex items-center justify-between">
                     <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
