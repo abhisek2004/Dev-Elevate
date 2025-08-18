@@ -14,6 +14,7 @@ import quizRoutes from './routes/quizRoutes.js'
 import atsRoutes from './routes/atsRoutes.js';
 import notificationRoutes from "./routes/notificationRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js"
+import javaRoutes from "./routes/javaRoutes.js";
 
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
@@ -59,6 +60,9 @@ app.use("/api/v1/admin/courses", courseRoutes); // course create/delete/edit
 app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
 app.use("/api/v1/admin/quiz", quizRoutes); //quiz-related
 app.use("/api/v1", aiRoutes);
+
+// Learning Routes
+app.use("/api/v1/learning/java", javaRoutes); // Java learning content
 
 
 // Sample Usage of authenticate and authorize middleware for roleBased Features
