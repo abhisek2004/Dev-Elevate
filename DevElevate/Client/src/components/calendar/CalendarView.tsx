@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Plus, Calendar as CalendarIcon } from 'lucide-react';
 import { useTasks } from '../../contexts/AppContext';
+import { useGlobalState } from '../../contexts/GlobalContext';
 import { Button } from '../ui/button';
 import { Modal } from '../ui/modal';
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, addMonths, subMonths, isSameMonth, isSameDay, parseISO, isSameWeek, isWithinInterval, setHours, setMinutes, getHours, getMinutes } from 'date-fns';
@@ -28,6 +29,7 @@ const getWeekDays = (date: Date) => {
 
  const CalendarView: React.FC = () => {
   const { tasks, addTask, updateTask, deleteTask } = useTasks();
+  const { state } = useGlobalState();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -40,7 +42,7 @@ const getWeekDays = (date: Date) => {
       <div className="flex justify-center items-center h-64">
         <div className="text-center">
           <div className="mx-auto mb-4 w-8 h-8 rounded-full border-4 border-blue-500 animate-spin border-t-transparent"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading calendar...</p>
+          <p className={`${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Loading calendar...</p>
         </div>
       </div>
     );
@@ -161,7 +163,7 @@ const getWeekDays = (date: Date) => {
       <>
         <div className="grid grid-cols-7 gap-2 mb-2">
           {weekDays.map(day => (
-            <div key={day} className="py-2 font-semibold text-center text-gray-700 dark:text-gray-300">
+            <div key={day} className={`py-2 font-semibold text-center ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
               {day}
             </div>
           ))}
@@ -174,18 +176,18 @@ const getWeekDays = (date: Date) => {
             return (
               <div
                 key={i}
-                className={`rounded-lg p-2 min-h-[80px] cursor-pointer border transition-all ${isCurrentMonth ? 'bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700' : 'bg-gray-100 border-gray-100 dark:bg-gray-800 dark:border-gray-800'} ${isToday ? 'ring-2 ring-blue-500' : ''}`}
+                className={`rounded-lg p-2 min-h-[80px] cursor-pointer border transition-all ${isCurrentMonth ? (state.darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200') : (state.darkMode ? 'bg-gray-800 border-gray-800' : 'bg-gray-100 border-gray-100')} ${isToday ? 'ring-2 ring-blue-500' : ''}`}
                 onClick={() => handleDayClick(day)}
               >
                 <div className="flex justify-between items-center mb-1">
-                  <span className={`font-bold text-sm ${isCurrentMonth ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-600'}`}>{format(day, 'd')}</span>
+                  <span className={`font-bold text-sm ${isCurrentMonth ? (state.darkMode ? 'text-white' : 'text-gray-900') : (state.darkMode ? 'text-gray-600' : 'text-gray-400')}`}>{format(day, 'd')}</span>
                   <Button variant="ghost" size="sm" onClick={e => { e.stopPropagation(); handleDayClick(day); }}><Plus size={14} /></Button>
                 </div>
                 <div className="space-y-1">
                   {dayTasks.slice(0, 2).map(task => (
                     <div
                       key={task.id}
-                      className="px-2 py-1 mb-1 text-xs text-blue-900 truncate bg-blue-100 rounded cursor-pointer dark:bg-blue-900/40 dark:text-blue-100 hover:bg-blue-200 dark:hover:bg-blue-800"
+                      className={`px-2 py-1 mb-1 text-xs truncate rounded cursor-pointer ${state.darkMode ? 'bg-blue-900/40 text-blue-100 hover:bg-blue-800' : 'bg-blue-100 text-blue-900 hover:bg-blue-200'}`}
                       onClick={e => { e.stopPropagation(); handleTaskClick(task); }}
                     >
                       {task.title} {task.dueDate && (<span className="ml-1 text-gray-400">{format(typeof task.dueDate === 'string' ? parseISO(task.dueDate) : task.dueDate, 'HH:mm')}</span>)}
@@ -221,18 +223,18 @@ const getWeekDays = (date: Date) => {
             return (
               <div
                 key={i}
-                className={`rounded-lg p-2 min-h-[80px] cursor-pointer border transition-all bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 ${isToday ? 'ring-2 ring-blue-500' : ''}`}
+                className={`rounded-lg p-2 min-h-[80px] cursor-pointer border transition-all ${state.darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'} ${isToday ? 'ring-2 ring-blue-500' : ''}`}
                 onClick={() => handleDayClick(day)}
               >
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-sm font-bold text-gray-900 dark:text-white">{format(day, 'EEE d')}</span>
+                  <span className={`text-sm font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>{format(day, 'EEE d')}</span>
                   <Button variant="ghost" size="sm" onClick={e => { e.stopPropagation(); handleDayClick(day); }}><Plus size={14} /></Button>
                 </div>
                 <div className="space-y-1">
                   {dayTasks.map(task => (
                     <div
                       key={task.id}
-                      className="px-2 py-1 mb-1 text-xs text-blue-900 truncate bg-blue-100 rounded cursor-pointer dark:bg-blue-900/40 dark:text-blue-100 hover:bg-blue-200 dark:hover:bg-blue-800"
+                      className={`px-2 py-1 mb-1 text-xs truncate rounded cursor-pointer ${state.darkMode ? 'bg-blue-900/40 text-blue-100 hover:bg-blue-800' : 'bg-blue-100 text-blue-900 hover:bg-blue-200'}`}
                       onClick={e => { e.stopPropagation(); handleTaskClick(task); }}
                     >
                       {task.title} {task.dueDate && (<span className="ml-1 text-gray-400">{format(typeof task.dueDate === 'string' ? parseISO(task.dueDate) : task.dueDate, 'HH:mm')}</span>)}
@@ -251,20 +253,20 @@ const getWeekDays = (date: Date) => {
     const hours = Array.from({ length: 24 }, (_, i) => i);
     return (
       <>
-        <div className="py-2 mb-2 font-semibold text-center text-gray-700 dark:text-gray-300">
+        <div className={`py-2 mb-2 font-semibold text-center ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
           {format(currentDate, 'EEEE, MMMM d, yyyy')}
         </div>
         <div className="grid grid-cols-1 gap-2">
           {hours.map(hour => {
             const hourTasks = getTasksForDayAndHour(currentDate, hour);
             return (
-              <div key={hour} className="flex items-center border-b border-gray-900 dark:border-gray-700 min-h-[40px]">
+              <div key={hour} className={`flex items-center border-b min-h-[40px] ${state.darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
                 <div className="pr-2 w-16 text-xs text-right text-gray-400">{format(setHours(currentDate, hour), 'HH:00')}</div>
                 <div className="flex-1">
                   {hourTasks.map(task => (
                     <div
                       key={task.id}
-                      className="inline-block px-2 py-1 mr-2 mb-1 text-xs text-blue-900 bg-blue-100 rounded cursor-pointer dark:bg-blue-900/40 dark:text-blue-100 hover:bg-blue-200 dark:hover:bg-blue-800"
+                      className={`inline-block px-2 py-1 mr-2 mb-1 text-xs rounded cursor-pointer ${state.darkMode ? 'bg-blue-900/40 text-blue-100 hover:bg-blue-800' : 'bg-blue-100 text-blue-900 hover:bg-blue-200'}`}
                       onClick={() => handleTaskClick(task)}
                     >
                       {task.title} {task.dueDate && (<span className="ml-1 text-gray-400">{format(typeof task.dueDate === 'string' ? parseISO(task.dueDate) : task.dueDate, 'HH:mm')}</span>)}
@@ -280,13 +282,13 @@ const getWeekDays = (date: Date) => {
   };
 
   return (
-    <div className="p-6 mx-auto mt-8 max-w-5xl bg-white rounded-xl shadow-lg dark:bg-gray-800">
+    <div className={`p-6 mx-auto mt-8 max-w-5xl rounded-xl shadow-lg ${state.darkMode ? 'bg-gray-800' : 'bg-white'}`}>
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center space-x-2">
           <Button variant="ghost" onClick={handlePrev}><ChevronLeft /></Button>
           <Button variant="ghost" onClick={handleToday}>Today</Button>
           <Button variant="ghost" onClick={handleNext}><ChevronRight /></Button>
-          <h2 className="flex items-center ml-4 text-2xl font-bold text-gray-900 dark:text-white">
+          <h2 className={`flex items-center ml-4 text-2xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             <CalendarIcon className="mr-2" />
             {view === 'month' ? format(currentDate, 'MMMM yyyy') : view === 'week' ? `Week of ${format(startOfWeek(currentDate), 'MMM d')}` : format(currentDate, 'MMMM d, yyyy')}
           </h2>
