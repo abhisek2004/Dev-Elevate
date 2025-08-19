@@ -24,7 +24,7 @@ const TasksView: React.FC = () => {
   const [newTask, setNewTask] = useState({
     title: '',
     description: '',
-    priority: 'medium' as const,
+    priority: 'medium' as Task['priority'],
     dueDate: '',
     assignedTo: '',
     tags: [] as string[],
@@ -126,7 +126,7 @@ const TasksView: React.FC = () => {
 
   const TaskCard: React.FC<{ task: Task }> = ({ task }) => (
     <div
-      className={`p-4 rounded-lg border shadow-sm transition-shadow cursor-pointer hover:shadow-md ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
+      className={`p-4 rounded-lg border shadow-sm transition-shadow cursor-pointer hover:shadow-md ${state.darkMode ? 'bg-gray-800 border-gray-700 text-gray-100' : 'bg-white border-gray-200 text-gray-900'}`}
       onClick={() => setSelectedTask(task)}
     >
       <div className="flex justify-between items-start mb-3">
@@ -142,7 +142,7 @@ const TasksView: React.FC = () => {
             {getStatusIcon(task.status)}
           </button>
           <div className="flex-1">
-            <h3 className={`font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h3 className="font-medium text-current">
               {task.title}
             </h3>
             <p className={`mt-1 text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
@@ -158,7 +158,7 @@ const TasksView: React.FC = () => {
         </div>
       </div>
 
-      <div className={`flex justify-between items-center text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+      <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
         <div className="flex items-center space-x-4">
           {task.dueDate && (
             <span className="flex items-center">
@@ -465,31 +465,40 @@ const TasksView: React.FC = () => {
       >
         {selectedTask && (
           <div className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <span className={`px-3 py-1 text-sm font-medium rounded-full ${getStatusColor(selectedTask.status)}`}>
-                {selectedTask.status.replace('-', ' ')}
-              </span>
-              <span className={`px-3 py-1 text-sm font-medium rounded-full ${getPriorityColor(selectedTask.priority)}`}>
-                {selectedTask.priority} priority
-              </span>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-4">
+                <span className={`px-3 py-1 text-sm font-medium rounded-full ${getStatusColor(selectedTask.status)}`}>
+                  {selectedTask.status.replace('-', ' ')}
+                </span>
+                <span className={`px-3 py-1 text-sm font-medium rounded-full ${getPriorityColor(selectedTask.priority)}`}>
+                  {selectedTask.priority} priority
+                </span>
+              </div>
+              <div className={`flex items-center space-x-4 text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <span>Created {formatDate(selectedTask.createdAt)}</span>
+              </div>
             </div>
 
             <div>
               <h3 className={`mb-2 font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Description</h3>
-              <p className={`${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{selectedTask.description}</p>
+              <div className={`whitespace-pre-wrap ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                {selectedTask.description || 'No description provided.'}
+              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h4 className={`mb-2 font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Created</h4>
-                <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {formatDate(selectedTask.createdAt)}
-                </p>
-              </div>
+              {selectedTask.assignedTo && (
+                <div>
+                  <h4 className={`mb-2 font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Assigned To</h4>
+                  <p className={`text-sm ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    {selectedTask.assignedTo}
+                  </p>
+                </div>
+              )}
               {selectedTask.dueDate && (
                 <div>
                   <h4 className={`mb-2 font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Due Date</h4>
-                  <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <p className={`text-sm ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     {formatDate(selectedTask.dueDate)}
                   </p>
                 </div>
@@ -497,13 +506,13 @@ const TasksView: React.FC = () => {
             </div>
 
             {selectedTask.tags.length > 0 && (
-              <div>
-                <h4 className={`mb-2 font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Tags</h4>
+              <div className={`flex items-center pt-4 space-x-2 border-t ${state.darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                <div className={`${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Tags:</div>
                 <div className="flex flex-wrap gap-2">
                   {selectedTask.tags.map(tag => (
                     <span
                       key={tag}
-                      className={`px-2 py-1 text-sm rounded-full ${state.darkMode ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-600'}`}
+                      className={`px-2 py-1 text-sm rounded-full ${state.darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-700'} font-medium`}
                     >
                       {tag}
                     </span>
@@ -516,11 +525,13 @@ const TasksView: React.FC = () => {
               <Button
                 variant="outline"
                 onClick={() => setSelectedTask(null)}
+                className="dark:text-white dark:border-white dark:hover:bg-gray-700"
               >
                 Close
               </Button>
               <Button
                 variant="primary"
+                className="dark:bg-blue-500 dark:hover:bg-blue-600 dark:text-white font-medium"
                 onClick={() => {
                   const nextStatus = selectedTask.status === 'todo' ? 'in-progress' : 
                                   selectedTask.status === 'in-progress' ? 'done' : 'todo';
