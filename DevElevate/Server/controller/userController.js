@@ -37,7 +37,14 @@ export const registerUser = async (req, res) => {
 
     const html = generateWelcomeEmail(newUser.name);
 
-    await sendWelcomeEmail(newUser.email, html);
+    // Try to send welcome email but continue even if it fails
+    try {
+      await sendWelcomeEmail(newUser.email, html);
+      console.log("✅ Welcome email sent successfully");
+    } catch (emailError) {
+      console.log("⚠️ Skipping email send due to error:", emailError.message);
+      // Continue with registration even if email fails
+    }
 
     await newUser.save();
 
