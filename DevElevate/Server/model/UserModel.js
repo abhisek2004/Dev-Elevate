@@ -44,6 +44,24 @@ const userSchema = new mongoose.Schema(
     streakEndDate: {
       type: Date,
     },
+    // Coding platform fields
+    problemsSolved: {
+      type: Number,
+      default: 0
+    },
+    totalSubmissions: {
+      type: Number,
+      default: 0
+    },
+    codingRank: {
+      type: String,
+      enum: ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond'],
+      default: 'Bronze'
+    },
+    preferredLanguages: [{
+      type: String,
+      enum: ['python', 'javascript', 'java', 'cpp', 'c']
+    }]
   },
   {
     timestamps: true,
