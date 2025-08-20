@@ -149,7 +149,7 @@ const Settings: React.FC = () => {
   };
 
   const renderAccountSettings = () => (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${globalState.darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-neutral-800 border border-gray-200'} p-6 rounded-lg`}>
       <div className="flex items-center space-x-4">
         <div className="relative">
           <div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
@@ -174,21 +174,21 @@ const Settings: React.FC = () => {
           </label>
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Profile Picture</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400">Upload a new avatar for your account</p>
+          <h3 className={`text-lg font-semibold ${globalState.darkMode ? 'text-white' : 'text-gray-900'}`}>Profile Picture</h3>
+          <p className={`text-sm ${globalState.darkMode ? 'text-gray-400' : 'text-neutral-600'}`}>Upload a new avatar for your account</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className={`block text-sm font-medium ${globalState.darkMode ? 'text-white' : 'text-neutral-800'} mb-2`}>
             Full Name
           </label>
           <input
             type="text"
             value={profileData.name}
             onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${globalState.darkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-neutral-800 border-gray-300'} ${
               errors.name ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="Enter your full name"
@@ -197,14 +197,14 @@ const Settings: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className={`block text-sm font-medium ${globalState.darkMode ? 'text-white' : 'text-neutral-800'} mb-2`}>
             Email Address
           </label>
           <input
             type="email"
             value={profileData.email}
             onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${globalState.darkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-neutral-800 border-gray-300'} ${
               errors.email ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="Enter your email"
@@ -214,14 +214,14 @@ const Settings: React.FC = () => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label className={`block text-sm font-medium ${globalState.darkMode ? 'text-white' : 'text-neutral-800'} mb-2`}>
           Bio
         </label>
         <textarea
           value={profileData.bio}
           onChange={(e) => setProfileData({ ...profileData, bio: e.target.value })}
           rows={4}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${globalState.darkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-neutral-800 border-gray-300'}`}
           placeholder="Tell us about yourself..."
         />
       </div>
@@ -238,12 +238,12 @@ const Settings: React.FC = () => {
   );
 
   const renderSecuritySettings = () => (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${globalState.darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-neutral-800 border border-gray-200'} p-6 rounded-lg`}>
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Change Password</h3>
+        <h3 className={`text-lg font-semibold ${globalState.darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Change Password</h3>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className={`block text-sm font-medium ${globalState.darkMode ? 'text-gray-300' : 'text-neutral-800'} mb-2`}>
               Current Password
             </label>
             <div className="relative">
@@ -251,7 +251,7 @@ const Settings: React.FC = () => {
                 type={showCurrentPassword ? "text" : "password"}
                 value={passwordData.currentPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white pr-12"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${globalState.darkMode ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white' : 'bg-white border-gray-300 text-gray-900'} pr-12`}
                 placeholder="Enter current password"
               />
               <button
@@ -265,7 +265,7 @@ const Settings: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className={`block text-sm font-medium ${globalState.darkMode ? 'text-gray-300' : 'text-neutral-800'} mb-2`}>
               New Password
             </label>
             <div className="relative">
@@ -273,7 +273,7 @@ const Settings: React.FC = () => {
                 type={showNewPassword ? "text" : "password"}
                 value={passwordData.newPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white pr-12 ${
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${globalState.darkMode ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white' : 'bg-white border-gray-300 text-gray-900'} pr-12 ${
                   errors.newPassword ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Enter new password"
@@ -290,7 +290,7 @@ const Settings: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className={`block text-sm font-medium ${globalState.darkMode ? 'text-gray-300' : 'text-neutral-800'} mb-2`}>
               Confirm New Password
             </label>
             <div className="relative">
@@ -298,7 +298,7 @@ const Settings: React.FC = () => {
                 type={showConfirmPassword ? "text" : "password"}
                 value={passwordData.confirmPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white pr-12 ${
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${globalState.darkMode ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white' : 'bg-white border-gray-300 text-gray-900'} pr-12 ${
                   errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Confirm new password"
@@ -326,13 +326,13 @@ const Settings: React.FC = () => {
       </div>
 
       <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Account Security</h3>
-        <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+        <h3 className={`text-lg font-semibold ${globalState.darkMode ? 'text-gray-300' : 'text-neutral-800'} mb-4`}>Account Security</h3>
+        <div className={`p-4 rounded-lg border ${globalState.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
           <div className="flex items-start space-x-3">
             <AlertCircle className="w-5 h-5 text-yellow-500 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-gray-900 dark:text-white">Security Tips</p>
-              <ul className="mt-2 text-sm text-gray-600 dark:text-gray-400 space-y-1">
+              <p className={`text-sm font-medium ${globalState.darkMode ? 'text-gray-300' : 'text-neutral-800'} mb-2`}>Security Tips</p>
+              <ul className={`mt-2 text-sm ${globalState.darkMode ? 'text-gray-400' : 'text-neutral-600'} space-y-1`}>
                 <li>• Use a strong, unique password</li>
                 <li>• Enable notifications for account changes</li>
                 <li>• Regularly review your account activity</li>
@@ -346,14 +346,14 @@ const Settings: React.FC = () => {
   );
 
   const renderNotificationSettings = () => (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${globalState.darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-neutral-800 border border-gray-200'} p-6 rounded-lg`}>
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Email Preferences</h3>
+        <h3 className={`text-lg font-semibold ${globalState.darkMode ? 'text-gray-300' : 'text-neutral-800'} mb-4`}>Email Preferences</h3>
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div className={`flex items-center justify-between p-4 ${globalState.darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg border ${globalState.darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
             <div>
-              <p className="font-medium text-gray-900 dark:text-white">Email Updates</p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Receive updates about new features and courses</p>
+              <p className={`font-medium ${globalState.darkMode ? 'text-gray-300' : 'text-neutral-800'}`}>Email Updates</p>
+              <p className={`text-sm ${globalState.darkMode ? 'text-gray-400' : 'text-gray-700'}`}>Receive updates about new features and courses</p>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
               <input
@@ -362,14 +362,14 @@ const Settings: React.FC = () => {
                 onChange={(e) => setPreferences({ ...preferences, emailUpdates: e.target.checked })}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <div className={`w-11 h-6 ${globalState.darkMode ? 'bg-gray-700' : 'bg-gray-200'} peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600`}></div>
             </label>
           </div>
 
-          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div className={`flex items-center justify-between p-4 ${globalState.darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg border ${globalState.darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
             <div>
-              <p className="font-medium text-gray-900 dark:text-white">Push Notifications</p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Get notified about important activities</p>
+              <p className={`font-medium ${globalState.darkMode ? 'text-gray-300' : 'text-neutral-800'}`}>Push Notifications</p>
+              <p className={`text-sm ${globalState.darkMode ? 'text-gray-400' : 'text-gray-700'}`}>Get notified about important activities</p>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
               <input
@@ -378,7 +378,7 @@ const Settings: React.FC = () => {
                 onChange={() => setPreferences({ ...preferences, notifications: true })}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <div className={`w-11 h-6 ${globalState.darkMode ? 'bg-gray-700' : 'bg-gray-200'} peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600`}></div>
             </label>
           </div>
         </div>
@@ -396,73 +396,73 @@ const Settings: React.FC = () => {
   );
 
   const renderPreferences = () => (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Appearance</h3>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-            <div className="flex items-center space-x-3">
-              {preferences.theme === 'dark' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-              <div>
-                <p className="font-medium text-gray-900 dark:text-white">Theme</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Choose your preferred theme</p>
+    <div className={`space-y-6 ${globalState.darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-neutral-800 border border-gray-200'} p-6 rounded-lg`}>
+        <div className={`${globalState.darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-neutral-800'}`}> 
+          <h3 className={`text-lg font-semibold ${globalState.darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Appearance</h3>
+          <div className="space-y-4">
+            <div className={`flex items-center justify-between p-4 ${globalState.darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg border ${globalState.darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+              <div className="flex items-center space-x-3">
+                {preferences.theme === 'dark' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                <div>
+                  <p className={`font-medium ${globalState.darkMode ? 'text-white' : 'text-neutral-800'}`}>Theme</p>
+                  <p className={`text-sm ${globalState.darkMode ? 'text-gray-400' : 'text-gray-700'}`}>Choose your preferred theme</p>
+                </div>
               </div>
+              <select
+                value={preferences.theme}
+                onChange={(e) => setPreferences({ ...preferences, theme: e.target.value as 'light' | 'dark' })}
+                className={`px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${globalState.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-neutral-800'}`}
+              >
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
             </div>
-            <select
-              value={preferences.theme}
-              onChange={(e) => setPreferences({ ...preferences, theme: e.target.value as 'light' | 'dark' })}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-            >
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </div>
 
-          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-            <div className="flex items-center space-x-3">
-              <Globe className="w-5 h-5" />
-              <div>
-                <p className="font-medium text-gray-900 dark:text-white">Language</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Select your preferred language</p>
+            <div className={`flex items-center justify-between p-4 ${globalState.darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg border ${globalState.darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+              <div className="flex items-center space-x-3">
+                <Globe className="w-5 h-5" />
+                <div>
+                  <p className={`font-medium ${globalState.darkMode ? 'text-white' : 'text-neutral-800'}`}>Language</p>
+                  <p className={`text-sm ${globalState.darkMode ? 'text-gray-400' : 'text-gray-700'}`}>Select your preferred language</p>
+                </div>
               </div>
+              <select
+                value={preferences.language}
+                onChange={(e) => setPreferences({ ...preferences, language: e.target.value as 'en' | 'hi' })}
+                className={`px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${globalState.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-neutral-800'}`}
+              >
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+              </select>
             </div>
-            <select
-              value={preferences.language}
-              onChange={(e) => setPreferences({ ...preferences, language: e.target.value as 'en' | 'hi' })}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          </div>
+        </div>
+
+        <button
+          onClick={handlePreferencesUpdate}
+          disabled={isLoading}
+          className="flex items-center space-x-2 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50"
+        >
+          <Save className="w-4 h-4" />
+          <span>{isLoading ? 'Saving...' : 'Save Preferences'}</span>
+        </button>
+
+        <div className={`border-t border-gray-200 dark:border-gray-700 pt-6`}>
+          <h3 className={`text-lg font-semibold ${globalState.darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Danger Zone</h3>
+          <div className={`bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded-lg`}>
+            <button
+              onClick={handleLogout}
+              className={`flex items-center space-x-2 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors`}
             >
-              <option value="en">English</option>
-              <option value="hi">Hindi</option>
-            </select>
+              <LogOut className="w-4 h-4" />
+              <span>Logout</span>
+            </button>
+            <p className={`mt-2 text-sm ${globalState.darkMode ? 'text-red-400' : 'text-red-600'}`}>
+              This will sign you out of your account on this device.
+            </p>
           </div>
         </div>
       </div>
-
-      <button
-        onClick={handlePreferencesUpdate}
-        disabled={isLoading}
-        className="flex items-center space-x-2 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50"
-      >
-        <Save className="w-4 h-4" />
-        <span>{isLoading ? 'Saving...' : 'Save Preferences'}</span>
-      </button>
-
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Danger Zone</h3>
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded-lg">
-          <button
-            onClick={handleLogout}
-            className="flex items-center space-x-2 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors"
-          >
-            <LogOut className="w-4 h-4" />
-            <span>Logout</span>
-          </button>
-          <p className="mt-2 text-sm text-red-600 dark:text-red-400">
-            This will sign you out of your account on this device.
-          </p>
-        </div>
-      </div>
-    </div>
   );
 
   const renderContent = () => {
@@ -481,7 +481,7 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen ${globalState.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
+    <div className={`min-h-screen ${globalState.darkMode ? 'bg-gray-900 text-white' : 'bg-white'} transition-colors duration-200`}>
       {toastMessage && (
         <Toast 
           message={toastMessage} 
@@ -493,10 +493,10 @@ const Settings: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-violet-600 bg-clip-text text-transparent">
-  Settings
-</h1>
+            Settings
+          </h1>
 
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <p className={`mt-2 ${globalState.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
             Manage your account settings and preferences
           </p>
         </div>
@@ -514,7 +514,7 @@ const Settings: React.FC = () => {
                     className={`w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg transition-colors ${
                       activeSection === section.id
                         ? 'bg-blue-500 text-white'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                        : `${globalState.darkMode ? 'hover:bg-gray-800 text-gray-300' : 'hover:bg-gray-100 text-gray-700'}`
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -527,7 +527,7 @@ const Settings: React.FC = () => {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <div className={`${globalState.darkMode ? 'bg-gray-800 text-white border-gray-700' : 'bg-gray-50 text-neutral-800 border-gray-200'} rounded-lg shadow-sm border p-0`}>
               {renderContent()}
             </div>
           </div>
