@@ -1,4 +1,4 @@
-import Submission from "../model/Submission.js";
+import { Submission } from "../model/Submission.js";
 import Quiz from "../model/Quiz.js";
 
 export const getAllSubmissionsDetailed = async (req, res) => {

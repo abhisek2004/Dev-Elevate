@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Problem } from '../model/Problem.js';
 import { Submission } from '../model/Submission.js';
-import { User } from '../model/UserModel.js';
+import User from '../model/UserModel.js';
 import logger from '../utils/logger.js';
 
 // Judge0 API configuration (free tier)
