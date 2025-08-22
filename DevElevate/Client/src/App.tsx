@@ -38,6 +38,7 @@ import NotesView from "./components/notes/NotesView";
 import CalendarView from "./components/calendar/CalendarView";
 import Coding from "./pages/Coding/Coding";
 import InterviewPage from "./pages/Interview/InterviewPage";
+import QuizPage from "./components/Quiz/QuizPage";
 
 
 
@@ -71,6 +72,7 @@ const AppContent = () => {
                               <Routes>
                                 <Route path="dashboard" element={<Dashboard />} />
                                 <Route path="learning" element={<LearningHub />} />
+                                <Route path="quiz" element={<QuizPage />} />
                                 <Route path="coding/*" element={<Coding />} />
                                 <Route path="interview" element={<InterviewPage />} />
                                 <Route path="chatbot" element={<Chatbot />} />

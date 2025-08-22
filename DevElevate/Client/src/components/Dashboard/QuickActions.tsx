@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageSquare, FileText, Target, Code } from 'lucide-react';
+import { MessageSquare, FileText, Target, Code, Brain } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +8,13 @@ const QuickActions: React.FC = () => {
   const navigate = useNavigate();
 
   const actions = [
+    {
+      title: 'Take Quiz',
+      description: 'Test your knowledge',
+      icon: Brain,
+      color: 'from-indigo-500 to-purple-500',
+      onClick: () => navigate('/quiz')
+    },
     {
       title: 'Study Buddy',
       description: 'Get AI help with your queries',
@@ -28,13 +35,6 @@ const QuickActions: React.FC = () => {
       icon: Code,
       color: 'from-purple-500 to-pink-500',
       onClick: () => navigate('/learning?track=dsa')
-    },
-    {
-      title: 'Mock Interview',
-      description: 'Prepare for interviews',
-      icon: Target,
-      color: 'from-orange-500 to-red-500',
-      onClick: () => navigate('/placement')
     }
   ];
 
