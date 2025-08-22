@@ -1,3 +1,4 @@
+//Middleware to authenticate requests using JWT.
 import jwt from "jsonwebtoken";
 import user from "../model/UserModel.js";
 
