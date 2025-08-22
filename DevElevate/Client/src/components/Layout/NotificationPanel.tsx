@@ -3,13 +3,9 @@ import {
   Bell,
   X,
   Check,
-  CheckCheck,
   Trash2,
   Settings,
-  Filter,
   Calendar,
-  BookOpen,
-  Target,
   MessageSquare,
   Star,
   AlertCircle,
@@ -40,7 +36,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
   isOpen,
   onClose,
 }) => {
-  const { state, dispatch } = useGlobalState();
+  const { state } = useGlobalState();
   const { notifications, setNotifications } = useNotificationContext();
   const [filter, setFilter] = useState<
     "all" | "unread" | "achievements" | "reminders"
@@ -116,13 +112,27 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
     );
   };
 
-  const deleteNotification = (id: string) => {
-    setNotifications((prev) =>
-      prev.filter((notification) => notification.id !== id)
-    );
-    setSelectedNotifications((prev) =>
-      prev.filter((selectedId) => selectedId !== id)
-    );
+  const deleteNotification = async (id: string) => {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/notifications/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+
+      if (res.ok) {
+        setNotifications((prev) =>
+          prev.filter((notification) => notification.id !== id)
+        );
+        setSelectedNotifications((prev) =>
+          prev.filter((selectedId) => selectedId !== id)
+        );
+      }
+    } catch (err) {
+      // Optionally handle error
+    }
   };
 
   const deleteSelected = () => {
