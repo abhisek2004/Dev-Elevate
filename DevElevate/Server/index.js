@@ -10,11 +10,11 @@ import { authenticateToken } from "./middleware/authMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import adminFeedbackRoutes from './routes/adminFeedbackRoutes.js';
 import communityRoutes from './routes/communityRoutes.js';
-import quizRoutes from './routes/quizRoutes.js'
+import quizRoutes from './routes/quizRoutes.js';
 import userQuizRoutes from './routes/userQuizRoutes.js';
 import atsRoutes from './routes/atsRoutes.js';
 import notificationRoutes from "./routes/notificationRoutes.js";
-import aiRoutes from "./routes/aiRoutes.js"
+import aiRoutes from "./routes/aiRoutes.js";
 import javaRoutes from "./routes/javaRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
 
@@ -68,7 +68,7 @@ app.use("/api/v1", aiRoutes);
 app.use("/api/v1/learning/java", javaRoutes); // Java learning content
 
 // Placement Routes
-app.use('/api/v1/placements', placementRoutes);
+app.use("/api/v1/placements", placementRoutes); // Placement prep functionality
 
 // Sample Usage of authenticate and authorize middleware for roleBased Features
 app.get(
