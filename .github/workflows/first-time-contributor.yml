@@ -1,0 +1,99 @@
+name: Welcome First-Time Contributors
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  welcome-contributor:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Check if First-Time Contributor
+        uses: actions/github-script@v7
+        id: check-first-time
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const author = pr.user.login;
+
+            // Get all PRs by this author
+            const prs = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'all',
+              per_page: 100
+            });
+
+            // Check if this is their first PR
+            const userPRs = prs.data.filter(p => p.user.login === author);
+            const isFirstTime = userPRs.length === 1;
+
+            core.setOutput('is-first-time', isFirstTime);
+            core.setOutput('author', author);
+            core.setOutput('pr-number', pr.number);
+
+      - name: Welcome First-Time Contributor
+        if: steps.check-first-time.outputs.is-first-time == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const author = '${{ steps.check-first-time.outputs.author }}';
+            const prNumber = '${{ steps.check-first-time.outputs.pr-number }}';
+
+            const welcomeMessage = [
+              `## 🎉 Welcome to DevElevate, @${author}!`,
+              ``,
+              `### 🌟 First-Time Contributor Badge`,
+              `![First Time Contributor](https://img.shields.io/badge/First%20Time%20Contributor-DevElevate-brightgreen?style=for-the-badge&logo=github)`,
+              ``,
+              `🎊 **Congratulations!** You've just made your first contribution to DevElevate!`,
+              ``,
+              `### 🎯 What This Means`,
+              `- You're now part of our amazing open-source community`,
+              `- Your contribution will help students and developers worldwide`,
+              `- You're contributing to a GSSoC 2025 official project`,
+              ``,
+              `### 🚀 Next Steps`,
+              `1. **Review Process**: Our maintainers will review your PR`,
+              `2. **Feedback**: You might receive suggestions for improvements`,
+              `3. **Merge**: Once approved, your code will be merged!`,
+              `4. **Celebration**: Your contribution will be visible on your GitHub profile`,
+              ``,
+              `### 💡 Tips for Success`,
+              `- Respond promptly to review comments`,
+              `- Keep your PR focused and well-documented`,
+              `- Don't hesitate to ask questions in the comments`,
+              `- Join our [Discord community](https://discord.gg/BtqrauPm) for support`,
+              ``,
+              `### 🏆 Recognition`,
+              `- Your name will be added to our contributors list`,
+              `- You'll receive a special mention in our release notes`,
+              `- Consider applying for GSSoC 2025 if you're eligible!`,
+              ``,
+              `---
+              *Welcome to the DevElevate family! 🌟*`
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              issue_number: parseInt(prNumber),
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: welcomeMessage
+            });
+
+      - name: Add First-Time Contributor Label
+        if: steps.check-first-time.outputs.is-first-time == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = '${{ steps.check-first-time.outputs.pr-number }}';
+
+            await github.rest.issues.addLabels({
+              issue_number: parseInt(prNumber),
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['first-time-contributor', 'gssoc-2025']
+            });

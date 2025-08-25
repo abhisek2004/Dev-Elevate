@@ -10,10 +10,11 @@ import { authenticateToken } from "./middleware/authMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import adminFeedbackRoutes from './routes/adminFeedbackRoutes.js';
 import communityRoutes from './routes/communityRoutes.js';
-import quizRoutes from './routes/quizRoutes.js'
+import quizRoutes from './routes/quizRoutes.js';
+import userQuizRoutes from './routes/userQuizRoutes.js';
 import atsRoutes from './routes/atsRoutes.js';
 import notificationRoutes from "./routes/notificationRoutes.js";
-import aiRoutes from "./routes/aiRoutes.js"
+import aiRoutes from "./routes/aiRoutes.js";
 import javaRoutes from "./routes/javaRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
 
@@ -60,14 +61,14 @@ app.use("/api/v1/admin", adminRoutes); // general admin stuff like login, profil
 app.use("/api/v1/admin/courses", courseRoutes); // course create/delete/edit
 app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
 app.use("/api/v1/admin/quiz", quizRoutes); //quiz-related
+app.use("/api/v1/quiz", userQuizRoutes); // user quiz routes
 app.use("/api/v1", aiRoutes);
 
 // Learning Routes
 app.use("/api/v1/learning/java", javaRoutes); // Java learning content
 
-// Placement Preparation Routes
-app.use("/api/v1/placement", placementRoutes); // Placement prep functionality
-
+// Placement Routes
+app.use("/api/v1/placements", placementRoutes); // Placement prep functionality
 
 // Sample Usage of authenticate and authorize middleware for roleBased Features
 app.get(

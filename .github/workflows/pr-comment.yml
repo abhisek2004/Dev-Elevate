@@ -1,0 +1,171 @@
+name: Auto Comment on Pull Requests
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  auto-comment:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Auto Comment on New PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const prNumber = pr.number;
+            const prTitle = pr.title;
+            const prBody = pr.body;
+            const author = pr.user.login;
+            const branchName = pr.head.ref;
+            const baseBranch = pr.base.ref;
+
+            const welcomeMessage = [
+              `## 🚀 Welcome to DevElevate PR!`,
+              ``,
+              `Hi @${author}, thank you for your pull request! 🙌`,
+              ``,
+              `### 📋 PR Details`,
+              `- **PR #${prNumber}**: ${prTitle}`,
+              `- **Branch**: \`${branchName}\` → \`${baseBranch}\``,
+              `- **Status**: 🆕 New Pull Request`,
+              ``,
+              `### 🔍 PR Analysis`,
+              prBody ? `**Description**: ${prBody.length > 300 ? prBody.substring(0, 300) + '...' : prBody}` : '**No description provided**',
+              ``,
+              `### ✅ Checklist for Review`,
+              `- [ ] Code follows project style guidelines`,
+              `- [ ] Self-review completed`,
+              `- [ ] Documentation updated (if applicable)`,
+              `- [ ] Tests added/updated (if applicable)`,
+              `- [ ] No breaking changes introduced`,
+              `- [ ] All CI checks passing`,
+              ``,
+              `### 🚀 Next Steps`,
+              `1. **Review**: Our maintainers will review your PR within 24-48 hours`,
+              `2. **CI/CD**: Automated checks will run to ensure code quality`,
+              `3. **Discussion**: Feel free to respond to review comments`,
+              `4. **Merge**: Once approved, your PR will be merged!`,
+              ``,
+              `### 📚 Helpful Resources`,
+              `- 📖 [Contributing Guidelines](https://github.com/abhisek2004/Dev-Elevate/blob/main/README.md)`,
+              `- 🔧 [PR Template](https://github.com/abhisek2004/Dev-Elevate/blob/main/.github/ISSUE_TEMPLATE/PULL_REQUEST_TEMPLATE.md)`,
+              `- 💬 [Join our Discord](https://discord.gg/BtqrauPm) for discussions`,
+              `- 🌟 [GSSoC 2025 Program](https://gssoc.girlscript.tech/) - We're an official participant!`,
+              ``,
+              `### 🏷️ Auto-Labeling`,
+              `This PR will be automatically labeled based on its content and files changed.`,
+              ``,
+              `---
+              *This is an automated message. For immediate assistance, please join our [Discord server](https://discord.gg/BtqrauPm).*`
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: welcomeMessage
+            });
+
+      - name: Auto Label PRs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const prNumber = pr.number;
+            const prTitle = pr.title.toLowerCase();
+            const prBody = (pr.body || '').toLowerCase();
+            const files = await github.rest.pulls.listFiles({
+              pull_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+
+            let labels = ['new-pr'];
+
+            // Check file types
+            const fileNames = files.data.map(file => file.filename.toLowerCase());
+            const hasFrontendFiles = fileNames.some(file => 
+              file.includes('.tsx') || file.includes('.ts') || file.includes('.jsx') || 
+              file.includes('.js') || file.includes('.css') || file.includes('.scss') ||
+              file.includes('components/') || file.includes('src/')
+            );
+
+            const hasBackendFiles = fileNames.some(file => 
+              file.includes('.py') || file.includes('.java') || file.includes('.php') ||
+              file.includes('server/') || file.includes('api/') || file.includes('routes/')
+            );
+
+            const hasDocs = fileNames.some(file => 
+              file.includes('.md') || file.includes('readme') || file.includes('docs/')
+            );
+
+            // Content-based labeling
+            if (prTitle.includes('bug') || prTitle.includes('fix') || 
+                prBody.includes('bug') || prBody.includes('fix')) {
+              labels.push('bug-fix');
+            }
+
+            if (prTitle.includes('feature') || prTitle.includes('enhancement') ||
+                prBody.includes('feature') || prBody.includes('enhancement')) {
+              labels.push('enhancement');
+            }
+
+            if (prTitle.includes('refactor') || prBody.includes('refactor')) {
+              labels.push('refactor');
+            }
+
+            if (hasFrontendFiles) {
+              labels.push('frontend');
+            }
+
+            if (hasBackendFiles) {
+              labels.push('backend');
+            }
+
+            if (hasDocs) {
+              labels.push('documentation');
+            }
+
+            if (prTitle.includes('gssoc') || prTitle.includes('gsoc') ||
+                prBody.includes('gssoc') || prBody.includes('gsoc')) {
+              labels.push('gssoc-2025');
+            }
+
+            await github.rest.issues.addLabels({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: labels
+            });
+
+      - name: Check PR Size
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const additions = pr.additions;
+            const deletions = pr.deletions;
+            const totalChanges = additions + deletions;
+
+            let sizeLabel = '';
+            if (totalChanges <= 10) {
+              sizeLabel = 'size/XS';
+            } else if (totalChanges <= 30) {
+              sizeLabel = 'size/S';
+            } else if (totalChanges <= 100) {
+              sizeLabel = 'size/M';
+            } else if (totalChanges <= 500) {
+              sizeLabel = 'size/L';
+            } else {
+              sizeLabel = 'size/XL';
+            }
+
+            await github.rest.issues.addLabels({
+              issue_number: pr.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: [sizeLabel]
+            });
