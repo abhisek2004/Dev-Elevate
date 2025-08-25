@@ -1,0 +1,14 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Hello, CI!"
+      - name: Check workflows directory
+        run: |
+          echo "🔍 Checking workflow files..."
+          ls -la .github/workflows/ || echo "⚠️ No workflows directory found"

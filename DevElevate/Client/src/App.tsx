@@ -16,6 +16,7 @@ import Chatbot from "./components/Chatbot/Chatbot";
 import TechFeed from "./components/TechFeed/TechFeed";
 import ResumeBuilder from "./components/ResumeBuilder/ResumeBuilder";
 import PlacementPrep from "./components/PlacementPrep/PlacementPrep";
+import PlacementStats from "./pages/Placements/PlacementStats";
 import UserProfile from "./components/Profile/UserProfile";
 import PrivacyPolicy from "./components/Legal/PrivacyPolicy";
 import TermsOfService from "./components/Legal/TermsOfService";
@@ -38,6 +39,7 @@ import NotesView from "./components/notes/NotesView";
 import CalendarView from "./components/calendar/CalendarView";
 import Coding from "./pages/Coding/Coding";
 import InterviewPage from "./pages/Interview/InterviewPage";
+import QuizPage from "./components/Quiz/QuizPage";
 
 
 
@@ -58,6 +60,7 @@ const AppContent = () => {
                   }
                 />
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/placements" element={<PlacementStats />}/>
 
                 {/* Protected Routes */}
                 <Route
@@ -71,6 +74,7 @@ const AppContent = () => {
                               <Routes>
                                 <Route path="dashboard" element={<Dashboard />} />
                                 <Route path="learning" element={<LearningHub />} />
+                                <Route path="quiz" element={<QuizPage />} />
                                 <Route path="coding/*" element={<Coding />} />
                                 <Route path="interview" element={<InterviewPage />} />
                                 <Route path="chatbot" element={<Chatbot />} />

@@ -1,4 +1,4 @@
-import { Submission } from "../model/Submission.js";
+import QuizAttempt from "../model/QuizAttempt.js";
 import Quiz from "../model/Quiz.js";
 
 export const getAllSubmissionsDetailed = async (req, res) => {
@@ -14,7 +14,7 @@ export const getAllSubmissionsDetailed = async (req, res) => {
     for (const quiz of quizzes) {
       if (!quiz._id || !Array.isArray(quiz.questions)) continue;
 
-      const submissions = await Submission.find({ quizId: quiz._id }).populate("userId", "name email");
+      const submissions = await QuizAttempt.find({ quizId: quiz._id }).populate("userId", "name email");
 
       if (!submissions || submissions.length === 0) {
         results.push({
@@ -38,30 +38,24 @@ export const getAllSubmissionsDetailed = async (req, res) => {
 
           if (!question) return null;
 
-          let isCorrect = false;
-
-          if (quiz.type === "MCQ") {
-            isCorrect = question.correctAnswer === ans.givenAnswer;
-          } else if (quiz.type === "Code") {
-            isCorrect = question.expectedOutput?.trim() === ans.output?.trim();
-          }
-
-          if (isCorrect) totalScore += 1;
-
           return {
             questionText: question.questionText,
-            givenAnswer: ans.givenAnswer,
+            givenAnswer: ans.userAnswer,
             expected: quiz.type === "MCQ" ? question.correctAnswer : question.expectedOutput,
-            result: isCorrect ? "✅ Correct" : "❌ Incorrect",
+            result: ans.isCorrect ? "✅ Correct" : "❌ Incorrect",
           };
-        }).filter(Boolean); // Removes nulls
+        }).filter(Boolean);
+
+        totalScore = submission.score;
 
         return {
-          student: submission.userId?.name || "Unknown",
+          student: submission.userId?.username || submission.userId?.name || "Unknown",
           email: submission.userId?.email || "N/A",
           score: totalScore,
-          submittedAt: submission.submittedAt,
+          submittedAt: submission.completedAt,
           answers: detailedAnswers,
+          timeTaken: submission.timeTaken,
+          percentage: Math.round((submission.score / submission.totalQuestions) * 100)
         };
       });
 

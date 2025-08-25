@@ -16,6 +16,7 @@ import {
   Calendar,
   DollarSign,
   Users,
+  Brain,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useGlobalState } from "../../contexts/GlobalContext";
@@ -37,6 +38,7 @@ const Sidebar: React.FC = () => {
   const navItems = [
     { path: "/dashboard", icon: Home, label: "Dashboard" },
     { path: "/learning", icon: BookOpen, label: "Learning Hub" },
+    { path: "/quiz", icon: Brain, label: "Quiz Center" },
     { path: "/coding", icon: Code2, label: "Coding" },
     { path: "/interview", icon: Users, label: "Interview" },
     { path: "/chatbot", icon: MessageSquare, label: "Study Buddy" },

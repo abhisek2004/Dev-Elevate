@@ -7,6 +7,7 @@ import NewsWidget from './NewsWidget';
 import QuickActions from './QuickActions';
 import StreakCalendar from './StreakCalendar';
 import DailyGoals from './DailyGoals';
+import QuizHistory from '../Quiz/QuizHistory';
 import { User } from '../../contexts/GlobalContext';
 
 const Dashboard: React.FC = () => {
@@ -94,6 +95,7 @@ const Dashboard: React.FC = () => {
           {/* Right Column */}
           <div className="space-y-6">
             <QuickActions />
+            <QuizHistory />
             <DailyGoals />
             <StreakCalendar />
           </div>

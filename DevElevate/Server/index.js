@@ -10,13 +10,14 @@ import { authenticateToken } from "./middleware/authMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import adminFeedbackRoutes from './routes/adminFeedbackRoutes.js';
 import communityRoutes from './routes/communityRoutes.js';
-import quizRoutes from './routes/quizRoutes.js'
+import quizRoutes from './routes/quizRoutes.js';
+import userQuizRoutes from './routes/userQuizRoutes.js';
 import atsRoutes from './routes/atsRoutes.js';
 import notificationRoutes from "./routes/notificationRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import javaRoutes from "./routes/javaRoutes.js";
-import codingRoutes from "./routes/codingRoutes.js";
-import placementRoutes from "./routes/placementRoutes.js";
+import codingRoutes from "./routes/codingRoutes.js";   // ✅ keep coding routes
+import placementRoutes from "./routes/placementRoutes.js"; // ✅ keep placement routes
 
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
@@ -48,32 +49,32 @@ app.set("trust proxy", true);
 
 // Routes
 app.use("/api/v1/notifications", notificationRoutes);
+
 // USER ROUTES
 app.use("/api/v1", userRoutes);
-
-app.use("/api/v1/community", communityRoutes); // Community routes for questions and answers
-
-// ATS Scanner Route
-app.use("/api/v1/ats", atsRoutes); // ATS resume scanner functionality
+app.use("/api/v1/community", communityRoutes);
+app.use("/api/v1/ats", atsRoutes);
 
 // ADMIN ROUTES
-app.use("/api/v1/admin", adminRoutes); // general admin stuff like login, profile
-app.use("/api/v1/admin/courses", courseRoutes); // course create/delete/edit
-app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
-app.use("/api/v1/admin/quiz", quizRoutes); //quiz-related
+app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/admin/courses", courseRoutes);
+app.use("/api/v1/admin/feedback", adminFeedbackRoutes);
+app.use("/api/v1/admin/quiz", quizRoutes);
+app.use("/api/v1/quiz", userQuizRoutes);
+
+// AI routes
 app.use("/api/v1", aiRoutes);
 
 // Learning Routes
-app.use("/api/v1/learning/java", javaRoutes); // Java learning content
+app.use("/api/v1/learning/java", javaRoutes);
 
 // Coding Platform Routes
-app.use("/api/v1/coding", codingRoutes); // Coding problems and submissions
+app.use("/api/v1/coding", codingRoutes);
 
-// Placement Preparation Routes
-app.use("/api/v1/placement", placementRoutes); // Placement prep functionality
+// Placement Prep Routes
+app.use("/api/v1/placements", placementRoutes); // ✅ standardized plural
 
-
-// Sample Usage of authenticate and authorize middleware for roleBased Features
+// Sample usage of authenticate + authorize middleware
 app.get(
   "/api/admin/dashboard",
   authenticateToken,

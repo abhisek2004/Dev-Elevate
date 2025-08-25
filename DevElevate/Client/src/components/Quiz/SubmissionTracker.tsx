@@ -15,6 +15,8 @@ interface Submission {
   score: number;
   submittedAt: string;
   answers: DetailedAnswer[];
+  timeTaken?: number;
+  percentage?: number;
 }
 
 interface QuizSubmissions {
@@ -42,7 +44,7 @@ const SubmissionTracker: React.FC<SubmissionTrackerProps> = ({ darkMode }) => {
       setLoading(true);
       setError(null);
       try {
-        const res = await instance.get('/api/v1/admin/quiz/submission')
+        const res = await instance.get('/api/v1/admin/quiz/submissions')
         setData(res.data);
       } catch (err: any) {
         setError(err.response?.data?.message || 'Failed to fetch submissions');
@@ -78,7 +80,8 @@ const SubmissionTracker: React.FC<SubmissionTrackerProps> = ({ darkMode }) => {
                   <th className="text-left p-2">Student</th>
                   <th className="text-left p-2">Email</th>
                   <th className="text-center p-2">Score</th>
-                  <th className="text-center p-2">Submitted At</th>
+                  <th className="text-center p-2">Percentage</th>
+                  <th className="text-center p-2">Time</th>
                   <th className="text-center p-2">Actions</th>
                 </tr>
               </thead>
@@ -91,7 +94,8 @@ const SubmissionTracker: React.FC<SubmissionTrackerProps> = ({ darkMode }) => {
                     <td className="p-2">{submission.student}</td>
                     <td className="p-2">{submission.email}</td>
                     <td className="p-2 text-center">{submission.score}</td>
-                    <td className="p-2 text-center">{new Date(submission.submittedAt).toLocaleString()}</td>
+                    <td className="p-2 text-center">{submission.percentage || 0}%</td>
+                    <td className="p-2 text-center">{submission.timeTaken ? Math.floor(submission.timeTaken / 60) + 'm' : 'N/A'}</td>
                     <td className="p-2 text-center">
                       <button
                         onClick={() => {
@@ -125,7 +129,8 @@ const SubmissionTracker: React.FC<SubmissionTrackerProps> = ({ darkMode }) => {
             <h4 className="text-xl font-bold mb-4">Submission Details</h4>
             <p><strong>Quiz:</strong> {selectedQuiz}</p>
             <p><strong>Student:</strong> {selected.student} ({selected.email})</p>
-            <p><strong>Score:</strong> {selected.score}</p>
+            <p><strong>Score:</strong> {selected.score} ({selected.percentage || 0}%)</p>
+            <p><strong>Time Taken:</strong> {selected.timeTaken ? Math.floor(selected.timeTaken / 60) + 'm ' + (selected.timeTaken % 60) + 's' : 'N/A'}</p>
             <p><strong>Submitted At:</strong> {new Date(selected.submittedAt).toLocaleString()}</p>
 
             <div className="mt-6 space-y-4">
