@@ -1,28 +1,56 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Filter, BookOpen, Clock, CheckCircle, XCircle } from 'lucide-react';
+import { Search, Filter, BookOpen, Clock, CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { problems } from '../Data/problems';
+import { codingApi, type Problem } from '../../../api/codingApi';
 
 const ProblemsPage: React.FC = () => {
+  const [problems, setProblems] = useState<Problem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('All');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [showFilters, setShowFilters] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const difficulties = ['All', 'Easy', 'Medium', 'Hard'];
   const categories = ['All', 'Array', 'Math', 'Dynamic Programming', 'String', 'Tree', 'Graph'];
 
+  // Fetch problems from backend
+  useEffect(() => {
+    const fetchProblems = async () => {
+      try {
+        setLoading(true);
+        const params: any = { page: currentPage, limit: 20 };
+
+        if (selectedDifficulty !== 'All') {
+          params.difficulty = selectedDifficulty;
+        }
+        if (selectedCategory !== 'All') {
+          params.category = selectedCategory;
+        }
+
+        const response = await codingApi.getProblems(params);
+        setProblems(response.problems);
+        setTotalPages(response.pagination.pages);
+      } catch (error) {
+        console.error('Error fetching problems:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProblems();
+  }, [currentPage, selectedDifficulty, selectedCategory]);
+
   const filteredProblems = useMemo(() => {
     return problems.filter(problem => {
       const matchesSearch = problem.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          problem.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-      const matchesDifficulty = selectedDifficulty === 'All' || problem.difficulty === selectedDifficulty;
-      const matchesCategory = selectedCategory === 'All' || problem.category === selectedCategory;
-      
-      return matchesSearch && matchesDifficulty && matchesCategory;
+        problem.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      return matchesSearch;
     });
-  }, [searchTerm, selectedDifficulty, selectedCategory]);
+  }, [problems, searchTerm]);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -34,15 +62,8 @@ const ProblemsPage: React.FC = () => {
   };
 
   const getStatusIcon = (problemId: string) => {
-    // Mock solved status - in real app this would come from user data
-    const solvedProblems = ['1', '2'];
-    const attemptedProblems = ['3'];
-    
-    if (solvedProblems.includes(problemId)) {
-      return <CheckCircle className="w-5 h-5 text-green-400" />;
-    } else if (attemptedProblems.includes(problemId)) {
-      return <XCircle className="w-5 h-5 text-yellow-400" />;
-    }
+    // TODO: In real app, this would come from user submission data
+    // For now, return empty div
     return <div className="w-5 h-5" />;
   };
 
@@ -76,7 +97,7 @@ const ProblemsPage: React.FC = () => {
                 className="py-3 pr-4 pl-10 w-full placeholder-gray-400 text-white bg-gray-700 rounded-lg border border-gray-600 transition-colors focus:border-electric-400 focus:outline-none"
               />
             </div>
-            
+
             <button
               onClick={() => setShowFilters(!showFilters)}
               className="flex items-center px-4 py-3 space-x-2 text-gray-300 bg-gray-700 rounded-lg border border-gray-600 transition-colors hover:text-white hover:border-gray-500"
@@ -110,7 +131,7 @@ const ProblemsPage: React.FC = () => {
                     ))}
                   </select>
                 </div>
-                
+
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-300">
                     Category
@@ -152,7 +173,12 @@ const ProblemsPage: React.FC = () => {
 
             {/* Problems */}
             <div className="divide-y divide-gray-700">
-              {filteredProblems.length === 0 ? (
+              {loading ? (
+                <div className="py-12 text-center">
+                  <Loader2 className="mx-auto mb-4 w-8 h-8 text-electric-400 animate-spin" />
+                  <p className="text-gray-400">Loading problems...</p>
+                </div>
+              ) : filteredProblems.length === 0 ? (
                 <div className="py-12 text-center">
                   <BookOpen className="mx-auto mb-4 w-16 h-16 text-gray-600" />
                   <h3 className="mb-2 text-xl font-semibold text-white">No Problems Found</h3>
@@ -161,21 +187,21 @@ const ProblemsPage: React.FC = () => {
               ) : (
                 filteredProblems.map((problem, index) => (
                   <motion.div
-                    key={problem.id}
+                    key={problem._id}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
                     className="transition-colors hover:bg-gray-750"
                   >
                     <Link
-                      to={`/coding/problems/${problem.id}`}
+                      to={`/coding/problems/${problem._id}`}
                       className="block px-6 py-4"
                     >
                       <div className="grid grid-cols-12 gap-4 items-center">
                         <div className="col-span-1">
-                          {getStatusIcon(problem.id)}
+                          {getStatusIcon(problem._id)}
                         </div>
-                        
+
                         <div className="col-span-5">
                           <h3 className="font-medium text-white transition-colors hover:text-electric-400">
                             {problem.title}
@@ -196,18 +222,18 @@ const ProblemsPage: React.FC = () => {
                             )}
                           </div>
                         </div>
-                        
+
                         <div className="col-span-2">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(problem.difficulty)}`}>
                             {problem.difficulty}
                           </span>
                         </div>
-                        
+
                         <div className="col-span-2">
                           <div className="font-medium text-white">{problem.acceptance}%</div>
                           <div className="text-xs text-gray-400">{problem.submissions.toLocaleString()} submissions</div>
                         </div>
-                        
+
                         <div className="col-span-2">
                           <span className="text-gray-300">{problem.category}</span>
                         </div>
@@ -238,7 +264,7 @@ const ProblemsPage: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="p-6 bg-gray-800 rounded-lg border border-gray-700">
             <div className="flex justify-between items-center">
               <div>
@@ -250,7 +276,7 @@ const ProblemsPage: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="p-6 bg-gray-800 rounded-lg border border-gray-700">
             <div className="flex justify-between items-center">
               <div>

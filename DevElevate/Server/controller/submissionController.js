@@ -44,9 +44,9 @@ export const getAllSubmissionsDetailed = async (req, res) => {
             expected: quiz.type === "MCQ" ? question.correctAnswer : question.expectedOutput,
             result: ans.isCorrect ? "✅ Correct" : "❌ Incorrect",
           };
-        }).filter(Boolean); // Removes nulls
+        }).filter(Boolean);
 
-        totalScore = submission.score; // Use pre-calculated score
+        totalScore = submission.score;
 
         return {
           student: submission.userId?.username || submission.userId?.name || "Unknown",
