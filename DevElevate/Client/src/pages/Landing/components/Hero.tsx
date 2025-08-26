@@ -129,9 +129,17 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <ChevronDown className="w-6 h-6 text-gray-400" />
-      </div>
+<div 
+  className="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce cursor-pointer"
+  onClick={() => {
+    document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
+  }}
+>
+  <ChevronDown className="w-6 h-6 text-gray-400" />
+</div>
+
+
+
     </section>
   );
 };

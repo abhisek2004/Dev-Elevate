@@ -5,18 +5,26 @@ import { Input } from '../ui/Input';
 import { Modal } from '../ui/modal';
 import { Dropdown } from '../ui/Dropdown';
 import { Task, useTasks } from '../../contexts/AppContext';
+import { useGlobalState } from '../../contexts/GlobalContext';
 import { formatDate, generateId, getPriorityColor, getStatusColor } from '../../utils/helperAI';
 
 const TasksView: React.FC = () => {
   const { tasks, addTask, updateTask, deleteTask } = useTasks();
+  const { state } = useGlobalState();
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'list' | 'kanban'>('list');
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState({
+    status: 'all' as 'all' | Task['status'],
+    priority: 'all' as 'all' | Task['priority'],
+    assignedTo: 'all' as string,
+  });
   const [newTask, setNewTask] = useState({
     title: '',
     description: '',
-    priority: 'medium' as const,
+    priority: 'medium' as Task['priority'],
     dueDate: '',
     assignedTo: '',
     tags: [] as string[],
@@ -28,17 +36,25 @@ const TasksView: React.FC = () => {
       <div className="flex justify-center items-center h-64">
         <div className="text-center">
           <div className="mx-auto mb-4 w-8 h-8 rounded-full border-4 border-blue-500 animate-spin border-t-transparent"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading tasks...</p>
+          <p className={`${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Loading tasks...</p>
         </div>
       </div>
     );
   }
 
-  const filteredTasks = tasks.filter(task =>
-    task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    task.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    task.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredTasks = tasks.filter(task => {
+    const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      task.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    const matchesStatus = filters.status === 'all' || task.status === filters.status;
+    const matchesPriority = filters.priority === 'all' || task.priority === filters.priority;
+    const matchesAssignee = filters.assignedTo === 'all' || 
+      (filters.assignedTo === 'unassigned' && !task.assignedTo) ||
+      (task.assignedTo && task.assignedTo.toLowerCase().includes(filters.assignedTo.toLowerCase()));
+    
+    return matchesSearch && matchesStatus && matchesPriority && matchesAssignee;
+  });
 
   const tasksByStatus = {
     todo: filteredTasks.filter(task => task.status === 'todo'),
@@ -110,7 +126,7 @@ const TasksView: React.FC = () => {
 
   const TaskCard: React.FC<{ task: Task }> = ({ task }) => (
     <div
-      className="p-4 bg-white rounded-lg border border-gray-200 shadow-sm transition-shadow cursor-pointer dark:bg-gray-800 dark:border-gray-700 hover:shadow-md"
+      className={`p-4 rounded-lg border shadow-sm transition-shadow cursor-pointer hover:shadow-md ${state.darkMode ? 'bg-gray-800 border-gray-700 text-gray-100' : 'bg-white border-gray-200 text-gray-900'}`}
       onClick={() => setSelectedTask(task)}
     >
       <div className="flex justify-between items-start mb-3">
@@ -126,10 +142,10 @@ const TasksView: React.FC = () => {
             {getStatusIcon(task.status)}
           </button>
           <div className="flex-1">
-            <h3 className="font-medium text-gray-900 dark:text-white">
+            <h3 className="font-medium text-current">
               {task.title}
             </h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className={`mt-1 text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
               {task.description}
             </p>
           </div>
@@ -168,7 +184,7 @@ const TasksView: React.FC = () => {
           {task.tags.map(tag => (
             <span
               key={tag}
-              className="px-2 py-1 text-xs text-gray-600 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-400"
+              className={`px-2 py-1 text-xs rounded-full ${state.darkMode ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-600'}`}
             >
               {tag}
             </span>
@@ -183,9 +199,9 @@ const TasksView: React.FC = () => {
     status, 
     tasks 
   }) => (
-    <div className="p-4 bg-gray-50 rounded-lg dark:bg-gray-900">
+    <div className={`p-4 rounded-lg ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <div className="flex justify-between items-center mb-4">
-        <h3 className="font-medium text-gray-900 dark:text-white">
+        <h3 className={`font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
           {title} ({tasks.length})
         </h3>
         <Button
@@ -209,19 +225,19 @@ const TasksView: React.FC = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Tasks</h2>
-          <p className="mt-1 text-gray-500 dark:text-gray-400">
+          <h2 className={`text-2xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Tasks</h2>
+          <p className={`mt-1 ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
             {tasks.length} tasks • {tasksByStatus.todo.length} todo, {tasksByStatus['in-progress'].length} in progress, {tasksByStatus.done.length} done
           </p>
         </div>
         <div className="flex items-center space-x-2">
-          <div className="flex p-1 bg-gray-200 rounded-lg dark:bg-gray-700">
+          <div className={`flex p-1 rounded-lg ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
             <button
               onClick={() => setViewMode('list')}
               className={`px-3 py-1 text-sm rounded-md transition-colors ${
                 viewMode === 'list' 
-                  ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm' 
-                  : 'text-gray-600 dark:text-gray-400'
+                  ? `${state.darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} shadow-sm` 
+                  : `${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`
               }`}
             >
               List
@@ -230,8 +246,8 @@ const TasksView: React.FC = () => {
               onClick={() => setViewMode('kanban')}
               className={`px-3 py-1 text-sm rounded-md transition-colors ${
                 viewMode === 'kanban' 
-                  ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm' 
-                  : 'text-gray-600 dark:text-gray-400'
+                  ? `${state.darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} shadow-sm` 
+                  : `${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`
               }`}
             >
               Kanban
@@ -248,19 +264,90 @@ const TasksView: React.FC = () => {
       </div>
 
       {/* Search and Filters */}
-      <div className="flex items-center space-x-4">
-        <div className="flex-1">
-          <Input
-            placeholder="Search tasks..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            icon={<Search size={16} />}
-          />
+      <div className="space-y-4">
+        <div className="flex items-center space-x-4">
+          <div className="flex-1">
+            <Input
+              placeholder="Search tasks..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              icon={<Search size={16} />}
+            />
+          </div>
+          <Button 
+            variant="outline"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            <Filter size={16} className="mr-2" />
+            Filter
+          </Button>
         </div>
-        <Button variant="outline">
-          <Filter size={16} className="mr-2" />
-          Filter
-        </Button>
+        
+        {showFilters && (
+          <div className={`p-4 rounded-lg border ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Status
+                </label>
+                <select
+                  value={filters.status}
+                  onChange={(e) => setFilters({...filters, status: e.target.value as any})}
+                  className={`w-full p-2 rounded-md border ${state.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                >
+                  <option value="all">All Status</option>
+                  <option value="todo">To Do</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="done">Done</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Priority
+                </label>
+                <select
+                  value={filters.priority}
+                  onChange={(e) => setFilters({...filters, priority: e.target.value as any})}
+                  className={`w-full p-2 rounded-md border ${state.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                >
+                  <option value="all">All Priority</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Assignee
+                </label>
+                <select
+                  value={filters.assignedTo}
+                  onChange={(e) => setFilters({...filters, assignedTo: e.target.value})}
+                  className={`w-full p-2 rounded-md border ${state.darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                >
+                  <option value="all">All Assignees</option>
+                  <option value="unassigned">Unassigned</option>
+                  {Array.from(new Set(tasks.filter(t => t.assignedTo).map(t => t.assignedTo))).map(assignee => (
+                    <option key={assignee} value={assignee}>{assignee}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            
+            <div className="flex justify-end mt-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setFilters({ status: 'all', priority: 'all', assignedTo: 'all' })}
+              >
+                Clear Filters
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Tasks Display */}
@@ -272,7 +359,7 @@ const TasksView: React.FC = () => {
         </div>
       ) : (
         <>
-          <div className="p-4 mb-4 text-sm text-yellow-800 bg-yellow-50 rounded-lg border border-yellow-200 dark:bg-yellow-900/20 dark:border-yellow-700 dark:text-yellow-200">
+          <div className={`p-4 mb-4 text-sm rounded-lg border ${state.darkMode ? 'bg-yellow-900/20 border-yellow-700 text-yellow-200' : 'bg-yellow-50 border-yellow-200 text-yellow-800'}`}>
             <strong>What is Kanban?</strong> Kanban is a simple, visual way to manage your work. Tasks move through columns like To Do, In Progress, and Done, making it easy to see what needs attention and what is finished.
           </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -314,7 +401,7 @@ const TasksView: React.FC = () => {
             value={newTask.description}
             onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
             rows={4}
-            className="p-3 w-full text-gray-900 bg-white rounded-lg border border-gray-300 resize-none dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`p-3 w-full rounded-lg border resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 ${state.darkMode ? 'bg-gray-800 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
           />
 
           <div className="grid grid-cols-2 gap-4">
@@ -378,31 +465,40 @@ const TasksView: React.FC = () => {
       >
         {selectedTask && (
           <div className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <span className={`px-3 py-1 text-sm font-medium rounded-full ${getStatusColor(selectedTask.status)}`}>
-                {selectedTask.status.replace('-', ' ')}
-              </span>
-              <span className={`px-3 py-1 text-sm font-medium rounded-full ${getPriorityColor(selectedTask.priority)}`}>
-                {selectedTask.priority} priority
-              </span>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-4">
+                <span className={`px-3 py-1 text-sm font-medium rounded-full ${getStatusColor(selectedTask.status)}`}>
+                  {selectedTask.status.replace('-', ' ')}
+                </span>
+                <span className={`px-3 py-1 text-sm font-medium rounded-full ${getPriorityColor(selectedTask.priority)}`}>
+                  {selectedTask.priority} priority
+                </span>
+              </div>
+              <div className={`flex items-center space-x-4 text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <span>Created {formatDate(selectedTask.createdAt)}</span>
+              </div>
             </div>
 
             <div>
-              <h3 className="mb-2 font-medium text-gray-900 dark:text-white">Description</h3>
-              <p className="text-gray-600 dark:text-gray-400">{selectedTask.description}</p>
+              <h3 className={`mb-2 font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Description</h3>
+              <div className={`whitespace-pre-wrap ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                {selectedTask.description || 'No description provided.'}
+              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h4 className="mb-2 font-medium text-gray-900 dark:text-white">Created</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {formatDate(selectedTask.createdAt)}
-                </p>
-              </div>
+              {selectedTask.assignedTo && (
+                <div>
+                  <h4 className={`mb-2 font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Assigned To</h4>
+                  <p className={`text-sm ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    {selectedTask.assignedTo}
+                  </p>
+                </div>
+              )}
               {selectedTask.dueDate && (
                 <div>
-                  <h4 className="mb-2 font-medium text-gray-900 dark:text-white">Due Date</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <h4 className={`mb-2 font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Due Date</h4>
+                  <p className={`text-sm ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     {formatDate(selectedTask.dueDate)}
                   </p>
                 </div>
@@ -410,13 +506,13 @@ const TasksView: React.FC = () => {
             </div>
 
             {selectedTask.tags.length > 0 && (
-              <div>
-                <h4 className="mb-2 font-medium text-gray-900 dark:text-white">Tags</h4>
+              <div className={`flex items-center pt-4 space-x-2 border-t ${state.darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                <div className={`${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Tags:</div>
                 <div className="flex flex-wrap gap-2">
                   {selectedTask.tags.map(tag => (
                     <span
                       key={tag}
-                      className="px-2 py-1 text-sm text-gray-600 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-400"
+                      className={`px-2 py-1 text-sm rounded-full ${state.darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-700'} font-medium`}
                     >
                       {tag}
                     </span>
@@ -429,11 +525,13 @@ const TasksView: React.FC = () => {
               <Button
                 variant="outline"
                 onClick={() => setSelectedTask(null)}
+                className="dark:text-white dark:border-white dark:hover:bg-gray-700"
               >
                 Close
               </Button>
               <Button
                 variant="primary"
+                className="dark:bg-blue-500 dark:hover:bg-blue-600 dark:text-white font-medium"
                 onClick={() => {
                   const nextStatus = selectedTask.status === 'todo' ? 'in-progress' : 
                                   selectedTask.status === 'in-progress' ? 'done' : 'todo';

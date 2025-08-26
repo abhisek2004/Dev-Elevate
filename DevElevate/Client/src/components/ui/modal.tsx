@@ -5,6 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./dialog";
+import { useGlobalState } from "../../contexts/GlobalContext";
 
 interface ModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface ModalProps {
 }
 
 export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, size = 'md' }) => {
+  const { state } = useGlobalState();
   const sizeClasses = {
     sm: 'max-w-md',
     md: 'max-w-lg',
@@ -24,10 +26,10 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
-      <DialogContent className={sizeClasses[size]}>
+      <DialogContent className={`${sizeClasses[size]} ${state.darkMode ? 'bg-gray-900 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-900'}`}>
         {title ? (
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle className={state.darkMode ? 'text-white' : 'text-gray-900'}>{title}</DialogTitle>
           </DialogHeader>
         ) : null}
         {children}

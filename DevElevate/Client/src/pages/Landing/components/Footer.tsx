@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaBriefcase } from "react-icons/fa";
 import { Rocket, Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
+import { SiMongodb, SiExpress, SiNodedotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
 
 const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -23,11 +24,11 @@ const Footer: React.FC = () => {
   ];
 
   const techStack = [
-    { name: "MongoDB", icon: "🧠" },
-    { name: "Express.js", icon: "🚀" },
-    { name: "Node.js", icon: "🛠️" },
-    { name: "TypeScript", icon: "📘" },
-    { name: "Tailwind CSS", icon: "🎨" },
+    { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+    { name: "Express.js", icon: SiExpress, color: "#FFFFFF" },
+    { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
+    { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+    { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
   ];
 
   return (
@@ -109,12 +110,18 @@ const Footer: React.FC = () => {
           <div className="col-span-2">
             <h4 className="mb-4 font-semibold text-white">Tech Stack</h4>
             <ul className="space-y-3">
-              {techStack.map((tech) => (
-                <li key={tech.name} className="flex items-center space-x-2">
-                  <span>{tech.icon}</span>
-                  <span className="text-gray-400">{tech.name}</span>
-                </li>
-              ))}
+              {techStack.map((tech) => {
+                const IconComponent = tech.icon;
+                return (
+                  <li key={tech.name} className="flex items-center space-x-2">
+                    <IconComponent 
+                      className="w-4 h-4" 
+                      style={{ color: tech.color }}
+                    />
+                    <span className="text-gray-400">{tech.name}</span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

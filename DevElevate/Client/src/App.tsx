@@ -1,5 +1,5 @@
 import { AuthProvider } from "./contexts/AuthContext";
-import { GlobalProvider } from "./contexts/GlobalContext";
+import { GlobalProvider, useGlobalState } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { AdminProvider } from "./contexts/AdminContext";
 import { AppProvider } from "./contexts/AppContext";
@@ -16,6 +16,7 @@ import Chatbot from "./components/Chatbot/Chatbot";
 import TechFeed from "./components/TechFeed/TechFeed";
 import ResumeBuilder from "./components/ResumeBuilder/ResumeBuilder";
 import PlacementPrep from "./components/PlacementPrep/PlacementPrep";
+import PlacementStats from "./pages/Placements/PlacementStats";
 import UserProfile from "./components/Profile/UserProfile";
 import PrivacyPolicy from "./components/Legal/PrivacyPolicy";
 import TermsOfService from "./components/Legal/TermsOfService";
@@ -37,17 +38,18 @@ import TasksView from "./components/tasks/TasksView";
 import NotesView from "./components/notes/NotesView";
 import CalendarView from "./components/calendar/CalendarView";
 import Coding from "./pages/Coding/Coding";
+import InterviewPage from "./pages/Interview/InterviewPage";
+import QuizPage from "./components/Quiz/QuizPage";
 
 
 
-function App() {
+const AppContent = () => {
+  const { state } = useGlobalState();
+  
   return (
-    <AuthProvider>
-      <GlobalProvider>
-        <NotificationProvider>
-            <Router>
-              <ScrollToTop />
-              <Routes>
+    <Router>
+      <ScrollToTop />
+      <Routes>
                 {/* Public Routes */}
                 <Route
                   path="/login"
@@ -58,6 +60,7 @@ function App() {
                   }
                 />
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/placements" element={<PlacementStats />}/>
 
                 {/* Protected Routes */}
                 <Route
@@ -66,12 +69,14 @@ function App() {
                     <ProtectedRoute>
                       <AppProvider>
                         <Layout>
-                          <div className="flex-1 bg-white dark:bg-gray-900">
+                          <div className={`flex-1 ${state.darkMode ? 'bg-gray-900' : 'bg-white'}`}>
                             <main className="flex-1">
                               <Routes>
                                 <Route path="dashboard" element={<Dashboard />} />
                                 <Route path="learning" element={<LearningHub />} />
+                                <Route path="quiz" element={<QuizPage />} />
                                 <Route path="coding/*" element={<Coding />} />
+                                <Route path="interview" element={<InterviewPage />} />
                                 <Route path="chatbot" element={<Chatbot />} />
                                 <Route path="news" element={<TechFeed />} />
                                 <Route
@@ -140,8 +145,17 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-              </Routes>
-            </Router>
+      </Routes>
+    </Router>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <GlobalProvider>
+        <NotificationProvider>
+          <AppContent />
         </NotificationProvider>
       </GlobalProvider>
     </AuthProvider>

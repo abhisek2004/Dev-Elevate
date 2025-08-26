@@ -25,7 +25,7 @@ If you find a **security issue** in DevElevate, we kindly ask that you follow **
 ### ✅ Instead:
 
 * **Email us directly and privately** at:
-  📧 `abhisek2004panda@gmail.com`
+  📧 `officialdevelevate@gmail.com`
 
 * Please include:
 

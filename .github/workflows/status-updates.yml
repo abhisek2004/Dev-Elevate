@@ -1,0 +1,215 @@
+name: Status Updates and Reminders
+
+on:
+  schedule:
+    # Run every day at 9 AM UTC
+    - cron: "0 9 * * *"
+  workflow_dispatch:
+
+jobs:
+  status-updates:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Check Stale Issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+            // Get open issues that haven't been updated in 30 days
+            const staleIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              sort: 'updated',
+              direction: 'asc',
+              per_page: 100
+            });
+
+            for (const issue of staleIssues.data) {
+              const lastUpdated = new Date(issue.updated_at);
+              if (lastUpdated < thirtyDaysAgo && !issue.labels.some(label => label.name === 'stale')) {
+                const staleMessage = [
+                  `## ⏰ Issue Status Update`,
+                  ``,
+                  `This issue hasn't been updated in over 30 days.`,
+                  ``,
+                  `### 🔄 What You Can Do`,
+                  `- **Still relevant?** Please update this issue with current status`,
+                  `- **Need help?** Join our [Discord](https://discord.gg/BtqrauPm) for assistance`,
+                  `- **Completed?** Close the issue if it's been resolved`,
+                  `- **No longer needed?** Close the issue if it's no longer relevant`,
+                  ``,
+                  `### 📅 Timeline`,
+                  `- **Last Updated**: ${lastUpdated.toLocaleDateString()}`,
+                  `- **Days Since Update**: ${Math.floor((new Date() - lastUpdated) / (1000 * 60 * 60 * 24))}`,
+                  ``,
+                  `---
+                  *This is an automated reminder. If this issue is still relevant, please update it.*`
+                ].join('\n');
+                
+                await github.rest.issues.createComment({
+                  issue_number: issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: staleMessage
+                });
+                
+                await github.rest.issues.addLabels({
+                  issue_number: issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  labels: ['stale']
+                });
+              }
+            }
+
+      - name: Check Stale PRs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+            // Get open PRs that haven't been updated in 7 days
+            const stalePRs = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              sort: 'updated',
+              direction: 'asc',
+              per_page: 100
+            });
+
+            for (const pr of stalePRs.data) {
+              const lastUpdated = new Date(pr.updated_at);
+              if (lastUpdated < sevenDaysAgo && !pr.labels.some(label => label.name === 'stale')) {
+                const staleMessage = [
+                  `## ⏰ PR Status Update`,
+                  ``,
+                  `This pull request hasn't been updated in over 7 days.`,
+                  ``,
+                  `### 🔄 What You Can Do`,
+                  `- **Ready for review?** Please request a review from maintainers`,
+                  `- **Need changes?** Update the PR with requested changes`,
+                  `- **Need help?** Join our [Discord](https://discord.gg/BtqrauPm) for assistance`,
+                  `- **No longer needed?** Close the PR if it's no longer relevant`,
+                  ``,
+                  `### 📅 Timeline`,
+                  `- **Last Updated**: ${lastUpdated.toLocaleDateString()}`,
+                  `- **Days Since Update**: ${Math.floor((new Date() - lastUpdated) / (1000 * 60 * 60 * 24))}`,
+                  ``,
+                  `### 🎯 Next Steps`,
+                  `1. Address any review comments`,
+                  `2. Make necessary changes`,
+                  `3. Request a new review`,
+                  `4. Keep the conversation active`,
+                  ``,
+                  `---
+                  *This is an automated reminder. Please update this PR if it's still being worked on.*`
+                ].join('\n');
+                
+                await github.rest.issues.createComment({
+                  issue_number: pr.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: staleMessage
+                });
+                
+                await github.rest.issues.addLabels({
+                  issue_number: pr.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  labels: ['stale']
+                });
+              }
+            }
+
+      - name: Weekly Summary
+        if: github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Create a weekly summary issue
+            const today = new Date();
+            const weekStart = new Date(today);
+            weekStart.setDate(today.getDate() - 7);
+
+            const summaryTitle = `📊 Weekly Project Summary - ${today.toLocaleDateString()}`;
+
+            // Get recent activity
+            const recentIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'all',
+              since: weekStart.toISOString(),
+              per_page: 50
+            });
+
+            const recentPRs = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'all',
+              per_page: 50
+            });
+
+            const newIssues = recentIssues.data.filter(issue => 
+              new Date(issue.created_at) >= weekStart && !issue.pull_request
+            );
+
+            const newPRs = recentPRs.data.filter(pr => 
+              new Date(pr.created_at) >= weekStart
+            );
+
+            const mergedPRs = recentPRs.data.filter(pr => 
+              pr.merged_at && new Date(pr.merged_at) >= weekStart
+            );
+
+            const summaryBody = [
+              `## 📊 Weekly Project Summary`,
+              ``,
+              `**Period**: ${weekStart.toLocaleDateString()} - ${today.toLocaleDateString()}`,
+              ``,
+              `### 📈 Activity Overview`,
+              `- 🆕 **New Issues**: ${newIssues.length}`,
+              `- 🚀 **New PRs**: ${newPRs.length}`,
+              `- ✅ **Merged PRs**: ${mergedPRs.length}`,
+              `- 👥 **Active Contributors**: ${new Set([...newIssues.map(i => i.user.login), ...newPRs.map(p => p.user.login)]).size}`,
+              ``,
+              `### 🆕 New Issues This Week`,
+              newIssues.length > 0 ? newIssues.map(issue => 
+                `- [#${issue.number}](${issue.html_url}) ${issue.title} by @${issue.user.login}`
+              ).join('\n') : 'No new issues this week',
+              ``,
+              `### 🚀 New PRs This Week`,
+              newPRs.length > 0 ? newPRs.map(pr => 
+                `- [#${pr.number}](${pr.html_url}) ${pr.title} by @${pr.user.login}`
+              ).join('\n') : 'No new PRs this week',
+              ``,
+              `### ✅ Merged PRs This Week`,
+              mergedPRs.length > 0 ? mergedPRs.map(pr => 
+                `- [#${pr.number}](${pr.html_url}) ${pr.title} by @${pr.user.login}`
+              ).join('\n') : 'No merged PRs this week',
+              ``,
+              `### 🎯 Next Week's Goals`,
+              `- [ ] Review and merge pending PRs`,
+              `- [ ] Address stale issues and PRs`,
+              `- [ ] Welcome new contributors`,
+              `- [ ] Update project documentation`,
+              ``,
+              `---
+              *This is an automated weekly summary. For questions, join our [Discord](https://discord.gg/BtqrauPm).*`
+            ].join('\n');
+
+            // Create the summary issue
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: summaryTitle,
+              body: summaryBody,
+              labels: ['weekly-summary', 'automated']
+            });

@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home,
   BookOpen,
+  Code2,
   MessageSquare,
   Newspaper,
   FileText,
@@ -17,6 +18,7 @@ import {
   StickyNote,
   Calendar,
   Globe,
+  Users,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useGlobalState } from "../../contexts/GlobalContext";
@@ -36,8 +38,10 @@ const Navbar: React.FC = () => {
   const { notifications } = useNotificationContext();
 
   const navItems = [
- { path: "/dashboard", icon: Home, label: "Dashboard" },
+    { path: "/dashboard", icon: Home, label: "Dashboard" },
     { path: "/learning", icon: BookOpen, label: "Learning Hub" },
+    { path: "/coding", icon: Code2, label: "Coding" },
+    { path: "/interview", icon: Users, label: "Interview" },
     { path: "/chatbot", icon: MessageSquare, label: "Study Buddy" },
     { path: "/news", icon: Newspaper, label: "Tech Feed" },
     { path: "/community", icon: Globe, label: "Community" },
@@ -48,7 +52,6 @@ const Navbar: React.FC = () => {
     { path: "/notes", icon: StickyNote, label: "Notes" },
     { path: "/calendar", icon: Calendar, label: "Calendar" },
     { path: "/payment", icon: CreditCard, label: "Pricing" },
-
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -83,12 +86,12 @@ const Navbar: React.FC = () => {
             : "bg-white border-gray-200"
         }`}
       >
-        <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 mx-auto max-w-9xl sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <div className="flex justify-center items-center w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
                   <BookOpen className="w-5 h-5 text-white" />
                 </div>
                 <span
@@ -133,7 +136,7 @@ const Navbar: React.FC = () => {
               >
                 <Bell className="w-5 h-5" />
                 {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
+                  <span className="flex absolute -top-1 -right-1 justify-center items-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full">
                     {unreadCount > 9 ? "9+" : unreadCount}
                   </span>
                 )}
@@ -145,7 +148,7 @@ const Navbar: React.FC = () => {
               <div className="relative">
                 <button
                   onClick={handleProfileToggle}
-                  className={`flex items-center space-x-2 p-1 rounded-lg transition-colors`}
+                  className={`flex items-center p-1 space-x-2 rounded-lg transition-colors`}
                 >
                   <img
                     src={
@@ -157,7 +160,7 @@ const Navbar: React.FC = () => {
                     alt={authState.user?.name}
                     className="w-8 h-8 rounded-full border-2 border-blue-500"
                   />
-                  <div className="hidden md:block text-left">
+                  <div className="hidden text-left md:block">
                     <div
                       className={`text-sm font-medium ${
                         state.darkMode ? "text-white" : "text-gray-900"

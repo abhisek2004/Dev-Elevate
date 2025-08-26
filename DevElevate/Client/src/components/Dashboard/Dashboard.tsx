@@ -7,6 +7,7 @@ import NewsWidget from './NewsWidget';
 import QuickActions from './QuickActions';
 import StreakCalendar from './StreakCalendar';
 import DailyGoals from './DailyGoals';
+import QuizHistory from '../Quiz/QuizHistory';
 import { User } from '../../contexts/GlobalContext';
 
 const Dashboard: React.FC = () => {
@@ -21,51 +22,58 @@ const Dashboard: React.FC = () => {
         name: 'John Doe',
         email: 'john@example.com',
         joinDate: new Date().toISOString(),
-        streak: 7,
+        streak: 0, // Initialize with 0
         totalPoints: 1250,
         level: 'Intermediate'
       };
       dispatch({ type: 'SET_USER', payload: defaultUser });
     }
 
-    // Initialize sample news items
-    if (state.newsItems.length === 0) {
-      const sampleNews = [
-        {
-          id: '1',
-          title: 'React 18.3 Released with New Features',
-          summary: 'Latest React version brings performance improvements and new hooks',
-          url: '#',
-          publishDate: new Date().toISOString(),
-          category: 'tech' as const
-        },
-        {
-          id: '2',
-          title: 'Google Summer Internship 2024',
-          summary: 'Applications open for software engineering internships',
-          url: '#',
-          publishDate: new Date().toISOString(),
-          category: 'internships' as const
-        },
-        {
-          id: '3',
-          title: 'AI/ML Engineer Positions at Microsoft',
-          summary: 'Multiple openings for machine learning specialists',
-          url: '#',
-          publishDate: new Date().toISOString(),
-          category: 'jobs' as const
+    // Fetch streak data from backend
+    const fetchStreakData = async () => {
+      try {
+        const response = await fetch('/api/user/streak', {
+          headers: {
+            'Authorization': `Bearer ${authState.sessionToken}`
+          }
+        });
+        const data = await response.json();
+        
+        if (response.ok) {
+          // Update global state with streak data
+          dispatch({ 
+            type: 'SET_USER', 
+            payload: {
+              ...state.user,
+              streak: data.currentStreakData.currentStreak
+            }
+          });
+          
+          // Convert streak data to the format expected by StreakCalendar
+          const streakData = {};
+          data.currentStreakData.dayStreak.forEach((visit: { dateOfVisiting: string | number | Date }) => {
+            const date = new Date(visit.dateOfVisiting).toISOString().split('T')[0];
+            streakData[date] = true;
+          });
+          
+          dispatch({ type: 'HYDRATE_STATE', payload: { streakData } });
         }
-      ];
-      dispatch({ type: 'UPDATE_NEWS', payload: sampleNews });
+      } catch (error) {
+        console.error('Error fetching streak data:', error);
+      }
+    };
+
+    if (authState.isAuthenticated && authState.sessionToken) {
+      fetchStreakData();
     }
-  }, [state.user, state.newsItems.length, dispatch]);
+  }, [authState.isAuthenticated, authState.sessionToken, dispatch, state.user]);
 
   return (
-    <div className={`min-h-screen transition-colors duration-300  ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
+    <div className={`min-h-screen transition-colors duration-300 ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Welcome Section */}
         <div className="mb-10">
-          <h1 className={`text-4xl font-extrabold tracking-tight mb-3 ${state.darkMode ? 'text-white' : 'text-gray-900'} `}>
+          <h1 className={`text-4xl font-extrabold tracking-tight mb-3 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             Welcome back, {authState.user?.name || 'Developer'}! 👋
           </h1>
           <p className={`text-lg sm:text-xl font-medium leading-relaxed ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -77,7 +85,7 @@ const Dashboard: React.FC = () => {
         <StatsCards />
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-6">
             <ProgressWidget />
@@ -87,6 +95,7 @@ const Dashboard: React.FC = () => {
           {/* Right Column */}
           <div className="space-y-6">
             <QuickActions />
+            <QuizHistory />
             <DailyGoals />
             <StreakCalendar />
           </div>
