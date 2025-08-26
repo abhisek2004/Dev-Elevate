@@ -62,17 +62,23 @@ export const verifySignupOtp = async (req, res) => {
 
     const tokenDoc = await OtpToken.findOne({ email });
     if (!tokenDoc) {
-      return res.status(400).json({ message: "OTP not found. Please re-register." });
+      return res
+        .status(400)
+        .json({ message: "OTP not found. Please re-register." });
     }
 
     if (new Date() > tokenDoc.expiresAt) {
       await OtpToken.deleteOne({ _id: tokenDoc._id });
-      return res.status(400).json({ message: "OTP expired. Please request a new one." });
+      return res
+        .status(400)
+        .json({ message: "OTP expired. Please request a new one." });
     }
 
     const otpMatch = await bcrypt.compare(otp, tokenDoc.otpHash);
     if (!otpMatch) {
-      return res.status(400).json({ message: "Invalid OTP. Please try again." });
+      return res
+        .status(400)
+        .json({ message: "Invalid OTP. Please try again." });
     }
 
     // Create the user
@@ -134,7 +140,9 @@ export const verifySignupOtp = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({ message: "Something went wrong", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Something went wrong", error: error.message });
   }
 };
 
@@ -144,7 +152,6 @@ export const loginUser = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
- 
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
