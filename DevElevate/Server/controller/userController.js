@@ -5,7 +5,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import moment from "moment";
-import sendWelcomeEmail from "../utils/mailer.js";
+import sendWelcomeEmail, { sendOtpEmail } from "../utils/mailer.js";
+import OtpToken from "../model/OtpToken.js";
 import generateWelcomeEmail from "../utils/welcomeTemplate.js";
 dotenv.config();
 import { createNotification } from "./notificationController.js";
@@ -24,29 +25,82 @@ export const registerUser = async (req, res) => {
         .json({ message: "Password must be at least 8 characters long" });
     }
 
-    // Hash password
+    // Hash password for temporary storage
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
-    const newUser = new User({
-      name,
-      email,
-      role,
-      password: hashedPassword,
+    // Generate OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpHash = await bcrypt.hash(otp, 10);
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+    // Upsert OTP token for this email (one active per email)
+    await OtpToken.findOneAndUpdate(
+      { email },
+      { email, name, role, passwordHash: hashedPassword, otpHash, expiresAt },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+
+    // Send OTP email
+    await sendOtpEmail(email, otp, 5);
+
+    return res.status(200).json({
+      message: "OTP sent to email. Please verify to complete signup.",
     });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Something went wrong", error: error.message });
+  }
+};
 
-    const html = generateWelcomeEmail(newUser.name);
-
-    // Try to send welcome email but continue even if it fails
-    try {
-      await sendWelcomeEmail(newUser.email, html);
-      console.log("✅ Welcome email sent successfully");
-    } catch (emailError) {
-      console.log("⚠️ Skipping email send due to error:", emailError.message);
-      // Continue with registration even if email fails
+export const verifySignupOtp = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    if (!email || !otp) {
+      return res.status(400).json({ message: "Email and OTP are required" });
     }
 
+    const tokenDoc = await OtpToken.findOne({ email });
+    if (!tokenDoc) {
+      return res.status(400).json({ message: "OTP not found. Please re-register." });
+    }
+
+    if (new Date() > tokenDoc.expiresAt) {
+      await OtpToken.deleteOne({ _id: tokenDoc._id });
+      return res.status(400).json({ message: "OTP expired. Please request a new one." });
+    }
+
+    const otpMatch = await bcrypt.compare(otp, tokenDoc.otpHash);
+    if (!otpMatch) {
+      return res.status(400).json({ message: "Invalid OTP. Please try again." });
+    }
+
+    // Create the user
+    const existingUser = await User.findOne({ email: tokenDoc.email });
+    if (existingUser) {
+      await OtpToken.deleteOne({ _id: tokenDoc._id });
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    const newUser = new User({
+      name: tokenDoc.name,
+      email: tokenDoc.email,
+      role: tokenDoc.role,
+      password: tokenDoc.passwordHash,
+    });
+
     await newUser.save();
+
+    // Cleanup OTP doc
+    await OtpToken.deleteOne({ _id: tokenDoc._id });
+
+    // Send welcome email (non-blocking if fails)
+    try {
+      const html = generateWelcomeEmail(newUser.name);
+      await sendWelcomeEmail(newUser.email, html);
+    } catch (emailError) {
+      console.log("⚠️ Welcome email failed:", emailError.message);
+    }
 
     // Create notification for registration success
     await createNotification(
@@ -54,15 +108,33 @@ export const registerUser = async (req, res) => {
       "Welcome! Your account has been created.",
       "success"
     );
-    res.status(201).json({
+
+    // Auto-login: issue JWT and set cookie
+    const JWT_SECRET = process.env.JWT_SECRET;
+    const JWT_EXPIRES = "3d";
+    const payLode = { userId: newUser._id };
+    const token = jwt.sign(payLode, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 3 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.status(201).json({
       message: "User registered successfully",
-      newUser,
-      send: "Mali send successfully",
+      userId: newUser._id,
+      token: token,
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+      },
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong", error: error.message });
+    return res.status(500).json({ message: "Something went wrong", error: error.message });
   }
 };
 

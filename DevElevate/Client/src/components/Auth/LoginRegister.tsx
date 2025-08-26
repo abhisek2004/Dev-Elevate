@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 const LoginRegister: React.FC = () => {
-  const { state, login, register, dispatch } = useAuth();
+  const { state, login, register, verifySignupOtp, dispatch } = useAuth();
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +29,7 @@ const LoginRegister: React.FC = () => {
     password: "",
     confirmPassword: "",
   });
+  const [otp, setOtp] = useState("");
 
   useEffect(() => {
     console.log("LoginRegister useEffect - state.user:", state.user);
@@ -130,9 +131,12 @@ const LoginRegister: React.FC = () => {
       if (isLogin) {
         await login(formData.email, formData.password, role);
       } else {
-        await register(formData.name, formData.email, formData.password, role);
+        if (state.otpPending) {
+          await verifySignupOtp(state.pendingEmail || formData.email, otp);
+        } else {
+          await register(formData.name, formData.email, formData.password, role);
+        }
       }
-      // Remove the redirect from here!
     } catch (error) {
       console.error("Auth error:", error);
     }
@@ -278,10 +282,10 @@ const LoginRegister: React.FC = () => {
             </button>
           </div>
 
-          {/* Email/Password Form */}
+          {/* Email/Password + OTP Flow */}
           {authMethod === "email" && (
             <>
-              {!isLogin && (
+              {!isLogin && !state.otpPending && (
                 <div>
                   <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
                     Full Name
@@ -301,6 +305,7 @@ const LoginRegister: React.FC = () => {
                 </div>
               )}
 
+              {!state.otpPending && (
               <div>
                 <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
                   Email Address
@@ -318,7 +323,9 @@ const LoginRegister: React.FC = () => {
                   />
                 </div>
               </div>
+              )}
 
+              {!state.otpPending && (
               <div>
                 <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
                   Password
@@ -354,24 +361,39 @@ const LoginRegister: React.FC = () => {
                   </span>
                 )}
               </div>
+              )}
 
               {!isLogin && (
                 <div>
                   <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Confirm Password
+                    {state.otpPending ? "Enter OTP sent to your email" : "Confirm Password"}
                   </label>
-                  <div className="relative">
-                    <Lock className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleInputChange}
-                      className="w-full py-3 pl-10 pr-4 text-gray-900 bg-white border border-gray-300 rounded-lg dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                      placeholder="Confirm your password"
-                      required={!isLogin}
-                    />
-                  </div>
+                  {state.otpPending ? (
+                    <div className="relative">
+                      <input
+                        type="text"
+                        name="otp"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        className="w-full py-3 pl-4 pr-4 text-gray-900 bg-white border border-gray-300 rounded-lg dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white tracking-widest"
+                        placeholder="Enter 6-digit OTP"
+                        required
+                      />
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      <Lock className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
+                        className="w-full py-3 pl-10 pr-4 text-gray-900 bg-white border border-gray-300 rounded-lg dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                        placeholder="Confirm your password"
+                        required={!isLogin}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -389,7 +411,13 @@ const LoginRegister: React.FC = () => {
                     ) : (
                       <UserPlus className="w-5 h-5" />
                     )}
-                    <span>{isLogin ? "Sign In" : "Create Account"}</span>
+                    <span>
+                      {isLogin
+                        ? "Sign In"
+                        : state.otpPending
+                        ? "Verify OTP"
+                        : "Create Account"}
+                    </span>
                   </>
                 )}
               </button>

@@ -3,6 +3,7 @@ const router = express.Router();
 
 import {
   registerUser,
+  verifySignupOtp,
   loginUser,
   currentStreak,
   logout,
@@ -13,6 +14,7 @@ import {
 import { authenticateToken } from "../middleware/authMiddleware.js";
 
 router.post("/auth/signup", registerUser);
+router.post("/auth/verify-otp", verifySignupOtp);
 router.post("/auth/login", loginUser);
 router.get("/logout", authenticateToken, logout);
 router.post("/auth/google", googleUser);
