@@ -45,6 +45,8 @@ export interface AuthState {
   error: string | null;
   users: User[]; // For admin management
   sessionToken: string | null;
+  otpPending: boolean;
+  pendingEmail: string | null;
 }
 
 type AuthAction =
@@ -55,6 +57,7 @@ type AuthAction =
   | { type: "REGISTER_START" }
   | { type: "REGISTER_SUCCESS"; payload: { user: User; token: string } }
   | { type: "REGISTER_FAILURE"; payload: string }
+  | { type: "REGISTER_OTP_SENT"; payload: { email: string } }
   | { type: "UPDATE_PROFILE"; payload: Partial<User> }
   | { type: "CHANGE_PASSWORD_SUCCESS" }
   | { type: "LOAD_USERS"; payload: User[] }
@@ -70,6 +73,8 @@ const initialState: AuthState = {
   error: null,
   users: [],
   sessionToken: null,
+  otpPending: false,
+  pendingEmail: null,
 };
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
@@ -98,6 +103,8 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         isAuthenticated: false,
         isLoading: false,
         error: action.payload,
+        otpPending: false,
+        pendingEmail: null,
       };
 
     case "LOGOUT":
@@ -150,6 +157,17 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         isAuthenticated: true,
         isLoading: false,
         error: null,
+        otpPending: false,
+        pendingEmail: null,
+      };
+
+    case "REGISTER_OTP_SENT":
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        otpPending: true,
+        pendingEmail: action.payload.email,
       };
 
     default:
@@ -170,6 +188,7 @@ const AuthContext = createContext<{
     password: string,
     role: "user" | "admin"
   ) => Promise<void>;
+  verifySignupOtp: (email: string, otp: string) => Promise<void>;
   logout: () => void;
   updateProfile: (data: Partial<User>) => Promise<void>;
   changePassword: (
@@ -310,66 +329,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         throw new Error(data.message || "Registration failed");
       }
 
-      // For registration, we need to login after successful signup
-      // The backend doesn't return a token on signup, so we login immediately
-      if (data.message === "User registered successfully") {
-        // Auto-login after successful registration
-        const loginResponse = await fetch(`${baseUrl}/api/v1/auth/login`,
-          {
-            method: "POST",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password }),
-          }
-        );
-
-        const loginData = await loginResponse.json();
-
-        if (loginResponse.ok && loginData.token && loginData.user) {
-          const user: User = {
-            id: loginData.user.id,
-            name: loginData.user.name,
-            email: loginData.user.email,
-            role: loginData.user.role,
-            avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${loginData.user.name}`,
-            bio:
-              loginData.user.role === "admin"
-                ? "System Administrator"
-                : "DevElevate User",
-            socialLinks: {},
-            joinDate: new Date().toISOString(),
-            lastLogin: new Date().toISOString(),
-            isActive: true,
-            preferences: {
-              theme: "light",
-              notifications: true,
-              language: "en",
-              emailUpdates: true,
-            },
-            progress: {
-              coursesEnrolled: [],
-              completedModules: 0,
-              totalPoints: 0,
-              streak: 0,
-              level: "Beginner",
-            },
-          };
-
-          console.log("Registration successful - user:", user);
-          console.log("Registration successful - token:", loginData.token);
-
-          dispatch({
-            type: "REGISTER_SUCCESS",
-            payload: { user, token: loginData.token },
-          });
-        } else {
-          throw new Error("Registration successful but auto-login failed");
-        }
-      } else {
-        throw new Error("Registration failed");
+      // New flow: OTP email sent, wait for verification
+      if (data.message && data.message.includes("OTP")) {
+        dispatch({ type: "REGISTER_OTP_SENT", payload: { email } });
+        return;
       }
+
+      throw new Error("Unexpected signup response");
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Registration failed";
@@ -378,6 +344,60 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         type: "REGISTER_FAILURE",
         payload: errorMessage,
       });
+    }
+  };
+
+  const verifySignupOtp = async (email: string, otp: string) => {
+    dispatch({ type: "REGISTER_START" });
+    try {
+      const response = await fetch(`${baseUrl}/api/v1/auth/verify-otp`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "OTP verification failed");
+      }
+
+      if (data.token && data.user) {
+        const user: User = {
+          id: data.user.id,
+          name: data.user.name,
+          email: data.user.email,
+          role: data.user.role,
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
+          bio: data.user.role === "admin" ? "System Administrator" : "DevElevate User",
+          socialLinks: {},
+          joinDate: new Date().toISOString(),
+          lastLogin: new Date().toISOString(),
+          isActive: true,
+          preferences: {
+            theme: "light",
+            notifications: true,
+            language: "en",
+            emailUpdates: true,
+          },
+          progress: {
+            coursesEnrolled: [],
+            completedModules: 0,
+            totalPoints: 0,
+            streak: 0,
+            level: "Beginner",
+          },
+        };
+
+        dispatch({ type: "REGISTER_SUCCESS", payload: { user, token: data.token } });
+        return;
+      }
+
+      throw new Error("Invalid verification response");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "OTP verification failed";
+      dispatch({ type: "REGISTER_FAILURE", payload: errorMessage });
     }
   };
   const logout = () => {
@@ -470,6 +490,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         dispatch,
         login,
         register,
+        verifySignupOtp,
         logout,
         updateProfile,
         changePassword,
