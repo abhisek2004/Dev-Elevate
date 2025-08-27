@@ -40,6 +40,8 @@ import CalendarView from "./components/calendar/CalendarView";
 import Coding from "./pages/Coding/Coding";
 import InterviewPage from "./pages/Interview/InterviewPage";
 import QuizPage from "./components/Quiz/QuizPage";
+import HackathonsPage from "./pages/Hackathons/HackathonsPage";
+import HackathonDetailPage from "./pages/Hackathons/HackathonDetailPage";
 
 
 
@@ -96,6 +98,8 @@ const AppContent = () => {
                                 <Route path="tasks" element={<TasksView />} />
                                 <Route path="notes" element={<NotesView />} />
                                 <Route path="calendar" element={<CalendarView />} />
+                                <Route path="hackathons" element={<HackathonsPage />} />
+                                <Route path="hackathons/:id" element={<HackathonDetailPage />} />
                                 <Route path="settings" element={<Settings />} />
                                 <Route path="premium" element={<PremiumPage />} />
                                 <Route path="payment" element={<PaymentPage />} />
