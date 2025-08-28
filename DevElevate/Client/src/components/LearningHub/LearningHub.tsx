@@ -3,6 +3,7 @@ import { useGlobalState } from '../../contexts/GlobalContext';
 import { BookOpen, Code, Database, Brain, PlayCircle, FileText, CheckCircle } from 'lucide-react';
 import Toast from '../Layout/Toast';
 import ModuleCards from './Java/ModuleCards';
+import AIMLModuleCards from './AIML/ModuleCards';
 
 const LearningHub: React.FC = () => {
   const { state, dispatch } = useGlobalState();
@@ -67,11 +68,11 @@ const LearningHub: React.FC = () => {
       icon: Brain,
       color: 'from-purple-500 to-pink-500',
       modules: [
-        { id: 'python', title: 'Python for Data Science', topics: ['NumPy', 'Pandas', 'Matplotlib', 'Seaborn'], completed: false },
-        { id: 'statistics', title: 'Statistics & Probability', topics: ['Descriptive Stats', 'Inferential Stats', 'Probability'], completed: false },
-        { id: 'ml', title: 'Machine Learning', topics: ['Supervised Learning', 'Unsupervised Learning', 'Model Evaluation'], completed: false },
-        { id: 'dl', title: 'Deep Learning', topics: ['Neural Networks', 'CNN', 'RNN', 'Transformers'], completed: false },
-        { id: 'nlp', title: 'Natural Language Processing', topics: ['Text Processing', 'Sentiment Analysis', 'Language Models'], completed: false }
+        { id: 'introduction', title: 'AI/ML Introduction', topics: ['What is AI & Machine Learning?', 'Data Science Workflow'], completed: false },
+        { id: 'supervisedLearning', title: 'Supervised Learning', topics: ['Linear Regression', 'Classification Algorithms'], completed: false },
+        { id: 'unsupervisedLearning', title: 'Unsupervised Learning', topics: ['Clustering Algorithms', 'Dimensionality Reduction'], completed: false },
+        { id: 'deepLearning', title: 'Deep Learning', topics: ['Neural Network Fundamentals', 'CNNs and RNNs'], completed: false },
+        { id: 'mlops', title: 'MLOps & Deployment', topics: ['Model Deployment', 'Model Monitoring'], completed: false }
       ]
     }
   };
@@ -158,6 +159,8 @@ const LearningHub: React.FC = () => {
 
               {selectedTrack === 'java' ? (
                 <ModuleCards modules={currentTrack.modules} />
+              ) : selectedTrack === 'aiml' ? (
+                <AIMLModuleCards modules={currentTrack.modules} />
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {currentTrack.modules.map((module, index) => (
