@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGlobalState } from '../../../contexts/GlobalContext';
 import { ArrowLeft, BookOpen, Code, ExternalLink, CheckCircle, Star, Copy, Download } from 'lucide-react';
 import { aimlModules } from './moduleContent';
@@ -16,12 +16,70 @@ const TopicView: React.FC<TopicViewProps> = ({ moduleId, topicId, onBack, onTopi
   const [notes, setNotes] = useState('');
   const [rating, setRating] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const moduleContent = aimlModules[moduleId as keyof typeof aimlModules];
   const currentTopic = moduleContent?.topics.find(topic => topic.id === topicId);
 
+  // Load user data when component mounts or topic changes
+  useEffect(() => {
+    const loadUserData = async () => {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        // Load progress
+        const progressResponse = await fetch(`/api/v1/learning/aiml/progress/${topicId}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (progressResponse.ok) {
+          const progressData = await progressResponse.json();
+          setProgress(progressData.data.completionPercentage || 0);
+        }
+
+        // Load notes
+        const notesResponse = await fetch(`/api/v1/learning/aiml/notes/${topicId}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (notesResponse.ok) {
+          const notesData = await notesResponse.json();
+          setNotes(notesData.data?.notes || '');
+        }
+
+        // Load rating
+        const reviewResponse = await fetch(`/api/v1/learning/aiml/reviews/${topicId}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (reviewResponse.ok) {
+          const reviewData = await reviewResponse.json();
+          setRating(reviewData.data?.rating || 0);
+        }
+      } catch (error) {
+        console.error('Error loading user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (topicId) {
+      loadUserData();
+    }
+  }, [topicId]);
+
   if (!moduleContent || !currentTopic) {
     return <div>Topic not found</div>;
+  }
+
+  if (loading) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+          <p className={`${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Loading your progress...</p>
+        </div>
+      </div>
+    );
   }
 
   const handleSaveNotes = async () => {

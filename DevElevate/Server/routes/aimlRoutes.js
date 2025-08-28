@@ -124,6 +124,27 @@ router.get("/:moduleId", authenticateToken, (req, res) => {
   }
 });
 
+// GET /api/v1/learning/aiml/notes/:topicId - Get notes for a topic
+router.get("/notes/:topicId", authenticateToken, async (req, res) => {
+  try {
+    const { topicId } = req.params;
+    const userId = req.user.id;
+    
+    const notes = await Notes.findOne({ userId, topicId });
+    
+    res.status(200).json({
+      success: true,
+      data: notes
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching notes",
+      error: error.message
+    });
+  }
+});
+
 // POST /api/v1/learning/aiml/notes/:topicId - Save notes for a topic
 router.post("/notes/:topicId", authenticateToken, async (req, res) => {
   try {
@@ -147,6 +168,27 @@ router.post("/notes/:topicId", authenticateToken, async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error saving notes",
+      error: error.message
+    });
+  }
+});
+
+// GET /api/v1/learning/aiml/reviews/:topicId - Get review for a topic
+router.get("/reviews/:topicId", authenticateToken, async (req, res) => {
+  try {
+    const { topicId } = req.params;
+    const userId = req.user.id;
+    
+    const review = await Reviews.findOne({ userId, topicId });
+    
+    res.status(200).json({
+      success: true,
+      data: review
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching review",
       error: error.message
     });
   }
@@ -182,6 +224,56 @@ router.post("/reviews/:topicId", authenticateToken, async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error saving review",
+      error: error.message
+    });
+  }
+});
+
+// GET /api/v1/learning/aiml/progress/:topicId - Get progress for a specific topic
+router.get("/progress/:topicId", authenticateToken, async (req, res) => {
+  try {
+    const { topicId } = req.params;
+    const userId = req.user.id;
+    
+    const progress = await Progress.findOne({ userId, topicId });
+    
+    if (!progress) {
+      return res.status(200).json({
+        success: true,
+        data: {
+          status: 'not_started',
+          completionPercentage: 0
+        }
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: progress
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching progress",
+      error: error.message
+    });
+  }
+});
+
+// GET /api/v1/learning/aiml/progress - Get all progress for user
+router.get("/progress", authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const progress = await Progress.find({ userId });
+    
+    res.status(200).json({
+      success: true,
+      data: progress
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching user progress",
       error: error.message
     });
   }
