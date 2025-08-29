@@ -18,6 +18,7 @@ import aiRoutes from "./routes/aiRoutes.js"
 import javaRoutes from "./routes/javaRoutes.js";
 import aimlRoutes from "./routes/aimlRoutes.js";
 
+
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
   connectDB();
@@ -68,6 +69,8 @@ app.use("/api/v1", aiRoutes);
 app.use("/api/v1/learning/java", javaRoutes); // Java learning content
 app.use("/api/v1/learning/aiml", aimlRoutes); // AI/ML learning content
 
+// Placement Routes
+app.use('/api/v1/placements', placementRoutes);
 
 // Sample Usage of authenticate and authorize middleware for roleBased Features
 app.get(

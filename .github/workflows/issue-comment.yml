@@ -1,0 +1,123 @@
+name: Auto Comment on Issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  auto-comment:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Auto Comment on New Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const issueNumber = issue.number;
+            const issueTitle = issue.title;
+            const issueBody = issue.body;
+            const author = issue.user.login;
+
+            const welcomeMessage = [
+              `## 🎉 Welcome to DevElevate!`,
+              ``,
+              `Hi @${author}, thank you for opening this issue! 🙌`,
+              ``,
+              `### 📋 Issue Details`,
+              `- **Issue #${issueNumber}**: ${issueTitle}`,
+              `- **Status**: 🆕 New Issue`,
+              ``,
+              `### 🚀 Next Steps`,
+              `1. **Review**: Our team will review your issue within 24-48 hours`,
+              `2. **Discussion**: Feel free to add more details or ask questions in the comments`,
+              `3. **Updates**: We'll keep you posted on the progress`,
+              ``,
+              `### 📚 Helpful Resources`,
+              `- 📖 [Project Documentation](https://github.com/abhisek2004/Dev-Elevate#readme)`,
+              `- 🐛 [Bug Report Template](https://github.com/abhisek2004/Dev-Elevate/blob/main/.github/ISSUE_TEMPLATE/bug_report.md)`,
+              `- ✨ [Feature Request Template](https://github.com/abhisek2004/Dev-Elevate/blob/main/.github/ISSUE_TEMPLATE/feature_request.md)`,
+              `- 💬 [Join our Discord](https://discord.gg/BtqrauPm) for discussions`,
+              `- 🌟 [GSSoC 2025 Program](https://gssoc.girlscript.tech/) - We're an official participant!`,
+              ``,
+              `### 🔍 Issue Analysis`,
+              issueBody ? `**Issue Description**: ${issueBody.length > 200 ? issueBody.substring(0, 200) + '...' : issueBody}` : '**No description provided**',
+              ``,
+              `### 🏷️ Auto-Labeling`,
+              `This issue will be automatically labeled based on its content and title.`,
+              ``,
+              `---`,
+              `*This is an automated message. For immediate assistance, please join our [Discord server](https://discord.gg/BtqrauPm).*`
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              issue_number: issueNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: welcomeMessage
+            });
+
+      - name: Auto Label Issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const issueNumber = issue.number;
+            const issueTitle = issue.title.toLowerCase();
+            const issueBody = (issue.body || '').toLowerCase();
+
+            let labels = ['new-issue'];
+
+            if (issueTitle.includes('bug') || issueTitle.includes('error') || 
+                issueTitle.includes('crash') || issueTitle.includes('fix') ||
+                issueBody.includes('bug') || issueBody.includes('error') ||
+                issueBody.includes('crash') || issueBody.includes('fix')) {
+              labels.push('bug');
+            }
+
+            if (issueTitle.includes('feature') || issueTitle.includes('enhancement') ||
+                issueTitle.includes('request') || issueTitle.includes('add') ||
+                issueBody.includes('feature') || issueBody.includes('enhancement') ||
+                issueBody.includes('request') || issueBody.includes('add')) {
+              labels.push('enhancement');
+            }
+
+            if (issueTitle.includes('doc') || issueTitle.includes('readme') ||
+                issueTitle.includes('documentation') || issueBody.includes('doc') ||
+                issueBody.includes('readme') || issueBody.includes('documentation')) {
+              labels.push('documentation');
+            }
+
+            if (issueTitle.includes('ui') || issueTitle.includes('ux') ||
+                issueTitle.includes('design') || issueTitle.includes('interface') ||
+                issueBody.includes('ui') || issueBody.includes('ux') ||
+                issueBody.includes('design') || issueBody.includes('interface')) {
+              labels.push('ui/ux');
+            }
+
+            if (issueTitle.includes('backend') || issueTitle.includes('api') ||
+                issueTitle.includes('server') || issueTitle.includes('database') ||
+                issueBody.includes('backend') || issueBody.includes('api') ||
+                issueBody.includes('server') || issueBody.includes('database')) {
+              labels.push('backend');
+            }
+
+            if (issueTitle.includes('frontend') || issueTitle.includes('react') ||
+                issueTitle.includes('client') || issueTitle.includes('component') ||
+                issueBody.includes('frontend') || issueBody.includes('react') ||
+                issueBody.includes('client') || issueBody.includes('component')) {
+              labels.push('frontend');
+            }
+
+            if (issueTitle.includes('gssoc') || issueTitle.includes('gsoc') ||
+                issueBody.includes('gssoc') || issueBody.includes('gsoc')) {
+              labels.push('gssoc-2025');
+            }
+
+            await github.rest.issues.addLabels({
+              issue_number: issueNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: labels
+            });

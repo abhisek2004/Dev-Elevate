@@ -15,20 +15,19 @@ const Header: React.FC = () => {
   }, []);
 
   const navItems = [
-    { label: "Features", href: "#features" },
-    { label: "Learning", href: "#learning" },
-    { label: "AI Assistant", href: "#ai" },
-    { label: "Placement", href: "#placement" },
-    { label: "About", href: "#about" },
+    { label: "Features", href: "/#features" },
+    { label: "Learning", href: "/#learning" },
+    { label: "AI Assistant", href: "/#ai" },
+    { label: "Placement", href: "/placements", isRoute: true },
+    { label: "About", href: "/#about" },
   ];
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-500  bg-black ${
-        scrolled
-          ? "bg-black/80 backdrop-blur-xl border-b border-purple-500/20"
-          : ""
-      }`}
+      className={`fixed top-0 w-full z-50 transition-all duration-500  bg-black ${scrolled
+        ? "bg-black/80 backdrop-blur-xl border-b border-purple-500/20"
+        : ""
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
@@ -51,14 +50,24 @@ const Header: React.FC = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-gray-300 hover:text-white transition-colors duration-300 relative group"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 group-hover:w-full transition-all duration-300"></span>
-              </a>
+              item.isRoute ? (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className="text-gray-300 hover:text-white transition-colors duration-300 relative group"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 group-hover:w-full transition-all duration-300"></span>
+                </Link>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-gray-300 hover:text-white transition-colors duration-300 relative group"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 group-hover:w-full transition-all duration-300"></span>
+                </a>)
             ))}
           </nav>
 
@@ -90,14 +99,24 @@ const Header: React.FC = () => {
           <div className="md:hidden py-4 border-t border-gray-800">
             <div className="flex flex-col space-y-4">
               {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-gray-300 hover:text-white transition-colors duration-300"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
-                </a>
+                item.isRoute ? (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className="text-gray-300 hover:text-white transition-colors duration-300"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="text-gray-300 hover:text-white transition-colors duration-300"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.label}
+                  </a>)
               ))}
               <div className="flex flex-col justify-center items-center w-full space-y-2 pt-4">
                 <div className=" w-full">

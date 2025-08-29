@@ -18,7 +18,7 @@ export const createCourse = async (req, res) => {
       createdBy: req.id,
     });
 
-    // Create notification for course creation
+    // Creating notification for course creation.
     await createNotification(
       req.id,
       `Course '${courseTitle}' created successfully!`,

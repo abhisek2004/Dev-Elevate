@@ -3,6 +3,7 @@ import jobKeywords from "../utils/jobKeywords.js";
 import jobSpecificKeywords from "../utils/jobSpecificKeywords.js";
 
 /**
+ * ATS stands for Applicant Tracking System.
  * Controller for ATS resume scanning functionality
  * Analyzes resume text for ATS compatibility and provides score and suggestions
  */

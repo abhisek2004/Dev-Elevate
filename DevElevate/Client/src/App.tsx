@@ -16,6 +16,7 @@ import Chatbot from "./components/Chatbot/Chatbot";
 import TechFeed from "./components/TechFeed/TechFeed";
 import ResumeBuilder from "./components/ResumeBuilder/ResumeBuilder";
 import PlacementPrep from "./components/PlacementPrep/PlacementPrep";
+import PlacementStats from "./pages/Placements/PlacementStats";
 import UserProfile from "./components/Profile/UserProfile";
 import PrivacyPolicy from "./components/Legal/PrivacyPolicy";
 import TermsOfService from "./components/Legal/TermsOfService";
@@ -59,6 +60,7 @@ const AppContent = () => {
                   }
                 />
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/placements" element={<PlacementStats />}/>
 
                 {/* Protected Routes */}
                 <Route
