@@ -17,6 +17,7 @@ import notificationRoutes from "./routes/notificationRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js"
 import javaRoutes from "./routes/javaRoutes.js";
 import aimlRoutes from "./routes/aimlRoutes.js";
+import placementRoutes from "./routes/placementRoutes.js";
 
 
 // Connect to MongoDB only if MONGO_URI is available
