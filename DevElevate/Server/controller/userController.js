@@ -388,13 +388,20 @@ export const feedback = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
+    return res.status(500).json({
+      message: "Failed to submit feedback",
+      error: error.message
+    });
   }
 };
 
 // latestNewsController.js
 export const latestNews = async (req, res) => {
   try {
-    const apiKey = "5197b7b314d04c1080a2092f0496c165"; // You can move this to process.env later
+    const apiKey = process.env.NEWS_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({ message: "News API key not configured" });
+    }
     const url = `https://newsapi.org/v2/top-headlines?sources=bbc-news&pageSize=9&apiKey=${apiKey}`;
 
     const response = await fetch(url);

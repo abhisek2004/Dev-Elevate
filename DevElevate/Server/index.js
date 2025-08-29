@@ -20,6 +20,9 @@ import javaRoutes from "./routes/javaRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
 import hackathonRoutes from "./routes/hackathonRoutes.js";
 
+// Load environment variables FIRST
+dotenv.config();
+
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
   connectDB();
@@ -29,11 +32,11 @@ if (process.env.MONGO_URI) {
   );
 }
 
-// Load environment variables
-dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Trust proxy setting must come first for proper IP detection
+app.set("trust proxy", true);
 
 // Middleware
 app.use(
@@ -46,10 +49,22 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// Debug endpoint without rate limiting (before rate limiting middleware)
+app.get("/api/debug/health", (req, res) => {
+  res.json({
+    success: true,
+    message: "Server is healthy",
+    timestamp: new Date().toISOString(),
+    rateLimit: "none",
+    cors: {
+      origin: process.env.FRONTEND_URL || "*",
+      credentials: true
+    }
+  });
+});
+
 // Apply general rate limiting to all routes
 app.use(generalRateLimit);
-
-app.set("trust proxy", true);
 
 // Routes
 app.use("/api/v1/notifications", notificationRoutes);
