@@ -1,4 +1,5 @@
 import express from "express";
+import { readRateLimit } from "../middleware/rateLimitMiddleware.js";
 
 const router = express.Router();
 
@@ -157,7 +158,7 @@ const placementData = {
 };
 
 // Get placement statistics
-router.get("/stats", (req, res) => {
+router.get("/stats", readRateLimit, (req, res) => {
   try {
     res.json({
       success: true,
@@ -173,7 +174,7 @@ router.get("/stats", (req, res) => {
 });
 
 // Get alumni testimonials with optional filters
-router.get("/alumni", (req, res) => {
+router.get("/alumni", readRateLimit, (req, res) => {
   try {
     const { year, domain, location, search } = req.query;
     let filteredAlumni = [...placementData.alumni];
@@ -221,7 +222,7 @@ router.get("/alumni", (req, res) => {
 });
 
 // Get top recruiters
-router.get("/recruiters", (req, res) => {
+router.get("/recruiters", readRateLimit, (req, res) => {
   try {
     res.json({
       success: true,
@@ -237,7 +238,7 @@ router.get("/recruiters", (req, res) => {
 });
 
 // Get all placement data
-router.get("/all", (req, res) => {
+router.get("/all", readRateLimit, (req, res) => {
   try {
     res.json({
       success: true,

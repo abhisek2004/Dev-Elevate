@@ -5,14 +5,15 @@ import {
 } from '../controller/communityController.js';
 
 import { authenticateToken, requireAdmin } from '../middleware/authMiddleware.js';
+import { contentRateLimit, readRateLimit } from '../middleware/rateLimitMiddleware.js';
 
 const router = express.Router();
 
 // Community User Routes
-router.post('/questions', authenticateToken, postQuestion);
-router.get('/questions', authenticateToken, getQuestions);
-router.post('/questions/:id/answers', authenticateToken, postAnswer);
-router.get('/questions/:id/answers', authenticateToken, getAnswers);
+router.post('/questions', contentRateLimit, authenticateToken, postQuestion);
+router.get('/questions', readRateLimit, authenticateToken, getQuestions);
+router.post('/questions/:id/answers', contentRateLimit, authenticateToken, postAnswer);
+router.get('/questions/:id/answers', readRateLimit, authenticateToken, getAnswers);
 
 // Community Admin Routes
 router.delete('/questions/:id', authenticateToken, requireAdmin, deleteQuestion);

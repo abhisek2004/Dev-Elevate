@@ -7,6 +7,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorize.js";
 import { authenticateToken } from "./middleware/authMiddleware.js";
+import { generalRateLimit } from "./middleware/rateLimitMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import adminFeedbackRoutes from './routes/adminFeedbackRoutes.js';
 import communityRoutes from './routes/communityRoutes.js';
@@ -44,6 +45,9 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+
+// Apply general rate limiting to all routes
+app.use(generalRateLimit);
 
 app.set("trust proxy", true);
 

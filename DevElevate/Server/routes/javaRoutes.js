@@ -1,5 +1,6 @@
 import express from "express";
 import { authenticateToken } from "../middleware/authMiddleware.js";
+import { readRateLimit, contentRateLimit } from "../middleware/rateLimitMiddleware.js";
 import Notes from "../model/Notes.js";
 import Reviews from "../model/Reviews.js";
 import Progress from "../model/Progress.js";
@@ -82,7 +83,7 @@ const javaModules = {
 };
 
 // GET /api/v1/learning/java - Get all Java modules
-router.get("/", authenticateToken, (req, res) => {
+router.get("/", readRateLimit, authenticateToken, (req, res) => {
   try {
     const modules = Object.values(javaModules);
     res.status(200).json({
@@ -99,7 +100,7 @@ router.get("/", authenticateToken, (req, res) => {
 });
 
 // GET /api/v1/learning/java/:moduleId - Get specific module content
-router.get("/:moduleId", authenticateToken, (req, res) => {
+router.get("/:moduleId", readRateLimit, authenticateToken, (req, res) => {
   try {
     const { moduleId } = req.params;
     const module = javaModules[moduleId];
@@ -125,7 +126,7 @@ router.get("/:moduleId", authenticateToken, (req, res) => {
 });
 
 // POST /api/v1/learning/java/notes/:topicId - Save notes for a topic
-router.post("/notes/:topicId", authenticateToken, async (req, res) => {
+router.post("/notes/:topicId", contentRateLimit, authenticateToken, async (req, res) => {
   try {
     const { topicId } = req.params;
     const { notes, moduleId } = req.body;
@@ -153,7 +154,7 @@ router.post("/notes/:topicId", authenticateToken, async (req, res) => {
 });
 
 // POST /api/v1/learning/java/reviews/:topicId - Save rating/review for a topic
-router.post("/reviews/:topicId", authenticateToken, async (req, res) => {
+router.post("/reviews/:topicId", contentRateLimit, authenticateToken, async (req, res) => {
   try {
     const { topicId } = req.params;
     const { rating, comment, moduleId } = req.body;
@@ -188,7 +189,7 @@ router.post("/reviews/:topicId", authenticateToken, async (req, res) => {
 });
 
 // PATCH /api/v1/learning/java/progress/:topicId - Update progress for a topic
-router.patch("/progress/:topicId", authenticateToken, async (req, res) => {
+router.patch("/progress/:topicId", contentRateLimit, authenticateToken, async (req, res) => {
   try {
     const { topicId } = req.params;
     const { status, moduleId, completionPercentage } = req.body;
