@@ -6,6 +6,7 @@ import Toast from '../Layout/Toast';
 import ModuleCards from './Java/ModuleCards';
 import AIMLModuleCards from './AIML/ModuleCards';
 import MERNModuleCards from './MERN/ModuleCards';
+import DSAModuleCards from './DSA/ModuleCards';
 
 
 const LearningHub: React.FC = () => {
@@ -318,6 +319,8 @@ const LearningHub: React.FC = () => {
                 <AIMLModuleCards modules={currentTrack.modules} />
               ) : selectedTrack === 'mern' ? (
                 <MERNModuleCards modules={currentTrack.modules} />
+              ) : selectedTrack === 'dsa' ? (
+                <DSAModuleCards modules={currentTrack.modules} />
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {currentTrack.modules.map((module, index) => (
