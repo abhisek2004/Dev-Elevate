@@ -17,6 +17,7 @@ import notificationRoutes from "./routes/notificationRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js"
 import javaRoutes from "./routes/javaRoutes.js";
 import aimlRoutes from "./routes/aimlRoutes.js";
+import mernRoutes from "./routes/mernRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
 
 
@@ -69,6 +70,7 @@ app.use("/api/v1", aiRoutes);
 // Learning Routes
 app.use("/api/v1/learning/java", javaRoutes); // Java learning content
 app.use("/api/v1/learning/aiml", aimlRoutes); // AI/ML learning content
+app.use("/api/v1/learning/mern", mernRoutes); // MERN stack learning content
 
 // Placement Routes
 app.use('/api/v1/placements', placementRoutes);

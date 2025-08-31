@@ -5,6 +5,7 @@ import { BookOpen, Code, Database, Brain, PlayCircle, FileText, CheckCircle } fr
 import Toast from '../Layout/Toast';
 import ModuleCards from './Java/ModuleCards';
 import AIMLModuleCards from './AIML/ModuleCards';
+import MERNModuleCards from './MERN/ModuleCards';
 
 
 const LearningHub: React.FC = () => {
@@ -124,38 +125,38 @@ const LearningHub: React.FC = () => {
       modules: [
         {
           id: "html",
-          title: "HTML5",
-          topics: ["Semantic HTML", "Forms", "Accessibility", "SEO"],
+          title: "HTML5 Fundamentals",
+          topics: ["HTML Structure & Semantics", "Forms & Accessibility"],
           completed: true,
         },
         {
           id: "css",
-          title: "CSS3",
-          topics: ["Flexbox", "Grid", "Animations", "Responsive Design"],
+          title: "CSS3 & Styling",
+          topics: ["CSS Fundamentals & Selectors", "Flexbox & Grid"],
           completed: false,
         },
         {
           id: "javascript",
           title: "JavaScript ES6+",
-          topics: ["Modern JS", "Async/Await", "Modules", "DOM"],
+          topics: ["JavaScript Fundamentals", "DOM Manipulation & Events"],
           completed: false,
         },
         {
           id: "react",
           title: "React.js",
-          topics: ["Components", "Hooks", "State Management", "Router"],
+          topics: ["React Components & JSX", "Hooks & State Management"],
           completed: false,
         },
         {
           id: "nodejs",
-          title: "Node.js",
-          topics: ["Express.js", "Middleware", "REST APIs", "Authentication"],
+          title: "Node.js & Express",
+          topics: ["Node.js & Express Fundamentals", "REST API Development"],
           completed: false,
         },
         {
           id: "mongodb",
-          title: "MongoDB",
-          topics: ["NoSQL Basics", "Mongoose", "Aggregation", "Indexing"],
+          title: "MongoDB & Database",
+          topics: ["MongoDB Fundamentals", "Data Modeling & Relationships"],
           completed: false,
         },
       ],
@@ -315,6 +316,8 @@ const LearningHub: React.FC = () => {
                 <ModuleCards modules={currentTrack.modules} />
               ) : selectedTrack === 'aiml' ? (
                 <AIMLModuleCards modules={currentTrack.modules} />
+              ) : selectedTrack === 'mern' ? (
+                <MERNModuleCards modules={currentTrack.modules} />
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {currentTrack.modules.map((module, index) => (
