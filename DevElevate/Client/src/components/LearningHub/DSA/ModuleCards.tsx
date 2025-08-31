@@ -223,11 +223,7 @@ const ModuleCards: React.FC<ModuleCardsProps> = ({ modules }) => {
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => handleStartLearning(module.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors shadow-sm ${
-                    module.completed
-                      ? 'bg-green-500 hover:bg-green-600 text-white'
-                      : 'bg-blue-500 hover:bg-blue-600 text-white'
-                  }`}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors shadow-sm bg-blue-500 hover:bg-blue-600 text-white"
                 >
                   <PlayCircle className="w-5 h-5" />
                   <span>Start Learning</span>
