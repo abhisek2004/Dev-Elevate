@@ -8,6 +8,16 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    bio: {
+      type: String,
+      default:""
+    },
+    socialLinks: {
+      github: { type: String, default: "" },
+      linkedin: { type: String, default: "" },
+      twitter: { type: String, default: "" },
+    },
+
     email: {
       type: String,
       required: true,
