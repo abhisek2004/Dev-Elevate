@@ -334,6 +334,7 @@ const LoginRegister: React.FC = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
+                    onPaste={(e) => e.preventDefault()}
                     className="py-3 pr-12 pl-10 w-full text-gray-900 bg-white rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
                     placeholder="Enter your password"
                     required
@@ -385,6 +386,7 @@ const LoginRegister: React.FC = () => {
                         name="confirmPassword"
                         value={formData.confirmPassword}
                         onChange={handleInputChange}
+                        onPaste={(e) => e.preventDefault()}
                         className="py-3 pr-4 pl-10 w-full text-gray-900 bg-white rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
                         placeholder="Confirm your password"
                         required={!isLogin}
