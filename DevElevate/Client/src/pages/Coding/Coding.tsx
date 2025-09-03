@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Code2, Zap, Trophy, Users, ArrowRight, Play, Star, GitBranch, Target, BarChart3, Calendar, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -12,15 +12,6 @@ import AdminDashboard from './Pages/AdminDashboard';
 
 const Coding: React.FC = () => {
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState(() => {
-    const path = location.pathname;
-    if (path.includes('/coding/problems')) return 'problems';
-    if (path.includes('/coding/contests')) return 'contests';
-    if (path.includes('/coding/leaderboard')) return 'leaderboard';
-    if (path.includes('/coding/profile')) return 'profile';
-    if (path.includes('/coding/admin')) return 'admin';
-    return 'home';
-  });
 
   const navItems = [
     { id: 'home', label: 'Home', path: '', icon: Code2 },
@@ -30,10 +21,12 @@ const Coding: React.FC = () => {
     { id: 'profile', label: 'Profile', path: 'profile', icon: Users },
   ];
 
-  const isActive = (tabId: string) => activeTab === tabId;
-
-  const handleTabChange = (tabId: string) => {
-    setActiveTab(tabId);
+  const isActive = (itemPath: string) => {
+    const currentPath = location.pathname;
+    if (itemPath === '') {
+      return currentPath === '/coding' || currentPath === '/coding/';
+    }
+    return currentPath.startsWith(`/coding/${itemPath}`);
   };
 
   return (
@@ -59,10 +52,9 @@ const Coding: React.FC = () => {
                 return (
                   <Link
                     key={item.id}
-                    to={item.path}
-                    onClick={() => handleTabChange(item.id)}
+                    to={`/coding/${item.path}`} 
                     className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                      isActive(item.id)
+                      isActive(item.path)
                         ? 'bg-electric-500 text-white shadow-lg shadow-electric-500/25'
                         : 'text-gray-400 hover:text-white hover:bg-gray-700'
                     }`}

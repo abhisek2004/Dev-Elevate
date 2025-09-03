@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Code2, Trophy, Zap } from 'lucide-react';
+import { Code2, Trophy, Zap, Home, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Header: React.FC = () => {
@@ -9,9 +9,11 @@ const Header: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const navItems = [
+    { path: '/', label: 'Home', icon: Home },
     { path: '/problems', label: 'Problems', icon: Code2 },
     { path: '/contests', label: 'Contests', icon: Trophy },
-    { path: '/leaderboard', label: 'Leaderboard', icon: Zap }
+    { path: '/leaderboard', label: 'Leaderboard', icon: Zap },
+    { path: '/profile', label: 'Profile', icon: User }
   ];
 
   return (
