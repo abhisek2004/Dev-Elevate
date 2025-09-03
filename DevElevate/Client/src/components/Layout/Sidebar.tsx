@@ -50,7 +50,6 @@ const Sidebar: React.FC = () => {
     { path: "/tasks", icon: CheckSquare, label: "Tasks" },
     { path: "/notes", icon: StickyNote, label: "Notes" },
     { path: "/calendar", icon: Calendar, label: "Calendar" },
-    { path: "/payment", icon: CreditCard, label: "Pricing" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -73,7 +72,7 @@ const Sidebar: React.FC = () => {
           : "bg-white border-gray-200"
           }`}
       >
-        <div className="flex flex-col p-4 space-y-6 h-full">
+        <div className="flex flex-col h-full p-4 space-y-6">
           {/* Navigation Items */}
           <div className="flex flex-col space-y-1">
             {navItems.map((item) => {
