@@ -22,6 +22,8 @@ import PrivacyPolicy from "./components/Legal/PrivacyPolicy";
 import TermsOfService from "./components/Legal/TermsOfService";
 import CreatorPage from "./components/Legal/CreatorPage";
 import Disclaimer from "./components/Legal/Disclaimer";
+import HelpCenter from "./components/HelpCenter/HelpCenter";
+import ContactSupport from "./components/ContactSupport/ContactSupport";
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import AdminSystemLogs from "./components/Admin/AdminSystemLogs";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
@@ -108,6 +110,8 @@ const AppContent = () => {
                                   path="disclaimer"
                                   element={<Disclaimer />}
                                 />
+                                <Route path="help-center" element={<HelpCenter />} />
+                                <Route path="contact-support" element={<ContactSupport />} />
                                 <Route
                                   path="*"
                                   element={<Navigate to="/dashboard" replace />}
