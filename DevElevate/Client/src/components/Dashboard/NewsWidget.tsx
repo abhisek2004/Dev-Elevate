@@ -25,7 +25,6 @@ const NewsWidget: React.FC = () => {
           "https://newsdata.io/api/1/latest?apikey=pub_435a52c41f174309b4357800e29821d0&category=technology,business&language=en&country=in"
         );
         const data = await res.json();
-        console.log("Fetched news:", data.results);
 
         if (data.results) {
         setArticles(data.results.slice(0, 9)); // ✅ limit to 9
