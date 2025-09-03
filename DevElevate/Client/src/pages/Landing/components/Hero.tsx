@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
-import { ArrowRight, Play, Sparkles, ChevronDown } from "lucide-react";
+import { ArrowRight, Play, Sparkles, ChevronDown, X } from "lucide-react";
 import AnimatedCube from "./AnimatedCube";
 import { Link } from "react-router-dom";
 
 const Hero: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [contributors, setContributors] = useState<any[]>([]);
+  const [showVideo, setShowVideo] = useState(false);
 
   // Observer animation
   useEffect(() => {
@@ -109,11 +110,38 @@ const Hero: React.FC = () => {
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </Link>
-            <button className="flex items-center justify-center px-8 py-4 space-x-2 font-semibold text-white transition-all duration-300 border group bg-white/5 backdrop-blur-sm border-white/10 rounded-xl hover:bg-white/10">
-              <Play className="w-5 h-5" />
-              <span>Watch Demo</span>
-            </button>
+
+            {!showVideo && (
+              <button
+                onClick={() => setShowVideo(true)}
+                className="flex items-center justify-center px-8 py-4 space-x-2 font-semibold text-white transition-all duration-300 border group bg-white/5 backdrop-blur-sm border-white/10 rounded-xl hover:bg-white/10"
+              >
+                <Play className="w-5 h-5" />
+                <span>Watch Demo</span>
+              </button>
+            )}
           </div>
+
+          {/* Video Embed */}
+          {showVideo && (
+            <div className="relative w-full max-w-3xl mt-6 overflow-hidden shadow-lg aspect-video rounded-xl">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/zCUTFe8gQEA?si=Ww6NjvtI1R5RKaDW&autoplay=1"
+                title="DevElevate Demo Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+              {/* Close button */}
+              <button
+                onClick={() => setShowVideo(false)}
+                className="absolute p-2 text-white transition bg-black rounded-full top-2 right-2 hover:bg-red-600"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          )}
 
           {/* Trust Indicators */}
           <div className="flex items-center space-x-4 text-sm text-gray-500">
