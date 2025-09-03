@@ -166,6 +166,14 @@ const Hero: React.FC = () => {
           <div className="absolute hidden p-3 delay-500 border rounded-lg md:block bottom-1/4 -right-16 bg-black/50 backdrop-blur-sm border-blue-500/20 animate-float">
             <code className="text-xs text-blue-400">{"AI.solve(problem)"}</code>
           </div>
+          {/* 🔥 New floating snippets */}
+          <div className="absolute hidden p-3 delay-700 border rounded-lg md:block top-10 right-1/4 bg-black/50 backdrop-blur-sm border-pink-500/20 animate-float">
+            <code className="text-xs text-pink-400">{"const dev = Elevate();"}</code>
+          </div>
+
+          <div className="absolute hidden p-3 delay-1000 border rounded-lg md:block bottom-10 left-1/4 bg-black/50 backdrop-blur-sm border-yellow-500/20 animate-float">
+            <code className="text-xs text-yellow-400">{"// 🚀 Keep Building"}</code>
+          </div>
         </div>
       </div>
 
