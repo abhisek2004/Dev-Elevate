@@ -27,7 +27,6 @@ import AdminSystemLogs from "./components/Admin/AdminSystemLogs";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import LoginRegister from "./components/Auth/LoginRegister";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Settings from "./components/Settings/Settings";
 import PremiumPage from "./components/premium/PremiumPage";
 import PaymentPage from "./components/Payment/PaymentPage";
 import ProjectRecommender from "./components/ProjectRecommender/ProjectRecommender";
@@ -96,7 +95,6 @@ const AppContent = () => {
                                 <Route path="tasks" element={<TasksView />} />
                                 <Route path="notes" element={<NotesView />} />
                                 <Route path="calendar" element={<CalendarView />} />
-                                <Route path="settings" element={<Settings />} />
                                 <Route path="premium" element={<PremiumPage />} />
                                 <Route path="payment" element={<PaymentPage />} />
                                 <Route path="profile" element={<UserProfile />} />
