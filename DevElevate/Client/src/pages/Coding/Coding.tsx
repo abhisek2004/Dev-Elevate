@@ -7,7 +7,7 @@ import ProblemsPage from './Pages/ProblemsPage';
 import ProblemDetailPage from './Pages/ProblemDetailPage';
 import ContestsPage from './Pages/ContestsPage';
 import LeaderboardPage from './Pages/LeaderboardPage';
-import ProfilePage from './Pages/ProfilePage';
+
 import AdminDashboard from './Pages/AdminDashboard';
 
 const Coding: React.FC = () => {
@@ -18,7 +18,7 @@ const Coding: React.FC = () => {
     { id: 'problems', label: 'Problems', path: 'problems', icon: Target },
     { id: 'contests', label: 'Contests', path: 'contests', icon: Trophy },
     { id: 'leaderboard', label: 'Leaderboard', path: 'leaderboard', icon: BarChart3 },
-    { id: 'profile', label: 'Profile', path: 'profile', icon: Users },
+
   ];
 
   const isActive = (itemPath: string) => {
@@ -35,16 +35,6 @@ const Coding: React.FC = () => {
       <header className="border-b border-gray-800 backdrop-blur-sm bg-gray-900/95">
         <div className="px-4 py-6 mx-auto max-w-7xl">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-              <div className="p-2 bg-gradient-to-r rounded-lg from-electric-400 to-neon-500">
-                <Code2 className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-white">DevElevate Coding</h1>
-                <p className="text-gray-400">Master coding, shape the future</p>
-              </div>
-            </div>
-            
             {/* Navigation Tabs */}
             <nav className="flex p-1 space-x-1 bg-gray-800 rounded-lg">
               {navItems.map((item) => {
@@ -77,7 +67,7 @@ const Coding: React.FC = () => {
           <Route path="/problems/:id" element={<ProblemDetailPage />} />
           <Route path="/contests" element={<ContestsPage />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+
           <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
       </main>

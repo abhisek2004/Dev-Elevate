@@ -210,33 +210,6 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
-        <div className="px-4 mx-auto max-w-4xl text-center sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="mb-6 text-4xl font-bold text-white">
-              Ready to Level Up Your Coding Skills?
-            </h2>
-            <p className="mb-8 text-xl text-gray-400">
-              Join thousands of developers who are already improving their skills on DevElevate.
-              Start your journey today and unlock your potential.
-            </p>
-            <Link
-              to="/coding/problems"
-              className="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r rounded-xl shadow-lg transition-all duration-300 transform from-electric-400 to-neon-500 hover:from-electric-500 hover:to-neon-600 hover:scale-105 hover:shadow-electric-400/50"
-            >
-              Get Started Free
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 };
