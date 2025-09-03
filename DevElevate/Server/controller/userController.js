@@ -429,3 +429,40 @@ export const latestNews = async (req, res) => {
       .json({ message: "Internal Server Error", error: error.message });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { name, bio, socialLinks } = req.body;
+    const updatedUser = await User
+      .findByIdAndUpdate(
+        req.user._id,
+        { name, bio, socialLinks },
+        { new: true }
+      )
+      .select("-password -refreshToken");
+
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getProfile= async(req,res)=>{
+try {
+    
+    const userId =  req.user._id;
+    if (!userId) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const user = await User.findById(userId).select('-password'); // exclude password
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}

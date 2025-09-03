@@ -9,64 +9,64 @@ import StreakCalendar from './StreakCalendar';
 import DailyGoals from './DailyGoals';
 import QuizHistory from '../Quiz/QuizHistory';
 import { User } from '../../contexts/GlobalContext';
+import { baseUrl } from '../../config/routes';
 
 const Dashboard: React.FC = () => {
   const { state: authState } = useAuth();
   const { state, dispatch } = useGlobalState();
+useEffect(() => {
+  // Initialize user if not exists
+  if (!state.user) {
+    const defaultUser: User = {
+      id: '1',
+      name: 'John Doe',
+      email: 'john@example.com',
+      joinDate: new Date().toISOString(),
+      streak: 0,
+      totalPoints: 1250,
+      level: 'Intermediate'
+    };
+    dispatch({ type: 'SET_USER', payload: defaultUser });
+  }
 
-  useEffect(() => {
-    // Initialize user if not exists
-    if (!state.user) {
-      const defaultUser: User = {
-        id: '1',
-        name: 'John Doe',
-        email: 'john@example.com',
-        joinDate: new Date().toISOString(),
-        streak: 0, // Initialize with 0
-        totalPoints: 1250,
-        level: 'Intermediate'
-      };
-      dispatch({ type: 'SET_USER', payload: defaultUser });
-    }
+  // Fetch streak data from backend
+  const fetchStreakData = async () => {
+    try {
+      const response = await fetch(`${baseUrl}/api/v1/user/streak`, {
+        headers: {
+          'Authorization': `Bearer ${authState.sessionToken}`
+        }
+      });
+      const data = await response.json();
 
-    // Fetch streak data from backend
-    const fetchStreakData = async () => {
-      try {
-        const response = await fetch('/api/user/streak', {
-          headers: {
-            'Authorization': `Bearer ${authState.sessionToken}`
+      if (response.ok) {
+        // Update global state with streak data
+        dispatch({ 
+          type: 'SET_USER', 
+          payload: {
+            ...state.user,
+            streak: data.currentStreakData.currentStreak
           }
         });
-        const data = await response.json();
-        
-        if (response.ok) {
-          // Update global state with streak data
-          dispatch({ 
-            type: 'SET_USER', 
-            payload: {
-              ...state.user,
-              streak: data.currentStreakData.currentStreak
-            }
-          });
-          
-          // Convert streak data to the format expected by StreakCalendar
-          const streakData = {};
-          data.currentStreakData.dayStreak.forEach((visit: { dateOfVisiting: string | number | Date }) => {
-            const date = new Date(visit.dateOfVisiting).toISOString().split('T')[0];
-            streakData[date] = true;
-          });
-          
-          dispatch({ type: 'HYDRATE_STATE', payload: { streakData } });
-        }
-      } catch (error) {
-        console.error('Error fetching streak data:', error);
-      }
-    };
 
-    if (authState.isAuthenticated && authState.sessionToken) {
-      fetchStreakData();
+        // Convert streak data for StreakCalendar
+        const streakData: Record<string, boolean> = {};
+        data.currentStreakData.dayStreak.forEach((visit: { dateOfVisiting: string | number | Date }) => {
+          const date = new Date(visit.dateOfVisiting).toISOString().split('T')[0];
+          streakData[date] = true;
+        });
+
+        dispatch({ type: 'HYDRATE_STATE', payload: { streakData } });
+      }
+    } catch (error) {
+      console.error('Error fetching streak data:', error);
     }
-  }, [authState.isAuthenticated, authState.sessionToken, dispatch, state.user]);
+  };
+
+  if (authState.isAuthenticated && authState.sessionToken) {
+    fetchStreakData();
+  }
+}, [authState.isAuthenticated, authState.sessionToken, dispatch]);
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>

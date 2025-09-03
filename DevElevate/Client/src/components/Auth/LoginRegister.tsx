@@ -32,7 +32,6 @@ const LoginRegister: React.FC = () => {
   const [otp, setOtp] = useState("");
 
   useEffect(() => {
-    console.log("LoginRegister useEffect - state.user:", state.user);
     if (state.isAuthenticated && state.user) {
       if (state.user.role === "admin") {
         navigate("/admin");
@@ -65,18 +64,16 @@ const LoginRegister: React.FC = () => {
       const data = await response.json();
 
       if (response.ok && data.user && data.token) {
-        // Map backend user to your app's User type (same as in AuthContext)
         const user: User = {
           id: data.user.id,
           name: data.user.name,
           email: data.user.email,
           role: data.user.role,
           avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
-          bio:
-            data.user.role === "admin"
-              ? "System Administrator"
-              : "DevElevate User",
-          socialLinks: {},
+          bio:data.user.bio,
+          socialLinks: {
+            
+          },
           joinDate: new Date().toISOString(),
           lastLogin: new Date().toISOString(),
           isActive: true,

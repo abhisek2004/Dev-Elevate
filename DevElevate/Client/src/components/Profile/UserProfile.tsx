@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+import React, { useState, useEffect } from 'react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { 
   User as UserIcon,
-  Mail, 
-  Calendar, 
   Edit, 
   Save, 
   X, 
   Camera, 
   Lock, 
-  Settings, 
   BookOpen, 
   Trophy, 
   Target,
   Github,
   Linkedin,
   Twitter,
-  Globe,
   Flame
 } from 'lucide-react';
+import { baseUrl } from '../../config/routes';
 
 interface User {
   id: string;
@@ -49,24 +45,52 @@ interface User {
     streak: number;
     longestStreak: number;
     level: string;
+    currentStreak: 0;
     streakStartDate?: string;
     streakEndDate?: string;
   };
 }
+const defaultUser: User = {
+  id: '0',
+  name: 'Guest User',
+  email: 'guest@example.com',
+  avatar: '',
+  role: 'user',
+  bio: '',
+  socialLinks: {
+    linkedin: '',
+    github: '',
+    twitter: ''
+  },
+  joinDate: new Date().toISOString(),
+  lastLogin: new Date().toISOString(),
+  isActive: false,
+  preferences: {
+    theme: 'light',
+    notifications: true,
+    language: 'en',
+    emailUpdates: true
+  },
+  progress: {
+    coursesEnrolled: [],
+    completedModules: 0,
+    totalPoints: 0,
+    streak: 0,
+    longestStreak: 0,
+    currentStreak: 0,
+    level: 'Beginner'
+  },
+};
 
 const UserProfile: React.FC = () => {
-  const { state: authState, updateProfile, changePassword } = useAuth();
   const { state: globalState } = useGlobalState();
+  const [user, setUser] = useState<User | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [formData, setFormData] = useState({
-    name: authState.user?.name || '',
-    bio: authState.user?.bio || '',
-    socialLinks: {
-      linkedin: authState.user?.socialLinks?.linkedin || '',
-      github: authState.user?.socialLinks?.github || '',
-      twitter: authState.user?.socialLinks?.twitter || ''
-    }
+    name: '',
+    bio: '',
+    socialLinks: { linkedin: '', github: '', twitter: '' }
   });
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
@@ -75,25 +99,99 @@ const UserProfile: React.FC = () => {
   });
   const [passwordError, setPasswordError] = useState('');
 
-  const handleSaveProfile = async () => {
+  // Fetch profile on mount
+useEffect(() => {
+  const fetchProfile = async () => {
     try {
-      await updateProfile(formData);
-      setIsEditing(false);
-    } catch (error) {
-      console.error('Failed to update profile:', error);
+      const res = await fetch(`${baseUrl}/api/v1/get-profile`, { credentials: 'include' });
+      if (!res.ok) throw new Error('Failed to fetch profile');
+      const data = await res.json();
+
+      // Merge with defaults
+      const mergedUser: User = {
+        ...defaultUser,
+        id: data._id || defaultUser.id,
+        name: data.name || defaultUser.name,
+        email: data.email || defaultUser.email,
+        role: data.role || defaultUser.role,
+        bio: data.bio || defaultUser.bio,
+        socialLinks: {
+          ...defaultUser.socialLinks,
+          ...data.socialLinks
+        },
+        joinDate: data.createdAt || defaultUser.joinDate,
+        lastLogin: data.updatedAt || defaultUser.lastLogin,
+        progress: {
+          ...defaultUser.progress,
+          streak: data.currentStreak || defaultUser.progress.streak,
+          longestStreak: data.longestStreak || defaultUser.progress.longestStreak,
+          currentStreak: data.currentStreak || defaultUser. progress.currentStreak
+        },
+      };
+
+      setUser(mergedUser);
+
+      setFormData({
+        name: mergedUser.name,
+        bio: mergedUser.bio,
+        socialLinks: { ...mergedUser.socialLinks }
+      });
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  const handleCancelEdit = () => {
-    setFormData({
-      name: authState.user?.name || '',
-      bio: authState.user?.bio || '',
+  fetchProfile();
+}, []);
+
+ const handleSaveProfile = async () => {
+  if (!user) return;
+
+  try {
+    const payload = {
+      ...user, // existing data
+      name: formData.name,
+      bio: formData.bio,
       socialLinks: {
-        linkedin: authState.user?.socialLinks?.linkedin || '',
-        github: authState.user?.socialLinks?.github || '',
-        twitter: authState.user?.socialLinks?.twitter || ''
+        ...user.socialLinks,
+        ...formData.socialLinks
       }
+    };
+
+    const res = await fetch(`${baseUrl}/api/v1/update-profile`, {
+      method: 'PUT',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     });
+
+    if (!res.ok) throw new Error('Failed to update profile');
+    const data = await res.json();
+
+    // Merge with defaults to prevent undefined errors
+    const mergedUser = { ...defaultUser, ...data, socialLinks: { ...defaultUser.socialLinks, ...data.socialLinks }, progress: { ...defaultUser.progress, ...data.progress } };
+    setUser(mergedUser);
+    setIsEditing(false);
+
+  } catch (err) {
+    console.error(err);
+    alert(err instanceof Error ? err.message : 'Failed to save profile');
+  }
+};
+
+
+  const handleCancelEdit = () => {
+    if (user) {
+      setFormData({
+        name: user.name || '',
+        bio: user.bio || '',
+        socialLinks: {
+          linkedin: user.socialLinks?.linkedin || '',
+          github: user.socialLinks?.github || '',
+          twitter: user.socialLinks?.twitter || ''
+        }
+      });
+    }
     setIsEditing(false);
   };
 
@@ -112,7 +210,16 @@ const UserProfile: React.FC = () => {
     }
 
     try {
-      await changePassword(passwordData.currentPassword, passwordData.newPassword);
+      const res = await fetch('/api/change-password', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentPassword: passwordData.currentPassword, newPassword: passwordData.newPassword })
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || 'Failed to change password');
+      }
       setShowPasswordForm(false);
       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
       alert('Password changed successfully!');
@@ -127,23 +234,25 @@ const UserProfile: React.FC = () => {
     setShowPasswordForm(false);
   };
 
-  if (!authState.user) {
+  if (!user) {
     return <div className="flex items-center justify-center min-h-screen">
-      <p className="text-lg">Please log in to view your profile.</p>
+      <p className="text-lg">Loading profile...</p>
     </div>;
   }
 
-  const { user } = authState;
-  const streakPercentage = Math.min(100, (user.progress.streak / 30) * 100);
-  const streakMessage = user.progress.streak >= 7 ? 
-    '🔥 Keep it up!' : 
-    user.progress.streak >= 3 ? 
-    'You\'re on a roll!' : 
-    'Complete daily goals to build your streak!';
+const streakValue = user?.progress?.streak ?? 0;
+const streakPercentage = Math.min(100, (streakValue / 30) * 100);
+const streakMessage =
+  streakValue >= 7
+    ? '🔥 Keep it up!'
+    : streakValue >= 3
+    ? "You're on a roll!"
+    : 'Complete daily goals to build your streak!';
 
   return (
+    // ... rest of your original JSX remains unchanged
     <div className={`min-h-screen ${globalState.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className={`text-3xl font-bold ${globalState.darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
@@ -538,3 +647,6 @@ const UserProfile: React.FC = () => {
 };
 
 export default UserProfile;
+
+
+
