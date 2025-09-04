@@ -12,6 +12,7 @@ import {
   latestNews,
   updateProfile,
   getProfile,
+  changePassword,
 } from "../controller/userController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 
@@ -24,6 +25,7 @@ router.get("/get-profile", authenticateToken, getProfile);
 router.post("/auth/google", googleUser);
 router.post("/feedback", authenticateToken, feedback);
 router.get("/user/streak",authenticateToken,currentStreak)
+router.post('/change-password',authenticateToken,changePassword)
 
 router.get("/latest-news",latestNews)
 

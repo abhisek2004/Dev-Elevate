@@ -3,7 +3,7 @@ import { useGlobalState } from "../../contexts/GlobalContext";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 import {
-  User as UserIcon,
+  User,
   Edit,
   Save,
   X,
@@ -216,13 +216,13 @@ const UserProfile: React.FC = () => {
       return;
     }
 
-    if (passwordData.newPassword.length < 6) {
-      setPasswordError("Password must be at least 6 characters");
+    if (passwordData.newPassword.length < 8) {
+      setPasswordError("Password must be at least 8 characters");
       return;
     }
 
     try {
-      const res = await fetch("/api/change-password", {
+      const res = await fetch(`${baseUrl}/api/v1/change-password`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -231,10 +231,24 @@ const UserProfile: React.FC = () => {
           newPassword: passwordData.newPassword,
         }),
       });
+
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Failed to change password");
+        let errorMessage = "Failed to change password";
+
+        try {
+          const errData = await res.json();
+          errorMessage = errData?.message || errorMessage;
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            console.error(error.message);
+          } else {
+            console.error("Unknown error:", error);
+          }
+        }
+
+        throw new Error(errorMessage);
       }
+
       setShowPasswordForm(false);
       setPasswordData({
         currentPassword: "",
@@ -678,10 +692,19 @@ const UserProfile: React.FC = () => {
                         required
                       />
 
-                   {
-                    showPassword?  <FaRegEyeSlash size={20} className="absolute right-3 top-3 text-gray-900 cursor-pointer" onClick={()=>setShowPassword(!showPassword)}/>
-                    : <FaRegEyeSlash size={20} className="absolute right-3 top-3 text-gray-900 cursor-pointer" onClick={()=>setShowPassword(!showPassword)}/>
-                   }   
+                      {showPassword ? (
+                        <FaRegEyeSlash
+                          size={20}
+                          className="absolute right-3 top-3 text-gray-900 cursor-pointer"
+                          onClick={() => setShowPassword(!showPassword)}
+                        />
+                      ) : (
+                        <FaRegEyeSlash
+                          size={20}
+                          className="absolute right-3 top-3 text-gray-900 cursor-pointer"
+                          onClick={() => setShowPassword(!showPassword)}
+                        />
+                      )}
                     </div>
                   </div>
 
@@ -694,7 +717,7 @@ const UserProfile: React.FC = () => {
                       New Password
                     </label>
                     <input
-                       type={showPassword ? "text" : "password"}
+                      type={showPassword ? "text" : "password"}
                       value={passwordData.newPassword}
                       onChange={(e) =>
                         setPasswordData({
@@ -720,7 +743,7 @@ const UserProfile: React.FC = () => {
                       Confirm New Password
                     </label>
                     <input
-                       type={showPassword ? "text" : "password"}
+                      type={showPassword ? "text" : "password"}
                       value={passwordData.confirmPassword}
                       onChange={(e) =>
                         setPasswordData({

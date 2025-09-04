@@ -433,13 +433,11 @@ export const latestNews = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { name, bio, socialLinks } = req.body;
-    const updatedUser = await User
-      .findByIdAndUpdate(
-        req.user._id,
-        { name, bio, socialLinks },
-        { new: true }
-      )
-      .select("-password -refreshToken");
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { name, bio, socialLinks },
+      { new: true }
+    ).select("-password -refreshToken");
 
     res.json(updatedUser);
   } catch (err) {
@@ -447,22 +445,54 @@ export const updateProfile = async (req, res) => {
   }
 };
 
-export const getProfile= async(req,res)=>{
-try {
-    
-    const userId =  req.user._id;
+export const getProfile = async (req, res) => {
+  try {
+    const userId = req.user._id;
     if (!userId) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const user = await User.findById(userId).select('-password'); // exclude password
+    const user = await User.findById(userId).select("-password"); // exclude password
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
-}
+};
+
+
+export const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    console.log(currentPassword, newPassword);
+
+    const userId = req.user._id;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    console.log(hashedPassword);
+
+    await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
+
+    return res.status(200).json({
+      message: "Password changed successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: error.message || "Server error" });
+  }
+};
+
