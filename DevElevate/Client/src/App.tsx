@@ -62,10 +62,10 @@ const AppContent = () => {
                 />
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/placements" element={<PlacementStats />}/>
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="/terms" element={<TermsOfService />} />
-                <Route path="/creator" element={<CreatorPage />} />
-                <Route path="/disclaimer" element={<Disclaimer />} />
+                <Route path="/privacy" element={<div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-white'}`}><PrivacyPolicy /></div>} />
+                <Route path="/terms" element={<div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-white'}`}><TermsOfService /></div>} />
+                <Route path="/creator" element={<div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-white'}`}><CreatorPage /></div>} />
+                <Route path="/disclaimer" element={<div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-white'}`}><Disclaimer /></div>} />
 
                 {/* Protected Routes */}
                 <Route
