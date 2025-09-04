@@ -18,6 +18,7 @@ import {
   Flame,
 } from "lucide-react";
 import { baseUrl } from "../../config/routes";
+import { toast } from "sonner";
 
 interface User {
   id: string;
@@ -183,6 +184,9 @@ const UserProfile: React.FC = () => {
         progress: { ...defaultUser.progress, ...data.progress },
       };
       setUser(mergedUser);
+      toast.success("Profile update successfully", {
+        icon: "✅",
+      });
       setIsEditing(false);
     } catch (err) {
       console.error(err);
@@ -255,7 +259,9 @@ const UserProfile: React.FC = () => {
         newPassword: "",
         confirmPassword: "",
       });
-      alert("Password changed successfully!");
+      toast.success("Password changed successfully", {
+        icon: "✅",
+      });
     } catch (error) {
       setPasswordError(
         error instanceof Error ? error.message : "Failed to change password"

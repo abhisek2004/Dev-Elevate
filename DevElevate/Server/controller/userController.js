@@ -468,25 +468,17 @@ export const getProfile = async (req, res) => {
 export const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
-    console.log(currentPassword, newPassword);
-
     const userId = req.user._id;
-
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     const isMatch = await bcrypt.compare(currentPassword, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    console.log(hashedPassword);
-
     await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
-
     return res.status(200).json({
       message: "Password changed successfully",
     });
