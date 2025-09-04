@@ -15,6 +15,7 @@ import {
   changePassword,
 } from "../controller/userController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
+import { passwordChangeLimiter } from "../utils/passwordChangeLimiter.js";
 
 router.post("/auth/signup", registerUser);
 router.post("/auth/verify-otp", verifySignupOtp);
@@ -25,7 +26,7 @@ router.get("/get-profile", authenticateToken, getProfile);
 router.post("/auth/google", googleUser);
 router.post("/feedback", authenticateToken, feedback);
 router.get("/user/streak",authenticateToken,currentStreak)
-router.post('/change-password',authenticateToken,changePassword)
+router.post('/change-password',authenticateToken,passwordChangeLimiter,changePassword)
 
 router.get("/latest-news",latestNews)
 
