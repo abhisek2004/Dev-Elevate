@@ -58,7 +58,7 @@ const CreatorPage: React.FC = () => {
   ];
 
   return (
-    <div className="transition-colors duration-200">
+    <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
       <div className="px-4 py-12 mx-auto max-w-6xl sm:px-6 lg:px-8">
         {/* Hero Section */}
         

@@ -62,6 +62,10 @@ const AppContent = () => {
                 />
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/placements" element={<PlacementStats />}/>
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<TermsOfService />} />
+                <Route path="/creator" element={<CreatorPage />} />
+                <Route path="/disclaimer" element={<Disclaimer />} />
 
                 {/* Protected Routes */}
                 <Route
@@ -100,16 +104,6 @@ const AppContent = () => {
                                 <Route path="premium" element={<PremiumPage />} />
                                 <Route path="payment" element={<PaymentPage />} />
                                 <Route path="profile" element={<UserProfile />} />
-                                <Route
-                                  path="privacy"
-                                  element={<PrivacyPolicy />}
-                                />
-                                <Route path="terms" element={<TermsOfService />} />
-                                <Route path="creator" element={<CreatorPage />} />
-                                <Route
-                                  path="disclaimer"
-                                  element={<Disclaimer />}
-                                />
                                 <Route path="help-center" element={<HelpCenter />} />
                                 <Route path="contact-support" element={<ContactSupport />} />
                                 <Route

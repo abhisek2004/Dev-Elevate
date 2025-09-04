@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FaBriefcase } from "react-icons/fa";
 import { Rocket, Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
 import { SiMongodb, SiExpress, SiNodedotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
@@ -78,12 +79,12 @@ const Footer: React.FC = () => {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.path}
+                  <Link
+                    to={link.path}
                     className="text-gray-400 transition-colors duration-300 hover:text-white"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -95,12 +96,12 @@ const Footer: React.FC = () => {
             <ul className="space-y-3">
               {legalLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.path}
+                  <Link
+                    to={link.path}
                     className="text-gray-400 transition-colors duration-300 hover:text-white"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
