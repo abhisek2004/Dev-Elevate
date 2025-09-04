@@ -51,7 +51,6 @@ const Navbar: React.FC = () => {
     { path: "/tasks", icon: CheckSquare, label: "Tasks" },
     { path: "/notes", icon: StickyNote, label: "Notes" },
     { path: "/calendar", icon: Calendar, label: "Calendar" },
-    { path: "/payment", icon: CreditCard, label: "Pricing" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -87,11 +86,11 @@ const Navbar: React.FC = () => {
         }`}
       >
         <div className="px-4 mx-auto max-w-9xl sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center space-x-2">
-                <div className="flex justify-center items-center w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600">
                   <BookOpen className="w-5 h-5 text-white" />
                 </div>
                 <span
@@ -136,7 +135,7 @@ const Navbar: React.FC = () => {
               >
                 <Bell className="w-5 h-5" />
                 {unreadCount > 0 && (
-                  <span className="flex absolute -top-1 -right-1 justify-center items-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full">
+                  <span className="absolute flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full -top-1 -right-1">
                     {unreadCount > 9 ? "9+" : unreadCount}
                   </span>
                 )}
@@ -158,7 +157,7 @@ const Navbar: React.FC = () => {
                       )}&background=3b82f6&color=fff`
                     }
                     alt={authState.user?.name}
-                    className="w-8 h-8 rounded-full border-2 border-blue-500"
+                    className="w-8 h-8 border-2 border-blue-500 rounded-full"
                   />
                   <div className="hidden text-left md:block">
                     <div

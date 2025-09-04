@@ -50,14 +50,14 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
         { icon: User, label: 'View Profile', action: () => navigate('/profile') },
       ]
     },
-    {
-      section: 'Learning',
-      items: [
-        { icon: BookOpen, label: 'My Courses', action: () => navigate('/learning') },
-        { icon: Target, label: 'Progress & Goals', action: () => navigate('/') },
-        { icon: FileText, label: 'My Resume', action: () => navigate('/resume') },
-      ]
-    },
+    // {
+    //   section: 'Learning',
+    //   items: [
+    //     // { icon: BookOpen, label: 'My Courses', action: () => navigate('/learning') },
+    //     // { icon: Target, label: 'Progress & Goals', action: () => navigate('/') },
+    //     // { icon: FileText, label: 'My Resume', action: () => navigate('/resume') },
+    //   ]
+    // },
     {
       section: 'Premium',
       items: [
@@ -68,8 +68,8 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
     {
       section: 'Support',
       items: [
-        { icon: HelpCircle, label: 'Help Center', action: () => window.open('/help', '_blank') },
-        { icon: ExternalLink, label: 'Contact Support', action: () => window.open('mailto:support@develevate.com') },
+        { icon: HelpCircle, label: 'Help Center', action: () => navigate('/help-center') },
+        { icon: ExternalLink, label: 'Contact Support', action: () => navigate('/contact-support') },
       ]
     }
   ];
@@ -102,7 +102,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
               alt={authState.user?.name}
               className="w-12 h-12 rounded-full border-2 border-blue-500"
             />
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
+            <div className="absolute -right-1 -bottom-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
           </div>
           <div className="flex-1">
             <h3 className={`font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -111,7 +111,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
             <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
               {authState.user?.email || 'guest@example.com'}
             </p>
-            <div className="flex items-center space-x-2 mt-1">
+            <div className="flex items-center mt-1 space-x-2">
               <span className={`text-xs px-2 py-1 rounded-full ${
                 state.darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-700'
               }`}>
@@ -129,7 +129,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
   
 
       {/* Menu Items */}
-      <div className="max-h-80 overflow-y-auto">
+      <div className="overflow-y-auto max-h-80">
         {menuItems.map((section, sectionIndex) => (
           <div key={sectionIndex} className={`${sectionIndex > 0 ? `border-t ${state.darkMode ? 'border-gray-700' : 'border-gray-200'}` : ''}`}>
             <div className={`px-4 py-2 text-xs font-medium uppercase tracking-wider ${
@@ -160,7 +160,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
                       {item.label}
                     </span>
                     {item.highlight && (
-                      <span className="ml-auto px-2 py-1 bg-white/20 rounded-full text-xs">
+                      <span className="px-2 py-1 ml-auto text-xs rounded-full bg-white/20">
                         New
                       </span>
                     )}
@@ -174,7 +174,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
 
       {/* Theme Toggle & Logout */}
       <div className={`p-4 border-t ${state.darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-gray-50'}`}>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex justify-between items-center mb-3">
           <span className={`text-sm font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             Theme
           </span>
@@ -202,7 +202,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
         
         <button
           onClick={handleLogout}
-          className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+          className="flex justify-center items-center px-4 py-2 space-x-2 w-full text-white bg-red-500 rounded-lg transition-colors hover:bg-red-600"
         >
           <LogOut className="w-4 h-4" />
           <span>Sign Out</span>

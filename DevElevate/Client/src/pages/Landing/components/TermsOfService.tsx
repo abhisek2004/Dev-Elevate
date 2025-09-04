@@ -312,7 +312,7 @@ const TermsOfService: React.FC = () => {
                 state.darkMode ? "text-gray-300" : "text-gray-700"
               }`}
             >
-              <strong>Email:</strong> officialdevelevate@gmail.com
+              <strong>Email:</strong> legal@develevate.com
             </p>
             <p
               className={`${
@@ -330,16 +330,17 @@ const TermsOfService: React.FC = () => {
               https://github.com/abhisek2004/Dev-Elevate.git
             </p>
           </div>
-          {/* Return to Dashboard Button */}
-          <div className="flex justify-center mt-10">
-            <Link
-              to="/dashboard"
-              className="flex gap-2 items-center px-6 py-3 font-medium text-white bg-purple-600 rounded-xl shadow-lg transition hover:bg-purple-700"
-            >
-              <Home className="w-5 h-5" />
-              Return to Dashboard
-            </Link>
-          </div>
+        </div>
+
+        {/* Return to Dashboard Button */}
+        <div className="flex justify-center mt-10">
+          <Link
+            to="/dashboard"
+            className="flex gap-2 items-center px-6 py-3 font-medium text-white bg-purple-600 rounded-xl shadow-lg transition hover:bg-purple-700"
+          >
+            <Home className="w-5 h-5" />
+            Return to Dashboard
+          </Link>
         </div>
       </div>
     </div>
