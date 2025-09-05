@@ -418,6 +418,8 @@ This keeps the project clean 🧹, updated 🔄, and easier to merge! ✅
 
 ### Environment Variables Donot
 
+### 👉 Replace the placeholders (your_xxx_here) with your actual keys when running locally.
+
 client/.env   
 
 # --------------------
@@ -427,7 +429,6 @@ client/.env
 ```env
 VITE_API_URL=http://localhost:4000
 VITE_NEW_API_KEY=your_new_api_key_here
-
 VITE_FIREBASE_API_KEY=your_firebase_api_key_here
 VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 VITE_FIREBASE_PROJECT_ID=your_project_id_here
@@ -435,7 +436,6 @@ VITE_FIREBASE_STORAGE_BUCKET=your_project_storage_bucket_here
 VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id_here
 VITE_FIREBASE_APP_ID=your_app_id_here
 VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id_here
-
 VITE_GROQ_API_KEY=your_groq_api_key_here
 VITE_GEMINI_API_KEY=your_gemini_api_key_here
 
