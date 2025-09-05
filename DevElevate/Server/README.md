@@ -189,14 +189,21 @@ Server/
 
 Create a `.env` file with the following variables:
 
+server/.env
+
+# --------------------
+# Backend
+# --------------------
+
+### 👉 Replace the placeholders (your_xxx_here) with your actual keys when running locally.
+
 ```env
-PORT=3001
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-MAIL_USER=your_gmail_address
-MAIL_PASS=your_gmail_app_password
-FRONTEND_URL=your_frontend_url
-NODE_ENV=development
+PORT=4000
+MONGO_URI=your_mongodb_connection_uri_here
+JWT_SECRET=your_jwt_secret_here
+FRONTEND_URL=http://localhost:5173
+MAIL_USER=your_email_here
+MAIL_PASS=your_email_app_password_here
 ```
 
 ### Installation
