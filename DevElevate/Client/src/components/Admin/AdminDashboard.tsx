@@ -42,6 +42,7 @@ import { CiLogout } from "react-icons/ci";
 import QuizForm from "../Quiz/QuizForm";
 import QuizList from "../Quiz/QuizList";
 import SubmissionTracker from "../Quiz/SubmissionTracker";
+import AnalyticsDashboard from "../AnalyticsDashboard";
 type Course = {
   id: string;
   title: string;
@@ -70,8 +71,10 @@ type NewsArticle = {
 const AdminDashboard: React.FC = () => {
   const { state: authState, loadUsers, logout } = useAuth();
   const { state: globalState, dispatch } = useGlobalState();
-  const { users, totalUsers, totalAdmins, loading, addUserByAdmin,deleteUserByAdmin } =
-    useAdmin();
+  const {users, totalUsers, totalAdmins, loading, addUserByAdmin,deleteUserByAdmin } =useAdmin();
+
+console.log(totalUsers);
+
 
 
   const [activeTab, setActiveTab] = useState("overview");
@@ -2162,175 +2165,7 @@ const AdminDashboard: React.FC = () => {
   );
 
   const renderAnalytics = () => (
-    <div className="space-y-6">
-      <h3
-        className={`text-xl font-semibold ${
-          globalState.darkMode ? "text-white" : "text-gray-900"
-        }`}
-      >
-        Analytics Dashboard
-      </h3>
-
-      {/* Analytics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div
-          className={`${
-            globalState.darkMode ? "bg-gray-800" : "bg-white"
-          } p-6 rounded-lg border`}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p
-                className={`text-sm ${
-                  globalState.darkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                Page Views
-              </p>
-              <p
-                className={`text-2xl font-bold ${
-                  globalState.darkMode ? "text-white" : "text-gray-900"
-                }`}
-              >
-                24,567
-              </p>
-              <p className="text-sm text-green-500">+12% from last month</p>
-            </div>
-            <Activity className="w-8 h-8 text-blue-500" />
-          </div>
-        </div>
-
-        <div
-          className={`${
-            globalState.darkMode ? "bg-gray-800" : "bg-white"
-          } p-6 rounded-lg border`}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p
-                className={`text-sm ${
-                  globalState.darkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                User Engagement
-              </p>
-              <p
-                className={`text-2xl font-bold ${
-                  globalState.darkMode ? "text-white" : "text-gray-900"
-                }`}
-              >
-                78%
-              </p>
-              <p className="text-sm text-green-500">+5% from last week</p>
-            </div>
-            <Users className="w-8 h-8 text-green-500" />
-          </div>
-        </div>
-
-        <div
-          className={`${
-            globalState.darkMode ? "bg-gray-800" : "bg-white"
-          } p-6 rounded-lg border`}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p
-                className={`text-sm ${
-                  globalState.darkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                Course Completion
-              </p>
-              <p
-                className={`text-2xl font-bold ${
-                  globalState.darkMode ? "text-white" : "text-gray-900"
-                }`}
-              >
-                85%
-              </p>
-              <p className="text-sm text-green-500">+8% from last month</p>
-            </div>
-            <Award className="w-8 h-8 text-purple-500" />
-          </div>
-        </div>
-
-        <div
-          className={`${
-            globalState.darkMode ? "bg-gray-800" : "bg-white"
-          } p-6 rounded-lg border`}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p
-                className={`text-sm ${
-                  globalState.darkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                Revenue
-              </p>
-              <p
-                className={`text-2xl font-bold ${
-                  globalState.darkMode ? "text-white" : "text-gray-900"
-                }`}
-              >
-                $12,450
-              </p>
-              <p className="text-sm text-green-500">+15% from last month</p>
-            </div>
-            <TrendingUp className="w-8 h-8 text-orange-500" />
-          </div>
-        </div>
-      </div>
-
-      {/* Charts Placeholder */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div
-          className={`${
-            globalState.darkMode ? "bg-gray-800" : "bg-white"
-          } p-6 rounded-lg border`}
-        >
-          <h4
-            className={`text-lg font-semibold mb-4 ${
-              globalState.darkMode ? "text-white" : "text-gray-900"
-            }`}
-          >
-            User Growth
-          </h4>
-          <div className="h-64 flex items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
-            <p
-              className={
-                globalState.darkMode ? "text-gray-400" : "text-gray-600"
-              }
-            >
-              Chart Placeholder
-            </p>
-          </div>
-        </div>
-
-        <div
-          className={`${
-            globalState.darkMode ? "bg-gray-800" : "bg-white"
-          } p-6 rounded-lg border`}
-        >
-          <h4
-            className={`text-lg font-semibold mb-4 ${
-              globalState.darkMode ? "text-white" : "text-gray-900"
-            }`}
-          >
-            Course Performance
-          </h4>
-          <div className="h-64 flex items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
-            <p
-              className={
-                globalState.darkMode ? "text-gray-400" : "text-gray-600"
-              }
-            >
-              Chart Placeholder
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+  <AnalyticsDashboard/>
   );
 
   const renderSystemLogs = () => (
