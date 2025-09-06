@@ -6,7 +6,7 @@ import {
   fetchModulesCompleted,
   fetchQuizAttempts,
   fetchFeedback,
-} from "../../services/analyticsService";
+} from "../services/analyticsService";
 import {
   BarChart,
   Bar,
