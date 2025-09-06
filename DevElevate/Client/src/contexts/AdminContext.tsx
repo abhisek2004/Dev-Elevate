@@ -38,7 +38,11 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     try {
       setLoading(true);
       const data = await getAllUsers();
-      setUsers(data.users);
+      console.log(data);
+      
+  
+      
+      setUsers(data.data);
       setTotalUsers(data.totalUsers);
       setTotalAdmins(data.totalAdmins);
     } catch (error) {

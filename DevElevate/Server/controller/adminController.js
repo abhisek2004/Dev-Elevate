@@ -14,7 +14,7 @@ export const createAdminLog = async (req, res) => {
       return res.status(400).json({ message: "Action and details are required" });
     }
 
-    const log = new AdminLog({
+    const log = new Admin({
       action,
       details,
       performedBy: req.user.id, // comes from authenticateToken middleware
@@ -74,12 +74,30 @@ export const addUser = async (req, res) => {
 // ✅ Get all registered users
 export const getAllUserRegister = async (req, res) => {
   try {
-    const users = await User.find().select("-password"); // hide password
-    res.status(200).json(users);
+    // Fetch all users but exclude password
+    const users = await User.find().select("-password");
+
+    // Count by role
+    const totalUsers = await User.countDocuments({ role: "user" });
+    const totalAdmins = await User.countDocuments({ role: "admin" });
+
+    res.status(200).json({
+      success: true,
+      message: "Users fetched successfully",
+      totalUsers,
+      totalAdmins,
+      totalRegistered: users.length,
+      data: users,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error fetching users", error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Error fetching users",
+      error: error.message,
+    });
   }
 };
+
 
 // ✅ Delete user by ID (matches /delete-user/:id route)
 export const deleteUserById = async (req, res) => {
