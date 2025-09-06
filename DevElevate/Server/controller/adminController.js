@@ -1,7 +1,9 @@
 // controller/adminController.js
 import bcrypt from "bcryptjs";
-import User from "../models/User.js";       // ✅ adjust path if needed
-import AdminLog from "../models/AdminLog.js"; // ✅ ensure model exists
+import User from "../model/UserModel.js";   
+import AdminLog from "../model/AdminLog.js"    
+
+
 
 // ✅ Create an admin log entry
 export const createAdminLog = async (req, res) => {
