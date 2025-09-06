@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
-import user from "../model/UserModel.js";
+import User from "../models/User.js";
 
+// ✅ Middleware: Authenticate user via token
 export const authenticateToken = async (req, res, next) => {
   try {
     const token =
@@ -13,27 +14,27 @@ export const authenticateToken = async (req, res, next) => {
 
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-    const userData = await user
-      .findById(decodedToken?.userId)
+    const userData = await User.findById(decodedToken?.id || decodedToken?.userId)
       .select("-password -refreshToken");
 
     if (!userData) {
       return res.status(401).json({ message: "Invalid Access Token" });
     }
 
-    req.user = userData; // ✅ attach user
+    req.user = userData;
     next();
   } catch (error) {
+    console.error(error);
     return res.status(401).json({ message: "Invalid or expired token" });
   }
 };
 
-
+// ✅ Middleware: Check if user is admin
 export const requireAdmin = (req, res, next) => {
   if (req.user && req.user.role === "admin") {
     next();
   } else {
-    return res.status(403).json({ message: "Admin access required" });
+    res.status(403).json({ message: "Access denied. Admins only." });
   }
 };
 
