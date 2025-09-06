@@ -8,7 +8,6 @@ import { AdminProvider } from "./contexts/AdminContext";
 import { AppProvider } from "./contexts/AppContext";
 
 import Footer from "./components/Layout/Footer";
-import ScrollToTop from "./components/Layout/ScrollToTop";
 import LearningHub from "./components/LearningHub/LearningHub";
 import Chatbot from "./components/Chatbot/Chatbot";
 import TechFeed from "./components/TechFeed/TechFeed";
@@ -37,6 +36,7 @@ import CalendarView from "./components/calendar/CalendarView";
 import Coding from "./pages/Coding/Coding";
 import InterviewPage from "./pages/Interview/InterviewPage";
 import QuizPage from "./components/Quiz/QuizPage";
+import BackToTopButton from "./components/Layout/BackToTopButton";
 
 // ✅ AppContent
 const AppContent = () => {
@@ -44,7 +44,6 @@ const AppContent = () => {
 
   return (
     <Router>
-      <ScrollToTop />
       <Routes>
         {/* Public Routes */}
         <Route
@@ -136,6 +135,7 @@ const AppContent = () => {
           }
         />
       </Routes>
+      <BackToTopButton />
     </Router>
   );
 };
