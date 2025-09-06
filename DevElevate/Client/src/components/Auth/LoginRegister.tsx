@@ -52,9 +52,7 @@ const LoginRegister: React.FC = () => {
         email: firebaseUser.email || "",
         password: "",
         role: role,
-      };
-      console.log("user payload", userPayload);
-      // Send to backend and get the response
+      };      // Send to backend and get the response
       const response = await fetch(`${baseUrl}/api/v1/auth/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
