@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
           {/* Brand */}
           <div className="col-span-2 md:col-span-2">
             <div className="flex items-center mb-6 space-x-3">
-              <div className="flex justify-center items-center w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500">
                 <Rocket className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex justify-center items-center w-10 h-10 rounded-lg border transition-all duration-300 bg-white/5 border-white/10 hover:bg-white/10 hover:border-purple-500/30"
+                  className="flex items-center justify-center w-10 h-10 transition-all duration-300 border rounded-lg bg-white/5 border-white/10 hover:bg-white/10 hover:border-purple-500/30"
                 >
                   <social.icon className="w-4 h-4 text-gray-400" />
                 </a>
@@ -115,8 +115,8 @@ const Footer: React.FC = () => {
                 const IconComponent = tech.icon;
                 return (
                   <li key={tech.name} className="flex items-center space-x-2">
-                    <IconComponent 
-                      className="w-4 h-4" 
+                    <IconComponent
+                      className="w-4 h-4"
                       style={{ color: tech.color }}
                     />
                     <span className="text-gray-400">{tech.name}</span>
@@ -128,26 +128,15 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col justify-between items-center pt-8 mt-12 border-t border-white/10 md:flex-row">
+        <div className="flex flex-col items-center justify-between pt-8 mt-12 border-t border-white/10 md:flex-row">
           <div className="mb-4 text-sm text-gray-400 md:mb-0">
             © 2025 DevElevate. All rights reserved.
           </div>
-
-          {/* Back to Top Button */}
-          <button
-            onClick={scrollToTop}
-            className="flex items-center space-x-2 text-gray-400 transition-colors duration-300 group hover:text-white"
-          >
-            <span className="text-sm">Back to top</span>
-            <div className="flex justify-center items-center w-8 h-8 rounded-lg border transition-all duration-300 bg-white/5 border-white/10 group-hover:bg-white/10 group-hover:border-purple-500/30">
-              <ArrowUp className="w-4 h-4" />
-            </div>
-          </button>
         </div>
       </div>
 
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-t to-transparent pointer-events-none from-purple-900/5"></div>
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t to-transparent from-purple-900/5"></div>
     </footer>
   );
 };
