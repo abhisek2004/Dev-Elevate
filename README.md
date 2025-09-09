@@ -118,15 +118,9 @@ Click the link below to explore the complete guide:
 
 > ⚠️ **📢 Important Note – Must Read Before You Contribute!** ⚠️
 
-https://github.com/user-attachments/assets/05618403-7b9a-4b04-91fa-c46d72e8e674
-
 ---
 
-https://github.com/user-attachments/assets/76b1d004-0dbf-4f18-ba26-60dd66429305
-
----
-
-https://github.com/user-attachments/assets/cadea16d-4c59-4e4a-8f80-5c6cc15aa272
+https://youtu.be/zCUTFe8gQEA?si=bS5lkWOxnIuJMXst
 
 ---
 
