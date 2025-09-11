@@ -22,7 +22,7 @@ const LoginRegister: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState<"user" | "admin">("user");
-  const [authMethod, setAuthMethod] = useState<"email" | "google">("email");
+  // Showing email form and Google button together; no segmented method toggle needed
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -234,51 +234,8 @@ const LoginRegister: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Authentication method tabs */}
-          <div className="flex justify-center mb-6">
-            <button
-              type="button"
-              onClick={() => setAuthMethod("email")}
-              className={`px-4 py-2 flex items-center font-semibold rounded-tl-lg rounded-bl-lg transition-all duration-200
-              ${
-                authMethod === "email"
-                  ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
-                  : "bg-purple-100 text-blue-500 border border-blue-500 hover:bg-blue-50"
-              }`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="mr-1 w-5 h-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-              </svg>
-              Email
-            </button>
-            <button
-              type="button"
-              onClick={() => setAuthMethod("google")}
-              className={`px-4 py-2 flex items-center font-semibold rounded-tr-lg rounded-br-lg transition-all duration-200
-              ${
-                authMethod === "google"
-                  ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
-                  : "bg-purple-100 text-blue-500 border border-blue-500 hover:bg-blue-50"
-              }`}
-            >
-              <svg className="mr-1 w-5 h-5" viewBox="0 0 24 24">
-                <path
-                  fill="currentColor"
-                  d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z"
-                />
-              </svg>
-              Google
-            </button>
-          </div>
 
           {/* Email/Password + OTP Flow */}
-          {authMethod === "email" && (
             <>
               {!isLogin && !state.otpPending && (
                 <div>
@@ -394,7 +351,7 @@ const LoginRegister: React.FC = () => {
                 </div>
               )}
 
-              {isLogin && authMethod === "email" && role === "admin" && (
+              {isLogin && role === "admin" && (
                 <div className="p-4 rounded-xl border bg-slate-800/30 border-slate-700/50">
                   <p className="mb-2 text-xs text-center text-slate-400">Admin Credentials:</p>
                   <p className="text-xs text-center text-slate-300">Email: officialdevelevate@gmail.com</p>
@@ -427,40 +384,42 @@ const LoginRegister: React.FC = () => {
                 )}
               </button>
             </>
-          )}
+          
+
+          {/* Divider */}
+          <div className="flex items-center my-4">
+            <div className="flex-1 border-t border-gray-300"></div>
+            <span className="px-3 text-gray-500">or</span>
+            <div className="flex-1 border-t border-gray-300"></div>
+          </div>
 
           {/* Google Auth */}
-          {authMethod === "google" && (
             <div className="flex flex-col items-center space-y-4">
               <button
                 type="button"
                 onClick={handleGoogleAuth}
-                className="flex justify-center items-center py-3 space-x-2 w-full font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg transition-all duration-200 hover:from-blue-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full h-12 px-4 inline-flex items-center justify-center rounded-full border border-gray-200 bg-white text-gray-900 shadow-sm transition-all hover:shadow-md active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed dark:bg-white"
                 disabled={state.isLoading}
               >
                 {state.isLoading ? (
-                  <div className="w-5 h-5 rounded-full border-2 border-white animate-spin border-t-transparent" />
+                  <div className="w-5 h-5 rounded-full border-2 border-gray-900 animate-spin border-t-transparent" />
                 ) : (
                   <>
-                    <svg className="w-5 h-5" viewBox="0 0 24 24">
-                      <path
-                        fill="#fff"
-                        d="M21.805 10.023h-9.18v3.955h5.266c-.227 1.2-1.37 3.52-5.266 3.52-3.17 0-5.75-2.62-5.75-5.84s2.58-5.84 5.75-5.84c1.81 0 3.03.77 3.73 1.43l2.55-2.48C17.09 3.67 15.13 2.7 12.625 2.7c-5.01 0-9.075 4.06-9.075 9.07s4.065 9.07 9.075 9.07c5.23 0 8.7-3.67 8.7-8.84 0-.59-.07-1.04-.17-1.48z"
-                      />
+                    <svg className="mr-2 w-5 h-5" viewBox="0 0 48 48" aria-hidden>
+                      <path fill="#EA4335" d="M24 9.5c3.94 0 6.63 1.7 8.15 3.13l5.56-5.56C34.7 3.4 29.82 1.5 24 1.5 14.64 1.5 6.54 6.98 2.98 14.76l6.86 5.32C11.48 14.47 17.18 9.5 24 9.5z"/>
+                      <path fill="#34A853" d="M46.5 24c0-1.64-.15-2.84-.47-4.08H24v7.73h12.75c-.26 1.93-1.67 4.84-4.81 6.79l7.38 5.72C43.7 36.8 46.5 30.9 46.5 24z"/>
+                      <path fill="#4A90E2" d="M9.84 28.62A14.48 14.48 0 0 1 9 24c0-1.61.27-3.16.76-4.62L2.9 14.06C1.65 16.73 1 19.58 1 22.5S1.65 28.27 2.9 30.94l6.94-2.32z"/>
+                      <path fill="#FBBC05" d="M24 46.5c6.48 0 11.92-2.14 15.89-5.84l-7.38-5.72c-2.04 1.37-4.78 2.33-8.51 2.33-6.82 0-12.52-4.97-14.16-11.58l-6.86 5.32C6.54 41.02 14.64 46.5 24 46.5z"/>
                     </svg>
-                    <span>
-                      {isLogin ? "Sign in with Google" : "Sign up with Google"}
-                    </span>
+                    <span className="text-sm font-medium">Continue with Google</span>
                   </>
                 )}
               </button>
               <p className="text-sm text-center text-gray-500">
-                {isLogin
-                  ? "Sign in using your Google account."
-                  : "Sign up using your Google account."}
+                Use your Google account to {isLogin ? "sign in" : "sign up"} quickly.
               </p>
             </div>
-          )}
+          
         </form>
 
         {/* Toggle Form */}
