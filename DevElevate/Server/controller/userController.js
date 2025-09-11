@@ -105,7 +105,7 @@ export const verifySignupOtp = async (req, res) => {
       const html = generateWelcomeEmail(newUser.name);
       await sendWelcomeEmail(newUser.email, html);
     } catch (emailError) {
-      console.log("⚠️ Welcome email failed:", emailError.message);
+      console.error("⚠️ Welcome email failed:", emailError.message);
     }
 
     // Create notification for registration success
@@ -203,7 +203,6 @@ export const googleUser = async (req, res) => {
 
     // Check if user already exists
     let user = await User.findOne({ email });
-    console.log("User found in DB:", user);
 
     if (!user) {
       user = new User({
@@ -220,7 +219,6 @@ export const googleUser = async (req, res) => {
         "success"
       );
       await user.save();
-      console.log("New Google user created:", user);
     }
 
     // JWT token
@@ -228,7 +226,6 @@ export const googleUser = async (req, res) => {
     const JWT_EXPIRES = "3d";
     const payLode = { userId: user._id };
     const token = jwt.sign(payLode, JWT_SECRET, { expiresIn: JWT_EXPIRES });
-    console.log("JWT token generated:", token);
 
     // Set token in cookie and send response
     res
@@ -250,7 +247,7 @@ export const googleUser = async (req, res) => {
           role: user.role,
         },
       });
-    console.log("Google login response sent.");
+    
   } catch (error) {
     console.error("Google login error:", error);
     res
@@ -286,10 +283,9 @@ export const logout = async (req, res) => {
 
 export const currentStreak = async (req, res) => {
   try {
-    console.log(req.user);
-
+    
     const userId = req.user._id.toString();
-    console.log(userId);
+    
 
     const user = await User.findById(userId).populate("dayStreak");
 
@@ -387,7 +383,7 @@ export const feedback = async (req, res) => {
       newFeedback,
     });
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
   }
 };
 
@@ -419,7 +415,6 @@ export const latestNews = async (req, res) => {
     }
 
     const data = await response.json();
-    console.log(data);
 
     res.json(data);
   } catch (error) {

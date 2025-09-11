@@ -4,7 +4,6 @@ import User from "../model/UserModel.js";
 // ✅ Middleware: Authenticate user via token
 export const authenticateToken = async (req, res, next) => {
   try {
-    console.log(req.cookies.token);
     
     const token =
       req.cookies?.token ||
