@@ -51,49 +51,49 @@ const Features: React.FC = () => {
   ];
 
   return (
-    <section id="features" className="py-20 sm:py-24 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="features" className="relative py-20 sm:py-24">
+      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16 sm:mb-20">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-full px-4 py-2 mb-6">
+        <div className="mb-16 text-center sm:mb-20">
+          <div className="inline-flex items-center px-4 py-2 mb-6 space-x-2 bg-gradient-to-r rounded-full border from-purple-500/10 to-blue-500/10 border-purple-500/20">
             <Star className="w-4 h-4 text-purple-400" />
             <span className="text-sm text-gray-300">Powerful Features</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+          <h2 className="mb-6 text-3xl font-bold sm:text-4xl md:text-6xl">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
               Everything You Need to
             </span>
             <br />
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
               Excel in Tech
             </span>
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="mx-auto max-w-3xl text-base text-gray-400 sm:text-lg md:text-xl">
             Our comprehensive platform combines AI-powered learning, personalized guidance, and industry-standard tools 
             to accelerate your tech career journey.
           </p>
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 md:gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 hover:border-purple-500/30 transition-all duration-500 hover:scale-105"
+              className="relative p-6 rounded-2xl border backdrop-blur-sm transition-all duration-500 group bg-black/50 border-white/10 sm:p-8 hover:border-purple-500/30 hover:scale-105"
             >
               {/* Background Glow */}
               <div className={`absolute inset-0 bg-gradient-to-r ${feature.gradient} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-500`}></div>
               
               {/* Icon */}
               <div className={`w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r ${feature.gradient} rounded-xl flex items-center justify-center mb-5`}>
-                <feature.icon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+                <feature.icon className="w-7 h-7 text-white sm:w-8 sm:h-8" />
               </div>
 
               {/* Content */}
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-purple-400 group-hover:to-blue-400 transition-all duration-300">
+              <h3 className="mb-3 text-xl font-bold text-white transition-all duration-300 sm:text-2xl sm:mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-purple-400 group-hover:to-blue-400">
                 {feature.title}
               </h3>
-              <p className="text-gray-400 text-sm sm:text-base mb-5 leading-relaxed">
+              <p className="mb-5 text-sm leading-relaxed text-gray-400 sm:text-base">
                 {feature.description}
               </p>
 
@@ -113,12 +113,7 @@ const Features: React.FC = () => {
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-14 sm:mt-16">
-          <button className="text-sm sm:text-base bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
-            Explore All Features
-          </button>
-        </div>
+       
       </div>
     </section>
   );

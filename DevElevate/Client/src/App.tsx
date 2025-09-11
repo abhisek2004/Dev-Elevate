@@ -1,6 +1,5 @@
 // ✅ All imports at the top
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import AnalyticsDashboard from "./components/AnalyticsDashboard.tsx";
 import { AuthProvider } from "./contexts/AuthContext";
 import { GlobalProvider, useGlobalState } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
@@ -8,6 +7,8 @@ import { AdminProvider } from "./contexts/AdminContext";
 import { AppProvider } from "./contexts/AppContext";
 
 import Footer from "./components/Layout/Footer";
+import { useEffect, useState } from "react";
+import SplashScreen from "./components/Layout/SplashScreen";
 import LearningHub from "./components/LearningHub/LearningHub";
 import Chatbot from "./components/Chatbot/Chatbot";
 import TechFeed from "./components/TechFeed/TechFeed";
@@ -132,11 +133,33 @@ const AppContent = () => {
 
 // ✅ App root
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    let timeoutId: number | undefined;
+    const hide = () => setShowSplash(false);
+    // Hide when window finished loading, with a safety timeout fallback
+    if (document.readyState === "complete") {
+      timeoutId = window.setTimeout(hide, 400);
+    } else {
+      window.addEventListener("load", hide, { once: true });
+      timeoutId = window.setTimeout(hide, 1500);
+    }
+    return () => {
+      window.removeEventListener("load", hide as EventListener);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+  }, []);
+
   return (
     <AuthProvider>
       <GlobalProvider>
         <NotificationProvider>
-          <AppContent />
+          {showSplash ? (
+            <SplashScreen fullPage title="DevElevate" subtitle="Preparing awesomeness..." />
+          ) : (
+            <AppContent />
+          )}
         </NotificationProvider>
       </GlobalProvider>
     </AuthProvider>
