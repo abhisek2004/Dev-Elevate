@@ -8,19 +8,19 @@ import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorize.js";
 import { authenticateToken } from "./middleware/authMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
-import adminFeedbackRoutes from './routes/adminFeedbackRoutes.js';
-import communityRoutes from './routes/communityRoutes.js';
-import quizRoutes from './routes/quizRoutes.js'
-import userQuizRoutes from './routes/userQuizRoutes.js';
-import atsRoutes from './routes/atsRoutes.js';
+import adminFeedbackRoutes from "./routes/adminFeedbackRoutes.js";
+import communityRoutes from "./routes/communityRoutes.js";
+import quizRoutes from "./routes/quizRoutes.js";
+import userQuizRoutes from "./routes/userQuizRoutes.js";
+import atsRoutes from "./routes/atsRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
-import aiRoutes from "./routes/aiRoutes.js"
+import aiRoutes from "./routes/aiRoutes.js";
 import javaRoutes from "./routes/javaRoutes.js";
 import aimlRoutes from "./routes/aimlRoutes.js";
 import mernRoutes from "./routes/mernRoutes.js";
 import dsaRoutes from "./routes/dsaRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
-
+import contactSupport from "./routes/contactSupport.js"
 
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
@@ -54,10 +54,11 @@ app.set("trust proxy", true);
 app.use("/api/v1/notifications", notificationRoutes);
 // USER ROUTES
 app.use("/api/v1", userRoutes);
+app.use("/api/v1", contactSupport);
 
-app.use("/api/v1/community", communityRoutes); // Community routes for questions and answers
+app.use("/api/v1/community", communityRoutes); 
 
-// ATS Scanner Route
+
 app.use("/api/v1/ats", atsRoutes); // ATS resume scanner functionality
 
 // ADMIN ROUTES
@@ -75,7 +76,7 @@ app.use("/api/v1/learning/mern", mernRoutes); // MERN stack learning content
 app.use("/api/v1/learning/dsa", dsaRoutes); // DSA learning content
 
 // Placement Routes
-app.use('/api/v1/placements', placementRoutes);
+app.use("/api/v1/placements", placementRoutes);
 
 // Sample Usage of authenticate and authorize middleware for roleBased Features
 app.get(
