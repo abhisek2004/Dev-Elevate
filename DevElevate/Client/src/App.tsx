@@ -38,6 +38,7 @@ import Coding from "./pages/Coding/Coding";
 import InterviewPage from "./pages/Interview/InterviewPage";
 import QuizPage from "./components/Quiz/QuizPage";
 import BackToTopButton from "./components/Layout/BackToTopButton";
+import HelpCenter from "./components/HelpCenter/HelpCenter";
 
 // ✅ AppContent
 const AppContent = () => {
@@ -115,7 +116,8 @@ const AppContent = () => {
                         <Route path="terms" element={<TermsOfService />} />
                         <Route path="creator" element={<CreatorPage />} />
                         <Route path="disclaimer" element={<Disclaimer />} />
-                        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                        <Route path="help-center" element={<HelpCenter />} />
+                        <Route path="*" element={<Navigate to="/dashboard" replace />} />                     
                       </Routes>
                     </main>
                     <Footer />
