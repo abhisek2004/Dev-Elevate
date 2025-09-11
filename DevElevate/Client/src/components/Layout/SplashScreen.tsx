@@ -35,12 +35,11 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
           {Array.from({ length: 40 }).map((_, i) => (
             <div
               key={i}
-              className="absolute w-1 h-1 rounded-full animate-pulse bg-white/20"
+              className="absolute w-1 h-1 rounded-full bg-white/20"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 2}s`,
+                animation: `spin ${(1 + Math.random() * 3).toFixed(2)}s cubic-bezier(0.4, 0.2, 0.2, 1) ${(Math.random() * 2).toFixed(2)}s infinite`,
               }}
             />
           ))}
@@ -62,7 +61,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
           overflow: "hidden",
         }}
       >
-        <div className="flex relative z-10 flex-col gap-8 items-center">
+        <div className="relative z-10 flex flex-col items-center gap-8">
           <div className="relative" style={{ width: 160, height: 160 }}>
             <div
               className="rounded-full animate-spin"
