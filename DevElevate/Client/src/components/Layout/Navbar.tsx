@@ -18,6 +18,7 @@ import {
   StickyNote,
   Calendar,
   Globe,
+  Brain,
   Users,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
@@ -40,6 +41,7 @@ const Navbar: React.FC = () => {
   const navItems = [
     { path: "/dashboard", icon: Home, label: "Dashboard" },
     { path: "/learning", icon: BookOpen, label: "Learning Hub" },
+    { path: "/quiz", icon: Brain, label: "Quiz Center" },
     { path: "/coding", icon: Code2, label: "Coding" },
     { path: "/interview", icon: Users, label: "Interview" },
     { path: "/chatbot", icon: MessageSquare, label: "Study Buddy" },
@@ -86,11 +88,11 @@ const Navbar: React.FC = () => {
         }`}
       >
         <div className="px-4 mx-auto max-w-9xl sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center space-x-2">
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600">
+                <div className="flex justify-center items-center w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
                   <BookOpen className="w-5 h-5 text-white" />
                 </div>
                 <span
@@ -135,7 +137,7 @@ const Navbar: React.FC = () => {
               >
                 <Bell className="w-5 h-5" />
                 {unreadCount > 0 && (
-                  <span className="absolute flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full -top-1 -right-1">
+                  <span className="flex absolute -top-1 -right-1 justify-center items-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full">
                     {unreadCount > 9 ? "9+" : unreadCount}
                   </span>
                 )}
@@ -157,7 +159,7 @@ const Navbar: React.FC = () => {
                       )}&background=3b82f6&color=fff`
                     }
                     alt={authState.user?.name}
-                    className="w-8 h-8 border-2 border-blue-500 rounded-full"
+                    className="w-8 h-8 rounded-full border-2 border-blue-500"
                   />
                   <div className="hidden text-left md:block">
                     <div
