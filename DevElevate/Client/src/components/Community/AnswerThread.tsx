@@ -11,7 +11,7 @@ interface AnswerThreadProps {
 
 interface Answer {
     content: string;
-    created_at: string;
+    created_at: Date;
     user: User;
     accepted: boolean;
 }
@@ -69,7 +69,8 @@ const AnswerThread: React.FC<AnswerThreadProps> = ({ question }) => {
             ))}
 
             <div className="mt-2 flex items-center justify-between mb-4">
-                <span className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Asked by {question.user.name} on {new Date(question.createdAt).toLocaleDateString()}</span>
+                <span className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}> Asked by {question.user?.name} on {
+                         new Date(question.created_at || Date.now()).toLocaleDateString()}</span>
                 <span className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{answers.length} Answers</span>
             </div>
             <div className="space-y-4">
@@ -79,7 +80,11 @@ const AnswerThread: React.FC<AnswerThreadProps> = ({ question }) => {
                             {answer.accepted && <span className={`text-xs ${state.darkMode ? 'text-green-400' : 'text-green-600'} font-semibold`}>Accepted ✔️</span>}
                         </div>
                         <p className={`${state.darkMode ? 'text-gray-200' : 'text-gray-800'}`}>{answer.content}</p>
-                        <span className={`text-xs ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Answered by {answer.user.name} on {new Date(answer.created_at).toLocaleDateString()}</span>
+                        <span className={`text-xs ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                         Answered by {answer.user?.name} on {
+                         new Date(answer.created_at || Date.now()).toLocaleDateString()
+                            }
+                        </span> 
                     </div>
                 ))}
             </div>
