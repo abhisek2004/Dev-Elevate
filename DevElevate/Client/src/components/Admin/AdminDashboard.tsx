@@ -71,11 +71,16 @@ type NewsArticle = {
 const AdminDashboard: React.FC = () => {
   const { state: authState, loadUsers, logout } = useAuth();
   const { state: globalState, dispatch } = useGlobalState();
-  const {users, totalUsers, totalAdmins, loading, addUserByAdmin,deleteUserByAdmin } =useAdmin();
+  const {
+    users,
+    totalUsers,
+    totalAdmins,
+    loading,
+    addUserByAdmin,
+    deleteUserByAdmin,
+  } = useAdmin();
 
-console.log(totalUsers);
-
-
+  console.log(totalUsers);
 
   const [activeTab, setActiveTab] = useState("overview");
   const [searchTerm, setSearchTerm] = useState("");
@@ -112,6 +117,7 @@ console.log(totalUsers);
   };
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [showUserDetailsModal, setShowUserDetailsModal] = useState(false);
   const [courses, setCourses] = useState<Course[]>([]);
 
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
@@ -149,7 +155,7 @@ console.log(totalUsers);
   const navigate = useNavigate();
 
   const handleAddUser = (userData: AddUserForm) => {
-    addUserByAdmin(userData); 
+    addUserByAdmin(userData);
   };
 
   interface DeleteUserData {
@@ -157,8 +163,7 @@ console.log(totalUsers);
   }
 
   const handleDeleteUser = (userId: DeleteUserData) => {
-    
-    deleteUserByAdmin(userId)
+    deleteUserByAdmin(userId);
     console.log("pass-1");
   };
 
@@ -214,7 +219,7 @@ console.log(totalUsers);
             setEditingQuiz(null);
             setShowQuizForm(true);
           }}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+          className="flex items-center px-4 py-2 space-x-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600"
         >
           <span>+ Create Quiz</span>
         </button>
@@ -389,7 +394,8 @@ console.log(totalUsers);
   ];
 
   // Filter logic
-  const filteredUsers=authState.users.filter(
+  const filteredUsers = authState.users
+    .filter(
       (user) =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -408,12 +414,12 @@ console.log(totalUsers);
       // Progress filter
       if (
         filter.minProgress &&
-        user.progress.totalPoints < Number(filter.minProgress)
+        (user.progress?.totalPoints || 0) < Number(filter.minProgress)
       )
         return false;
       if (
         filter.maxProgress &&
-        user.progress.totalPoints > Number(filter.maxProgress)
+        (user.progress?.totalPoints || 0) > Number(filter.maxProgress)
       )
         return false;
       return true;
@@ -483,7 +489,7 @@ console.log(totalUsers);
   const renderOverview = () => (
     <div className="space-y-6">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
@@ -495,7 +501,7 @@ console.log(totalUsers);
                   : "bg-white border-gray-200"
               } rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow`}
             >
-              <div className="flex items-center justify-between">
+              <div className="flex justify-between items-center">
                 <div>
                   <p
                     className={`text-sm ${
@@ -511,8 +517,8 @@ console.log(totalUsers);
                   >
                     {stat.value}
                   </p>
-                  <p className="text-sm text-green-500 flex items-center mt-1">
-                    <TrendingUp className="w-3 h-3 mr-1" />
+                  <p className="flex items-center mt-1 text-sm text-green-500">
+                    <TrendingUp className="mr-1 w-3 h-3" />
                     {stat.change}
                   </p>
                 </div>
@@ -542,24 +548,24 @@ console.log(totalUsers);
         >
           Quick Actions
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <button
             onClick={() => setShowAddCourse(true)}
-            className="flex items-center space-x-3 p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+            className="flex items-center p-4 space-x-3 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600"
           >
             <Plus className="w-5 h-5" />
             <span>Add New Course</span>
           </button>
           <button
             onClick={() => setShowAddNews(true)}
-            className="flex items-center space-x-3 p-4 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
+            className="flex items-center p-4 space-x-3 text-white bg-green-500 rounded-lg transition-colors hover:bg-green-600"
           >
             <Newspaper className="w-5 h-5" />
             <span>Publish News</span>
           </button>
           <button
             onClick={exportUserData}
-            className="flex items-center space-x-3 p-4 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors"
+            className="flex items-center p-4 space-x-3 text-white bg-purple-500 rounded-lg transition-colors hover:bg-purple-600"
           >
             <Download className="w-5 h-5" />
             <span>Export Data</span>
@@ -617,7 +623,7 @@ console.log(totalUsers);
           ].map((activity, index) => (
             <div
               key={index}
-              className="flex items-center justify-between py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0"
+              className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0"
             >
               <div className="flex items-center space-x-3">
                 <div
@@ -663,7 +669,7 @@ console.log(totalUsers);
       </div>
 
       {/* System Health */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div
           className={`${
             globalState.darkMode
@@ -679,7 +685,7 @@ console.log(totalUsers);
             System Health
           </h3>
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between items-center">
               <span
                 className={
                   globalState.darkMode ? "text-gray-300" : "text-gray-700"
@@ -689,10 +695,10 @@ console.log(totalUsers);
               </span>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-green-500 text-sm">Online</span>
+                <span className="text-sm text-green-500">Online</span>
               </div>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between items-center">
               <span
                 className={
                   globalState.darkMode ? "text-gray-300" : "text-gray-700"
@@ -702,10 +708,10 @@ console.log(totalUsers);
               </span>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-green-500 text-sm">Connected</span>
+                <span className="text-sm text-green-500">Connected</span>
               </div>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between items-center">
               <span
                 className={
                   globalState.darkMode ? "text-gray-300" : "text-gray-700"
@@ -715,7 +721,7 @@ console.log(totalUsers);
               </span>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-green-500 text-sm">Operational</span>
+                <span className="text-sm text-green-500">Operational</span>
               </div>
             </div>
           </div>
@@ -736,7 +742,7 @@ console.log(totalUsers);
             Platform Metrics
           </h3>
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between items-center">
               <span
                 className={
                   globalState.darkMode ? "text-gray-300" : "text-gray-700"
@@ -752,7 +758,7 @@ console.log(totalUsers);
                 99.9%
               </span>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between items-center">
               <span
                 className={
                   globalState.darkMode ? "text-gray-300" : "text-gray-700"
@@ -768,7 +774,7 @@ console.log(totalUsers);
                 120ms
               </span>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between items-center">
               <span
                 className={
                   globalState.darkMode ? "text-gray-300" : "text-gray-700"
@@ -793,9 +799,9 @@ console.log(totalUsers);
   const renderUserManagement = () => (
     <div className="space-y-6">
       {/* Search and Actions */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-between">
+      <div className="flex flex-col gap-4 justify-between sm:flex-row">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Search className="absolute left-3 top-1/2 w-5 h-5 text-gray-400 transform -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search users..."
@@ -811,24 +817,24 @@ console.log(totalUsers);
         <div className="flex space-x-2">
           <button
             onClick={() => setShowAddUser(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+            className="flex items-center px-4 py-2 space-x-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600"
           >
             <Plus className="w-4 h-4" />
             <span>Add User</span>
           </button>
           <button
             onClick={exportUserData}
-            className="flex items-center space-x-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
+            className="flex items-center px-4 py-2 space-x-2 text-white bg-green-500 rounded-lg transition-colors hover:bg-green-600"
           >
             <Download className="w-4 h-4" />
             <span>Export</span>
           </button>
-          <button className="flex items-center space-x-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors">
+          <button className="flex items-center px-4 py-2 space-x-2 text-white bg-purple-500 rounded-lg transition-colors hover:bg-purple-600">
             <Mail className="w-4 h-4" />
             <span>Send Email</span>
           </button>
           <button
-            className="flex items-center space-x-2 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+            className="flex items-center px-4 py-2 space-x-2 text-white bg-gray-500 rounded-lg transition-colors hover:bg-gray-600"
             onClick={() => setShowFilter(true)}
           >
             <Filter className="w-4 h-4" />
@@ -839,7 +845,7 @@ console.log(totalUsers);
 
       {/* Filter Modal */}
       {showFilter && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+        <div className="flex fixed inset-0 z-50 justify-center items-center bg-black bg-opacity-40">
           <div
             className={`${
               globalState.darkMode ? "bg-gray-800" : "bg-white"
@@ -984,7 +990,7 @@ console.log(totalUsers);
                   />
                 </div>
               </div>
-              <div className="flex justify-end space-x-2 pt-2">
+              <div className="flex justify-end pt-2 space-x-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -996,13 +1002,13 @@ console.log(totalUsers);
                       maxProgress: "",
                     });
                   }}
-                  className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                  className="px-4 py-2 text-white bg-gray-500 rounded-lg transition-colors hover:bg-gray-600"
                 >
                   Reset
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+                  className="px-4 py-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600"
                 >
                   Apply
                 </button>
@@ -1013,7 +1019,7 @@ console.log(totalUsers);
       )}
 
       {/* User Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <div
           className={`${
             globalState.darkMode ? "bg-gray-800" : "bg-white"
@@ -1141,10 +1147,10 @@ console.log(totalUsers);
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-8">
+                  <td colSpan={5} className="py-8 text-center">
                     <div className="flex justify-center items-center">
                       <svg
-                        className="animate-spin h-6 w-6 text-blue-500 mr-2"
+                        className="mr-2 w-6 h-6 text-blue-500 animate-spin"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -1169,7 +1175,7 @@ console.log(totalUsers);
                 </tr>
               ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-6 text-gray-500">
+                  <td colSpan={5} className="py-6 text-center text-gray-500">
                     No users found.
                   </td>
                 </tr>
@@ -1216,7 +1222,7 @@ console.log(totalUsers);
                     </td>
 
                     {/* Streak */}
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <td className="px-6 py-4 text-sm whitespace-nowrap">
                       <div>
                         Current:{" "}
                         <span className="font-medium">
@@ -1232,17 +1238,20 @@ console.log(totalUsers);
                     </td>
 
                     {/* Created At */}
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <td className="px-6 py-4 text-sm whitespace-nowrap">
                       {new Date(user.createdAt).toLocaleDateString()}
                     </td>
 
                     {/* Actions */}
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                       <div className="flex space-x-2">
                         <button
-                          onClick={() => setSelectedUser(user)}
+                          onClick={() => {
+                            setSelectedUser(user);
+                            setShowUserDetailsModal(true);
+                          }}
                           className="text-blue-600 hover:text-blue-900"
-                          title="View"
+                          title="View Details"
                         >
                           <Eye className="w-4 h-4" />
                         </button>
@@ -1259,7 +1268,7 @@ console.log(totalUsers);
                           <Mail className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={()=>handleDeleteUser(user._id)}
+                          onClick={() => handleDeleteUser(user._id)}
                           className="text-red-600 hover:text-red-900"
                           title="Delete"
                         >
@@ -1289,7 +1298,7 @@ console.log(totalUsers);
         </h3>
         <button
           onClick={() => setShowAddCourse(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+          className="flex items-center px-4 py-2 space-x-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600"
         >
           <Plus className="w-4 h-4" />
           <span>Add Course</span>
@@ -1297,7 +1306,7 @@ console.log(totalUsers);
       </div>
 
       {/* Course Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <div
           className={`${
             globalState.darkMode ? "bg-gray-800" : "bg-white"
@@ -1399,7 +1408,7 @@ console.log(totalUsers);
       </div>
 
       {/* Courses Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {courses.map((course) => (
           <div
             key={course.id}
@@ -1409,7 +1418,7 @@ console.log(totalUsers);
                 : "bg-white border-gray-200"
             } rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow`}
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex justify-between items-center mb-4">
               <h4
                 className={`text-lg font-semibold ${
                   globalState.darkMode ? "text-white" : "text-gray-900"
@@ -1535,8 +1544,8 @@ console.log(totalUsers);
               </div>
             </div>
 
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <div className="flex items-center justify-between">
+            <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex justify-between items-center">
                 <span
                   className={`px-2 py-1 rounded-full text-xs font-medium ${
                     course.status === "active"
@@ -1572,11 +1581,11 @@ console.log(totalUsers);
           Content Management
         </h3>
         <div className="flex space-x-2">
-          <button className="flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+          <button className="flex items-center px-4 py-2 space-x-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600">
             <Upload className="w-4 h-4" />
             <span>Upload Content</span>
           </button>
-          <button className="flex items-center space-x-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
+          <button className="flex items-center px-4 py-2 space-x-2 text-white bg-green-500 rounded-lg transition-colors hover:bg-green-600">
             <Plus className="w-4 h-4" />
             <span>Create Resource</span>
           </button>
@@ -1584,7 +1593,7 @@ console.log(totalUsers);
       </div>
 
       {/* Content Categories */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <div
           className={`${
             globalState.darkMode
@@ -1592,7 +1601,7 @@ console.log(totalUsers);
               : "bg-white border-gray-200"
           } rounded-xl p-6 border shadow-sm`}
         >
-          <div className="flex items-center space-x-3 mb-4">
+          <div className="flex items-center mb-4 space-x-3">
             <FileText className="w-6 h-6 text-blue-500" />
             <h4
               className={`text-lg font-semibold ${
@@ -1652,7 +1661,7 @@ console.log(totalUsers);
               </span>
             </div>
           </div>
-          <button className="w-full mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+          <button className="px-4 py-2 mt-4 w-full text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600">
             Manage Documents
           </button>
         </div>
@@ -1664,7 +1673,7 @@ console.log(totalUsers);
               : "bg-white border-gray-200"
           } rounded-xl p-6 border shadow-sm`}
         >
-          <div className="flex items-center space-x-3 mb-4">
+          <div className="flex items-center mb-4 space-x-3">
             <Globe className="w-6 h-6 text-green-500" />
             <h4
               className={`text-lg font-semibold ${
@@ -1724,7 +1733,7 @@ console.log(totalUsers);
               </span>
             </div>
           </div>
-          <button className="w-full mt-4 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
+          <button className="px-4 py-2 mt-4 w-full text-white bg-green-500 rounded-lg transition-colors hover:bg-green-600">
             Manage Media
           </button>
         </div>
@@ -1736,7 +1745,7 @@ console.log(totalUsers);
               : "bg-white border-gray-200"
           } rounded-xl p-6 border shadow-sm`}
         >
-          <div className="flex items-center space-x-3 mb-4">
+          <div className="flex items-center mb-4 space-x-3">
             <Database className="w-6 h-6 text-purple-500" />
             <h4
               className={`text-lg font-semibold ${
@@ -1796,7 +1805,7 @@ console.log(totalUsers);
               </span>
             </div>
           </div>
-          <button className="w-full mt-4 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors">
+          <button className="px-4 py-2 mt-4 w-full text-white bg-purple-500 rounded-lg transition-colors hover:bg-purple-600">
             Manage Resources
           </button>
         </div>
@@ -1846,7 +1855,7 @@ console.log(totalUsers);
           ].map((file, index) => (
             <div
               key={index}
-              className="flex items-center justify-between py-2 border-b border-gray-200 dark:border-gray-700 last:border-b-0"
+              className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700 last:border-b-0"
             >
               <div className="flex items-center space-x-3">
                 <FileText className="w-5 h-5 text-gray-400" />
@@ -1901,7 +1910,7 @@ console.log(totalUsers);
         </h3>
         <button
           onClick={() => setShowAddNews(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+          className="flex items-center px-4 py-2 space-x-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600"
         >
           <Plus className="w-4 h-4" />
           <span>Add News</span>
@@ -1909,7 +1918,7 @@ console.log(totalUsers);
       </div>
 
       {/* News Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <div
           className={`${
             globalState.darkMode ? "bg-gray-800" : "bg-white"
@@ -2132,7 +2141,7 @@ console.log(totalUsers);
                   >
                     {new Date(article.publishDate).toLocaleDateString()}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                     <div className="flex space-x-2">
                       <button
                         className="text-blue-600 hover:text-blue-900"
@@ -2164,13 +2173,11 @@ console.log(totalUsers);
     </div>
   );
 
-  const renderAnalytics = () => (
-  <AnalyticsDashboard/>
-  );
+  const renderAnalytics = () => <AnalyticsDashboard />;
 
   const renderSystemLogs = () => (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex justify-between items-center">
         <h3
           className={`text-xl font-semibold ${
             globalState.darkMode ? "text-white" : "text-gray-900"
@@ -2180,9 +2187,9 @@ console.log(totalUsers);
         </h3>
         <button
           onClick={() => navigate("/admin/logs")}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          className="px-4 py-2 font-medium text-white bg-blue-600 rounded-lg transition-colors hover:bg-blue-700"
         >
-          <Database className="w-4 h-4 inline mr-2" />
+          <Database className="inline mr-2 w-4 h-4" />
           View Detailed Logs
         </button>
       </div>
@@ -2199,7 +2206,7 @@ console.log(totalUsers);
             globalState.darkMode ? "text-gray-400" : "text-gray-600"
           }`}
         >
-          <Database className="w-12 h-12 mx-auto mb-4 opacity-50" />
+          <Database className="mx-auto mb-4 w-12 h-12 opacity-50" />
           Click "View Detailed Logs" to access the full system logs interface
           with filtering, search, and pagination capabilities.
         </p>
@@ -2217,7 +2224,7 @@ console.log(totalUsers);
         System Settings
       </h3>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* General Settings */}
         <div
           className={`${
@@ -2259,7 +2266,7 @@ console.log(totalUsers);
               />
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between items-center">
               <div>
                 <label
                   className={`text-sm font-medium ${
@@ -2299,7 +2306,7 @@ console.log(totalUsers);
               </button>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between items-center">
               <div>
                 <label
                   className={`text-sm font-medium ${
@@ -2407,7 +2414,7 @@ console.log(totalUsers);
               />
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between items-center">
               <div>
                 <label
                   className={`text-sm font-medium ${
@@ -2452,7 +2459,7 @@ console.log(totalUsers);
 
       {/* Save Settings */}
       <div className="flex justify-end">
-        <button className="flex items-center space-x-2 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+        <button className="flex items-center px-6 py-2 space-x-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600">
           <Save className="w-4 h-4" />
           <span>Save Settings</span>
         </button>
@@ -2463,9 +2470,9 @@ console.log(totalUsers);
   const renderFeedbackManagement = () => (
     <div className="space-y-6">
       {/* Search & Actions */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-between">
+      <div className="flex flex-col gap-4 justify-between sm:flex-row">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Search className="absolute left-3 top-1/2 w-5 h-5 text-gray-400 transform -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search feedback..."
@@ -2481,7 +2488,7 @@ console.log(totalUsers);
 
         <div className="flex">
           <button
-            className="flex items-center space-x-2 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+            className="flex items-center px-4 py-2 space-x-2 text-white bg-gray-500 rounded-lg transition-colors hover:bg-gray-600"
             onClick={() => setShowFilter(true)}
           >
             <Filter className="w-4 h-4" />
@@ -2492,7 +2499,7 @@ console.log(totalUsers);
 
       {/* Filter Modal */}
       {showFilter && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+        <div className="flex fixed inset-0 z-50 justify-center items-center bg-black bg-opacity-40">
           <div
             className={`${
               globalState.darkMode ? "bg-gray-800" : "bg-white"
@@ -2591,7 +2598,7 @@ console.log(totalUsers);
                 </div>
               </div>
 
-              <div className="flex justify-end space-x-2 pt-2">
+              <div className="flex justify-end pt-2 space-x-2">
                 <button
                   type="button"
                   onClick={() =>
@@ -2602,13 +2609,13 @@ console.log(totalUsers);
                       dateTo: "",
                     })
                   }
-                  className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                  className="px-4 py-2 text-white bg-gray-500 rounded-lg transition-colors hover:bg-gray-600"
                 >
                   Reset
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+                  className="px-4 py-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600"
                 >
                   Apply
                 </button>
@@ -2655,10 +2662,10 @@ console.log(totalUsers);
 
   if (!authState.user || authState.user.role !== "admin") {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex justify-center items-center min-h-screen">
         <div className="text-center">
-          <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <AlertTriangle className="mx-auto mb-4 w-16 h-16 text-red-500" />
+          <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
             Access Denied
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
@@ -2680,7 +2687,7 @@ console.log(totalUsers);
         globalState.darkMode ? "bg-gray-900" : "bg-gray-50"
       } transition-colors duration-200`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <h1
@@ -2698,7 +2705,7 @@ console.log(totalUsers);
             Comprehensive platform management and analytics
           </p>
           {/* 🌙 Dark Mode Toggle Button */}
-          <div className="flex items-center justify-start space-x-4 mt-4">
+          <div className="flex justify-start items-center mt-4 space-x-4">
             <button
               onClick={() => dispatch({ type: "TOGGLE_DARK_MODE" })}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
@@ -2711,7 +2718,7 @@ console.log(totalUsers);
             </button>
             <button
               onClick={handleLogout}
-              className=" gap-3 flex items-center justify-center bg-red-50 hover:bg-red-500 px-5 py-2 rounded-lg ml-8 transition-all  "
+              className="flex gap-3 justify-center items-center px-5 py-2 ml-8 bg-red-50 rounded-lg transition-all hover:bg-red-500"
             >
               <CiLogout size={25} />
               <span>Logout</span>
@@ -2782,6 +2789,18 @@ console.log(totalUsers);
           darkMode={globalState.darkMode}
         />
       )}
+
+      {/* Detailed User Popup Modal */}
+      {showUserDetailsModal && selectedUser && (
+        <DetailedUserModal
+          user={selectedUser}
+          onClose={() => {
+            setShowUserDetailsModal(false);
+            setSelectedUser(null);
+          }}
+          darkMode={globalState.darkMode}
+        />
+      )}
     </div>
   );
 };
@@ -2838,17 +2857,17 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
       className={`fixed inset-0 z-50 flex items-center justify-center ${
         darkMode
           ? "bg-black bg-opacity-60"
-          : "bg-gray-200 border-gray-300 bg-opacity-60"
+          : "bg-gray-200 bg-opacity-60 border-gray-300"
       }`}
     >
       <div
         className={`p-8 shadow-lg w-full  rounded-2xl  max-w-md ${
-          darkMode ? "bg-gray-900 text-white" : "bg-white text-black"
+          darkMode ? "text-white bg-gray-900" : "text-black bg-white"
         }`}
       >
-        <h2 className="text-xl font-semibold mb-4">Add New User</h2>
+        <h2 className="mb-4 text-xl font-semibold">Add New User</h2>
         {error && (
-          <div className="mb-4 p-2 rounded bg-red-100 text-red-700 border border-red-300">
+          <div className="p-2 mb-4 text-red-700 bg-red-100 rounded border border-red-300">
             ⚠️ {error}
           </div>
         )}
@@ -2859,7 +2878,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
             placeholder="Full Name"
             value={formData.name}
             onChange={handleChange}
-            className="p-2 border rounded"
+            className="p-2 rounded border"
             required
           />
           <input
@@ -2868,7 +2887,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
             placeholder="Email Address"
             value={formData.email}
             onChange={handleChange}
-            className="p-2 border rounded"
+            className="p-2 rounded border"
             required
           />
           <input
@@ -2877,14 +2896,14 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="p-2 border rounded"
+            className="p-2 rounded border"
             required
           />
           <select
             name="role"
             value={formData.role}
             onChange={handleChange}
-            className="p-2 border rounded"
+            className="p-2 rounded border"
             required
           >
             <option value="" disabled>
@@ -2894,17 +2913,17 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
             <option value="user">User</option>
           </select>
 
-          <div className="flex justify-end gap-2 mt-4">
+          <div className="flex gap-2 justify-end mt-4">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+              className="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
             >
               Add User
             </button>
@@ -2949,7 +2968,7 @@ const AddCourseModal: React.FC<AddCourseModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="flex fixed inset-0 z-50 justify-center items-center bg-black bg-opacity-50">
       <div
         className={`${
           darkMode ? "bg-gray-800" : "bg-white"
@@ -2988,8 +3007,8 @@ const AddCourseModal: React.FC<AddCourseModalProps> = ({
               }
               className={`w-full px-3 py-2 rounded-lg border ${
                 darkMode
-                  ? "bg-gray-700 border-gray-600 text-white"
-                  : "bg-white border-gray-300 text-gray-900"
+                  ? "text-white bg-gray-700 border-gray-600"
+                  : "text-gray-900 bg-white border-gray-300"
               } focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
@@ -3011,8 +3030,8 @@ const AddCourseModal: React.FC<AddCourseModalProps> = ({
               rows={3}
               className={`w-full px-3 py-2 rounded-lg border ${
                 darkMode
-                  ? "bg-gray-700 border-gray-600 text-white"
-                  : "bg-white border-gray-300 text-gray-900"
+                  ? "text-white bg-gray-700 border-gray-600"
+                  : "text-gray-900 bg-white border-gray-300"
               } focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
@@ -3038,8 +3057,8 @@ const AddCourseModal: React.FC<AddCourseModalProps> = ({
                 }
                 className={`w-full px-3 py-2 rounded-lg border ${
                   darkMode
-                    ? "bg-gray-700 border-gray-600 text-white"
-                    : "bg-white border-gray-300 text-gray-900"
+                    ? "text-white bg-gray-700 border-gray-600"
+                    : "text-gray-900 bg-white border-gray-300"
                 } focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 required
               />
@@ -3060,8 +3079,8 @@ const AddCourseModal: React.FC<AddCourseModalProps> = ({
                 }
                 className={`w-full px-3 py-2 rounded-lg border ${
                   darkMode
-                    ? "bg-gray-700 border-gray-600 text-white"
-                    : "bg-white border-gray-300 text-gray-900"
+                    ? "text-white bg-gray-700 border-gray-600"
+                    : "text-gray-900 bg-white border-gray-300"
                 } focus:outline-none focus:ring-2 focus:ring-blue-500`}
               >
                 <option value="Beginner">Beginner</option>
@@ -3089,8 +3108,8 @@ const AddCourseModal: React.FC<AddCourseModalProps> = ({
                 placeholder="e.g., 12 weeks"
                 className={`w-full px-3 py-2 rounded-lg border ${
                   darkMode
-                    ? "bg-gray-700 border-gray-600 text-white"
-                    : "bg-white border-gray-300 text-gray-900"
+                    ? "text-white bg-gray-700 border-gray-600"
+                    : "text-gray-900 bg-white border-gray-300"
                 } focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 required
               />
@@ -3112,25 +3131,25 @@ const AddCourseModal: React.FC<AddCourseModalProps> = ({
                 }
                 className={`w-full px-3 py-2 rounded-lg border ${
                   darkMode
-                    ? "bg-gray-700 border-gray-600 text-white"
-                    : "bg-white border-gray-300 text-gray-900"
+                    ? "text-white bg-gray-700 border-gray-600"
+                    : "text-gray-900 bg-white border-gray-300"
                 } focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 required
               />
             </div>
           </div>
 
-          <div className="flex space-x-3 pt-4">
+          <div className="flex pt-4 space-x-3">
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+              className="flex-1 px-4 py-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600"
             >
               Add Course
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+              className="flex-1 px-4 py-2 text-white bg-gray-500 rounded-lg transition-colors hover:bg-gray-600"
             >
               Cancel
             </button>
@@ -3171,7 +3190,7 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="flex fixed inset-0 z-50 justify-center items-center bg-black bg-opacity-50">
       <div
         className={`${
           darkMode ? "bg-gray-800" : "bg-white"
@@ -3210,8 +3229,8 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({
               }
               className={`w-full px-3 py-2 rounded-lg border ${
                 darkMode
-                  ? "bg-gray-700 border-gray-600 text-white"
-                  : "bg-white border-gray-300 text-gray-900"
+                  ? "text-white bg-gray-700 border-gray-600"
+                  : "text-gray-900 bg-white border-gray-300"
               } focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
@@ -3233,8 +3252,8 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({
               rows={3}
               className={`w-full px-3 py-2 rounded-lg border ${
                 darkMode
-                  ? "bg-gray-700 border-gray-600 text-white"
-                  : "bg-white border-gray-300 text-gray-900"
+                  ? "text-white bg-gray-700 border-gray-600"
+                  : "text-gray-900 bg-white border-gray-300"
               } focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
@@ -3255,8 +3274,8 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({
               }
               className={`w-full px-3 py-2 rounded-lg border ${
                 darkMode
-                  ? "bg-gray-700 border-gray-600 text-white"
-                  : "bg-white border-gray-300 text-gray-900"
+                  ? "text-white bg-gray-700 border-gray-600"
+                  : "text-gray-900 bg-white border-gray-300"
               }`}
             >
               <option value="announcement">Announcement</option>
@@ -3275,7 +3294,7 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({
                   status: e.target.checked ? "published" : "draft",
                 })
               }
-              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
             />
             <label
               className={`text-sm ${
@@ -3286,17 +3305,17 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({
             </label>
           </div>
 
-          <div className="flex space-x-3 pt-4">
+          <div className="flex pt-4 space-x-3">
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+              className="flex-1 px-4 py-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600"
             >
               Add News
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+              className="flex-1 px-4 py-2 text-white bg-gray-500 rounded-lg transition-colors hover:bg-gray-600"
             >
               Cancel
             </button>
@@ -3335,7 +3354,7 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({
   darkMode,
 }) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="flex fixed inset-0 z-50 justify-center items-center bg-black bg-opacity-50">
       <div
         className={`${
           darkMode ? "bg-gray-800" : "bg-white"
@@ -3449,7 +3468,7 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({
                     darkMode ? "text-white" : "text-gray-900"
                   }`}
                 >
-                  {user.progress.totalPoints}
+                  {user.progress?.totalPoints || 0}
                 </p>
                 <p
                   className={`text-sm ${
@@ -3465,7 +3484,7 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({
                     darkMode ? "text-white" : "text-gray-900"
                   }`}
                 >
-                  {user.progress.streak}
+                  {user.progress?.streak || 0}
                 </p>
                 <p
                   className={`text-sm ${
@@ -3481,7 +3500,7 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({
                     darkMode ? "text-white" : "text-gray-900"
                   }`}
                 >
-                  {user.progress.completedModules}
+                  {user.progress?.completedModules || 0}
                 </p>
                 <p
                   className={`text-sm ${
@@ -3498,9 +3517,570 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({
         <div className="flex justify-end pt-4">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+            className="px-4 py-2 text-white bg-gray-500 rounded-lg transition-colors hover:bg-gray-600"
           >
             Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Detailed User Modal Component
+type DetailedUserModalProps = {
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+    avatar?: string;
+    role: string;
+    isActive: boolean;
+    createdAt: string;
+    currentStreak?: number;
+    longestStreak?: number;
+    bio?: string;
+    socialLinks?: {
+      linkedin?: string;
+      github?: string;
+      twitter?: string;
+    };
+    progress?: {
+      coursesEnrolled: any[];
+      completedModules: number;
+      totalPoints: number;
+      streak: number;
+      level: string;
+    };
+    preferences?: {
+      theme: string;
+      notifications: boolean;
+      language: string;
+      emailUpdates: boolean;
+    };
+    [key: string]: any;
+  };
+  onClose: () => void;
+  darkMode: boolean;
+};
+
+const DetailedUserModal: React.FC<DetailedUserModalProps> = ({
+  user,
+  onClose,
+  darkMode,
+}) => {
+  console.log("Modal rendering with user:", user);
+  console.log("Dark mode:", darkMode);
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black bg-opacity-60"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+    >
+      <div
+        className={`${
+          darkMode
+            ? "text-white bg-gray-900 border-gray-700"
+            : "text-gray-900 bg-white border-gray-200"
+        } rounded-2xl p-8 w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto shadow-2xl border-2`}
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          backgroundColor: darkMode ? "#1f2937" : "#ffffff",
+          color: darkMode ? "#ffffff" : "#111827",
+          minHeight: "400px",
+        }}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6">
+          <h2
+            className={`text-3xl font-bold ${
+              darkMode ? "text-white" : "text-gray-900"
+            }`}
+          >
+            User Profile Details - {user?.name || "Unknown User"}
+          </h2>
+          <button
+            onClick={onClose}
+            className={`p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${
+              darkMode
+                ? "text-gray-400 hover:text-white"
+                : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* Debug Info */}
+        <div className="p-4 mb-4 bg-yellow-100 rounded border border-yellow-300">
+          <p className="text-sm text-yellow-800">
+            Debug: User data received - Name: {user?.name}, Email: {user?.email}
+            , Role: {user?.role}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {/* Left Column - User Summary */}
+          <div className="lg:col-span-1">
+            <div
+              className={`${
+                darkMode ? "bg-gray-800" : "bg-gray-50"
+              } rounded-xl p-6 border`}
+            >
+              <div className="text-center">
+                {/* Profile Picture */}
+                <div className="inline-block relative mb-4">
+                  <img
+                    src={
+                      user.avatar ||
+                      `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        user.name
+                      )}&background=3b82f6&color=fff&size=120`
+                    }
+                    alt={user.name}
+                    className="w-24 h-24 rounded-full border-4 border-blue-500"
+                  />
+                  <div className="flex absolute right-0 bottom-0 justify-center items-center w-8 h-8 bg-blue-500 rounded-full">
+                    <span className="text-xs text-white">📷</span>
+                  </div>
+                </div>
+
+                {/* User Info */}
+                <h3
+                  className={`text-xl font-bold mb-1 ${
+                    darkMode ? "text-white" : "text-gray-900"
+                  }`}
+                >
+                  {user.name}
+                </h3>
+                <p
+                  className={`text-sm mb-2 ${
+                    darkMode ? "text-gray-400" : "text-gray-600"
+                  }`}
+                >
+                  {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                </p>
+
+                {/* User Level Badge */}
+                <div className="mb-4">
+                  <span
+                    className={`inline-flex px-3 py-1 rounded-full text-sm font-medium ${
+                      (user.level || user.progress?.level || "Beginner") ===
+                      "Beginner"
+                        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                        : (user.level || user.progress?.level || "Beginner") ===
+                          "Intermediate"
+                        ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
+                        : "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300"
+                    }`}
+                  >
+                    {user.level || user.progress?.level || "Beginner"}
+                  </span>
+                </div>
+
+                {/* User Stats */}
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span
+                      className={`text-sm ${
+                        darkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
+                    >
+                      Member Since
+                    </span>
+                    <span
+                      className={`text-sm font-medium ${
+                        darkMode ? "text-white" : "text-gray-900"
+                      }`}
+                    >
+                      {new Date(user.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span
+                      className={`text-sm ${
+                        darkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
+                    >
+                      Total Points
+                    </span>
+                    <span
+                      className={`text-sm font-medium ${
+                        darkMode ? "text-white" : "text-gray-900"
+                      }`}
+                    >
+                      {user.totalPoints || user.progress?.totalPoints || 0}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span
+                      className={`text-sm ${
+                        darkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
+                    >
+                      Current Streak
+                    </span>
+                    <span
+                      className={`text-sm font-medium flex items-center ${
+                        darkMode ? "text-white" : "text-gray-900"
+                      }`}
+                    >
+                      <Activity className="mr-1 w-4 h-4 text-orange-500" />
+                      {user.currentStreak || user.progress?.streak || 0} days
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Detailed Information */}
+          <div className="space-y-6 lg:col-span-2">
+            {/* Profile Information */}
+            <div
+              className={`${
+                darkMode ? "bg-gray-800" : "bg-gray-50"
+              } rounded-xl p-6 border`}
+            >
+              <h4
+                className={`text-lg font-semibold mb-4 ${
+                  darkMode ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Profile Information
+              </h4>
+              <div className="space-y-4">
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-1 ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Full Name
+                  </label>
+                  <p className={`${darkMode ? "text-white" : "text-gray-900"}`}>
+                    {user.name}
+                  </p>
+                </div>
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-1 ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Email Address
+                  </label>
+                  <p className={`${darkMode ? "text-white" : "text-gray-900"}`}>
+                    {user.email}
+                  </p>
+                </div>
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-1 ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Bio
+                  </label>
+                  <p className={`${darkMode ? "text-white" : "text-gray-900"}`}>
+                    {user.bio || "No bio available"}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div
+              className={`${
+                darkMode ? "bg-gray-800" : "bg-gray-50"
+              } rounded-xl p-6 border`}
+            >
+              <h4
+                className={`text-lg font-semibold mb-4 ${
+                  darkMode ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Social Links
+              </h4>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="flex justify-center items-center w-8 h-8 bg-blue-600 rounded-full">
+                    <span className="text-sm font-bold text-white">in</span>
+                  </div>
+                  <span
+                    className={`${darkMode ? "text-white" : "text-gray-900"}`}
+                  >
+                    {user.socialLinks?.linkedin || "No LinkedIn profile"}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="flex justify-center items-center w-8 h-8 bg-gray-800 rounded-full">
+                    <span className="text-sm font-bold text-white">GH</span>
+                  </div>
+                  <span
+                    className={`${darkMode ? "text-white" : "text-gray-900"}`}
+                  >
+                    {user.socialLinks?.github || "No GitHub profile"}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="flex justify-center items-center w-8 h-8 bg-blue-400 rounded-full">
+                    <span className="text-sm font-bold text-white">X</span>
+                  </div>
+                  <span
+                    className={`${darkMode ? "text-white" : "text-gray-900"}`}
+                  >
+                    {user.socialLinks?.twitter || "No Twitter profile"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Learning Progress */}
+            <div
+              className={`${
+                darkMode ? "bg-gray-800" : "bg-gray-50"
+              } rounded-xl p-6 border`}
+            >
+              <h4
+                className={`text-lg font-semibold mb-4 ${
+                  darkMode ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Learning Progress
+              </h4>
+              <div className="grid grid-cols-2 gap-4 mb-6 md:grid-cols-4">
+                <div className="text-center">
+                  <div className="flex justify-center items-center mx-auto mb-2 w-16 h-16 bg-blue-500 rounded-full">
+                    <BookOpen className="w-8 h-8 text-white" />
+                  </div>
+                  <p
+                    className={`text-2xl font-bold ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {user.coursesEnrolled?.length ||
+                      user.progress?.coursesEnrolled?.length ||
+                      0}
+                  </p>
+                  <p
+                    className={`text-sm ${
+                      darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    Courses Enrolled
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="flex justify-center items-center mx-auto mb-2 w-16 h-16 bg-green-500 rounded-full">
+                    <Award className="w-8 h-8 text-white" />
+                  </div>
+                  <p
+                    className={`text-2xl font-bold ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {user.completedModules ||
+                      user.progress?.completedModules ||
+                      0}
+                  </p>
+                  <p
+                    className={`text-sm ${
+                      darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    Modules Completed
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="flex justify-center items-center mx-auto mb-2 w-16 h-16 bg-purple-500 rounded-full">
+                    <Target className="w-8 h-8 text-white" />
+                  </div>
+                  <p
+                    className={`text-2xl font-bold ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {user.totalPoints || user.progress?.totalPoints || 0}
+                  </p>
+                  <p
+                    className={`text-sm ${
+                      darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    Total Points
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="flex justify-center items-center mx-auto mb-2 w-16 h-16 bg-orange-500 rounded-full">
+                    <Activity className="w-8 h-8 text-white" />
+                  </div>
+                  <p
+                    className={`text-2xl font-bold ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {user.currentStreak || user.progress?.streak || 0}
+                  </p>
+                  <p
+                    className={`text-sm ${
+                      darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    Day Streak
+                  </p>
+                </div>
+              </div>
+
+              {/* Streak Progress */}
+              <div>
+                <h5
+                  className={`text-sm font-medium mb-2 ${
+                    darkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
+                >
+                  Streak Progress
+                </h5>
+                <div className="flex items-center space-x-3">
+                  <div className="flex-1 h-2 bg-gray-200 rounded-full dark:bg-gray-700">
+                    <div
+                      className="h-2 bg-orange-500 rounded-full"
+                      style={{
+                        width: `${Math.min(
+                          ((user.currentStreak || user.progress?.streak || 0) /
+                            30) *
+                            100,
+                          100
+                        )}%`,
+                      }}
+                    ></div>
+                  </div>
+                  <span
+                    className={`text-sm font-medium ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {user.currentStreak || user.progress?.streak || 0}/30 days
+                  </span>
+                </div>
+                <p
+                  className={`text-sm mt-1 ${
+                    darkMode ? "text-gray-400" : "text-gray-600"
+                  }`}
+                >
+                  You're on a roll!
+                </p>
+              </div>
+            </div>
+
+            {/* Account Settings */}
+            <div
+              className={`${
+                darkMode ? "bg-gray-800" : "bg-gray-50"
+              } rounded-xl p-6 border`}
+            >
+              <h4
+                className={`text-lg font-semibold mb-4 ${
+                  darkMode ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Account Settings
+              </h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-1 ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Account Status
+                  </label>
+                  <span
+                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      user.isActive
+                        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                        : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+                    }`}
+                  >
+                    {user.isActive ? "Active" : "Inactive"}
+                  </span>
+                </div>
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-1 ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    User Role
+                  </label>
+                  <span
+                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      user.role === "admin"
+                        ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300"
+                        : "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300"
+                    }`}
+                  >
+                    {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                  </span>
+                </div>
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-1 ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Join Date
+                  </label>
+                  <p
+                    className={`text-sm ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {new Date(user.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-1 ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Last Activity
+                  </label>
+                  <p
+                    className={`text-sm ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {new Date().toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-end pt-6 mt-8 space-x-3 border-t border-gray-200 dark:border-gray-700">
+          <button
+            onClick={onClose}
+            className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+              darkMode
+                ? "text-white bg-gray-700 hover:bg-gray-600"
+                : "text-gray-900 bg-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            Close
+          </button>
+          <button className="px-6 py-2 font-medium text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600">
+            Edit Profile
+          </button>
+          <button className="px-6 py-2 font-medium text-white bg-green-500 rounded-lg transition-colors hover:bg-green-600">
+            Send Message
           </button>
         </div>
       </div>
