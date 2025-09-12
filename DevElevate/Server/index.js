@@ -54,6 +54,7 @@ app.set("trust proxy", true);
 app.use("/api/v1/notifications", notificationRoutes);
 // USER ROUTES
 app.use("/api/v1", userRoutes);
+
 app.use("/api/v1", contactSupport);
 
 app.use("/api/v1/community", communityRoutes); 
