@@ -1,5 +1,10 @@
 // ✅ All imports at the top
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { GlobalProvider, useGlobalState } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
@@ -22,6 +27,16 @@ import CreatorPage from "./components/Legal/CreatorPage";
 import Disclaimer from "./components/Legal/Disclaimer";
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import AdminSystemLogs from "./components/Admin/AdminSystemLogs";
+import Overview from "./components/Admin/Overview";
+import UserManagement from "./components/Admin/UserManagement";
+import ContentManagement from "./components/Admin/ContentManagement";
+import Community from "./components/Admin/Community";
+import NewsUpdates from "./components/Admin/NewsUpdates";
+import QuizManagement from "./components/Admin/QuizManagement";
+import Analytics from "./components/Admin/Analytics";
+import SystemLogs from "./components/Admin/SystemLogs";
+import SystemSettings from "./components/Admin/SystemSettings";
+import Feedback from "./components/Admin/Feedback";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import LoginRegister from "./components/Auth/LoginRegister";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -71,7 +86,17 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/admin/logs"
+          path="/admin/*"
+          element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminProvider>
+                <AdminDashboard />
+              </AdminProvider>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/system-logs"
           element={
             <ProtectedRoute requireAdmin={true}>
               <AdminProvider>
@@ -102,10 +127,16 @@ const AppContent = () => {
                         <Route path="interview" element={<InterviewPage />} />
                         <Route path="chatbot" element={<Chatbot />} />
                         <Route path="news" element={<TechFeed />} />
-                        <Route path="community/*" element={<CommunityForum />} />
+                        <Route
+                          path="community/*"
+                          element={<CommunityForum />}
+                        />
                         <Route path="resume" element={<ResumeBuilder />} />
                         <Route path="placement" element={<PlacementPrep />} />
-                        <Route path="projects" element={<ProjectRecommender />} />
+                        <Route
+                          path="projects"
+                          element={<ProjectRecommender />}
+                        />
                         <Route path="tasks" element={<TasksView />} />
                         <Route path="notes" element={<NotesView />} />
                         <Route path="calendar" element={<CalendarView />} />
@@ -117,7 +148,10 @@ const AppContent = () => {
                         <Route path="creator" element={<CreatorPage />} />
                         <Route path="disclaimer" element={<Disclaimer />} />
                         <Route path="help-center" element={<HelpCenter />} />
-                        <Route path="*" element={<Navigate to="/dashboard" replace />} />                     
+                        <Route
+                          path="*"
+                          element={<Navigate to="/dashboard" replace />}
+                        />
                       </Routes>
                     </main>
                     <Footer />
@@ -158,7 +192,11 @@ function App() {
       <GlobalProvider>
         <NotificationProvider>
           {showSplash ? (
-            <SplashScreen fullPage title="DevElevate" subtitle="Preparing awesomeness..." />
+            <SplashScreen
+              fullPage
+              title="DevElevate"
+              subtitle="Preparing awesomeness..."
+            />
           ) : (
             <AppContent />
           )}
