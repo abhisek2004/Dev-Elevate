@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import axios from "../../api/axiosinstance";
-
 import { useGlobalState } from "../../contexts/GlobalContext";
-import { Trash2, MessageCircle } from "lucide-react";
+import { baseUrl } from "../../config/routes";
+import { MessageCircle, Trash2 } from "lucide-react"; // ✅ make sure to import your icons
 
 type Feedback = {
   _id: string;
@@ -14,97 +14,50 @@ type Feedback = {
 };
 
 const AdminFeedback = () => {
-  const [feedbacks, setFeedbacks] = useState<Feedback[]>([
-    {
-      _id: "1",
-      name: "John Smith",
-      email: "john.smith@email.com",
-      message:
-        "I'm interested in learning more about your premium features. Can you provide more details about the advanced coding challenges?",
-      submittedAt: "2024-01-15T10:30:00Z",
-    },
-    {
-      _id: "2",
-      name: "Sarah Johnson",
-      email: "sarah.j@example.com",
-      message:
-        "I'm having trouble accessing the MERN stack course materials. The videos seem to be loading slowly. Is there a technical issue?",
-      submittedAt: "2024-01-14T15:45:00Z",
-    },
-    {
-      _id: "3",
-      name: "Mike Chen",
-      email: "mike.chen@tech.com",
-      message:
-        "Great platform! I've been using it for 2 months and my coding skills have improved significantly. Thank you for creating such a comprehensive learning resource.",
-      submittedAt: "2024-01-13T09:20:00Z",
-    },
-    {
-      _id: "4",
-      name: "Emily Davis",
-      email: "emily.davis@student.edu",
-      message:
-        "I'm a computer science student and would love to contribute to your open source projects. How can I get involved?",
-      submittedAt: "2024-01-12T14:15:00Z",
-    },
-    {
-      _id: "5",
-      name: "Alex Rodriguez",
-      email: "alex.rodriguez@dev.com",
-      message:
-        "The AI-powered code review feature is amazing! It helped me catch several bugs in my JavaScript projects. Keep up the great work!",
-      submittedAt: "2024-01-11T11:30:00Z",
-    },
-  ]);
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [loading, setLoading] = useState(false);
   const { state: globalState } = useGlobalState();
 
+  // ✅ fetch function
   const fetchFeedbacks = async () => {
     try {
       setLoading(true);
-      const res = await axios.get<{ data: Feedback[] }>("admin/feedback/all", {
+
+      const res = await fetch(`${baseUrl}/api/v1/faq-get`, {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
         },
       });
 
-      if (Array.isArray(res.data.data)) {
-        setFeedbacks(res.data.data);
-        localStorage.setItem(
-          "devElevateFeedbacks",
-          JSON.stringify(res.data.data)
-        );
+      if (!res.ok) {
+        throw new Error("Failed to fetch feedback");
+      }
+
+      const result: {
+        success: boolean;
+        count: number;
+        data: Feedback[];
+      } = await res.json();
+
+      if (Array.isArray(result.data)) {
+        setFeedbacks(result.data);
       } else {
         toast.error("Unexpected response format");
       }
-    } catch {
-      toast.error("Failed to fetch feedback");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Failed to fetch feedback");
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    const load = async () => {
-      const cached = localStorage.getItem("devElevateFeedbacks");
-      if (!cached) return fetchFeedbacks();
-
-      try {
-        const parsed = JSON.parse(cached);
-        if (Array.isArray(parsed)) {
-          setFeedbacks(parsed);
-          setLoading(false);
-        } else {
-          fetchFeedbacks();
-        }
-      } catch {
-        fetchFeedbacks();
-      }
-    };
-
-    load(); // call the inner async function
-  }, []);
-
+  // ✅ delete function
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this feedback?")) return;
 
@@ -117,18 +70,21 @@ const AdminFeedback = () => {
 
       const updated = feedbacks.filter((fb) => fb._id !== id);
       setFeedbacks(updated);
-      localStorage.setItem("devElevateFeedbacks", JSON.stringify(updated));
       toast.success("Deleted successfully");
     } catch {
       toast.error("Failed to delete");
     }
   };
 
+  // ✅ Hook at top-level
+  useEffect(() => {
+    fetchFeedbacks();
+  }, []);
+
   return (
     <div className="p-6 space-y-6">
       {/* Feedback Summary Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-        {/* Total Feedback */}
         <div
           className={`${
             globalState.darkMode ? "bg-gray-800" : "bg-white"

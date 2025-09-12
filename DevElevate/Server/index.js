@@ -20,7 +20,7 @@ import aimlRoutes from "./routes/aimlRoutes.js";
 import mernRoutes from "./routes/mernRoutes.js";
 import dsaRoutes from "./routes/dsaRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
-import contactSupport from "./routes/contactSupport.js"
+import Faq from "./routes/faq.js";
 
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
@@ -55,7 +55,7 @@ app.use("/api/v1/notifications", notificationRoutes);
 // USER ROUTES
 app.use("/api/v1", userRoutes);
 
-app.use("/api/v1", contactSupport);
+app.use("/api/v1", Faq);
 
 app.use("/api/v1/community", communityRoutes); 
 
