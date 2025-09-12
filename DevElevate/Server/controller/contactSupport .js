@@ -1,6 +1,6 @@
 import contactSupport from "../model/ContactSupport.js"
 
-export const contact_Support_Team = async (req, res) => {
+export const FAQ = async (req, res) => {
   try {
     let { name, email, message } = req.body;
 
