@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import { Send } from "lucide-react";
+import { toast } from "sonner";
+import { baseUrl } from "../../../config/routes";
 
 const FAQ: React.FC = () => {
+  interface QuestionForm {
+    name: string;
+    email: string;
+    message: string;
+  }
+
+  const [question, setQuestion] = useState<QuestionForm>({
+    name: "",
+    email: "",
+    message: "",
+  });
   const faqs = [
     {
       question: "What is DevElevate?",
@@ -40,22 +53,47 @@ const FAQ: React.FC = () => {
     setActiveIndex((prev) => (prev === index ? null : index));
   };
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    // TODO: Hook to backend/email service if desired
-    console.log("FAQ contact:", Object.fromEntries(data.entries()));
-    form.reset();
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setQuestion({ ...question, [e.target.name]: e.target.value });
   };
 
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    console.log(question);
+
+    try {
+      const res = await fetch(`${baseUrl}/api/v1/faq`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(question),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      const result = await res.json();
+      toast.success(result.message || "Form submitted successfully");
+
+      setQuestion({ name: "", email: "", message: "" });
+    } catch (err) {
+      console.error("❌ Error submitting form:", err);
+    }
+    setQuestion({ name: "", email: "", message: "" });
+  };
   return (
     <section className="relative py-20" id="faq">
       {/* Background gradient to align with landing aesthetics */}
       <div className="absolute inset-0 bg-gradient-to-l via-transparent -z-10 from-indigo-900/40 to-purple-900/30" />
 
       <div className="container px-4 mx-auto max-w-6xl">
-        <h2 className="text-3xl font-extrabold text-center text-white">Frequently Asked Questions</h2>
+        <h2 className="text-3xl font-extrabold text-center text-white">
+          Frequently Asked Questions
+        </h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-gray-300">
           Find answers to common questions about DevElevate
         </p>
@@ -73,14 +111,22 @@ const FAQ: React.FC = () => {
                 onClick={() => toggleFAQ(index)}
                 className="flex justify-between items-center px-4 py-3 w-full text-left"
               >
-                <span className="pr-6 text-base font-semibold text-white">{faq.question}</span>
+                <span className="pr-6 text-base font-semibold text-white">
+                  {faq.question}
+                </span>
                 <span
                   className={`shrink-0 rounded-md border border-white/10 p-1 text-indigo-400 transition-transform ${
                     activeIndex === index ? "rotate-45" : ""
                   }`}
                   aria-hidden
                 >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       d={activeIndex === index ? "M4 8H12" : "M4 8H12M8 4V12"}
                       stroke="currentColor"
@@ -111,11 +157,15 @@ const FAQ: React.FC = () => {
             />
           </div>
           <div>
-            <h3 className="mb-4 text-2xl font-bold text-white">Still Questions?</h3>
+            <h3 className="mb-4 text-2xl font-bold text-white">
+              Still Questions?
+            </h3>
             <form onSubmit={onSubmit} className="space-y-3">
               <input
                 type="text"
                 name="name"
+                onChange={handleChange}
+                value={question.name}
                 placeholder="Your Name"
                 required
                 className="px-4 py-2 w-full placeholder-gray-400 text-white rounded-lg border bg-gray-800/80 border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -123,6 +173,8 @@ const FAQ: React.FC = () => {
               <input
                 type="email"
                 name="email"
+                onChange={handleChange}
+                value={question.email}
                 placeholder="Email Address"
                 required
                 className="px-4 py-2 w-full placeholder-gray-400 text-white rounded-lg border bg-gray-800/80 border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -130,6 +182,8 @@ const FAQ: React.FC = () => {
               <textarea
                 name="message"
                 placeholder="Type your Message"
+                value={question.message}
+                onChange={handleChange}
                 rows={3}
                 required
                 className="px-4 py-2 w-full placeholder-gray-400 text-white rounded-lg border bg-gray-800/80 border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -150,5 +204,3 @@ const FAQ: React.FC = () => {
 };
 
 export default FAQ;
-
-
