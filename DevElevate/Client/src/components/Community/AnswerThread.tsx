@@ -70,7 +70,7 @@ const AnswerThread: React.FC<AnswerThreadProps> = ({ question }) => {
 
             <div className="mt-2 flex items-center justify-between mb-4">
                 <span className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}> Asked by {question.user?.name} on {
-                         new Date(question.created_at || Date.now()).toLocaleDateString()</span>
+                         new Date(question.created_at || Date.now()).toLocaleDateString()}</span>
                 <span className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{answers.length} Answers</span>
             </div>
             <div className="space-y-4">
