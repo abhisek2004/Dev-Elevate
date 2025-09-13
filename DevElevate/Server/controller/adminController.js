@@ -1,9 +1,7 @@
 // controller/adminController.js
 import bcrypt from "bcryptjs";
-import User from "../model/UserModel.js";   
-import AdminLog from "../model/AdminLog.js"    
-
-
+import User from "../model/UserModel.js";
+import AdminLog from "../model/AdminLog.js";
 
 // ✅ Create an admin log entry
 export const createAdminLog = async (req, res) => {
@@ -11,7 +9,9 @@ export const createAdminLog = async (req, res) => {
     const { action, details } = req.body;
 
     if (!action || !details) {
-      return res.status(400).json({ message: "Action and details are required" });
+      return res
+        .status(400)
+        .json({ message: "Action and details are required" });
     }
 
     const log = new Admin({
@@ -23,7 +23,9 @@ export const createAdminLog = async (req, res) => {
     await log.save();
     res.status(201).json({ message: "Log created successfully", log });
   } catch (error) {
-    res.status(500).json({ message: "Error creating log", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error creating log", error: error.message });
   }
 };
 
@@ -36,7 +38,9 @@ export const getAdminLogs = async (req, res) => {
 
     res.status(200).json(logs);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching logs", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching logs", error: error.message });
   }
 };
 
@@ -46,7 +50,9 @@ export const addUser = async (req, res) => {
     const { name, email, password, role } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ message: "Name, email, and password are required" });
+      return res
+        .status(400)
+        .json({ message: "Name, email, and password are required" });
     }
 
     const existingUser = await User.findOne({ email });
@@ -65,9 +71,13 @@ export const addUser = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({ message: "User created successfully", user: newUser });
+    res
+      .status(201)
+      .json({ message: "User created successfully", user: newUser });
   } catch (error) {
-    res.status(500).json({ message: "Error adding user", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error adding user", error: error.message });
   }
 };
 
@@ -98,11 +108,13 @@ export const getAllUserRegister = async (req, res) => {
   }
 };
 
-
 // ✅ Delete user by ID (matches /delete-user/:id route)
 export const deleteUserById = async (req, res) => {
   try {
-    const { id } = req.params;  // ✅ now uses params, not body
+   
+    const { id } = req.params;
+  
+  
 
     const user = await User.findByIdAndDelete(id);
 
@@ -112,9 +124,8 @@ export const deleteUserById = async (req, res) => {
 
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting user", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error deleting user", error: error.message });
   }
 };
-
-
-
