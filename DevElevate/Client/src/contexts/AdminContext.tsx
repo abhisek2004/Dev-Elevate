@@ -74,7 +74,7 @@ const deleteUserByAdmin = async (userId: string) => {
   console.log(userId);
   
   try {
-    const data = await deleteUser({ userId });
+    const data = await deleteUser(userId );
 
   
     setUsers(prev => prev.filter(user => user._id !== userId));

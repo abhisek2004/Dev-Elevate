@@ -13,7 +13,6 @@ import {
   Shield,
   Calendar,
   Eye,
-  Edit,
   Trash2,
   X,
   BookOpen,
@@ -73,7 +72,9 @@ const UserManagement: React.FC = () => {
     addUserByAdmin(userData);
   };
 
-  const handleDeleteUser = (userId: string) => {
+  const handleDeleteUser = (userId : string) => {
+    console.log("pass");
+    
     deleteUserByAdmin(userId);
   };
 
@@ -584,9 +585,7 @@ const UserManagement: React.FC = () => {
                         </button>
                         <button
                           onClick={() =>
-                            handleDeleteUser(
-                              (user as any)._id || (user as any).id
-                            )
+                            handleDeleteUser(user._id )
                           }
                           className="text-red-600 hover:text-red-900"
                           title="Delete"
@@ -740,205 +739,24 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
   );
 };
 
-// User Details Modal Component - Commented out, using DetailedUserModal instead
-/*
-const UserDetailsModal: React.FC<UserDetailsModalProps> = ({
-  user,
-  onClose,
-  darkMode,
-}) => {
-  return (
-    <div className="flex fixed inset-0 z-50 justify-center items-center bg-black bg-opacity-50">
-      <div
-        className={`${
-          darkMode ? "bg-gray-800" : "bg-white"
-        } rounded-xl p-6 w-full max-w-lg mx-4`}
-      >
-        <div className="flex justify-between items-center mb-4">
-          <h3
-            className={`text-lg font-semibold ${
-              darkMode ? "text-white" : "text-gray-900"
-            }`}
-          >
-            User Details
-          </h3>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center space-x-4">
-            <img
-              src={
-                user.avatar ||
-                `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                  user.name
-                )}&background=3b82f6&color=fff`
-              }
-              alt={user.name}
-              className="w-16 h-16 rounded-full"
-            />
-            <div>
-              <h4
-                className={`text-lg font-semibold ${
-                  darkMode ? "text-white" : "text-gray-900"
-                }`}
-              >
-                {user.name}
-              </h4>
-              <p className={`${darkMode ? "text-gray-400" : "text-gray-600"}`}>
-                {user.email}
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label
-                className={`block text-sm font-medium ${
-                  darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
-              >
-                Role
-              </label>
-              <p className={`${darkMode ? "text-white" : "text-gray-900"}`}>
-                {user.role}
-              </p>
-            </div>
-            <div>
-              <label
-                className={`block text-sm font-medium ${
-                  darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
-              >
-                Status
-              </label>
-              <p className={`${darkMode ? "text-white" : "text-gray-900"}`}>
-                {user.isActive ? "Active" : "Inactive"}
-              </p>
-            </div>
-            <div>
-              <label
-                className={`block text-sm font-medium ${
-                  darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
-              >
-                Join Date
-              </label>
-              <p className={`${darkMode ? "text-white" : "text-gray-900"}`}>
-                {new Date(user.joinDate).toLocaleDateString()}
-              </p>
-            </div>
-            <div>
-              <label
-                className={`block text-sm font-medium ${
-                  darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
-              >
-                Last Login
-              </label>
-              <p className={`${darkMode ? "text-white" : "text-gray-900"}`}>
-                {new Date(user.lastLogin).toLocaleDateString()}
-              </p>
-            </div>
-          </div>
-
-          <div>
-            <label
-              className={`block text-sm font-medium mb-2 ${
-                darkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
-              Progress Summary
-            </label>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center">
-                <p
-                  className={`text-2xl font-bold ${
-                    darkMode ? "text-white" : "text-gray-900"
-                  }`}
-                >
-                  {user.progress?.totalPoints || 0}
-                </p>
-                <p
-                  className={`text-sm ${
-                    darkMode ? "text-gray-400" : "text-gray-600"
-                  }`}
-                >
-                  Points
-                </p>
-              </div>
-              <div className="text-center">
-                <p
-                  className={`text-2xl font-bold ${
-                    darkMode ? "text-white" : "text-gray-900"
-                  }`}
-                >
-                  {user.progress?.streak || 0}
-                </p>
-                <p
-                  className={`text-sm ${
-                    darkMode ? "text-gray-400" : "text-gray-600"
-                  }`}
-                >
-                  Streak
-                </p>
-              </div>
-              <div className="text-center">
-                <p
-                  className={`text-2xl font-bold ${
-                    darkMode ? "text-white" : "text-gray-900"
-                  }`}
-                >
-                  {user.progress?.completedModules || 0}
-                </p>
-                <p
-                  className={`text-sm ${
-                    darkMode ? "text-gray-400" : "text-gray-600"
-                  }`}
-                >
-                  Modules
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-end pt-4">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 text-white bg-gray-500 rounded-lg transition-colors hover:bg-gray-600"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-*/
-
 // Detailed User Modal Component
 const DetailedUserModal: React.FC<DetailedUserModalProps> = ({
   user,
   onClose,
   darkMode,
 }) => {
-  // Get user-specific data with fallbacks
-  const userBio = user.bio || "No bio available";
-  const userLinkedIn = user.socialLinks?.linkedin || "No LinkedIn profile";
-  const userGitHub = user.socialLinks?.github || "No GitHub profile";
-  const userTwitter = user.socialLinks?.twitter || "No Twitter profile";
+  console.log(user);
 
-  const coursesEnrolled = user.progress?.coursesEnrolled?.length || 0;
-  const modulesCompleted = user.progress?.completedModules || 0;
-  const totalPoints = user.progress?.totalPoints || 0;
-  const dayStreak = user.progress?.streak || 0;
-  const userLevel = user.progress?.level || "Beginner";
+const userBio = user.bio || "No bio available";
+const userLinkedIn = user.socialLinks?.linkedin || "No LinkedIn profile";
+const userGitHub = user.socialLinks?.github || "No GitHub profile";
+const userTwitter = user.socialLinks?.twitter || "No Twitter profile";
+
+const coursesEnrolled = 0;
+const modulesCompleted = 0;
+const totalPoints = 0;
+const dayStreak = user.currentStreak || 0;
+const userLevel = "Beginner";
 
   return (
     <div
@@ -1258,6 +1076,4 @@ const DetailedUserModal: React.FC<DetailedUserModalProps> = ({
   );
 };
 
-
 export default UserManagement;
-

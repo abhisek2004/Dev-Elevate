@@ -33,12 +33,11 @@ interface DeleteUser {
 }
 
 export const deleteUser = async (
-  userData: DeleteUser
-): Promise<{ user: DeleteUser }> => {
-  const response = await axiosInstance.delete<{ user: DeleteUser }>(
-    adminApi.deleteUser,
-    { data: userData } 
+  userId: string
+): Promise<{ user: { _id: string } }> => {
+  const response = await axiosInstance.delete<{ user: { _id: string } }>(
+    `${adminApi.deleteUser}/${userId}`
   );
+
   return response.data;
 };
-
