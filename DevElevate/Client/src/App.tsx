@@ -86,6 +86,17 @@ const AppContent = () => {
           }
         />
         <Route
+
+          path="/admin/*"
+          element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminProvider>
+                <AdminDashboard />
+              </AdminProvider>
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/admin/system-logs"
           element={
             <ProtectedRoute requireAdmin={true}>
@@ -141,7 +152,8 @@ const AppContent = () => {
                         <Route
                           path="*"
                           element={<Navigate to="/dashboard" replace />}
-                        />         
+
+                        />
                       </Routes>
                     </main>
                     <Footer />
@@ -182,7 +194,7 @@ function App() {
       <GlobalProvider>
         <NotificationProvider>
           {showSplash ? (
-           <SplashScreen
+        <SplashScreen
               fullPage
               title="DevElevate"
               subtitle="Preparing awesomeness..."

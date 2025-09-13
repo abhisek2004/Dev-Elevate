@@ -52,11 +52,15 @@ const FAQ: React.FC = () => {
   const toggleFAQ = (index: number) => {
     setActiveIndex((prev) => (prev === index ? null : index));
   };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setQuestion({ ...question, [e.target.name]: e.target.value });
+
   };
+  
+
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     console.log(question);
@@ -83,7 +87,6 @@ const FAQ: React.FC = () => {
     }
     setQuestion({ name: "", email: "", message: "" });
   };
-
   return (
     <section className="relative py-20" id="faq">
       {/* Background gradient to align with landing aesthetics */}
@@ -203,5 +206,3 @@ const FAQ: React.FC = () => {
 };
 
 export default FAQ;
-
-

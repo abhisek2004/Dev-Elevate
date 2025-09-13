@@ -37,4 +37,6 @@ export const getFaq = async (req ,res) => {
       error: error instanceof Error ? error.message : "Unknown error",
     });
   }
+
 };
+

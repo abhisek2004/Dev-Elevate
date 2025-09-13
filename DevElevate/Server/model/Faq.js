@@ -22,5 +22,5 @@ const FaqSchema = new mongoose.Schema(
 );
 
 const FAQ = mongoose.model("FrequentAskedQuestion", FaqSchema);
-
 export default FAQ;
+

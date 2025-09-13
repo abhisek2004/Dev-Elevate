@@ -22,7 +22,7 @@ import dsaRoutes from "./routes/dsaRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
 import contactSupport from "./routes/contactSupport.js";
 import newsRoutes from "./routes/newsRoutes.js";
-
+import Faq from "./routes/faq.js";
 
 
 // Connect to MongoDB only if MONGO_URI is available
@@ -58,7 +58,11 @@ app.use("/api/v1/notifications", notificationRoutes);
 // USER ROUTES
 app.use("/api/v1", userRoutes);
 
+
 app.use("/api/v1", contactSupport);
+
+app.use("/api/v1", Faq);
+
 
 app.use("/api/v1/community", communityRoutes); 
 

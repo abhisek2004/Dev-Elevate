@@ -502,4 +502,6 @@ const AddNewsModal: React.FC<AddNewsModalProps> = ({
   );
 };
 
+
 export default NewsUpdates;
+

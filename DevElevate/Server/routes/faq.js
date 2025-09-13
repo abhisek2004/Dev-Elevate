@@ -5,4 +5,6 @@ const Faq = express.Router();
 Faq.post("/faq", postFaq);
 Faq.get("/faq-get",getFaq);
 
+
 export default Faq;
+

@@ -1258,4 +1258,6 @@ const DetailedUserModal: React.FC<DetailedUserModalProps> = ({
   );
 };
 
+
 export default UserManagement;
+
