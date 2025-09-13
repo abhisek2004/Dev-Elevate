@@ -583,18 +583,6 @@ const UserManagement: React.FC = () => {
                           <Eye className="w-4 h-4" />
                         </button>
                         <button
-                          className="text-green-600 hover:text-green-900"
-                          title="Edit"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button
-                          className="text-orange-600 hover:text-orange-900"
-                          title="Email"
-                        >
-                          <Mail className="w-4 h-4" />
-                        </button>
-                        <button
                           onClick={() =>
                             handleDeleteUser(
                               (user as any)._id || (user as any).id
