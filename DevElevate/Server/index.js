@@ -22,13 +22,17 @@ import dsaRoutes from "./routes/dsaRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
 import Faq from "./routes/faq.js";
 
+// import monitoring;
+import healthRoute from './monitoring/healthRoute.js'
+
+
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
-  connectDB();
+    connectDB();
 } else {
-  console.log(
-    "MongoDB connection skipped - PDF routes will work without database"
-  );
+    console.log(
+        "MongoDB connection skipped - PDF routes will work without database"
+    );
 }
 
 // Load environment variables
@@ -39,11 +43,11 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
+    cors({
+        origin: process.env.FRONTEND_URL,
+        credentials: true,
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
 );
 app.use(express.json());
 app.use(cookieParser());
@@ -57,10 +61,15 @@ app.use("/api/v1", userRoutes);
 
 app.use("/api/v1", Faq);
 
-app.use("/api/v1/community", communityRoutes); 
+app.use("/api/v1/community", communityRoutes);
 
 
 app.use("/api/v1/ats", atsRoutes); // ATS resume scanner functionality
+
+
+// Monitoring Route
+app.use('/monitoring', healthRoute);
+
 
 // ADMIN ROUTES
 app.use("/api/v1/admin", adminRoutes); // general admin stuff like login, profile
@@ -81,33 +90,33 @@ app.use("/api/v1/placements", placementRoutes);
 
 // Sample Usage of authenticate and authorize middleware for roleBased Features
 app.get(
-  "/api/admin/dashboard",
-  authenticateToken,
-  authorize("admin"),
-  (req, res) => {
-    res.send("Hello Admin");
-  }
+    "/api/admin/dashboard",
+    authenticateToken,
+    authorize("admin"),
+    (req, res) => {
+        res.send("Hello Admin");
+    }
 );
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    message: "Something went wrong!",
-    error: process.env.NODE_ENV === "development" ? err.message : undefined,
-  });
+    console.error(err.stack);
+    res.status(500).json({
+        success: false,
+        message: "Something went wrong!",
+        error: process.env.NODE_ENV === "development" ? err.message : undefined,
+    });
 });
 
 // 404 handler
 app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: "Route not found",
-  });
+    res.status(404).json({
+        success: false,
+        message: "Route not found",
+    });
 });
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
