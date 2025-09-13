@@ -20,7 +20,10 @@ import aimlRoutes from "./routes/aimlRoutes.js";
 import mernRoutes from "./routes/mernRoutes.js";
 import dsaRoutes from "./routes/dsaRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
-import contactSupport from "./routes/contactSupport.js"
+import contactSupport from "./routes/contactSupport.js";
+import newsRoutes from "./routes/newsRoutes.js";
+
+
 
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
@@ -54,6 +57,7 @@ app.set("trust proxy", true);
 app.use("/api/v1/notifications", notificationRoutes);
 // USER ROUTES
 app.use("/api/v1", userRoutes);
+
 app.use("/api/v1", contactSupport);
 
 app.use("/api/v1/community", communityRoutes); 
@@ -105,6 +109,9 @@ app.use((req, res) => {
     message: "Route not found",
   });
 });
+
+// Use news routes
+app.use("/api/v1", newsRoutes);
 
 // Start server
 app.listen(PORT, () => {
