@@ -262,9 +262,12 @@ const SystemSettings: React.FC = () => {
           <Save className="w-4 h-4" />
           <span>Save Settings</span>
         </button>
+
       </div>
     </div>
   );
 };
 
+
 export default SystemSettings;
+

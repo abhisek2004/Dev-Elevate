@@ -57,7 +57,9 @@ const FAQ: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setQuestion({ ...question, [e.target.name]: e.target.value });
+
   };
+  
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();

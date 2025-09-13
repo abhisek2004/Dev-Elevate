@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const FaqSchema = new mongoose.Schema(
+const contactSupportSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -21,6 +21,6 @@ const FaqSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const FAQ = mongoose.model("FrequentAskedQuestion", FaqSchema);
-export default FAQ;
+const ContactSupport = mongoose.model("ContactSupport", contactSupportSchema);
 
+export default ContactSupport;
