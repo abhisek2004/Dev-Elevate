@@ -155,6 +155,7 @@ const NewsWidget: React.FC = () => {
                     state.darkMode ? "text-white" : "text-gray-800"
                   }`}
                 >
+                  
                   {item.title}
                 </h4>
                 <p
