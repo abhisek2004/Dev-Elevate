@@ -7,6 +7,8 @@ import AdminLog from "../model/AdminLog.js";
 export const createAdminLog = async (req, res) => {
   try {
     const { action, details } = req.body;
+    console.log(action, details);
+    
 
     if (!action || !details) {
       return res
@@ -14,7 +16,7 @@ export const createAdminLog = async (req, res) => {
         .json({ message: "Action and details are required" });
     }
 
-    const log = new Admin({
+    const log = new AdminLog({
       action,
       details,
       performedBy: req.user.id, // comes from authenticateToken middleware

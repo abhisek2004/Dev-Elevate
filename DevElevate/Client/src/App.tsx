@@ -96,16 +96,6 @@ const AppContent = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/admin/system-logs"
-          element={
-            <ProtectedRoute requireAdmin={true}>
-              <AdminProvider>
-                <AdminSystemLogs />
-              </AdminProvider>
-            </ProtectedRoute>
-          }
-        />
 
         {/* Protected Routes */}
         <Route

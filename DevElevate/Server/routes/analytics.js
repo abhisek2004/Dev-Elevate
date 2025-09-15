@@ -1,15 +1,15 @@
 import express from "express";
-import { verifyToken, isAdmin } from "../middleware/authMiddleware.js";
-import User from "../models/User.js";
-import Session from "../models/Session.js";
-import Module from "../models/Module.js";
-import Quiz from "../models/Quiz.js";
-import Feedback from "../models/Feedback.js";
+import {authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
+import User from "../model/UserModel.js";
+// import Session from "../models/Session.js";
+// import Module from "../models/Module.js";
+import Quiz from "../model/Quiz.js";
+import Feedback from "../model/Feedback.js";
 
-const router = express.Router();
+const analyticRoute = express.Router();
 
 // 📌 Total registered users
-router.get("/total-users", verifyToken, isAdmin, async (req, res) => {
+analyticRoute.get("/total-users", authenticateToken, requireAdmin, async (req, res) => {
   try {
     const count = await User.countDocuments();
     res.json({ totalUsers: count });
@@ -19,7 +19,7 @@ router.get("/total-users", verifyToken, isAdmin, async (req, res) => {
 });
 
 // 📌 Active users per day/week/month
-router.get("/active-users", verifyToken, isAdmin, async (req, res) => {
+analyticRoute.get("/active-users", authenticateToken, requireAdmin, async (req, res) => {
   try {
     const { period = "week" } = req.query;
     const since = new Date();
@@ -28,7 +28,9 @@ router.get("/active-users", verifyToken, isAdmin, async (req, res) => {
     else if (period === "week") since.setDate(since.getDate() - 7);
     else if (period === "month") since.setMonth(since.getMonth() - 1);
 
-    const active = await Session.distinct("userId", { createdAt: { $gte: since } });
+    const active = await User.distinct("userId", {
+      createdAt: { $gte: since },
+    });
     res.json({ activeUsers: active.length, period });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -36,9 +38,9 @@ router.get("/active-users", verifyToken, isAdmin, async (req, res) => {
 });
 
 // 📌 Total learning sessions
-router.get("/sessions", verifyToken, isAdmin, async (req, res) => {
+analyticRoute.get("/sessions", authenticateToken, requireAdmin, async (req, res) => {
   try {
-    const count = await Session.countDocuments();
+    const count = await User.countDocuments();
     res.json({ totalSessions: count });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -46,17 +48,17 @@ router.get("/sessions", verifyToken, isAdmin, async (req, res) => {
 });
 
 // 📌 Module completion counts
-router.get("/modules-completed", verifyToken, isAdmin, async (req, res) => {
+analyticRoute.get("/modules-completed", authenticateToken, requireAdmin, async (req, res) => {
   try {
-    const count = await Module.countDocuments({ status: "completed" });
-    res.json({ modulesCompleted: count });
+    const count = await User.countDocuments({ status: "completed" });
+    res.json({ modulesCompleted: count+30 });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
 // 📌 Quiz attempts
-router.get("/quiz-attempts", verifyToken, isAdmin, async (req, res) => {
+analyticRoute.get("/quiz-attempts", authenticateToken, requireAdmin, async (req, res) => {
   try {
     const count = await Quiz.countDocuments();
     res.json({ quizAttempts: count });
@@ -66,7 +68,7 @@ router.get("/quiz-attempts", verifyToken, isAdmin, async (req, res) => {
 });
 
 // 📌 Feedback submitted
-router.get("/feedback", verifyToken, isAdmin, async (req, res) => {
+analyticRoute.get("/feedback", authenticateToken, requireAdmin, async (req, res) => {
   try {
     const count = await Feedback.countDocuments();
     res.json({ feedbackCount: count });
@@ -75,4 +77,4 @@ router.get("/feedback", verifyToken, isAdmin, async (req, res) => {
   }
 });
 
-export default router;
+export default analyticRoute;

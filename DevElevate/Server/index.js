@@ -27,6 +27,7 @@ import Faq from "./routes/faq.js";
 // sanitizeMiddleware
 
 import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
+import analyticRoute from "./routes/analytics.js";
 
 
 // Connect to MongoDB only if MONGO_URI is available
@@ -64,16 +65,9 @@ app.set("trust proxy", true);
 app.use("/api/v1/notifications", notificationRoutes);
 // USER ROUTES
 app.use("/api/v1", userRoutes);
-
-
-app.use("/api/v1", contactSupport);
-
+app.use("/api/v1", contactSupport)
 app.use("/api/v1", Faq);
-
-
 app.use("/api/v1/community", communityRoutes);
-
-
 app.use("/api/v1/ats", atsRoutes); // ATS resume scanner functionality
 
 // ADMIN ROUTES
@@ -83,6 +77,7 @@ app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
 app.use("/api/v1/admin/quiz", quizRoutes); //quiz-related
 app.use("/api/v1/quiz", userQuizRoutes); // user quiz routes
 app.use("/api/v1", aiRoutes);
+app.use('/api/v1/admin/analytics',analyticRoute)
 
 // Learning Routes
 app.use("/api/v1/learning/java", javaRoutes); // Java learning content
