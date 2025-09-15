@@ -83,19 +83,20 @@ const AdminSystemLogs: React.FC = () => {
   const logPageVisit = async (authData: AuthData) => {
     try {
       const logData = {
-        actionType: 'view_logs',
+        action: 'view_logs',
         userId: authData.user.id,
         userRole: authData.user.role,
         timestamp: new Date().toISOString(),
-        message: `Admin ${authData.user.name} viewed system logs page`
+        details: `Admin ${authData.user.name} viewed system logs page`
       };
 
-      await fetch('http://localhost:4000/api/admin/system-log', {
+      await fetch('http://localhost:4000/api/v1/admin/system-log', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authData.sessionToken}`
+          'Authorization': `Bearer ${authData.sessionToken}`,
         },
+        credentials: "include",
         body: JSON.stringify(logData)
       });
     } catch (error) {
@@ -124,12 +125,13 @@ const AdminSystemLogs: React.FC = () => {
         params.append('dateTo', dateFilter);
       }
 
-      const response = await fetch(`http://localhost:4000/api/admin/system-logs?${params}`, {
+      const response = await fetch(`http://localhost:4000/api/v1/admin/system-logs?${params}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
-        }
+        },
+      credentials: "include"
       });
 
       if (!response.ok) {

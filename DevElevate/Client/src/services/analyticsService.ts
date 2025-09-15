@@ -1,13 +1,16 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000/api/analytics";
+import { baseUrl } from "../config/routes";
 
 // ✅ Attach JWT from localStorage
 const getAuthHeader = () => {
   const token = localStorage.getItem("token");
-  return { headers: { Authorization: `Bearer ${token}` } };
-};
 
+  return {
+    headers: { Authorization: `Bearer ${token}` },
+    withCredentials: true, 
+  };
+};
 // ✅ Generic GET with error handling
 const safeGet = async <T>(url: string): Promise<T> => {
   try {
@@ -20,12 +23,12 @@ const safeGet = async <T>(url: string): Promise<T> => {
 };
 
 // 📊 API Methods
-export const fetchTotalUsers = () => safeGet<{ totalUsers: number }>(`${API_URL}/total-users`);
+export const fetchTotalUsers = () => safeGet<{ totalUsers: number }>(`${baseUrl}/api/v1/admin/analytics/total-users`);
 export const fetchActiveUsers = (period: string = "week") =>
-  safeGet<{ activeUsers: number }>(`${API_URL}/active-users?period=${period}`);
-export const fetchSessions = () => safeGet<{ totalSessions: number }>(`${API_URL}/sessions`);
+  safeGet<{ activeUsers: number }>(`${baseUrl}/api/v1/admin/analytics/active-users?period=${period}`);
+export const fetchSessions = () => safeGet<{ totalSessions: number }>(`${baseUrl}/api/v1/admin/analytics/sessions`);
 export const fetchModulesCompleted = () =>
-  safeGet<{ modulesCompleted: number }>(`${API_URL}/modules-completed`);
-export const fetchQuizAttempts = () => safeGet<{ quizAttempts: number }>(`${API_URL}/quiz-attempts`);
-export const fetchFeedback = () => safeGet<{ feedbackCount: number }>(`${API_URL}/feedback`);
+  safeGet<{ modulesCompleted: number }>(`${baseUrl}/api/v1/admin/analytics/modules-completed`);
+export const fetchQuizAttempts = () => safeGet<{ quizAttempts: number }>(`${baseUrl}/api/v1/admin/analytics/quiz-attempts`);
+export const fetchFeedback = () => safeGet<{ feedbackCount: number }>(`${baseUrl}/api/v1/admin/analytics/feedback`);
 

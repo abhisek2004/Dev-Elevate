@@ -48,6 +48,9 @@ const AnalyticsDashboard: React.FC = () => {
     const fetchData = async () => {
       try {
         const totalUsersRes = await fetchTotalUsers();
+        console.log("Total Users Response:", totalUsersRes.totalUsers
+);
+        
         const activeUsersRes = await fetchActiveUsers("week");
         const sessionsRes = await fetchSessions();
         const modulesRes = await fetchModulesCompleted();
@@ -69,6 +72,8 @@ const AnalyticsDashboard: React.FC = () => {
 
     fetchData();
   }, []);
+  console.log(stats);
+  
 
   // Chart datasets
   const barData = [
