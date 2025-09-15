@@ -38,7 +38,7 @@ export const getAdminLogs = async (req, res) => {
       .populate("performedBy", "name email")
       .sort({ createdAt: -1 });
 
-    res.status(200).json(logs);
+    res.status(200).json({data:logs});
   } catch (error) {
     res
       .status(500)
