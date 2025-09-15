@@ -1,17 +1,77 @@
 import React, { useState } from "react";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import { Save } from "lucide-react";
+import axios from "axios"; // Add axios for API calls
 
 const SystemSettings: React.FC = () => {
   const { state: globalState } = useGlobalState();
+
   const [systemSettings, setSystemSettings] = useState({
     siteName: "DevElevate",
-    maintenanceMode: false,
+    maintenanceMode: null,
     registrationEnabled: true,
     emailNotifications: true,
     maxUsersPerCourse: 1000,
     sessionTimeout: 30,
   });
+
+  // New states for handling secret key modal
+  const [isSecretModalOpen, setIsSecretModalOpen] = useState(false);
+  const [secretKey, setSecretKey] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Handle when toggle button is clicked
+  const handleToggleMaintenance = () => {
+    setIsSecretModalOpen(true);
+    setSecretKey("");
+    setErrorMessage("");
+  };
+
+  // Verify secret key by calling backend API
+
+  const verifySecretKey = async () => {
+    try {
+      const newValue = !systemSettings.maintenanceMode;
+
+      const res = await axios.patch(
+        "http://localhost:4000/api/v1/admin/system-settings",
+        {
+          maintenanceMode: newValue,
+          secretKey, // if required by backend
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // ✅ Update state using the nested settings object
+      if (
+        res.data &&
+        res.data.settings &&
+        typeof res.data.settings.maintenanceMode === "boolean"
+      ) {
+        setSystemSettings((prev) => ({
+          ...prev,
+          maintenanceMode: res.data.settings.maintenanceMode,
+        }));
+        setIsSecretModalOpen(false);
+        setErrorMessage("");
+      } else {
+        setErrorMessage(
+          res.data?.message || "Failed to update maintenance mode."
+        );
+      }
+    } catch (err: any) {
+      console.error("Error updating maintenance mode:", err);
+      setErrorMessage(
+        err.response?.data?.message || "Error updating maintenance mode."
+      );
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -65,7 +125,7 @@ const SystemSettings: React.FC = () => {
               />
             </div>
 
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <div>
                 <label
                   className={`text-sm font-medium ${
@@ -83,12 +143,7 @@ const SystemSettings: React.FC = () => {
                 </p>
               </div>
               <button
-                onClick={() =>
-                  setSystemSettings({
-                    ...systemSettings,
-                    maintenanceMode: !systemSettings.maintenanceMode,
-                  })
-                }
+                onClick={handleToggleMaintenance}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                   systemSettings.maintenanceMode
                     ? "bg-blue-600"
@@ -105,7 +160,7 @@ const SystemSettings: React.FC = () => {
               </button>
             </div>
 
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <div>
                 <label
                   className={`text-sm font-medium ${
@@ -213,7 +268,7 @@ const SystemSettings: React.FC = () => {
               />
             </div>
 
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <div>
                 <label
                   className={`text-sm font-medium ${
@@ -258,16 +313,48 @@ const SystemSettings: React.FC = () => {
 
       {/* Save Settings */}
       <div className="flex justify-end">
-        <button className="flex items-center px-6 py-2 space-x-2 text-white bg-blue-500 rounded-lg transition-colors hover:bg-blue-600">
+        <button className="flex items-center px-6 py-2 space-x-2 text-white transition-colors bg-blue-500 rounded-lg hover:bg-blue-600">
           <Save className="w-4 h-4" />
           <span>Save Settings</span>
         </button>
-
       </div>
+
+      {/* Secret Key Modal */}
+      {isSecretModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-80">
+            <h4 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+              Enter Secret Key
+            </h4>
+            <input
+              type="password"
+              value={secretKey}
+              onChange={(e) => setSecretKey(e.target.value)}
+              className="w-full px-3 py-2 mb-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Secret Key"
+            />
+            {errorMessage && (
+              <p className="text-red-500 text-sm mb-2">{errorMessage}</p>
+            )}
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={() => setIsSecretModalOpen(false)}
+                className="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={verifySecretKey}
+                className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-
 export default SystemSettings;
-
