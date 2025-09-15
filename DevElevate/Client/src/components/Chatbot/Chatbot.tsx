@@ -258,7 +258,7 @@ const Chatbot: React.FC = () => {
                       <div className="flex-1 min-w-0">
                         <div className="relative group">
                           <div
-                            className={`prose max-w-none ${
+                            className={`prose max-w-none  text-gray-800 dark:text-gray-200 ${
                               state.darkMode ? "prose-invert" : ""
                             }`}
                           >
