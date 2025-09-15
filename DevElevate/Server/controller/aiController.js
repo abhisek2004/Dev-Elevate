@@ -11,8 +11,6 @@ export const getAIReply = async (req, res) => {
     if (category && category.toLowerCase() === "quiz") {
       prompt = `You are Study Buddy, an AI mentor specializing in DSA quizzes.\nGenerate 6 deep-level MCQ (multiple choice questions) based on the topic: \"${message}\".\nMake sure the questions test strong understanding, not just definitions.\nEach question should have 4 options and clearly mark the correct answer.\nFormat:\n1. Question text\nA) Option A\nB) Option B\nC) Option C\nD) Option D\n✅ Correct Answer: X\nOnly provide the quiz — no explanation or extra text.`;
     }
-    // Gemini API call
-    console.log("[Gemini Request]", { prompt });
     const response = await axios.post(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {

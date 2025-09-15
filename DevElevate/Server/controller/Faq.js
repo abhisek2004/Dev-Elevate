@@ -3,6 +3,8 @@ import FAQ from "../model/Faq.js"
 export const postFaq = async (req, res) => {
   try {
     let { name, email, message } = req.body;
+ 
+    
 
 
     const newRequest = new FAQ({
