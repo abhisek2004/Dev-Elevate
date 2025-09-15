@@ -95,7 +95,7 @@ useEffect(() => {
           {/* Right Column */}
           <div className="space-y-6">
             <QuickActions />
-            {/* <QuizHistory /> */}
+            <QuizHistory />
             <DailyGoals />
             <StreakCalendar />
           </div>
