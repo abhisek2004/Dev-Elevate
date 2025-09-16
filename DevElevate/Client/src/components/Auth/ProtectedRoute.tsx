@@ -41,7 +41,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       const token = localStorage.getItem("authToken");
       try {
         const res = await axios.get<ApiResponse>(
-          `${baseUrl}/api/v1/admin/system-setting`,
+          `${baseUrl}/api/v1/admin/system-settings`,
           {
             withCredentials: true,
             headers: {
