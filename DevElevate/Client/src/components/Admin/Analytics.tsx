@@ -1,13 +1,12 @@
 import React from "react";
-import AnalyticsDashboard from "../AnalyticsDashboard";
+import AdvancedAnalytics from "./AdvancedAnalytics";
 
 const Analytics: React.FC = () => {
   return (
     <div className="space-y-6">
-      <AnalyticsDashboard />
+      <AdvancedAnalytics />
     </div>
   );
 };
-
 
 export default Analytics;

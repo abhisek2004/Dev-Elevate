@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Users, 
   Code2, 
@@ -21,10 +21,62 @@ import {
   Clock
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart as RechartsPie, Cell } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart as RechartsPie, Cell, AreaChart, Area } from 'recharts';
+import * as analyticsService from '../../../services/analyticsService';
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
+  // Analytics state
+  const [analytics, setAnalytics] = useState({
+    totalUsers: 0,
+    activeUsers: 0,
+    totalSessions: 0,
+    modulesCompleted: 0,
+    quizAttempts: 0,
+    feedbackCount: 0,
+  });
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [analyticsError, setAnalyticsError] = useState('');
+  const [analyticsPeriod, setAnalyticsPeriod] = useState('week');
+  const [chartType, setChartType] = useState('bar');
+  const [userGrowthData, setUserGrowthData] = useState([
+    { month: 'Jan', users: 8500, active: 2100 },
+    { month: 'Feb', users: 9200, active: 2450 },
+    { month: 'Mar', users: 10100, active: 2800 },
+    { month: 'Apr', users: 11200, active: 3100 },
+    { month: 'May', users: 12000, active: 3350 },
+    { month: 'Jun', users: 12547, active: 3456 },
+  ]);
+  // Fetch analytics data
+  useEffect(() => {
+    if (activeTab !== 'analytics') return;
+    setAnalyticsLoading(true);
+    setAnalyticsError('');
+    Promise.all([
+      analyticsService.fetchTotalUsers(),
+      analyticsService.fetchActiveUsers(analyticsPeriod),
+      analyticsService.fetchSessions(),
+      analyticsService.fetchModulesCompleted(),
+      analyticsService.fetchQuizAttempts(),
+      analyticsService.fetchFeedback(),
+      analyticsService.fetchUserGrowth('month', 6),
+    ])
+      .then(([totalUsers, activeUsers, totalSessions, modulesCompleted, quizAttempts, feedback, userGrowth]) => {
+        setAnalytics({
+          totalUsers: totalUsers.totalUsers,
+          activeUsers: activeUsers.activeUsers,
+          totalSessions: totalSessions.totalSessions,
+          modulesCompleted: modulesCompleted.modulesCompleted,
+          quizAttempts: quizAttempts.quizAttempts,
+          feedbackCount: feedback.feedbackCount,
+        });
+        setUserGrowthData(userGrowth.userGrowth);
+      })
+      .catch((err) => {
+        setAnalyticsError('Failed to load analytics data.');
+      })
+      .finally(() => setAnalyticsLoading(false));
+  }, [activeTab, analyticsPeriod]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showUserModal, setShowUserModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,15 +94,6 @@ const AdminDashboard: React.FC = () => {
     { id: '2', user: 'jane_smith', action: 'Submitted contest entry', time: '5 minutes ago', type: 'submit' },
     { id: '3', user: 'mike_wilson', action: 'Created new account', time: '10 minutes ago', type: 'register' },
     { id: '4', user: 'sarah_jones', action: 'Won weekly contest', time: '1 hour ago', type: 'win' },
-  ];
-
-  const userGrowthData = [
-    { month: 'Jan', users: 8500, active: 2100 },
-    { month: 'Feb', users: 9200, active: 2450 },
-    { month: 'Mar', users: 10100, active: 2800 },
-    { month: 'Apr', users: 11200, active: 3100 },
-    { month: 'May', users: 12000, active: 3350 },
-    { month: 'Jun', users: 12547, active: 3456 },
   ];
 
   const submissionData = [
@@ -104,6 +147,36 @@ const AdminDashboard: React.FC = () => {
       case 'Hard': return 'bg-red-400/20 text-red-400';
       default: return 'bg-gray-400/20 text-gray-400';
     }
+  };
+
+  // Export functions
+  const exportToCSV = () => {
+    const csvData = [
+      ['Metric', 'Value', 'Period'],
+      ['Total Users', analytics.totalUsers, analyticsPeriod],
+      ['Active Users', analytics.activeUsers, analyticsPeriod],
+      ['Total Sessions', analytics.totalSessions, analyticsPeriod],
+      ['Modules Completed', analytics.modulesCompleted, analyticsPeriod],
+      ['Quiz Attempts', analytics.quizAttempts, analyticsPeriod],
+      ['Feedback Count', analytics.feedbackCount, analyticsPeriod],
+    ];
+
+    const csvContent = csvData.map(row => row.join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `analytics-${analyticsPeriod}-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const exportToExcel = () => {
+    // For now, just call CSV export - in a real implementation, you'd use a library like xlsx
+    exportToCSV();
+    alert('Excel export uses CSV format for now. Install xlsx library for proper Excel support.');
   };
 
   return (
@@ -497,37 +570,247 @@ const AdminDashboard: React.FC = () => {
           )}
 
           {activeTab === 'analytics' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-                <h3 className="text-xl font-semibold text-white mb-4">Daily Active Users</h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={userGrowthData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                    <XAxis dataKey="month" stroke="#9CA3AF" />
-                    <YAxis stroke="#9CA3AF" />
-                    <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px' }} />
-                    <Line type="monotone" dataKey="active" stroke="#10B981" strokeWidth={3} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-
-              <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-                <h3 className="text-xl font-semibold text-white mb-4">Problem Solving Trends</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-3 bg-gray-750 rounded-lg">
-                    <span className="text-gray-300">Easy Problems</span>
-                    <span className="text-green-400 font-semibold">↑ 15.3%</span>
+            <div className="space-y-8">
+              {/* Filters and Export */}
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                  <div>
+                    <label className="text-gray-300 mr-2">Period:</label>
+                    <select
+                      value={analyticsPeriod}
+                      onChange={e => setAnalyticsPeriod(e.target.value)}
+                      className="bg-gray-700 text-white rounded px-3 py-2 border border-gray-600 focus:border-electric-400 focus:outline-none"
+                    >
+                      <option value="day">Last 24 Hours</option>
+                      <option value="week">Last 7 Days</option>
+                      <option value="month">Last 30 Days</option>
+                    </select>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-750 rounded-lg">
-                    <span className="text-gray-300">Medium Problems</span>
-                    <span className="text-yellow-400 font-semibold">↑ 8.7%</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-750 rounded-lg">
-                    <span className="text-gray-300">Hard Problems</span>
-                    <span className="text-red-400 font-semibold">↓ 2.1%</span>
+                  <div>
+                    <label className="text-gray-300 mr-2">Chart Type:</label>
+                    <select
+                      value={chartType}
+                      onChange={e => setChartType(e.target.value)}
+                      className="bg-gray-700 text-white rounded px-3 py-2 border border-gray-600 focus:border-electric-400 focus:outline-none"
+                    >
+                      <option value="bar">Bar Chart</option>
+                      <option value="line">Line Chart</option>
+                      <option value="area">Area Chart</option>
+                    </select>
                   </div>
                 </div>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={exportToCSV}
+                    className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200"
+                  >
+                    <Download className="w-4 h-4 mr-2" /> Export CSV
+                  </button>
+                  <button
+                    onClick={exportToExcel}
+                    className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200"
+                  >
+                    <Download className="w-4 h-4 mr-2" /> Export Excel
+                  </button>
+                </div>
               </div>
+
+              {analyticsLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-electric-400"></div>
+                  <span className="ml-3 text-gray-400">Loading analytics...</span>
+                </div>
+              ) : analyticsError ? (
+                <div className="bg-red-900/20 border border-red-800 rounded-lg p-4">
+                  <div className="text-red-400 font-semibold">Error loading analytics</div>
+                  <div className="text-red-300 text-sm mt-1">{analyticsError}</div>
+                </div>
+              ) : (
+                <>
+                  {/* Key Metrics Cards */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-2xl font-bold text-white">{analytics.totalUsers.toLocaleString()}</div>
+                          <div className="text-gray-400">Total Users</div>
+                        </div>
+                        <Users className="w-8 h-8 text-blue-400" />
+                      </div>
+                      <div className="mt-2 text-sm text-green-400">↑ 12.3% from last month</div>
+                    </div>
+
+                    <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-2xl font-bold text-white">{analytics.activeUsers.toLocaleString()}</div>
+                          <div className="text-gray-400">Active Users ({analyticsPeriod})</div>
+                        </div>
+                        <Activity className="w-8 h-8 text-green-400" />
+                      </div>
+                      <div className="mt-2 text-sm text-green-400">↑ 8.7% from last period</div>
+                    </div>
+
+                    <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-2xl font-bold text-white">{analytics.totalSessions.toLocaleString()}</div>
+                          <div className="text-gray-400">Total Sessions</div>
+                        </div>
+                        <TrendingUp className="w-8 h-8 text-purple-400" />
+                      </div>
+                      <div className="mt-2 text-sm text-green-400">↑ 15.6% from last period</div>
+                    </div>
+                  </div>
+
+                  {/* Charts Section */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* User Growth Chart */}
+                    <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                      <h3 className="text-xl font-semibold text-white mb-4">User Growth Trend</h3>
+                      <ResponsiveContainer width="100%" height={300}>
+                        {chartType === 'line' ? (
+                          <LineChart data={userGrowthData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                            <XAxis dataKey="month" stroke="#9CA3AF" />
+                            <YAxis stroke="#9CA3AF" />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: '#1F2937', 
+                                border: '1px solid #374151',
+                                borderRadius: '8px'
+                              }}
+                            />
+                            <Line type="monotone" dataKey="users" stroke="#00D4FF" strokeWidth={3} dot={{ fill: '#00D4FF', strokeWidth: 2, r: 6 }} />
+                            <Line type="monotone" dataKey="active" stroke="#10B981" strokeWidth={3} dot={{ fill: '#10B981', strokeWidth: 2, r: 6 }} />
+                          </LineChart>
+                        ) : chartType === 'area' ? (
+                          <AreaChart data={userGrowthData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                            <XAxis dataKey="month" stroke="#9CA3AF" />
+                            <YAxis stroke="#9CA3AF" />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: '#1F2937', 
+                                border: '1px solid #374151',
+                                borderRadius: '8px'
+                              }}
+                            />
+                            <Area type="monotone" dataKey="users" stackId="1" stroke="#00D4FF" fill="#00D4FF" fillOpacity={0.6} />
+                            <Area type="monotone" dataKey="active" stackId="1" stroke="#10B981" fill="#10B981" fillOpacity={0.6} />
+                          </AreaChart>
+                        ) : (
+                          <BarChart data={userGrowthData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                            <XAxis dataKey="month" stroke="#9CA3AF" />
+                            <YAxis stroke="#9CA3AF" />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: '#1F2937', 
+                                border: '1px solid #374151',
+                                borderRadius: '8px'
+                              }}
+                            />
+                            <Bar dataKey="users" fill="#00D4FF" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="active" fill="#10B981" radius={[4, 4, 0, 0]} />
+                          </BarChart>
+                        )}
+                      </ResponsiveContainer>
+                    </div>
+
+                    {/* Activity Distribution */}
+                    <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                      <h3 className="text-xl font-semibold text-white mb-4">Activity Distribution</h3>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={[
+                          { name: 'Modules', value: analytics.modulesCompleted, color: '#8B5CF6' },
+                          { name: 'Quizzes', value: analytics.quizAttempts, color: '#F59E0B' },
+                          { name: 'Feedback', value: analytics.feedbackCount, color: '#EC4899' },
+                        ]}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                          <XAxis dataKey="name" stroke="#9CA3AF" />
+                          <YAxis stroke="#9CA3AF" />
+                          <Tooltip 
+                            contentStyle={{ 
+                              backgroundColor: '#1F2937', 
+                              border: '1px solid #374151',
+                              borderRadius: '8px'
+                            }}
+                          />
+                          <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                            {[
+                              { name: 'Modules', value: analytics.modulesCompleted, color: '#8B5CF6' },
+                              { name: 'Quizzes', value: analytics.quizAttempts, color: '#F59E0B' },
+                              { name: 'Feedback', value: analytics.feedbackCount, color: '#EC4899' },
+                            ].map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+
+                  {/* Detailed Metrics Table */}
+                  <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <h3 className="text-xl font-semibold text-white mb-4">Detailed Analytics</h3>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b border-gray-700">
+                            <th className="text-left py-2 px-4 text-gray-400">Metric</th>
+                            <th className="text-left py-2 px-4 text-gray-400">Value</th>
+                            <th className="text-left py-2 px-4 text-gray-400">Change</th>
+                            <th className="text-left py-2 px-4 text-gray-400">Trend</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-b border-gray-700">
+                            <td className="py-3 px-4 text-white">Total Users</td>
+                            <td className="py-3 px-4 text-electric-400 font-semibold">{analytics.totalUsers.toLocaleString()}</td>
+                            <td className="py-3 px-4 text-green-400">+12.3%</td>
+                            <td className="py-3 px-4">
+                              <TrendingUp className="w-4 h-4 text-green-400" />
+                            </td>
+                          </tr>
+                          <tr className="border-b border-gray-700">
+                            <td className="py-3 px-4 text-white">Active Users</td>
+                            <td className="py-3 px-4 text-green-400 font-semibold">{analytics.activeUsers.toLocaleString()}</td>
+                            <td className="py-3 px-4 text-green-400">+8.7%</td>
+                            <td className="py-3 px-4">
+                              <TrendingUp className="w-4 h-4 text-green-400" />
+                            </td>
+                          </tr>
+                          <tr className="border-b border-gray-700">
+                            <td className="py-3 px-4 text-white">Modules Completed</td>
+                            <td className="py-3 px-4 text-purple-400 font-semibold">{analytics.modulesCompleted.toLocaleString()}</td>
+                            <td className="py-3 px-4 text-green-400">+15.2%</td>
+                            <td className="py-3 px-4">
+                              <TrendingUp className="w-4 h-4 text-green-400" />
+                            </td>
+                          </tr>
+                          <tr className="border-b border-gray-700">
+                            <td className="py-3 px-4 text-white">Quiz Attempts</td>
+                            <td className="py-3 px-4 text-yellow-400 font-semibold">{analytics.quizAttempts.toLocaleString()}</td>
+                            <td className="py-3 px-4 text-red-400">-2.1%</td>
+                            <td className="py-3 px-4">
+                              <TrendingUp className="w-4 h-4 text-red-400 rotate-180" />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-3 px-4 text-white">Feedback Count</td>
+                            <td className="py-3 px-4 text-pink-400 font-semibold">{analytics.feedbackCount.toLocaleString()}</td>
+                            <td className="py-3 px-4 text-green-400">+5.8%</td>
+                            <td className="py-3 px-4">
+                              <TrendingUp className="w-4 h-4 text-green-400" />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
