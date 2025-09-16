@@ -17,7 +17,8 @@ const adminLogSchema = new mongoose.Schema(
         'course_management',
         'content_management',
         'news_management',
-        'system_settings'
+        'system_settings',
+        'quiz_complete'
       ]
     },
     userId: {
@@ -41,6 +42,9 @@ const adminLogSchema = new mongoose.Schema(
     },
     additionalData: {
       type: mongoose.Schema.Types.Mixed
+    },
+    details:{
+      type:String
     },
     performedBy: {
       type: mongoose.Schema.Types.ObjectId,

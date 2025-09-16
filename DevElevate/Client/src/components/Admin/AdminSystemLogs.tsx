@@ -15,14 +15,19 @@ import {
   Shield,
   Activity,
 } from "lucide-react";
+import { baseUrl } from "../../config/routes";
 
 interface AdminLog {
   _id: string;
   actionType: string;
   userId: string;
   userRole: string;
-  timestamp: string;
-  message: string;
+  performedBy: {
+    name: string;
+    role: string;
+  };
+  createdAt: string;
+  details: string;
 }
 
 interface AuthData {
@@ -83,14 +88,14 @@ const AdminSystemLogs: React.FC = () => {
   const logPageVisit = async (authData: AuthData) => {
     try {
       const logData = {
-        action: "view_logs",
+        action: "user_management",
         userId: authData.user.id,
         userRole: authData.user.role,
         timestamp: new Date().toISOString(),
         details: `Admin ${authData.user.name} viewed system logs page`,
       };
 
-      await fetch("http://localhost:4000/api/v1/admin/system-log", {
+      await fetch(`${baseUrl}/api/v1/admin/system-log`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +131,7 @@ const AdminSystemLogs: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:4000/api/v1/admin/system-logs?${params}`,
+        `${baseUrl}/api/v1/admin/system-logs?${params}`,
         {
           method: "GET",
           headers: {
@@ -141,16 +146,13 @@ const AdminSystemLogs: React.FC = () => {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
 
-      const result = await response.json(); // { data: [...] }
-      console.log("Full API Response:", result);
+      const result = await response.json();
 
-     
-
-      const data = result.data; // Adjust based on actual response structure
+      const data = result;
 
       if (data.success) {
-        setLogs(data.logs || []);
-        setFilteredLogs(data.logs || []);
+        setLogs(data.log || []);
+        setFilteredLogs(data.log || []);
 
         // Update pagination state from backend response
         if (data.pagination) {
@@ -178,9 +180,9 @@ const AdminSystemLogs: React.FC = () => {
   // Get unique action types for filter dropdown
   const getUniqueActionTypes = () => {
     const types = logs.map((log) => log.actionType);
+
     return [...new Set(types)];
   };
-
   // Format timestamp
   const formatTimestamp = (timestamp: string) => {
     const date = new Date(timestamp);
@@ -291,6 +293,7 @@ const AdminSystemLogs: React.FC = () => {
                 <Filter className="w-4 h-4 inline mr-2" />
                 Action Type
               </label>
+
               <select
                 value={actionTypeFilter}
                 onChange={(e) => setActionTypeFilter(e.target.value)}
@@ -301,11 +304,13 @@ const AdminSystemLogs: React.FC = () => {
                 }`}
               >
                 <option value="all">All Actions</option>
-                {getUniqueActionTypes().map((type) => (
-                  <option key={type} value={type}>
-                    {type.replace("_", " ").toUpperCase()}
-                  </option>
-                ))}
+                {getUniqueActionTypes()
+                  .filter((type): type is string => !!type) // prevent crash if undefined
+                  .map((type) => (
+                    <option key={type} value={type}>
+                      {type.replace(/_/g, " ").toUpperCase()}
+                    </option>
+                  ))}
               </select>
             </div>
 
@@ -501,7 +506,7 @@ const AdminSystemLogs: React.FC = () => {
                                 : "text-gray-900"
                             }`}
                           >
-                            {formatTimestamp(log.timestamp)}
+                            {formatTimestamp(log.createdAt)}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -521,16 +526,16 @@ const AdminSystemLogs: React.FC = () => {
                                 : "text-gray-600"
                             }`}
                           >
-                            {log.userId}
+                            {log.performedBy.name}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
                             className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getRoleBadgeColor(
-                              log.userRole
+                              log.performedBy.role
                             )}`}
                           >
-                            {log.userRole}
+                            {log.performedBy.role}
                           </span>
                         </td>
                         <td className="px-6 py-4">
@@ -541,7 +546,7 @@ const AdminSystemLogs: React.FC = () => {
                                 : "text-gray-600"
                             } max-w-md truncate`}
                           >
-                            {log.message}
+                            {log.details}
                           </div>
                         </td>
                       </tr>
