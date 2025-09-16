@@ -1,78 +1,85 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import { Save } from "lucide-react";
 import axios from "axios"; // Add axios for API calls
 import { baseUrl } from "../../config/routes";
 
 const SystemSettings: React.FC = () => {
-  const { state: globalState } = useGlobalState();
-
-  const [systemSettings, setSystemSettings] = useState({
-    siteName: "DevElevate",
-    maintenanceMode: null,
-    registrationEnabled: true,
-    emailNotifications: true,
-    maxUsersPerCourse: 1000,
-    sessionTimeout: 30,
-  });
-
-  // New states for handling secret key modal
+  
+const [systemSettings, setSystemSettings] = useState<any | null>(null); 
+  const [loading, setLoading] = useState(true);
   const [isSecretModalOpen, setIsSecretModalOpen] = useState(false);
   const [secretKey, setSecretKey] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Handle when toggle button is clicked
+  const { state: globalState } = useGlobalState();
+
+  useEffect(() => {
+    const fetchSystemSettings = async () => {
+      const token = localStorage.getItem("authToken");
+      try {
+        const res = await axios.get(`${baseUrl}/api/v1/admin/system-settings`, {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res.data?.settings) {
+          setSystemSettings(res.data.settings); // ✅ use API values directly
+        }
+      } catch (error) {
+        console.error("Error fetching system settings:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSystemSettings();
+  }, []);
+
+  // Toggle modal
   const handleToggleMaintenance = () => {
     setIsSecretModalOpen(true);
     setSecretKey("");
     setErrorMessage("");
   };
 
-  // Verify secret key by calling backend API
-
+  // Verify secret key & update maintenance mode
   const verifySecretKey = async () => {
     try {
+      if (!systemSettings) return;
+
       const newValue = !systemSettings.maintenanceMode;
 
       const res = await axios.patch(
-        `${baseUrl}/api/v1/admin/system-setting`,
+        `${baseUrl}/api/v1/admin/system-settings`,
         {
           maintenanceMode: newValue,
-          secretKey, // if required by backend
+          secretKey,
         },
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
             "Content-Type": "application/json",
           },
         }
       );
 
-      // ✅ Update state using the nested settings object
-      if (
-        res.data &&
-        res.data.settings &&
-        typeof res.data.settings.maintenanceMode === "boolean"
-      ) {
-        setSystemSettings((prev) => ({
-          ...prev,
-          maintenanceMode: res.data.settings.maintenanceMode,
-        }));
+      if (res.data?.settings) {
+        setSystemSettings(res.data.settings); // ✅ always replace with fresh API data
         setIsSecretModalOpen(false);
         setErrorMessage("");
       } else {
-        setErrorMessage(
-          res.data?.message || "Failed to update maintenance mode."
-        );
+        setErrorMessage(res.data?.message || "Failed to update maintenance mode.");
       }
     } catch (err: any) {
       console.error("Error updating maintenance mode:", err);
-      setErrorMessage(
-        err.response?.data?.message || "Error updating maintenance mode."
-      );
+      setErrorMessage(err.response?.data?.message || "Error updating maintenance mode.");
     }
   };
+  if (loading) return <p>Loading settings...</p>;
 
   return (
     <div className="space-y-6">
