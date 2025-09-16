@@ -23,6 +23,7 @@ import placementRoutes from "./routes/placementRoutes.js";
 import contactSupport from "./routes/contactSupport.js";
 import newsRoutes from "./routes/newsRoutes.js";
 import Faq from "./routes/faq.js";
+import systemSettings from "./routes/SystemSettingRoute.js";
 
 // sanitizeMiddleware
 
@@ -78,6 +79,8 @@ app.use("/api/v1/admin/quiz", quizRoutes); //quiz-related
 app.use("/api/v1/quiz", userQuizRoutes); // user quiz routes
 app.use("/api/v1", aiRoutes);
 app.use('/api/v1/admin/analytics',analyticRoute)
+
+app.use('/api/v1/admin',systemSettings)
 
 // Learning Routes
 app.use("/api/v1/learning/java", javaRoutes); // Java learning content
