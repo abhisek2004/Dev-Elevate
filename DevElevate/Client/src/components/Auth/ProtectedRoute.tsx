@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
+import { baseUrl } from "../../config/routes";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -40,7 +41,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       const token = localStorage.getItem("authToken");
       try {
         const res = await axios.get<ApiResponse>(
-          "http://localhost:4000/api/v1/admin/system-settings",
+          `${baseUrl}/api/v1/admin/system-setting`,
           {
             withCredentials: true,
             headers: {
@@ -78,18 +79,18 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Navigate to="/dashboard" replace />;
   }
 
-  if ((maintenanceMode && requireAuth)&& user?.role !== "admin") {
+  if ((maintenanceMode && requireAuth) && user?.role !== "admin") {
     return (
- <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white text-center">
-      <h1 className="text-4xl font-bold mb-4">🚧 Site Under Maintenance 🚧</h1>
-      <p className="text-gray-400 mb-6">We’ll be back soon. Please check later.</p>
-      <button
-        onClick={() => navigate("/")} // goes back to previous page
-        className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold"
-      >
-        Go Back
-      </button>
-    </div>
+      <div className="flex flex-col items-center justify-center h-screen text-center text-white bg-gray-900">
+        <h1 className="mb-4 text-4xl font-bold">🚧 Site Under Maintenance 🚧</h1>
+        <p className="mb-6 text-gray-400">We’ll be back soon. Please check later.</p>
+        <button
+          onClick={() => navigate("/")} // goes back to previous page
+          className="px-6 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700"
+        >
+          Go Back
+        </button>
+      </div>
     );
   }
 
