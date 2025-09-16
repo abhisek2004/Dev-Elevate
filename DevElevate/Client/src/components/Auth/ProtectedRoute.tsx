@@ -30,13 +30,22 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   requireAdmin = false,
   redirectTo = "/login",
 }) => {
-  const { state } = useAuth();
+  const { state, logout } = useAuth();
   const location = useLocation();
   const { isAuthenticated, user } = state;
   const [loading, setLoading] = useState(true);
   const [maintenanceMode, setMaintenanceMode] = useState(false);
   const navigate = useNavigate();
+
+  const [timeLeft, setTimeLeft] = useState(24 * 60 * 60); // 24 hours in seconds
+
   useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    
+
     const checkAuthAndSettings = async () => {
       const token = localStorage.getItem("authToken");
       try {
@@ -58,7 +67,22 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     };
 
     checkAuthAndSettings();
+    return () => clearInterval(timer);
   }, []);
+
+  const formatTime = (seconds: number) => {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hrs.toString().padStart(2, "0")}:${mins
+      .toString()
+      .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   // Not logged in → redirect to login
   if (requireAuth && !isAuthenticated) {
@@ -79,16 +103,29 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Navigate to="/dashboard" replace />;
   }
 
-  if ((maintenanceMode && requireAuth) && user?.role !== "admin") {
+  if (maintenanceMode && requireAuth && user?.role !== "admin") {
     return (
-      <div className="flex flex-col items-center justify-center h-screen text-center text-white bg-gray-900">
-        <h1 className="mb-4 text-4xl font-bold">🚧 Site Under Maintenance 🚧</h1>
-        <p className="mb-6 text-gray-400">We’ll be back soon. Please check later.</p>
+      <div className="flex flex-col items-center justify-center h-screen text-center text-white bg-gray-900 space-y-6">
+        {/* Smaller image */}
+        <img
+          src="https://thumbs.dreamstime.com/b/thin-line-style-under-maintenance-message-banner-100071034.jpg"
+          alt="under-maintenance"
+          className="w-80 h-auto rounded-lg shadow-lg" 
+        />
+
+        <p className="text-gray-400">We’ll be back soon. Please check later.</p>
+
+        {/* Countdown */}
+        <div className="text-3xl font-bold text-yellow-400">
+          ⏳ {formatTime(timeLeft)}
+        </div>
+
+        {/* Logout button */}
         <button
-          onClick={() => navigate("/")} // goes back to previous page
-          className="px-6 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700"
+          onClick={handleLogout}
+          className="px-6 py-2 font-semibold text-black bg-red-400 rounded-md hover:bg-red-700 transition"
         >
-          Go Back
+          Logout
         </button>
       </div>
     );
