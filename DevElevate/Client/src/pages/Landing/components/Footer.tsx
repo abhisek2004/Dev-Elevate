@@ -9,19 +9,14 @@ const Footer: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // const quickLinks = [
-  //   { name: "Learning Hub", path: "/learning" },
-  //   { name: "Study Buddy", path: "/chatbot" },
-  //   { name: "Tech Feed", path: "/news" },
-  //   { name: "Resume Builder", path: "/resume" },
-  //   { name: "Placement Prep", path: "/placement" },
-  // ];
-
   const legalLinks = [
     { name: "Privacy Policy", path: "/privacy" },
     { name: "Terms of Service", path: "/terms" },
     { name: "About Creator", path: "/creator" },
     { name: "Disclaimer", path: "/disclaimer" },
+    { name: "API Docs", path: "/api-docs" },
+    { name: "Documentation", path: "/documentation" },
+    { name: "Contributor Guide", path: "/contributor-guide" },
   ];
 
   const techStack = [

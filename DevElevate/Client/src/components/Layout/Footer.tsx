@@ -57,6 +57,7 @@ const Footer: React.FC = () => {
 
   const additionalLinks = [
     { name: "Documentation", path: "/documentation" },
+    { name: "API Docs", path: "/api-docs" },
   ];
 
   const allLinks = [...legalLinks, ...additionalLinks];
