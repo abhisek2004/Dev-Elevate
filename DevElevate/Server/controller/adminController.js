@@ -7,7 +7,6 @@ import AdminLog from "../model/AdminLog.js";
 export const createAdminLog = async (req, res) => {
   try {
     const { action, details } = req.body;
-    console.log("hii",action, details);
 
     if (!action || !details) {
       return res
