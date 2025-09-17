@@ -10,7 +10,8 @@ import { GlobalProvider, useGlobalState } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { AdminProvider } from "./contexts/AdminContext";
 import { AppProvider } from "./contexts/AppContext";
-
+import Leaderboard from "./pages/Leaderboard/Leaderboard";
+import ContributorGuide from "./pages/Leaderboard/ContributorGuide";
 import Footer from "./components/Layout/Footer";
 import { useEffect, useState } from "react";
 import SplashScreen from "./components/Layout/SplashScreen";
@@ -104,9 +105,8 @@ const AppContent = () => {
               <AppProvider>
                 <Layout>
                   <div
-                    className={`flex-1 ${
-                      state.darkMode ? "bg-gray-900" : "bg-white"
-                    }`}
+                    className={`flex-1 ${state.darkMode ? "bg-gray-900" : "bg-white"
+                      }`}
                   >
                     <main className="flex-1">
                       <Routes>
@@ -138,6 +138,8 @@ const AppContent = () => {
                         <Route path="creator" element={<CreatorPage />} />
                         <Route path="disclaimer" element={<Disclaimer />} />
                         <Route path="help-center" element={<HelpCenter />} />
+                        <Route path="leaderboard" element={<Leaderboard />} />
+                        <Route path="contributor-guide" element={<ContributorGuide />} />
                         <Route
                           path="*"
                           element={<Navigate to="/dashboard" replace />}
