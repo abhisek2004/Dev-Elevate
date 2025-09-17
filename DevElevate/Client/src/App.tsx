@@ -63,7 +63,23 @@ const AppContent = () => {
   return (
     <Router>
       <Routes>
-        {/* Public Routes */}
+        {/* Public Routes - Accessible from Landing Page */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/placements" element={<PlacementStats />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/about-creator" element={<CreatorPage />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
+        <Route path="/contributor-guide" element={<ContributorGuide />} />
+        <Route path="/documentation" element={<LandingPage />} /> {/* Placeholder, update with actual component */}
+        <Route path="/api-docs" element={<LandingPage />} /> {/* Placeholder, update with actual component */}
+        <Route path="/learning" element={<LearningHub />} />
+        <Route path="/chatbot" element={<Chatbot />} />
+        <Route path="/news" element={<TechFeed />} />
+        <Route path="/resume" element={<ResumeBuilder />} />
+        <Route path="/placement" element={<PlacementPrep />} />
+
+        {/* Login Route - Public but requires no auth */}
         <Route
           path="/login"
           element={
@@ -72,8 +88,6 @@ const AppContent = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/placements" element={<PlacementStats />} />
 
         {/* Admin Routes */}
         <Route
@@ -85,19 +99,21 @@ const AppContent = () => {
               </AdminProvider>
             </ProtectedRoute>
           }
-        />
-        <Route
-          path="/admin/*"
-          element={
-            <ProtectedRoute requireAdmin={true}>
-              <AdminProvider>
-                <AdminDashboard />
-              </AdminProvider>
-            </ProtectedRoute>
-          }
-        />
+        >
+          <Route index element={<Overview />} />
+          <Route path="overview" element={<Overview />} />
+          <Route path="users" element={<UserManagement />} />
+          <Route path="content" element={<ContentManagement />} />
+          <Route path="community" element={<Community />} />
+          <Route path="news" element={<NewsUpdates />} />
+          <Route path="quiz" element={<QuizManagement />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="logs" element={<SystemLogs />} />
+          <Route path="settings" element={<SystemSettings />} />
+          <Route path="feedback" element={<Feedback />} />
+        </Route>
 
-        {/* Protected Routes */}
+        {/* Protected Routes - Require Authentication */}
         <Route
           path="/*"
           element={
@@ -105,8 +121,7 @@ const AppContent = () => {
               <AppProvider>
                 <Layout>
                   <div
-                    className={`flex-1 ${state.darkMode ? "bg-gray-900" : "bg-white"
-                      }`}
+                    className={`flex-1 ${state.darkMode ? "bg-gray-900" : "bg-white"}`}
                   >
                     <main className="flex-1">
                       <Routes>
@@ -117,29 +132,18 @@ const AppContent = () => {
                         <Route path="interview" element={<InterviewPage />} />
                         <Route path="chatbot" element={<Chatbot />} />
                         <Route path="news" element={<TechFeed />} />
-                        <Route
-                          path="community/*"
-                          element={<CommunityForum />}
-                        />
+                        <Route path="community/*" element={<CommunityForum />} />
                         <Route path="resume" element={<ResumeBuilder />} />
                         <Route path="placement" element={<PlacementPrep />} />
-                        <Route
-                          path="projects"
-                          element={<ProjectRecommender />}
-                        />
+                        <Route path="projects" element={<ProjectRecommender />} />
                         <Route path="tasks" element={<TasksView />} />
                         <Route path="notes" element={<NotesView />} />
                         <Route path="calendar" element={<CalendarView />} />
                         <Route path="premium" element={<PremiumPage />} />
                         <Route path="payment" element={<PaymentPage />} />
                         <Route path="profile" element={<UserProfile />} />
-                        <Route path="privacy" element={<PrivacyPolicy />} />
-                        <Route path="terms" element={<TermsOfService />} />
-                        <Route path="creator" element={<CreatorPage />} />
-                        <Route path="disclaimer" element={<Disclaimer />} />
                         <Route path="help-center" element={<HelpCenter />} />
                         <Route path="leaderboard" element={<Leaderboard />} />
-                        <Route path="contributor-guide" element={<ContributorGuide />} />
                         <Route
                           path="*"
                           element={<Navigate to="/dashboard" replace />}

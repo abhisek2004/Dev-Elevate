@@ -17,11 +17,6 @@ const Footer: React.FC = () => {
     setIsSubmitting(true);
     try {
       // Placeholder for newsletter subscription API call
-      // await fetch('/api/newsletter/subscribe', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email })
-      // });
       console.log('Subscribed with email:', email);
       setEmail('');
     } catch (error) {
@@ -31,10 +26,11 @@ const Footer: React.FC = () => {
     }
   };
 
+  // Updated legal links to ensure they point to public routes
   const legalLinks = [
-    { name: "Privacy Policy", path: "/privacy" },
-    { name: "Terms of Service", path: "/terms" },
-    { name: "About Creator", path: "/creator" },
+    { name: "Privacy Policy", path: "/privacy-policy" }, // Updated to match file name
+    { name: "Terms of Service", path: "/terms-of-service" }, // Updated to match file name
+    { name: "About Creator", path: "/about-creator" },
     { name: "Disclaimer", path: "/disclaimer" },
     { name: "API Docs", path: "/api-docs" },
     { name: "Documentation", path: "/documentation" },
@@ -72,7 +68,7 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-4">
               {[
-                { icon: Github, href: 'https://github.com/abhisek2004' },
+                { icon: Github, href: 'https://github.com/abhisek2004/Dev-Elevate' }, // Updated to specific repo
                 { icon: FaBriefcase, href: 'https://abhisekpanda072.vercel.app/' },
                 { icon: Linkedin, href: 'https://www.linkedin.com/in/abhisekpanda2004/' },
                 { icon: Mail, href: 'mailto:officialdevelevate@gmail.com' }
@@ -132,7 +128,7 @@ const Footer: React.FC = () => {
               Subscribe to our newsletter
             </h4>
             <p className="mb-2 text-sm text-gray-600 dark:text-gray-400">
-              Get the latest updates, event tips, and community news.
+              Get the latest updates, learning tips, and community news from DevElevate.
             </p>
             <form
               onSubmit={handleSubmit}

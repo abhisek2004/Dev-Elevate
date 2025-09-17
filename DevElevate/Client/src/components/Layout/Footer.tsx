@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
         );
         if (response.ok) {
           const data = await response.json();
-          setContributors(data.slice(0, 6));
+          setContributors(data.slice(0, 6)); // Limit to 6 contributors
         } else {
           setContributors([]);
         }
@@ -39,6 +39,7 @@ const Footer: React.FC = () => {
     fetchContributors();
   }, []);
 
+  // Updated quick links to match page structure
   const quickLinks = [
     { name: "Learning Hub", path: "/learning" },
     { name: "Study Buddy", path: "/chatbot" },
@@ -47,10 +48,11 @@ const Footer: React.FC = () => {
     { name: "Placement Prep", path: "/placement" },
   ];
 
+  // Updated legal links with consistent naming
   const legalLinks = [
-    { name: "Privacy Policy", path: "/privacy" },
-    { name: "Terms of Service", path: "/terms" },
-    { name: "About Creator", path: "/creator" },
+    { name: "Privacy Policy", path: "/privacy-policy" },
+    { name: "Terms of Service", path: "/terms-of-service" },
+    { name: "About Creator", path: "/about-creator" },
     { name: "Disclaimer", path: "/disclaimer" },
     { name: "Contributor Guide", path: "/contributor-guide" },
   ];
@@ -97,7 +99,7 @@ const Footer: React.FC = () => {
               <div className="flex flex-wrap gap-3 items-center mt-4 text-sm">
                 <div className="flex items-center gap-x-0.5 text-purple-600">
                   <a
-                    href="https://github.com/abhisek2004"
+                    href="https://github.com/abhisek2004/Dev-Elevate"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`p-2 rounded-full transition-colors ${state.darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"}`}
@@ -183,7 +185,6 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-
         <div className={`border-t w-full ${state.darkMode ? "border-gray-800" : "border-gray-200"}`}>
           <p className={`text-center text-sm mt-3 mb-1 ${state.darkMode ? "text-gray-400" : "text-gray-600"}`}>
             © 2025 DevElevate. Built with{" "}
