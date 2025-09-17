@@ -77,11 +77,11 @@ const Header: React.FC = () => {
                 Sign In
               </button>
             </Link>
-            <Link to="/dashboard">
+            {/* <Link to="/dashboard">
               <button className="px-6 py-2 text-white bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg transition-all duration-300 transform hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105">
                 Get Started
               </button>
-            </Link>
+            </Link> */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -125,13 +125,13 @@ const Header: React.FC = () => {
                     </button>
                   </Link>
                 </div>
-                <div className="w-full">
+                {/* <div className="w-full">
                   <Link to="/dashboard">
                     <button className="px-6 py-2 w-full text-white bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg">
                       Get Started
                     </button>
                   </Link>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

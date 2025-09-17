@@ -9,13 +9,13 @@ const Footer: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const quickLinks = [
-    { name: "Learning Hub", path: "/learning" },
-    { name: "Study Buddy", path: "/chatbot" },
-    { name: "Tech Feed", path: "/news" },
-    { name: "Resume Builder", path: "/resume" },
-    { name: "Placement Prep", path: "/placement" },
-  ];
+  // const quickLinks = [
+  //   { name: "Learning Hub", path: "/learning" },
+  //   { name: "Study Buddy", path: "/chatbot" },
+  //   { name: "Tech Feed", path: "/news" },
+  //   { name: "Resume Builder", path: "/resume" },
+  //   { name: "Placement Prep", path: "/placement" },
+  // ];
 
   const legalLinks = [
     { name: "Privacy Policy", path: "/privacy" },
@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
           {/* Brand */}
           <div className="col-span-2 md:col-span-2">
             <div className="flex items-center mb-6 space-x-3">
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500">
+              <div className="flex justify-center items-center w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg">
                 <Rocket className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center w-10 h-10 transition-all duration-300 border rounded-lg bg-white/5 border-white/10 hover:bg-white/10 hover:border-purple-500/30"
+                  className="flex justify-center items-center w-10 h-10 rounded-lg border transition-all duration-300 bg-white/5 border-white/10 hover:bg-white/10 hover:border-purple-500/30"
                 >
                   <social.icon className="w-4 h-4 text-gray-400" />
                 </a>
@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="col-span-1">
+          {/* <div className="col-span-1">
             <h4 className="mb-4 font-semibold text-white">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
@@ -88,7 +88,7 @@ const Footer: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           {/* Legal Links */}
           <div className="col-span-1">
@@ -128,7 +128,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col items-center justify-between pt-8 mt-12 border-t border-white/10 md:flex-row">
+        <div className="flex flex-col justify-between items-center pt-8 mt-12 border-t border-white/10 md:flex-row">
           <div className="mb-4 text-sm text-gray-400 md:mb-0">
             © 2025 DevElevate. All rights reserved.
           </div>
@@ -136,7 +136,7 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Background Effects */}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t to-transparent from-purple-900/5"></div>
+      <div className="absolute inset-0 bg-gradient-to-t to-transparent pointer-events-none from-purple-900/5"></div>
     </footer>
   );
 };
