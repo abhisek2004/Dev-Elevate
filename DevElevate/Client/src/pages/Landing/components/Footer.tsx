@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBriefcase } from "react-icons/fa";
 import { Rocket, Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
 import { SiMongodb, SiExpress, SiNodedotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
 
 const Footer: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      // Placeholder for newsletter subscription API call
+      // await fetch('/api/newsletter/subscribe', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email })
+      // });
+      console.log('Subscribed with email:', email);
+      setEmail('');
+    } catch (error) {
+      console.error('Subscription error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const legalLinks = [
@@ -68,23 +90,6 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
-          {/* <div className="col-span-1">
-            <h4 className="mb-4 font-semibold text-white">Quick Links</h4>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-400 transition-colors duration-300 hover:text-white"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div> */}
-
           {/* Legal Links */}
           <div className="col-span-1">
             <h4 className="mb-4 font-semibold text-white">Legal</h4>
@@ -103,7 +108,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Tech Stack */}
-          <div className="col-span-2">
+          <div className="col-span-1">
             <h4 className="mb-4 font-semibold text-white">Tech Stack</h4>
             <ul className="space-y-3">
               {techStack.map((tech) => {
@@ -119,6 +124,39 @@ const Footer: React.FC = () => {
                 );
               })}
             </ul>
+          </div>
+
+          {/* Newsletter Subscription Form */}
+          <div className="col-span-2">
+            <h4 className="mb-2 text-sm font-semibold tracking-wider text-gray-900 uppercase dark:text-gray-100">
+              Subscribe to our newsletter
+            </h4>
+            <p className="mb-2 text-sm text-gray-600 dark:text-gray-400">
+              Get the latest updates, event tips, and community news.
+            </p>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-2 sm:flex-row"
+            >
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="flex-grow px-4 py-2 text-gray-900 bg-white rounded-md border border-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                disabled={isSubmitting}
+              />
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="px-4 py-2 text-white bg-indigo-600 rounded-md transition-colors hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? "Subscribing..." : "Subscribe"}
+              </button>
+            </form>
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              We respect your privacy. Unsubscribe at any time.
+            </p>
           </div>
         </div>
 
