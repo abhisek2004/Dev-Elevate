@@ -116,7 +116,6 @@ const LoginRegister: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     dispatch({ type: "CLEAR_ERROR" });
-
     // Validate email domain when email field is present (not during OTP step)
     if (!state.otpPending && !allowedEmailRegex.test(formData.email)) {
       dispatch({
