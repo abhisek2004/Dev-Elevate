@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
     <div className="h-screen overflow-hidden">
       {/* Fixed Navbar */}
       <div className="fixed top-0 left-0 right-0 z-50">
-        <Navbar toggleSidebar={() => setShowSidebar(!showSidebar)} />
+        <Navbar  />
       </div>
 
       {/* Sidebar and Main Layout */}

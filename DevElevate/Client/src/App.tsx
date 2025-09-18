@@ -11,7 +11,6 @@ import { NotificationProvider } from "./contexts/NotificationContext";
 import { AdminProvider } from "./contexts/AdminContext";
 import { AppProvider } from "./contexts/AppContext";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
-import ContributorGuide from "./pages/Leaderboard/ContributorGuide";
 import Footer from "./components/Layout/Footer";
 import { useEffect, useState } from "react";
 import SplashScreen from "./components/Layout/SplashScreen";
@@ -20,14 +19,8 @@ import Chatbot from "./components/Chatbot/Chatbot";
 import TechFeed from "./components/TechFeed/TechFeed";
 import ResumeBuilder from "./components/ResumeBuilder/ResumeBuilder";
 import PlacementPrep from "./components/PlacementPrep/PlacementPrep";
-import PlacementStats from "./pages/Placements/PlacementStats";
 import UserProfile from "./components/Profile/UserProfile";
-import PrivacyPolicy from "./components/Legal/PrivacyPolicy";
-import TermsOfService from "./components/Legal/TermsOfService";
-import CreatorPage from "./components/Legal/CreatorPage";
-import Disclaimer from "./components/Legal/Disclaimer";
 import AdminDashboard from "./components/Admin/AdminDashboard";
-import AdminSystemLogs from "./components/Admin/AdminSystemLogs";
 import Overview from "./components/Admin/Overview";
 import UserManagement from "./components/Admin/UserManagement";
 import ContentManagement from "./components/Admin/ContentManagement";
@@ -46,7 +39,6 @@ import PaymentPage from "./components/Payment/PaymentPage";
 import ProjectRecommender from "./components/ProjectRecommender/ProjectRecommender";
 import Layout from "./components/Layout/Layout";
 import CommunityForum from "./components/Community/CommunityForum";
-import LandingPage from "./pages/Landing/LandingPage";
 import TasksView from "./components/tasks/TasksView";
 import NotesView from "./components/notes/NotesView";
 import CalendarView from "./components/calendar/CalendarView";
@@ -63,23 +55,6 @@ const AppContent = () => {
   return (
     <Router>
       <Routes>
-        {/* Public Routes - Accessible from Landing Page */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/placements" element={<PlacementStats />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
-        <Route path="/about-creator" element={<CreatorPage />} />
-        <Route path="/disclaimer" element={<Disclaimer />} />
-        <Route path="/contributor-guide" element={<ContributorGuide />} />
-        <Route path="/documentation" element={<LandingPage />} /> {/* Placeholder, update with actual component */}
-        <Route path="/api-docs" element={<LandingPage />} /> {/* Placeholder, update with actual component */}
-        <Route path="/learning" element={<LearningHub />} />
-        <Route path="/chatbot" element={<Chatbot />} />
-        <Route path="/news" element={<TechFeed />} />
-        <Route path="/resume" element={<ResumeBuilder />} />
-        <Route path="/placement" element={<PlacementPrep />} />
-
-        {/* Login Route - Public but requires no auth */}
         <Route
           path="/login"
           element={
@@ -101,7 +76,6 @@ const AppContent = () => {
           }
         >
           <Route index element={<Overview />} />
-          <Route path="overview" element={<Overview />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="content" element={<ContentManagement />} />
           <Route path="community" element={<Community />} />
