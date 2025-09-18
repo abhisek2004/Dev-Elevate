@@ -23,14 +23,14 @@ import placementRoutes from "./routes/placementRoutes.js";
 import contactSupport from "./routes/contactSupport.js";
 import newsRoutes from "./routes/newsRoutes.js";
 import Faq from "./routes/faq.js";
+import systemSettings from "./routes/SystemSettingRoute.js";
 
 // sanitizeMiddleware
-
 import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
+import analyticRoute from "./routes/analytics.js";
 
 // ratelimiting
 import { guestLimiter, authLimiter, userLimiter } from './middleware/rateLimiting/index.js'
-
 
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
@@ -66,51 +66,28 @@ app.set("trust proxy", true);
 // Routes
 app.use("/api/v1/notifications", notificationRoutes);
 
-
-// USER ROUTES
-// app.use("/api/v1", userRoutes);
+// USER ROUTES with rate limiting
 app.use("/api/v1", authLimiter, userRoutes);
-
-
-// app.use("/api/v1", contactSupport);
 app.use("/api/v1", guestLimiter, contactSupport);
-
-
-// app.use("/api/v1", Faq);
 app.use("/api/v1", guestLimiter, Faq);
-
-
-// app.use("/api/v1/community", communityRoutes);
 app.use("/api/v1/community", guestLimiter, communityRoutes);
-
-
-// app.use("/api/v1/ats", atsRoutes); // ATS resume scanner functionality
-app.use("/api/v1/ats", guestLimiter, atsRoutes);
-
-
-
+app.use("/api/v1/ats", guestLimiter, atsRoutes); // ATS resume scanner functionality
 
 // ADMIN ROUTES
-// app.use("/api/v1/admin",adminRoutes); // general admin stuff like login, profile
 app.use("/api/v1/admin", authLimiter, adminRoutes);
 app.use("/api/v1/admin/courses", courseRoutes); // course create/delete/edit
 app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
 app.use("/api/v1/admin/quiz", quizRoutes); //quiz-related
 app.use("/api/v1/quiz", userQuizRoutes); // user quiz routes
 app.use("/api/v1", aiRoutes);
-
+app.use('/api/v1/admin/analytics', analyticRoute)
+app.use('/api/v1/admin', systemSettings)
 
 // Learning Routes
-// app.use("/api/v1/learning/java",javaRoutes); // Java learning content
-// app.use("/api/v1/learning/aiml", aimlRoutes); // AI/ML learning content
-// app.use("/api/v1/learning/mern", mernRoutes); // MERN stack learning content
-// app.use("/api/v1/learning/dsa", dsaRoutes); // DSA learning content
 app.use("/api/v1/learning/java", guestLimiter, javaRoutes);
 app.use("/api/v1/learning/aiml", guestLimiter, aimlRoutes);
 app.use("/api/v1/learning/mern", guestLimiter, mernRoutes);
 app.use("/api/v1/learning/dsa", guestLimiter, dsaRoutes);
-
-
 
 // Placement Routes
 app.use("/api/v1/placements", placementRoutes);
@@ -144,9 +121,7 @@ app.use((req, res) => {
 });
 
 // Use news routes
-// app.use("/api/v1", newsRoutes);
 app.use("/api/v1", guestLimiter, newsRoutes);
-
 
 // Start server
 app.listen(PORT, () => {

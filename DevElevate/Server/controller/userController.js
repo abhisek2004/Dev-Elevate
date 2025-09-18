@@ -167,7 +167,7 @@ export const loginUser = async (req, res) => {
     // Set token in cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // Always true in production (Render is HTTPS)
+      secure: true,
       sameSite: "None", // ✅ Needed for cross-origin cookies (Vercel ↔ Render)
       maxAge: 3 * 24 * 60 * 60 * 1000,
     });

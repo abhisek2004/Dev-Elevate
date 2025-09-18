@@ -365,6 +365,330 @@ const PlacementPrep: React.FC = () => {
       category: "Internship",
       applyUrl: "https://careers.microsoft.com/students/us/en",
     },
+
+    {
+      "company": "IndusAI Solutions Ltd.",
+      "position": "IndusAI Geek-A-Thon",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-24",
+      "description": "Participate in IndusAI Geek-A-Thon and showcase your skills in an online coding challenge to win exciting prizes and job opportunities.",
+      "requirements": [
+        "Engineering Students",
+        "MBA Students",
+        "Undergraduate",
+        "Postgraduate"
+      ],
+      "prize": "₹50,000 (Winner), ₹30,000 (First Runner Up), ₹15,000 (Second Runner Up), ₹5,000 (Third Runner Up)",
+      "category": "Coding Challenge",
+      "applyUrl": "https://unstop.com/hackathons/indusai-geek-a-thon-indusai-solutions-ltd-1066739"
+    },
+    {
+      "company": "Shri Madhwa Vadiraja Institute of Technology and Management (SMVITM)",
+      "position": "Hackothsava - 2k24",
+      "location": "Shankarapura, Karnataka",
+      "type": "Hackathon",
+      "deadline": "2024-07-21",
+      "description": "Join Hackothsava - 2k24 to tackle innovation challenges in coding and designing, with opportunities to win cash prizes and certificates.",
+      "requirements": [
+        "Engineering Students",
+        "Undergraduate",
+        "Coding Skills",
+        "Designing Skills"
+      ],
+      "prize": "₹50,000 (Winner), ₹40,000 (First Runner Up), ₹10,000 (Best Innovation Project)",
+      "category": "Innovation Challenge",
+      "applyUrl": "https://unstop.com/hackathons/hackothsav-2k24-shri-madhwa-vadiraja-institute-of-technology-and-management-smvitm-shankarapura-karnataka-1065624"
+    },
+    {
+      "company": "Flipkart",
+      "position": "Flipkart GRiD 6.0 - Robotics Challenge",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-31",
+      "description": "Compete in Flipkart GRiD 6.0 Robotics Challenge to solve robotics-related problems and win cash prizes, certificates, and internship opportunities.",
+      "requirements": [
+        "Engineering Students",
+        "Undergraduate",
+        "Postgraduate",
+        "Robotics Knowledge"
+      ],
+      "prize": "₹1,00,000 (Winners), ₹75,000 (First Runners-Up), Certificates and PPIs for Finalists",
+      "category": "Robotics",
+      "applyUrl": "https://unstop.com/hackathons/flipkart-grid-60-robotics-challenge-flipkart-grid-60-flipkart-1024253"
+    },
+    {
+      "company": "Flipkart",
+      "position": "Flipkart GRiD 6.0 - Information Security Challenge",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-31",
+      "description": "Participate in Flipkart GRiD 6.0 Information Security Challenge to tackle coding and security challenges, with chances to win cash and internship opportunities.",
+      "requirements": [
+        "Engineering Students",
+        "Undergraduate",
+        "Postgraduate",
+        "Coding Skills",
+        "Online Quiz Participation"
+      ],
+      "prize": "₹1,00,000 (Winners), ₹75,000 (First Runners-Up), Certificates and PPIs for Finalists",
+      "category": "Information Security",
+      "applyUrl": "https://unstop.com/hackathons/flipkart-grid-60-information-security-challenge-flipkart-grid-60-flipkart-1024250"
+    },
+    {
+      "company": "Flipkart",
+      "position": "Flipkart GRiD 6.0 - Software Development Track",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-31",
+      "description": "Join Flipkart GRiD 6.0 Software Development Track to compete in coding challenges and win cash prizes, certificates, and internship opportunities.",
+      "requirements": [
+        "Engineering Students",
+        "Undergraduate",
+        "Postgraduate",
+        "Coding Skills"
+      ],
+      "prize": "₹1,00,000 (Winners), ₹75,000 (First Runners-Up), Certificates and PPIs for Finalists",
+      "category": "Software Development",
+      "applyUrl": "https://unstop.com/hackathons/flipkart-grid-60-software-development-track-flipkart-grid-60-flipkart-1024247"
+    },
+    {
+      "company": "Celebal Technologies Private Limited",
+      "position": "Spark-Wars 3.0",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-24",
+      "description": "Showcase your coding and data analytics skills in Spark-Wars 3.0 to win exciting prizes like Play Station 5 and professional certificates.",
+      "requirements": [
+        "Engineering Students",
+        "Undergraduate",
+        "Postgraduate",
+        "Experienced Professionals",
+        "Coding Skills",
+        "Data Analytics Skills"
+      ],
+      "prize": "Play Station 5 (Winner), iPad Mini (First Runner Up), Marshall Speakers (Second Runner Up), Swag Bag (Top 100)",
+      "category": "Coding Challenge",
+      "applyUrl": "https://unstop.com/hackathons/spark-wars-30-celebal-technologies-private-limited-1064149"
+    },
+    {
+      "company": "Ksham Innovation Pvt. Ltd.",
+      "position": "PCB Designing Hackathon",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-15",
+      "description": "Compete in the PCB Designing Hackathon to showcase your designing and robotics skills, with opportunities for internships and cash prizes.",
+      "requirements": [
+        "Engineering Students",
+        "MBA Students",
+        "Undergraduate",
+        "Postgraduate",
+        "Designing Skills",
+        "Robotics Knowledge"
+      ],
+      "prize": "₹30,000 as Internship Stipend (Winner)",
+      "category": "PCB Designing",
+      "applyUrl": "https://unstop.com/hackathons/pcb-designing-hackathon-ksham-innovation-pvt-ltd-1063477"
+    },
+    {
+      "company": "Ksham Innovation Pvt. Ltd.",
+      "position": "Embedded Development Hackathon",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-11",
+      "description": "Participate in the Embedded Development Hackathon to demonstrate your coding and robotics skills, with a chance to win internship stipends.",
+      "requirements": [
+        "Engineering Students",
+        "Undergraduate",
+        "Postgraduate",
+        "Coding Skills",
+        "Robotics Knowledge"
+      ],
+      "prize": "₹50,000 as Internship Stipend (Winner)",
+      "category": "Embedded Development",
+      "applyUrl": "https://unstop.com/hackathons/embedded-development-hackathon-ksham-innovation-pvt-ltd-1062591"
+    },
+    {
+      "company": "Parul University, Vadodara",
+      "position": "AI/ML Hackathon 1.0",
+      "location": "Vadodara, India",
+      "type": "Hackathon",
+      "deadline": "2024-07-14",
+      "description": "Join the AI/ML Hackathon 1.0 to innovate in artificial intelligence and machine learning, with opportunities to win cash prizes and certificates.",
+      "requirements": [
+        "Engineering Students",
+        "MBA Students",
+        "Undergraduate",
+        "Postgraduate",
+        "Fresher",
+        "Experienced Professionals"
+      ],
+      "prize": "₹1,00,000 (Winner), ₹50,000 (First Runner Up), ₹25,000 (Second Runner Up), ₹5,000 (Consolation Prizes)",
+      "category": "AI/ML",
+      "applyUrl": "https://unstop.com/hackathons/aiml-hackathon-10-parul-university-vadodara-1062897"
+    },
+    {
+      "company": "Indian Institute of Technology (IIT), Jodhpur",
+      "position": "Green Fintech Hackathon",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-12",
+      "description": "Participate in the Green Fintech Hackathon to innovate in climate-focused fintech solutions, with significant cash prizes and certificates.",
+      "requirements": [
+        "Engineering Students",
+        "MBA Students",
+        "Undergraduate",
+        "Postgraduate",
+        "Fresher",
+        "Experienced Professionals",
+        "Finance Knowledge"
+      ],
+      "prize": "₹2,50,000 (Winner), ₹1,50,000 (First Runner Up), ₹1,00,000 (Second Runner Up)",
+      "category": "Fintech",
+      "applyUrl": "https://unstop.com/hackathons/green-fintech-hackathon-indian-institute-of-technology-iit-jodhpur-1061860"
+    },
+    {
+      "company": "Cyber Scam Prevention for Senior Citizen",
+      "position": "CSPSC Hacks",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-08-13",
+      "description": "Join CSPSC Hacks to develop solutions for cyber scam prevention, focusing on social good and beginner-friendly projects.",
+      "requirements": [
+        "Open Ended Project Skills",
+        "Social Good Focus",
+        "Beginner Friendly"
+      ],
+      "prize": "$150",
+      "category": "Social Good",
+      "applyUrl": "https://cspsc-hacks.devpost.com/"
+    },
+    {
+      "company": "Meta",
+      "position": "Presence Platform Hackathon | Japan 2024",
+      "location": "Toranomon Hills Business Tower, Japan",
+      "type": "Hackathon",
+      "deadline": "2024-07-11",
+      "description": "Compete in the Presence Platform Hackathon in Japan to innovate in AR/VR technologies, open to invited participants.",
+      "requirements": [
+        "AR/VR Knowledge",
+        "Invited Participants in Japan"
+      ],
+      "prize": "$25,000",
+      "category": "AR/VR",
+      "applyUrl": "https://presence-platform-japan-2024.devpost.com/"
+    },
+    {
+      "company": "Cirfin",
+      "position": "CirFin CREATE",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-08-15",
+      "description": "Participate in CirFin CREATE to develop solutions in social good, design, and machine learning/AI, with attractive cash prizes.",
+      "requirements": [
+        "Social Good Focus",
+        "Design Skills",
+        "Machine Learning/AI Knowledge"
+      ],
+      "prize": "$2,990",
+      "category": "Social Good",
+      "applyUrl": "https://cirfin-solve.devpost.com/"
+    },
+    {
+      "company": "TriVal",
+      "position": "Bay Area Hacks",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-08-31",
+      "description": "Join Bay Area Hacks to work on beginner-friendly, low/no code, and open-ended projects, with substantial cash prizes.",
+      "requirements": [
+        "Beginner Friendly",
+        "Low/No Code Skills",
+        "Open Ended Project Skills"
+      ],
+      "prize": "$9,250",
+      "category": "Beginner Friendly",
+      "applyUrl": "https://bahacks.devpost.com/"
+    },
+    {
+      "company": "Major League Hacking",
+      "position": "Global Hack Week: Season Launch",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-11",
+      "description": "Participate in Global Hack Week: Season Launch to work on beginner-friendly and open-ended projects, with a focus on community engagement.",
+      "requirements": [
+        "Beginner Friendly",
+        "Open Ended Project Skills"
+      ],
+      "prize": "$0",
+      "category": "Beginner Friendly",
+      "applyUrl": "https://global-hack-week-season-launch.devpost.com/"
+    },
+    {
+      "company": "FinCode Hacks",
+      "position": "FinCode Hacks",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-31",
+      "description": "Compete in FinCode Hacks to develop innovative solutions with beginner-friendly and low/no code approaches.",
+      "requirements": [
+        "Beginner Friendly",
+        "Low/No Code Skills",
+        "Open Ended Project Skills"
+      ],
+      "prize": "$8,022",
+      "category": "Beginner Friendly",
+      "applyUrl": "https://fincode-hacks.devpost.com/"
+    },
+    {
+      "company": "CyberAdvocate",
+      "position": "CyberHacks",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-31",
+      "description": "Join CyberHacks to create solutions with a focus on cybersecurity, using beginner-friendly and low/no code methods.",
+      "requirements": [
+        "Beginner Friendly",
+        "Low/No Code Skills",
+        "Open Ended Project Skills"
+      ],
+      "prize": "$8,900",
+      "category": "Cybersecurity",
+      "applyUrl": "https://cyberhacks.devpost.com/"
+    },
+    {
+      "company": "Diversity",
+      "position": "DiverseHacks",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-07-31",
+      "description": "Participate in DiverseHacks to work on inclusive, beginner-friendly, and low/no code projects with attractive prizes.",
+      "requirements": [
+        "Beginner Friendly",
+        "Low/No Code Skills",
+        "Open Ended Project Skills"
+      ],
+      "prize": "$8,070",
+      "category": "Beginner Friendly",
+      "applyUrl": "https://diversehacks.devpost.com/"
+    },
+    {
+      "company": "KITE",
+      "position": "Kite Hacks 2.0",
+      "location": "Online",
+      "type": "Hackathon",
+      "deadline": "2024-08-01",
+      "description": "Join Kite Hacks 2.0 to innovate in e-commerce and machine learning/AI, with a beginner-friendly approach.",
+      "requirements": [
+        "Beginner Friendly",
+        "E-commerce/Retail Knowledge",
+        "Machine Learning/AI Knowledge"
+      ],
+      "prize": "$50",
+      "category": "E-commerce/AI",
+      "applyUrl": "https://kite-hacks-2-0.devpost.com/"
+    },
   ];
 
   const interviewQuestions = [
@@ -546,11 +870,10 @@ const PlacementPrep: React.FC = () => {
           href={topic.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`p-6 rounded-2xl shadow-sm border hover:shadow-lg transition-all duration-200 ${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700 text-white"
-              : "bg-white border-gray-200 text-gray-900"
-          }`}
+          className={`p-6 rounded-2xl shadow-sm border hover:shadow-lg transition-all duration-200 ${state.darkMode
+            ? "bg-gray-800 border-gray-700 text-white"
+            : "bg-white border-gray-200 text-gray-900"
+            }`}
         >
           <h4 className="mb-2 text-lg font-semibold">{topic.name}</h4>
           <p className="text-sm !text-black dark:text-gray-300">
@@ -583,9 +906,8 @@ const PlacementPrep: React.FC = () => {
         <div className="flex flex-col gap-4 justify-between sm:flex-row sm:items-center">
           <div className="flex gap-3 items-center">
             <h3
-              className={`text-xl font-semibold ${
-                state.darkMode ? "text-white" : "text-gray-900"
-              }`}
+              className={`text-xl font-semibold ${state.darkMode ? "text-white" : "text-gray-900"
+                }`}
             >
               Latest Job Opportunities
             </h3>
@@ -595,11 +917,10 @@ const PlacementPrep: React.FC = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className={`px-4 py-2 rounded-lg border ${
-                state.darkMode
-                  ? "bg-gray-800 border-gray-700 text-white"
-                  : "bg-white border-gray-300 text-gray-900"
-              }`}
+              className={`px-4 py-2 rounded-lg border ${state.darkMode
+                ? "bg-gray-800 border-gray-700 text-white"
+                : "bg-white border-gray-300 text-gray-900"
+                }`}
             >
               <option>All Categories</option>
               <option>Product Based</option>
@@ -613,16 +934,14 @@ const PlacementPrep: React.FC = () => {
                 placeholder="Search by role or tech stack..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full pr-10 px-4 py-2 rounded-lg border ${
-                  state.darkMode
-                    ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-                    : "bg-white border-gray-300 text-gray-900"
-                }`}
+                className={`w-full pr-10 px-4 py-2 rounded-lg border ${state.darkMode
+                  ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                  : "bg-white border-gray-300 text-gray-900"
+                  }`}
               />
               <span
-                className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-xl ${
-                  state.darkMode ? "text-gray-400" : "text-gray-500"
-                }`}
+                className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-xl ${state.darkMode ? "text-gray-400" : "text-gray-500"
+                  }`}
               >
                 🔍
               </span>
@@ -633,51 +952,45 @@ const PlacementPrep: React.FC = () => {
           {filteredJobs.map((job: any, index) => (
             <div
               key={index}
-              className={`p-6 rounded-2xl border shadow-sm hover:shadow-lg transition-all duration-200  ${
-                state.darkMode
-                  ? "bg-gray-800 border-gray-700"
-                  : "bg-white border-gray-200"
-              } hover:shadow-md transition-shadow`}
+              className={`p-6 rounded-2xl border shadow-sm hover:shadow-lg transition-all duration-200  ${state.darkMode
+                ? "bg-gray-800 border-gray-700"
+                : "bg-white border-gray-200"
+                } hover:shadow-md transition-shadow`}
             >
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <h4
-                    className={`text-lg font-semibold tracking-tight ${
-                      state.darkMode ? "text-white" : "text-gray-900"
-                    }`}
+                    className={`text-lg font-semibold tracking-tight ${state.darkMode ? "text-white" : "text-gray-900"
+                      }`}
                   >
                     {job.position}
                   </h4>
                   <p
-                    className={`text-sm ${
-                      state.darkMode ? "text-gray-400" : "text-gray-600"
-                    }`}
+                    className={`text-sm ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
                   >
                     {job.company} • {job.location}
                   </p>
                 </div>
                 <span
-                  className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
-                    job.type === "Internship"
-                      ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
-                      : "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-                  }`}
+                  className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap ${job.type === "Internship"
+                    ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                    : "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
+                    }`}
                 >
                   {job.type}
                 </span>
               </div>
               <p
-                className={`text-sm leading-relaxed mb-4 ${
-                  state.darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
+                className={`text-sm leading-relaxed mb-4 ${state.darkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
               >
                 {job.description}
               </p>
               <div className="mb-4">
                 <h5
-                  className={`text-sm font-semibold mb-2 ${
-                    state.darkMode ? "text-gray-200" : "text-gray-800"
-                  }`}
+                  className={`text-sm font-semibold mb-2 ${state.darkMode ? "text-gray-200" : "text-gray-800"
+                    }`}
                 >
                   Requirements:
                 </h5>
@@ -685,9 +998,8 @@ const PlacementPrep: React.FC = () => {
                   {job.requirements.map((req: string, reqIndex: number) => (
                     <li
                       key={reqIndex}
-                      className={`flex items-start space-x-2 ${
-                        state.darkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
+                      className={`flex items-start space-x-2 ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                        }`}
                     >
                       <div className="w-1 h-1 bg-current rounded-full shrink-0"></div>
                       <span>{req}</span>
@@ -698,16 +1010,14 @@ const PlacementPrep: React.FC = () => {
               <div className="flex justify-between items-center mt-4">
                 <div>
                   <span
-                    className={`text-sm font-semibold ${
-                      state.darkMode ? "text-green-400" : "text-green-600"
-                    }`}
+                    className={`text-sm font-semibold ${state.darkMode ? "text-green-400" : "text-green-600"
+                      }`}
                   >
                     {job.salary}
                   </span>
                   <p
-                    className={`text-xs mt-1 ${
-                      state.darkMode ? "text-gray-400" : "text-gray-600"
-                    }`}
+                    className={`text-xs mt-1 ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
                   >
                     Deadline: {job.deadline}
                   </p>
@@ -750,16 +1060,14 @@ const PlacementPrep: React.FC = () => {
         {interviewQuestions.map((category, index) => (
           <div
             key={index}
-            className={`p-6 rounded-2xl shadow-sm border transition-all hover:shadow-md ${
-              state.darkMode
-                ? "bg-gray-800 border-gray-700"
-                : "bg-white border-gray-200"
-            }`}
+            className={`p-6 rounded-2xl shadow-sm border transition-all hover:shadow-md ${state.darkMode
+              ? "bg-gray-800 border-gray-700"
+              : "bg-white border-gray-200"
+              }`}
           >
             <h4
-              className={`text-lg font-semibold mb-4 ${
-                state.darkMode ? "text-white" : "text-gray-900"
-              }`}
+              className={`text-lg font-semibold mb-4 ${state.darkMode ? "text-white" : "text-gray-900"
+                }`}
             >
               {category.category} Questions
             </h4>
@@ -767,16 +1075,14 @@ const PlacementPrep: React.FC = () => {
               {category.questions.map((question, qIndex) => (
                 <div
                   key={qIndex}
-                  className={`p-3 rounded-lg ${
-                    state.darkMode
-                      ? "bg-gray-700 text-gray-300"
-                      : "bg-gray-50 text-gray-700"
-                  }`}
+                  className={`p-3 rounded-lg ${state.darkMode
+                    ? "bg-gray-700 text-gray-300"
+                    : "bg-gray-50 text-gray-700"
+                    }`}
                 >
                   <p
-                    className={`text-sm leading-relaxed ${
-                      state.darkMode ? "text-gray-300" : "text-gray-700"
-                    }`}
+                    className={`text-sm leading-relaxed ${state.darkMode ? "text-gray-300" : "text-gray-700"
+                      }`}
                   >
                     {question}
                   </p>
@@ -819,9 +1125,8 @@ const PlacementPrep: React.FC = () => {
   const renderResources = () => (
     <div className="space-y-6">
       <h3
-        className={`text-xl font-semibold ${
-          state.darkMode ? "text-white" : "text-gray-900"
-        }`}
+        className={`text-xl font-semibold ${state.darkMode ? "text-white" : "text-gray-900"
+          }`}
       >
         Download Resources
       </h3>
@@ -829,11 +1134,10 @@ const PlacementPrep: React.FC = () => {
         {resources.map((resource, index) => (
           <div
             key={index}
-            className={`p-6 rounded-lg border  transform transition-all duration-200  ${
-              state.darkMode
-                ? "bg-gray-800 border-gray-700"
-                : "bg-white border-gray-200"
-            } hover:shadow-lg transition-y-1`}
+            className={`p-6 rounded-lg border  transform transition-all duration-200  ${state.darkMode
+              ? "bg-gray-800 border-gray-700"
+              : "bg-white border-gray-200"
+              } hover:shadow-lg transition-y-1`}
           >
             <div className="flex items-start space-x-4">
               <div className="p-3 bg-blue-100 rounded-lg dark:bg-blue-900">
@@ -841,32 +1145,28 @@ const PlacementPrep: React.FC = () => {
               </div>
               <div className="flex-1">
                 <h4
-                  className={`text-lg font-semibold mb-2 ${
-                    state.darkMode ? "text-white" : "text-gray-900"
-                  }`}
+                  className={`text-lg font-semibold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
+                    }`}
                 >
                   {resource.title}
                 </h4>
                 <p
-                  className={`text-sm mb-3 ${
-                    state.darkMode ? "text-gray-400" : "text-gray-600"
-                  }`}
+                  className={`text-sm mb-3 ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
                 >
                   {resource.description}
                 </p>
                 <div className="flex justify-between items-center">
                   <div className="flex flex-wrap gap-4 items-center text-sm">
                     <span
-                      className={`${
-                        state.darkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
+                      className={`${state.darkMode ? "text-gray-400" : "text-gray-600"
+                        }`}
                     >
                       📄 {resource.type} • {resource.size}
                     </span>
                     <span
-                      className={`${
-                        state.darkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
+                      className={`${state.darkMode ? "text-gray-400" : "text-gray-600"
+                        }`}
                     >
                       ⬇️ {resource.downloads} downloads
                     </span>
@@ -898,7 +1198,7 @@ const PlacementPrep: React.FC = () => {
 
                       const url =
                         downloadUrls[
-                          resource.title as keyof typeof downloadUrls
+                        resource.title as keyof typeof downloadUrls
                         ];
                       if (url) {
                         // Open in a new tab; server headers decide whether to download or view
@@ -927,23 +1227,20 @@ const PlacementPrep: React.FC = () => {
   // --- Main Render ---
   return (
     <div
-      className={`min-h-screen ${
-        state.darkMode ? "bg-gray-900" : "bg-gradient-to-b from-sky-50 to-white"
-      } transition-colors duration-300`}
+      className={`min-h-screen ${state.darkMode ? "bg-gray-900" : "bg-gradient-to-b from-sky-50 to-white"
+        } transition-colors duration-300`}
     >
       <div className="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="mb-10">
           <h1
-            className={`text-3xl font-bold ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            } mb-2`}
+            className={`text-3xl font-bold ${state.darkMode ? "text-white" : "text-gray-900"
+              } mb-2`}
           >
             Placement Preparation Arena
           </h1>
           <p
-            className={`text-lg sm:text-xl ${
-              state.darkMode ? "text-gray-300" : "text-gray-700"
-            } max-w-3xl`}
+            className={`text-lg sm:text-xl ${state.darkMode ? "text-gray-300" : "text-gray-700"
+              } max-w-3xl`}
           >
             Everything you need to ace your job interviews and land your dream
             job
@@ -958,13 +1255,12 @@ const PlacementPrep: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setSelectedTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium shadow-sm transition-all duration-200 border ${
-                    selectedTab === tab.id
-                      ? "bg-blue-600 text-white border-blue-600 scale-105"
-                      : state.darkMode
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium shadow-sm transition-all duration-200 border ${selectedTab === tab.id
+                    ? "bg-blue-600 text-white border-blue-600 scale-105"
+                    : state.darkMode
                       ? "bg-gray-800 text-gray-300 hover:bg-gray-700 border-gray-700"
                       : "bg-white text-gray-700 hover:bg-gray-100 border-gray-300"
-                  }`}
+                    }`}
                 >
                   <Icon className="w-5 h-5" />
                   <span>{tab.label}</span>
@@ -975,11 +1271,10 @@ const PlacementPrep: React.FC = () => {
         </div>
         {/* Tab Content */}
         <div
-          className={`rounded-2xl p-6 transition-all duration-300 shadow-md border ${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } `}
+          className={`rounded-2xl p-6 transition-all duration-300 shadow-md border ${state.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } `}
         >
           {selectedTab === "opportunities" && renderOpportunities()}
           {selectedTab === "interviews" && renderInterviews()}

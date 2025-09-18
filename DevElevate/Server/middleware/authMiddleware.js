@@ -40,3 +40,28 @@ export const requireAdmin = (req, res, next) => {
 };
 
 
+export const checkSecretKey = (req, res, next) => {
+  const clientKey = req.body.secretKey; 
+  const serverKey = process.env.MAINTENANCE_SECRET_KEY;
+
+  if (!clientKey) {
+    return res.status(400).json({
+      success: false,
+      message: "❌ Secret key is missing in request body."
+    });
+  }
+
+  if (clientKey !== serverKey) {
+    return res.status(403).json({
+      success: false,
+      message: "🚫 Invalid secret key."
+    });
+  }
+
+  // ✅ Remove secretKey from body so it doesn’t overwrite DB fields
+  delete req.body.secretKey;
+
+  next();
+};
+
+

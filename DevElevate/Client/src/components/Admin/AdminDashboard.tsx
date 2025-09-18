@@ -21,10 +21,10 @@ import Community from "./Community";
 import NewsUpdates from "./NewsUpdates";
 import QuizManagement from "./QuizManagement";
 import Analytics from "./Analytics";
-import SystemLogs from "./SystemLogs";
 import SystemSettings from "./SystemSettings";
 import Feedback from "./Feedback";
 import { CiLogout } from "react-icons/ci";
+import AdminSystemLogs from "./AdminSystemLogs";
 
 const AdminDashboard: React.FC = () => {
   const { state: authState, logout } = useAuth();
@@ -79,7 +79,7 @@ const AdminDashboard: React.FC = () => {
       id: "logs",
       label: "System Logs",
       icon: Database,
-      path: "/admin/logs",
+      path: "/admin/system-logs",
     },
     {
       id: "settings",
@@ -225,7 +225,7 @@ const AdminDashboard: React.FC = () => {
             <Route path="/news" element={<NewsUpdates />} />
             <Route path="/quizzes" element={<QuizManagement />} />
             <Route path="/analytics" element={<Analytics />} />
-            <Route path="/logs" element={<SystemLogs />} />
+            <Route path="/system-logs" element={<AdminSystemLogs />} />
             <Route path="/settings" element={<SystemSettings />} />
             <Route path="/feedback" element={<Feedback />} />
           </Routes>

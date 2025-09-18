@@ -70,7 +70,7 @@ useEffect(() => {
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="px-4 py-10 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {/* Welcome Section */}
         <div className="mb-10">
           <h1 className={`text-4xl font-extrabold tracking-tight mb-3 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -85,9 +85,9 @@ useEffect(() => {
         <StatsCards />
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Left Column */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6 lg:col-span-2">
             <ProgressWidget />
             <NewsWidget />
           </div>

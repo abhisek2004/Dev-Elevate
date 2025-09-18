@@ -958,7 +958,7 @@ const CreatorPage: React.FC = () => {
         </div>
         <div className="flex justify-center mt-10">
           <Link
-            to="/dashboard"
+            to="/"
             className="flex gap-2 items-center px-6 py-3 font-medium text-white bg-purple-600 rounded-xl shadow-lg transition hover:bg-purple-700"
           >
             <Home className="w-5 h-5" />

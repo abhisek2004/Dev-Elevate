@@ -423,19 +423,19 @@ const PlacementStats: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="overflow-x-hidden relative min-h-screen text-white bg-black">
       {/* Header Section */}
       <section>
         <Header />
       </section>
       {/* Animated Background - Same as Landing Page */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20" />
+        <div className="absolute inset-0 bg-gradient-to-br via-black from-purple-900/20 to-blue-900/20" />
         <div className="absolute inset-0">
           {Array.from({ length: 50 }).map((_, i) => (
             <div
               key={i}
-              className="absolute w-1 h-1 bg-white/20 rounded-full animate-pulse"
+              className="absolute w-1 h-1 rounded-full animate-pulse bg-white/20"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -450,32 +450,32 @@ const PlacementStats: React.FC = () => {
       {/* Main Content */}
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8">
+        <section className="flex relative justify-center items-center px-4 pt-20 min-h-screen sm:px-6 lg:px-8">
           {/* Background Grid */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+          <div className="overflow-hidden absolute inset-0">
+            <div className="absolute inset-0 opacity-10 bg-grid-pattern"></div>
           </div>
 
-          <div className="max-w-7xl mx-auto text-center">
+          <div className="mx-auto max-w-7xl text-center">
             {/* Badge */}
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-full px-6 py-3 mb-8">
+            <div className="inline-flex items-center px-6 py-3 mb-8 space-x-2 bg-gradient-to-r rounded-full border from-purple-500/10 to-blue-500/10 border-purple-500/20">
               <Trophy className="w-5 h-5 text-purple-400" />
               <span className="text-sm text-gray-300">Industry-Leading Placement Success</span>
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             </div>
 
             {/* Main Heading */}
-            <div className="space-y-6 mb-12">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-                <span className="bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+            <div className="mb-12 space-y-6">
+              <h1 className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-blue-200">
                   Placement
                 </span>
                 <br />
-                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent animate-gradient">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 animate-gradient">
                   Success Stories
                 </span>
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              <p className="mx-auto max-w-3xl text-base leading-relaxed text-gray-400 sm:text-lg md:text-xl">
                 Discover how DevElevate has transformed careers and helped students land their dream jobs at top companies worldwide
               </p>
             </div>
@@ -485,89 +485,89 @@ const PlacementStats: React.FC = () => {
               className="animate-bounce cursor-pointer"
               onClick={() => statsRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <ChevronDown className="w-6 h-6 text-gray-400 mx-auto" />
+              <ChevronDown className="mx-auto w-6 h-6 text-gray-400" />
             </div>
           </div>
         </section>
 
         {/* Stats Section with Animated Counters */}
-        <section ref={statsRef} className="py-24 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section ref={statsRef} className="relative py-24">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             {/* Background Effects */}
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 via-transparent to-blue-900/10"></div>
+            <div className="absolute inset-0 bg-gradient-to-r via-transparent from-purple-900/10 to-blue-900/10"></div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               {/* Total Hires */}
-              <div className="group text-center relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 opacity-0 group-hover:opacity-10 rounded-2xl blur-xl transition-opacity duration-500"></div>
-                <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:shadow-lg group-hover:shadow-purple-500/25 transition-all duration-300">
+              <div className="relative text-center group">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-10"></div>
+                <div className="flex justify-center items-center mx-auto mb-6 w-20 h-20 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/25">
                   <Users className="w-10 h-10 text-white" />
                 </div>
-                <div className="text-4xl md:text-5xl font-bold mb-2">
-                  <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                <div className="mb-2 text-4xl font-bold md:text-5xl">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
                     <AnimatedCounter value={placementData.totalHires} suffix="+" isVisible={isStatsVisible} />
                   </span>
                 </div>
-                <div className="text-gray-400 font-medium text-lg">Total Hires</div>
-                <div className="mt-4 w-full bg-gray-800 rounded-full h-1 overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-1000 ease-out w-full"></div>
+                <div className="text-lg font-medium text-gray-400">Total Hires</div>
+                <div className="overflow-hidden mt-4 w-full h-1 bg-gray-800 rounded-full">
+                  <div className="w-full h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-1000 ease-out"></div>
                 </div>
               </div>
 
               {/* Success Rate */}
-              <div className="group text-center relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 opacity-0 group-hover:opacity-10 rounded-2xl blur-xl transition-opacity duration-500"></div>
-                <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:shadow-lg group-hover:shadow-green-500/25 transition-all duration-300">
+              <div className="relative text-center group">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-10"></div>
+                <div className="flex justify-center items-center mx-auto mb-6 w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/25">
                   <TrendingUp className="w-10 h-10 text-white" />
                 </div>
-                <div className="text-4xl md:text-5xl font-bold mb-2">
-                  <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                <div className="mb-2 text-4xl font-bold md:text-5xl">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-400">
                     <AnimatedCounter value={placementData.successRate} suffix="%" isVisible={isStatsVisible} />
                   </span>
                 </div>
-                <div className="text-gray-400 font-medium text-lg">Success Rate</div>
-                <div className="mt-4 w-full bg-gray-800 rounded-full h-1 overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-1000 ease-out w-full" style={{ transitionDelay: '200ms' }}></div>
+                <div className="text-lg font-medium text-gray-400">Success Rate</div>
+                <div className="overflow-hidden mt-4 w-full h-1 bg-gray-800 rounded-full">
+                  <div className="w-full h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-1000 ease-out" style={{ transitionDelay: '200ms' }}></div>
                 </div>
               </div>
 
               {/* Hiring Partners */}
-              <div className="group text-center relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-10 rounded-2xl blur-xl transition-opacity duration-500"></div>
-                <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
+              <div className="relative text-center group">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-10"></div>
+                <div className="flex justify-center items-center mx-auto mb-6 w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/25">
                   <Building2 className="w-10 h-10 text-white" />
                 </div>
-                <div className="text-4xl md:text-5xl font-bold mb-2">
-                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                <div className="mb-2 text-4xl font-bold md:text-5xl">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
                     <AnimatedCounter value={placementData.hiringPartners} suffix="+" isVisible={isStatsVisible} />
                   </span>
                 </div>
-                <div className="text-gray-400 font-medium text-lg">Hiring Partners</div>
-                <div className="mt-4 w-full bg-gray-800 rounded-full h-1 overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-1000 ease-out w-full" style={{ transitionDelay: '400ms' }}></div>
+                <div className="text-lg font-medium text-gray-400">Hiring Partners</div>
+                <div className="overflow-hidden mt-4 w-full h-1 bg-gray-800 rounded-full">
+                  <div className="w-full h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-1000 ease-out" style={{ transitionDelay: '400ms' }}></div>
                 </div>
               </div>
 
               {/* Average Package */}
-              <div className="group text-center relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-orange-500 opacity-0 group-hover:opacity-10 rounded-2xl blur-xl transition-opacity duration-500"></div>
-                <div className="w-20 h-20 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:shadow-lg group-hover:shadow-yellow-500/25 transition-all duration-300">
+              <div className="relative text-center group">
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-10"></div>
+                <div className="flex justify-center items-center mx-auto mb-6 w-20 h-20 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-yellow-500/25">
                   <Briefcase className="w-10 h-10 text-white" />
                 </div>
-                <div className="text-4xl md:text-5xl font-bold mb-2">
-                  <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                <div className="mb-2 text-4xl font-bold md:text-5xl">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
                     {placementData.averageSalary}
                   </span>
                 </div>
-                <div className="text-gray-400 font-medium text-lg">Avg. Package</div>
-                <div className="mt-4 w-full bg-gray-800 rounded-full h-1 overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-yellow-500 to-orange-500 transition-all duration-1000 ease-out w-full" style={{ transitionDelay: '600ms' }}></div>
+                <div className="text-lg font-medium text-gray-400">Avg. Package</div>
+                <div className="overflow-hidden mt-4 w-full h-1 bg-gray-800 rounded-full">
+                  <div className="w-full h-full bg-gradient-to-r from-yellow-500 to-orange-500 transition-all duration-1000 ease-out" style={{ transitionDelay: '600ms' }}></div>
                 </div>
               </div>
             </div>
 
-            <div className="text-center mt-16">
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <div className="mt-16 text-center">
+              <p className="mx-auto max-w-2xl text-xl text-gray-400">
                 Join thousands of developers who have transformed their careers with DevElevate
               </p>
             </div>
@@ -576,24 +576,24 @@ const PlacementStats: React.FC = () => {
 
         {/* Interactive Leaderboard Section */}
         <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-full px-6 py-3 mb-6">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="mb-12 text-center">
+              <div className="inline-flex items-center px-6 py-3 mb-6 space-x-2 bg-gradient-to-r rounded-full border from-yellow-500/10 to-orange-500/10 border-yellow-500/20">
                 <Crown className="w-5 h-5 text-yellow-400" />
                 <span className="text-sm text-gray-300">Top Performers</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
+              <h2 className="mb-6 text-4xl font-bold md:text-5xl">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400">
                   Placement Leaderboard
                 </span>
               </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              <p className="mx-auto max-w-3xl text-xl text-gray-400">
                 Celebrating our highest achievers who landed dream packages and multiple offers
               </p>
             </div>
 
-            <div className="bg-black/50 backdrop-blur-xl border border-purple-500/20 rounded-3xl p-8 shadow-2xl">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="p-8 rounded-3xl border shadow-2xl backdrop-blur-xl bg-black/50 border-purple-500/20">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                 {/* Top 3 Podium */}
                 <div className="flex justify-center items-end space-x-4">
                   {/* 2nd Place */}
@@ -602,16 +602,16 @@ const PlacementStats: React.FC = () => {
                       <img
                         src={leaderboardData[1].image}
                         alt={leaderboardData[1].name}
-                        className="w-20 h-20 rounded-full border-4 border-silver mx-auto"
+                        className="mx-auto w-20 h-20 rounded-full border-4 border-silver"
                       />
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center">
+                      <div className="flex absolute -top-2 -right-2 justify-center items-center w-8 h-8 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full">
                         <Medal className="w-4 h-4 text-white" />
                       </div>
                     </div>
-                    <div className="bg-gradient-to-t from-gray-600 to-gray-500 rounded-t-lg p-4 h-24 flex flex-col justify-center">
-                      <div className="text-white font-bold text-lg">#2</div>
-                      <div className="text-gray-200 text-sm">{leaderboardData[1].name}</div>
-                      <div className="text-gray-300 text-xs">{leaderboardData[1].package}</div>
+                    <div className="flex flex-col justify-center p-4 h-24 bg-gradient-to-t from-gray-600 to-gray-500 rounded-t-lg">
+                      <div className="text-lg font-bold text-white">#2</div>
+                      <div className="text-sm text-gray-200">{leaderboardData[1].name}</div>
+                      <div className="text-xs text-gray-300">{leaderboardData[1].package}</div>
                     </div>
                   </div>
 
@@ -621,17 +621,17 @@ const PlacementStats: React.FC = () => {
                       <img
                         src={leaderboardData[0].image}
                         alt={leaderboardData[0].name}
-                        className="w-24 h-24 rounded-full border-4 border-yellow-400 mx-auto"
+                        className="mx-auto w-24 h-24 rounded-full border-4 border-yellow-400"
                       />
-                      <div className="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center">
+                      <div className="flex absolute -top-2 -right-2 justify-center items-center w-10 h-10 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full">
                         <Crown className="w-5 h-5 text-white" />
                       </div>
                     </div>
-                    <div className="bg-gradient-to-t from-yellow-600 to-yellow-500 rounded-t-lg p-4 h-32 flex flex-col justify-center">
-                      <div className="text-white font-bold text-2xl">#1</div>
-                      <div className="text-yellow-100 text-sm font-semibold">{leaderboardData[0].name}</div>
-                      <div className="text-yellow-200 text-xs">{leaderboardData[0].package}</div>
-                      <div className="text-yellow-300 text-xs">{leaderboardData[0].offers} offers</div>
+                    <div className="flex flex-col justify-center p-4 h-32 bg-gradient-to-t from-yellow-600 to-yellow-500 rounded-t-lg">
+                      <div className="text-2xl font-bold text-white">#1</div>
+                      <div className="text-sm font-semibold text-yellow-100">{leaderboardData[0].name}</div>
+                      <div className="text-xs text-yellow-200">{leaderboardData[0].package}</div>
+                      <div className="text-xs text-yellow-300">{leaderboardData[0].offers} offers</div>
                     </div>
                   </div>
 
@@ -641,16 +641,16 @@ const PlacementStats: React.FC = () => {
                       <img
                         src={leaderboardData[2].image}
                         alt={leaderboardData[2].name}
-                        className="w-20 h-20 rounded-full border-4 border-orange-400 mx-auto"
+                        className="mx-auto w-20 h-20 rounded-full border-4 border-orange-400"
                       />
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full flex items-center justify-center">
+                      <div className="flex absolute -top-2 -right-2 justify-center items-center w-8 h-8 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full">
                         <Award className="w-4 h-4 text-white" />
                       </div>
                     </div>
-                    <div className="bg-gradient-to-t from-orange-600 to-orange-500 rounded-t-lg p-4 h-20 flex flex-col justify-center">
-                      <div className="text-white font-bold text-lg">#3</div>
-                      <div className="text-orange-200 text-sm">{leaderboardData[2].name}</div>
-                      <div className="text-orange-300 text-xs">{leaderboardData[2].package}</div>
+                    <div className="flex flex-col justify-center p-4 h-20 bg-gradient-to-t from-orange-600 to-orange-500 rounded-t-lg">
+                      <div className="text-lg font-bold text-white">#3</div>
+                      <div className="text-sm text-orange-200">{leaderboardData[2].name}</div>
+                      <div className="text-xs text-orange-300">{leaderboardData[2].package}</div>
                     </div>
                   </div>
                 </div>
@@ -660,10 +660,10 @@ const PlacementStats: React.FC = () => {
                   {leaderboardData.map((student,) => (
                     <div
                       key={student.id}
-                      className="group bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 hover:border-purple-500/30 transition-all duration-300 hover:bg-gray-700/50"
+                      className="p-4 rounded-xl border backdrop-blur-sm transition-all duration-300 group bg-gray-800/50 border-gray-700/50 hover:border-purple-500/30 hover:bg-gray-700/50"
                     >
                       <div className="flex items-center space-x-4">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-blue-500">
+                        <div className="flex justify-center items-center w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full">
                           {getRankIcon(student.rank)}
                         </div>
                         <img
@@ -672,15 +672,15 @@ const PlacementStats: React.FC = () => {
                           className="w-12 h-12 rounded-full border-2 border-purple-500/30"
                         />
                         <div className="flex-1">
-                          <h3 className="text-white font-semibold">{student.name}</h3>
-                          <p className="text-gray-400 text-sm">{student.domain}</p>
+                          <h3 className="font-semibold text-white">{student.name}</h3>
+                          <p className="text-sm text-gray-400">{student.domain}</p>
                         </div>
                         <div className="text-right">
-                          <div className="text-green-400 font-bold">{student.package}</div>
-                          <div className="text-gray-400 text-sm">{student.company}</div>
-                          <div className="text-purple-400 text-xs">{student.offers} offers</div>
+                          <div className="font-bold text-green-400">{student.package}</div>
+                          <div className="text-sm text-gray-400">{student.company}</div>
+                          <div className="text-xs text-purple-400">{student.offers} offers</div>
                         </div>
-                        <div className="text-purple-400 font-bold text-lg">#{student.rank}</div>
+                        <div className="text-lg font-bold text-purple-400">#{student.rank}</div>
                       </div>
                     </div>
                   ))}
@@ -692,25 +692,25 @@ const PlacementStats: React.FC = () => {
 
         {/* Placement Statistics Dashboard */}
         <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-full px-6 py-3 mb-6">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="mb-12 text-center">
+              <div className="inline-flex items-center px-6 py-3 mb-6 space-x-2 bg-gradient-to-r rounded-full border from-purple-500/10 to-pink-500/10 border-purple-500/20">
                 <BarChart3 className="w-5 h-5 text-purple-400" />
                 <span className="text-sm text-gray-300">Analytics Dashboard</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
+              <h2 className="mb-6 text-4xl font-bold md:text-5xl">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-red-400">
                   Placement Analytics
                 </span>
               </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              <p className="mx-auto max-w-3xl text-xl text-gray-400">
                 Comprehensive insights into placement trends, department-wise statistics, and salary distributions
               </p>
             </div>
 
             {/* Chart Navigation */}
             <div className="flex justify-center mb-8">
-              <div className="bg-black/50 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-2 inline-flex space-x-2">
+              <div className="inline-flex p-2 space-x-2 rounded-2xl border backdrop-blur-xl bg-black/50 border-purple-500/20">
                 <button
                   onClick={() => setActiveChart('trend')}
                   className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 ${activeChart === 'trend'
@@ -745,11 +745,11 @@ const PlacementStats: React.FC = () => {
             </div>
 
             {/* Charts Container */}
-            <div className="bg-black/50 backdrop-blur-xl border border-purple-500/20 rounded-3xl p-8 shadow-2xl">
+            <div className="p-8 rounded-3xl border shadow-2xl backdrop-blur-xl bg-black/50 border-purple-500/20">
               {/* Year-wise Trend Chart */}
               {activeChart === 'trend' && (
                 <div className="h-96">
-                  <h3 className="text-2xl font-bold text-white mb-6 flex items-center space-x-2">
+                  <h3 className="flex items-center mb-6 space-x-2 text-2xl font-bold text-white">
                     <TrendingUp className="w-6 h-6 text-green-400" />
                     <span>Year-wise Placement Trend</span>
                   </h3>
@@ -782,7 +782,7 @@ const PlacementStats: React.FC = () => {
               {/* Department-wise Chart */}
               {activeChart === 'department' && (
                 <div className="h-96">
-                  <h3 className="text-2xl font-bold text-white mb-6 flex items-center space-x-2">
+                  <h3 className="flex items-center mb-6 space-x-2 text-2xl font-bold text-white">
                     <BarChart3 className="w-6 h-6 text-blue-400" />
                     <span>Department-wise Placements</span>
                   </h3>
@@ -812,11 +812,11 @@ const PlacementStats: React.FC = () => {
               {/* Salary Distribution Chart */}
               {activeChart === 'salary' && (
                 <div className="h-96">
-                  <h3 className="text-2xl font-bold text-white mb-6 flex items-center space-x-2">
+                  <h3 className="flex items-center mb-6 space-x-2 text-2xl font-bold text-white">
                     <PieChart className="w-6 h-6 text-yellow-400" />
                     <span>Salary Range Distribution</span>
                   </h3>
-                  <div className="flex items-center justify-center h-full">
+                  <div className="flex justify-center items-center h-full">
                     <ResponsiveContainer width="60%" height="100%">
                       <RechartsPieChart>
                         <Pie
@@ -842,7 +842,7 @@ const PlacementStats: React.FC = () => {
                         />
                       </RechartsPieChart>
                     </ResponsiveContainer>
-                    <div className="space-y-3 ml-8">
+                    <div className="ml-8 space-y-3">
                       {salaryDistribution.map((entry, index) => (
                         <div key={index} className="flex items-center space-x-3">
                           <div
@@ -850,7 +850,7 @@ const PlacementStats: React.FC = () => {
                             style={{ backgroundColor: entry.color }}
                           ></div>
                           <span className="text-gray-300">{entry.range}</span>
-                          <span className="text-white font-semibold">({entry.count})</span>
+                          <span className="font-semibold text-white">({entry.count})</span>
                         </div>
                       ))}
                     </div>
@@ -863,25 +863,25 @@ const PlacementStats: React.FC = () => {
 
         {/* Filters Section */}
         <section className="py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-black/50 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-8 shadow-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="p-8 rounded-2xl border shadow-2xl backdrop-blur-xl bg-black/50 border-purple-500/20">
+              <div className="flex gap-3 items-center mb-6">
+                <div className="flex justify-center items-center w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl">
                   <Filter className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-white">Filter Success Stories</h3>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
                 {/* Search */}
                 <div className="relative">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Search className="absolute left-4 top-1/2 w-5 h-5 text-gray-400 transform -translate-y-1/2" />
                   <input
                     type="text"
                     placeholder="Search by name, company..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-600 bg-gray-800/50 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                    className="py-3 pr-4 pl-12 w-full placeholder-gray-400 text-white rounded-xl border border-gray-600 transition-all duration-300 bg-gray-800/50 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   />
                 </div>
 
@@ -889,7 +889,7 @@ const PlacementStats: React.FC = () => {
                 <select
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(e.target.value)}
-                  className="px-4 py-3 rounded-xl border border-gray-600 bg-gray-800/50 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                  className="px-4 py-3 text-white rounded-xl border border-gray-600 transition-all duration-300 bg-gray-800/50 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
                   {years.map(year => (
                     <option key={year} value={year}>{year}</option>
@@ -900,7 +900,7 @@ const PlacementStats: React.FC = () => {
                 <select
                   value={selectedDomain}
                   onChange={(e) => setSelectedDomain(e.target.value)}
-                  className="px-4 py-3 rounded-xl border border-gray-600 bg-gray-800/50 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                  className="px-4 py-3 text-white rounded-xl border border-gray-600 transition-all duration-300 bg-gray-800/50 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
                   {domains.map(domain => (
                     <option key={domain} value={domain}>{domain}</option>
@@ -911,7 +911,7 @@ const PlacementStats: React.FC = () => {
                 <select
                   value={selectedLocation}
                   onChange={(e) => setSelectedLocation(e.target.value)}
-                  className="px-4 py-3 rounded-xl border border-gray-600 bg-gray-800/50 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                  className="px-4 py-3 text-white rounded-xl border border-gray-600 transition-all duration-300 bg-gray-800/50 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
                   {locations.map(location => (
                     <option key={location} value={location}>{location}</option>
@@ -924,36 +924,36 @@ const PlacementStats: React.FC = () => {
 
         {/* Alumni Testimonials */}
         <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-full px-6 py-3 mb-6">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="mb-16 text-center">
+              <div className="inline-flex items-center px-6 py-3 mb-6 space-x-2 bg-gradient-to-r rounded-full border from-purple-500/10 to-blue-500/10 border-purple-500/20">
                 <Star className="w-5 h-5 text-yellow-400" />
                 <span className="text-sm text-gray-300">Success Stories</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              <h2 className="mb-6 text-4xl font-bold md:text-5xl">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400">
                   Alumni Achievements
                 </span>
               </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              <p className="mx-auto max-w-3xl text-xl text-gray-400">
                 Real stories from real people who transformed their careers with DevElevate
               </p>
             </div>
 
             {filteredTestimonials.length === 0 ? (
-              <div className="text-center py-16">
-                <div className="w-24 h-24 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="py-16 text-center">
+                <div className="flex justify-center items-center mx-auto mb-6 w-24 h-24 bg-gradient-to-r rounded-full from-purple-500/20 to-blue-500/20">
                   <Users className="w-12 h-12 text-gray-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">No alumni found</h3>
+                <h3 className="mb-2 text-2xl font-bold text-white">No alumni found</h3>
                 <p className="text-gray-400">Try adjusting your search criteria</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {filteredTestimonials.map((alumni, index) => (
                   <div
                     key={alumni.id}
-                    className="group bg-black/50 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-8 hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 hover:scale-105"
+                    className="p-8 rounded-2xl border backdrop-blur-xl transition-all duration-500 group bg-black/50 border-purple-500/20 hover:shadow-2xl hover:shadow-purple-500/25 hover:scale-105"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <div className="flex items-center mb-6">
@@ -961,36 +961,36 @@ const PlacementStats: React.FC = () => {
                         <img
                           src={alumni.image}
                           alt={alumni.name}
-                          className="w-16 h-16 rounded-full border-4 border-gradient-to-r from-purple-500 to-blue-500"
+                          className="w-16 h-16 from-purple-500 to-blue-500 rounded-full border-4 border-gradient-to-r"
                         />
-                        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-black"></div>
+                        <div className="absolute -right-1 -bottom-1 w-6 h-6 bg-green-500 rounded-full border-2 border-black"></div>
                       </div>
                       <div className="ml-4">
                         <h3 className="text-xl font-bold text-white">{alumni.name}</h3>
                         <p className="text-gray-400">{alumni.role}</p>
-                        <p className="text-sm font-semibold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                        <p className="text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
                           {alumni.company}
                         </p>
                         {alumni.salary && (
-                          <p className="text-sm text-green-400 font-medium">{alumni.salary}</p>
+                          <p className="text-sm font-medium text-green-400">{alumni.salary}</p>
                         )}
                       </div>
                     </div>
 
-                    <blockquote className="text-gray-300 mb-6 italic leading-relaxed">
+                    <blockquote className="mb-6 italic leading-relaxed text-gray-300">
                       "{alumni.story}"
                     </blockquote>
 
                     <div className="flex flex-wrap gap-2">
-                      <span className="flex items-center gap-1 px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs">
+                      <span className="flex gap-1 items-center px-3 py-1 text-xs text-blue-300 rounded-full bg-blue-500/20">
                         <Calendar className="w-3 h-3" />
                         {alumni.year}
                       </span>
-                      <span className="flex items-center gap-1 px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-xs">
+                      <span className="flex gap-1 items-center px-3 py-1 text-xs text-green-300 rounded-full bg-green-500/20">
                         <Briefcase className="w-3 h-3" />
                         {alumni.domain}
                       </span>
-                      <span className="flex items-center gap-1 px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs">
+                      <span className="flex gap-1 items-center px-3 py-1 text-xs text-purple-300 rounded-full bg-purple-500/20">
                         <MapPin className="w-3 h-3" />
                         {alumni.location}
                       </span>
@@ -1004,52 +1004,52 @@ const PlacementStats: React.FC = () => {
 
         {/* Top Recruiters */}
         <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-full px-6 py-3 mb-6">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="mb-16 text-center">
+              <div className="inline-flex items-center px-6 py-3 mb-6 space-x-2 bg-gradient-to-r rounded-full border from-blue-500/10 to-purple-500/10 border-blue-500/20">
                 <Building2 className="w-5 h-5 text-blue-400" />
                 <span className="text-sm text-gray-300">Industry Partners</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <h2 className="mb-6 text-4xl font-bold md:text-5xl">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
                   Top Hiring Partners
                 </span>
               </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              <p className="mx-auto max-w-3xl text-xl text-gray-400">
                 Trusted by the world's leading companies for top talent acquisition
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               {topRecruiters.map((recruiter, index) => (
                 <div
                   key={recruiter.id}
-                  className="group bg-black/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8 hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 hover:border-blue-500/30"
+                  className="p-8 rounded-2xl border backdrop-blur-xl transition-all duration-500 group bg-black/50 border-gray-700/50 hover:shadow-2xl hover:shadow-blue-500/25 hover:scale-105 hover:border-blue-500/30"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="text-center">
-                    <div className="w-20 h-20 mx-auto mb-6 flex items-center justify-center bg-gray-800/50 rounded-xl group-hover:bg-gradient-to-r group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-all duration-300">
+                    <div className="flex justify-center items-center mx-auto mb-6 w-20 h-20 rounded-xl transition-all duration-300 bg-gray-800/50 group-hover:bg-gradient-to-r group-hover:from-blue-500/20 group-hover:to-purple-500/20">
                       <img
                         src={recruiter.logo}
                         alt={recruiter.name}
-                        className="w-12 h-12 object-contain"
+                        className="object-contain w-12 h-12"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.style.display = 'none';
                           target.nextElementSibling?.setAttribute('style', 'display: flex');
                         }}
                       />
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded flex items-center justify-center text-white font-bold text-lg hidden">
+                      <div className="flex hidden justify-center items-center w-12 h-12 text-lg font-bold text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded">
                         {recruiter.name.charAt(0)}
                       </div>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">{recruiter.name}</h3>
-                    <p className="text-gray-400 mb-4">{recruiter.hiresCount} hires</p>
+                    <h3 className="mb-2 text-xl font-bold text-white">{recruiter.name}</h3>
+                    <p className="mb-4 text-gray-400">{recruiter.hiresCount} hires</p>
                     <a
                       href={recruiter.careersLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105"
+                      className="inline-flex gap-2 items-center px-6 py-3 font-medium text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl transition-all duration-300 transform hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105"
                     >
                       View Careers
                       <ExternalLink className="w-4 h-4" />
@@ -1063,28 +1063,28 @@ const PlacementStats: React.FC = () => {
 
         {/* Upcoming Events Timeline */}
         <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-full px-6 py-3 mb-6">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="mb-12 text-center">
+              <div className="inline-flex items-center px-6 py-3 mb-6 space-x-2 bg-gradient-to-r rounded-full border from-blue-500/10 to-cyan-500/10 border-blue-500/20">
                 <Calendar className="w-5 h-5 text-blue-400" />
                 <span className="text-sm text-gray-300">Upcoming Events</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
+              <h2 className="mb-6 text-4xl font-bold md:text-5xl">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400">
                   Placement Calendar
                 </span>
               </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              <p className="mx-auto max-w-3xl text-xl text-gray-400">
                 Stay updated with upcoming placement drives, tests, and interview schedules
               </p>
             </div>
 
-            <div className="bg-black/50 backdrop-blur-xl border border-blue-500/20 rounded-3xl p-8 shadow-2xl">
+            <div className="p-8 rounded-3xl border shadow-2xl backdrop-blur-xl bg-black/50 border-blue-500/20">
               <div className="space-y-6">
                 {upcomingEvents.map((event, index) => (
                   <div
                     key={event.id}
-                    className="group relative bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 hover:border-blue-500/30 transition-all duration-300 hover:bg-gray-700/50"
+                    className="relative p-6 rounded-xl border backdrop-blur-sm transition-all duration-300 group bg-gray-800/50 border-gray-700/50 hover:border-blue-500/30 hover:bg-gray-700/50"
                   >
                     <div className="flex items-center space-x-6">
                       {/* Event Icon */}
@@ -1094,13 +1094,13 @@ const PlacementStats: React.FC = () => {
 
                       {/* Event Details */}
                       <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-2">
+                        <div className="flex items-center mb-2 space-x-3">
                           <h3 className="text-xl font-bold text-white">{event.title}</h3>
-                          <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium">
+                          <span className="px-3 py-1 text-sm font-medium text-blue-300 rounded-full bg-blue-500/20">
                             {event.company}
                           </span>
                         </div>
-                        <p className="text-gray-400 mb-2">
+                        <p className="mb-2 text-gray-400">
                           Eligibility: {event.eligibility.join(', ')}
                         </p>
                         <div className="flex items-center space-x-4 text-sm text-gray-500">
@@ -1120,7 +1120,7 @@ const PlacementStats: React.FC = () => {
                         <div className={`px-4 py-2 bg-gradient-to-r ${getEventColor(event.type)} rounded-xl text-white font-bold text-lg mb-1`}>
                           {event.daysLeft}
                         </div>
-                        <div className="text-gray-400 text-sm">
+                        <div className="text-sm text-gray-400">
                           {event.daysLeft === 1 ? 'day left' : 'days left'}
                         </div>
                       </div>
@@ -1135,10 +1135,10 @@ const PlacementStats: React.FC = () => {
               </div>
 
               <div className="mt-8 text-center">
-                <button className="group bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-8 py-3 rounded-xl font-semibold flex items-center space-x-2 mx-auto hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
+                <button className="flex items-center px-8 py-3 mx-auto space-x-2 font-semibold text-white bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl transition-all duration-300 transform group hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105">
                   <Calendar className="w-5 h-5" />
                   <span>View Full Calendar</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>
             </div>

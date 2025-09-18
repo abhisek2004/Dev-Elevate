@@ -12,7 +12,7 @@ import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js
 const router = express.Router();
 
 // ✅ Create a system log
-router.post("/system-log", authenticateToken, requireAdmin, createAdminLog);
+router.post("/system-log", authenticateToken, createAdminLog);
 
 // ✅ Get all system logs
 router.get("/system-logs", authenticateToken, requireAdmin, getAdminLogs);
