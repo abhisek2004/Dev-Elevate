@@ -99,26 +99,27 @@ const CommunityAndCTA = () => {
   return (
     <div>
       {/* Community Section */}
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+      <section className="overflow-hidden relative py-24 bg-gradient-to-b from-gray-900 to-black">
         <div className="px-4 mx-auto max-w-6xl text-center">
           <motion.h2
             variants={cardVariant}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="mb-8 text-4xl font-bold leading-tight text-gray-900 sm:text-5xl dark:text-gray-100"
+            className="mb-8 text-4xl font-bold leading-tight text-gray-100 sm:text-5xl"
           >
             <span className="block mb-2">Connect, collaborate, and</span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-purple-500 to-blue-500 dark:from-indigo-400 dark:via-purple-400 dark:to-blue-400">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-400">
               grow with DevElevate.
             </span>
           </motion.h2>
 
           <motion.p
             variants={cardVariant}
-            className="mx-auto mb-12 max-w-2xl text-lg text-gray-600 dark:text-gray-400"
+            className="mx-auto mb-12 max-w-2xl text-lg text-gray-400"
           >
-            Join our community of developers, share best practices, and get support for your learning journey with DevElevate.
+            Join our community of developers, share best practices, and get support
+            for your learning journey with DevElevate.
           </motion.p>
 
           <div className="flex flex-col flex-wrap gap-6 justify-center mb-16 sm:flex-row">
@@ -192,7 +193,7 @@ const CommunityAndCTA = () => {
         </div>
 
         <motion.div
-          className="p-8 mx-4 max-w-5xl text-center bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl dark:from-gray-700/50 dark:to-gray-800/50 sm:p-12 sm:mx-auto"
+          className="p-8 mx-4 max-w-5xl text-center bg-gradient-to-r rounded-2xl backdrop-blur-sm from-indigo-900/30 to-blue-900/30 sm:p-12 sm:mx-auto"
           initial={{ opacity: 0, y: 50 }}
           animate={controls}
           variants={{
@@ -208,11 +209,12 @@ const CommunityAndCTA = () => {
             },
           }}
         >
-          <h3 className="mb-4 text-2xl font-bold text-gray-900 sm:text-3xl dark:text-gray-100">
+          <h3 className="mb-4 text-2xl font-bold text-gray-100 sm:text-3xl">
             Ready to transform your tech career?
           </h3>
-          <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-600 dark:text-gray-400">
-            Join 50,000+ developers who are already learning, growing, and landing their dream jobs with DevElevate's AI-powered platform.
+          <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-400">
+            Join 50,000+ developers who are already learning, growing, and landing
+            their dream jobs with DevElevate's AI-powered platform.
           </p>
           <div className="flex flex-col gap-4 justify-center mb-8 sm:flex-row">
             <Link to="/dashboard">
@@ -228,7 +230,7 @@ const CommunityAndCTA = () => {
               Book a Demo
             </a>
           </div>
-          <div className="flex flex-col justify-center items-center space-y-4 text-sm text-gray-500 sm:flex-row sm:space-y-0 sm:space-x-8">
+          <div className="flex flex-col justify-center items-center space-y-4 text-sm text-gray-400 sm:flex-row sm:space-y-0 sm:space-x-8">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-green-400 rounded-full"></div>
               <span>Free 7-day trial</span>
@@ -244,6 +246,7 @@ const CommunityAndCTA = () => {
           </div>
         </motion.div>
       </section>
+
     </div>
   );
 };

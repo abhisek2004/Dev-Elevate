@@ -99,7 +99,8 @@ const TechStackAndStats: React.FC = () => {
   // Updated technologies based on README
   const technologies = [
     { name: 'TypeScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
-    { name: 'Tailwind CSS', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/1280px-Tailwind_CSS_Logo.svg.png' }, { name: 'MongoDB', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
+    { name: 'Tailwind CSS', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/1280px-Tailwind_CSS_Logo.svg.png' },
+    { name: 'MongoDB', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
     { name: 'JWT', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg' }, // Proxy for JWT
     { name: 'GPT-4 API', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' }, // Proxy for AI
     { name: 'Axios', logo: 'https://axios-http.com/assets/logo.svg' }, // Custom if devicon doesn't have
@@ -108,7 +109,6 @@ const TechStackAndStats: React.FC = () => {
     { name: 'Render', logo: 'https://media.licdn.com/dms/image/v2/D4E0BAQGGDoFoqHtOvA/company-logo_200_200/company-logo_200_200/0/1702595267620/renderco_logo?e=2147483647&v=beta&t=ZYrxKUyruOEupgw5Lr5amgwgBCJq8VXH8r05Qr5CeQc' },
   ];
 
-  // Learning paths updated based on README vision
   const learningPaths = [
     { title: 'DSA Mastery', skills: ['Arrays', 'Trees', 'Graphs', 'DP'], color: 'purple' },
     { title: 'Java Fundamentals', skills: ['OOP', 'Multithreading', 'JDBC'], color: 'blue' },
@@ -202,7 +202,10 @@ const TechStackAndStats: React.FC = () => {
   ];
 
   return (
-    <section id="learning" className="relative py-24 bg-gradient-to-l from-indigo-100 to-indigo-50 dark:from-gray-800 dark:to-gray-900">
+    <section
+      id="learning"
+      className="overflow-hidden relative py-24 bg-gradient-to-b from-gray-900 to-black"
+    >
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="mb-16 text-center">
@@ -210,14 +213,15 @@ const TechStackAndStats: React.FC = () => {
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="mb-6 text-4xl font-bold text-gray-900 md:text-5xl dark:text-gray-100"
+            className="mb-6 text-4xl font-bold text-gray-100 md:text-5xl"
           >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
               Technologies We Cover & Project Stats
             </span>
           </motion.h2>
-          <p className="mx-auto max-w-2xl text-xl text-gray-600 dark:text-gray-400">
-            Master the most in-demand technologies with our comprehensive curriculum and track our open-source progress
+          <p className="mx-auto max-w-2xl text-xl text-gray-400">
+            Master the most in-demand technologies with our comprehensive curriculum
+            and track our open-source progress
           </p>
         </div>
 
@@ -257,12 +261,18 @@ const TechStackAndStats: React.FC = () => {
               className="p-6 rounded-xl border backdrop-blur-sm transition-all duration-300 bg-white/60 dark:bg-gray-800/60 border-gray-200/50 dark:border-gray-600/50 hover:border-indigo-500/50"
               whileHover={{ scale: 1.02 }}
             >
-              <h3 className="mb-4 text-xl font-bold text-gray-900 dark:text-gray-100">{path.title}</h3>
+              <h3 className="mb-4 text-xl font-bold text-gray-900 dark:text-gray-100">
+                {path.title}
+              </h3>
               <div className="space-y-2">
                 {path.skills.map((skill, skillIndex) => (
                   <div key={skillIndex} className="flex items-center space-x-2">
-                    <div className={`w-2 h-2 bg-${path.color}-500 rounded-full`}></div>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">{skill}</span>
+                    <div
+                      className={`w-2 h-2 bg-${path.color}-500 rounded-full`}
+                    ></div>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      {skill}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -275,7 +285,7 @@ const TechStackAndStats: React.FC = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mb-10 text-3xl font-extrabold text-center text-gray-900 dark:text-gray-100"
+          className="mb-10 text-3xl font-extrabold text-center text-gray-100"
         >
           Dev-Elevate Project Statistics
         </motion.h3>
@@ -330,6 +340,7 @@ const TechStackAndStats: React.FC = () => {
         </motion.div>
       </div>
     </section>
+
   );
 };
 
