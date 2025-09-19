@@ -47,6 +47,7 @@ import InterviewPage from "./pages/Interview/InterviewPage";
 import QuizPage from "./components/Quiz/QuizPage";
 import BackToTopButton from "./components/Layout/BackToTopButton";
 import HelpCenter from "./components/HelpCenter/HelpCenter";
+import LandingPage from "./pages/Landing/LandingPage";
 
 // ✅ AppContent
 const AppContent = () => {
@@ -55,6 +56,7 @@ const AppContent = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route
           path="/login"
           element={
