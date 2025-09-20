@@ -48,6 +48,13 @@ import QuizPage from "./components/Quiz/QuizPage";
 import BackToTopButton from "./components/Layout/BackToTopButton";
 import HelpCenter from "./components/HelpCenter/HelpCenter";
 import LandingPage from "./pages/Landing/LandingPage";
+import PrivacyPolicy from "./pages/Landing/components/PrivacyPolicy";
+import TermsOfService from "./pages/Landing/components/TermsOfService";
+import Disclaimer from "./pages/Landing/components/Disclaimer";
+import ApiDocs from "./pages/Landing/components/ApiDocs";
+import DocumentationPage from "./pages/Landing/components/DocumentationPage";
+import ContributorGuide from "./pages/Leaderboard/ContributorGuide";
+import CreatorPage from "./pages/Landing/components/CreatorPage";
 
 // ✅ AppContent
 const AppContent = () => {
@@ -57,6 +64,15 @@ const AppContent = () => {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
+      <Route path="/about-creator" element={<CreatorPage />} />
+      <Route path="/disclaimer" element={<Disclaimer />} />
+      <Route path="/api-docs" element={<ApiDocs />} />
+      <Route path="/documentation" element={<DocumentationPage />} />
+      <Route path="/contributor-guide" element={<ContributorGuide />} />
+
+
         <Route
           path="/login"
           element={

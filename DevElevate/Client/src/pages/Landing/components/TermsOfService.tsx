@@ -9,7 +9,8 @@ import {
   CheckCircle,
   XCircle,
 } from "lucide-react";
-import { useGlobalState } from "../../contexts/GlobalContext";
+import { useGlobalState } from "../../../contexts/GlobalContext";
+import { motion } from "framer-motion";
 
 const TermsOfService: React.FC = () => {
   const { state } = useGlobalState();
@@ -98,67 +99,44 @@ const TermsOfService: React.FC = () => {
   ];
 
   return (
-    <div
-      className={`min-h-screen ${
-        state.darkMode ? "bg-gray-900" : "bg-gray-50"
-      } transition-colors duration-200`}
-    >
-      <div className="px-4 py-12 mx-auto max-w-4xl sm:px-6 lg:px-8">
+    <div className="overflow-hidden relative min-h-screen bg-gradient-to-b from-gray-900 to-black">
+      {/* Optional floating neon blobs for futuristic effect */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute w-40 h-40 bg-blue-500 opacity-20 rounded-full blur-3xl animate-blob top-10 left-10"></div>
+        <div className="absolute w-60 h-60 bg-purple-500 opacity-20 rounded-full blur-3xl animate-blob animation-delay-2000 top-1/3 right-20"></div>
+        <div className="absolute w-32 h-32 bg-pink-500 opacity-20 rounded-full blur-3xl animate-blob animation-delay-4000 bottom-20 left-1/4"></div>
+      </div>
+
+      <div className="relative px-4 py-24 mx-auto max-w-4xl sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-12 text-center">
           <div className="flex justify-center items-center mb-4">
-            <FileText className="w-12 h-12 text-blue-500" />
+            <FileText className="w-12 h-12 text-indigo-400 animate-bounce" />
           </div>
-          <h1
-            className={`text-4xl font-bold mb-4 ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            }`}
-          >
+          <h1 className="text-4xl font-extrabold mb-4 text-white text-center">
             Terms of Service
           </h1>
-          <p
-            className={`text-lg ${
-              state.darkMode ? "text-gray-300" : "text-gray-600"
-            }`}
-          >
+          <p className="text-lg mb-2 text-gray-300 max-w-2xl mx-auto">
             Please read these terms carefully before using DevElevate. They
             govern your use of our platform and services.
           </p>
-          <div
-            className={`mt-4 text-sm ${
-              state.darkMode ? "text-gray-400" : "text-gray-500"
-            }`}
-          >
+          <div className="mt-2 text-sm text-gray-400">
             Effective Date: {new Date().toLocaleDateString()} | Version 1.0
           </div>
         </div>
 
         {/* Introduction */}
-        <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-xl p-8 border shadow-sm mb-8`}
-        >
-          <h2
-            className={`text-2xl font-bold mb-4 ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            }`}
-          >
+        <div className="rounded-2xl p-8 mb-8 border backdrop-blur-md shadow-lg bg-white/10 border-gray-700/40">
+          <h2 className="text-2xl font-bold mb-4 text-white">
             Welcome to DevElevate
           </h2>
-          <p
-            className={`text-lg leading-relaxed ${
-              state.darkMode ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
+          <p className="text-lg leading-relaxed text-gray-300">
             These Terms of Service ("Terms") govern your use of DevElevate, an
             AI-powered education and career advancement platform. By creating an
             account or using our services, you agree to comply with these terms.
-            DevElevate is designed to help students, developers, and
-            professionals advance their careers through structured learning, AI
-            assistance, and comprehensive career tools.
+            DevElevate helps students, developers, and professionals advance
+            their careers through structured learning, AI assistance, and career
+            tools.
           </p>
         </div>
 
@@ -169,33 +147,23 @@ const TermsOfService: React.FC = () => {
             return (
               <div
                 key={index}
-                className={`${
-                  state.darkMode
-                    ? "bg-gray-800 border-gray-700"
-                    : "bg-white border-gray-200"
-                } rounded-xl p-8 border shadow-sm`}
+                className="rounded-2xl p-8 border backdrop-blur-md shadow-lg bg-white/10 border-gray-700/40 hover:scale-105 transition-transform"
               >
                 <div className="flex items-center mb-6 space-x-3">
-                  <div className="p-3 bg-blue-100 rounded-lg dark:bg-blue-900">
-                    <Icon className="w-6 h-6 text-blue-600 dark:text-blue-300" />
+                  <div className="p-3 bg-gradient-to-br from-indigo-400 to-blue-400 rounded-lg">
+                    <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <h3
-                    className={`text-xl font-bold ${
-                      state.darkMode ? "text-white" : "text-gray-900"
-                    }`}
-                  >
+                  <h3 className="text-xl font-bold text-white">
                     {section.title}
                   </h3>
                 </div>
                 <ul className="space-y-3">
-                  {section.content.map((item, itemIndex) => (
+                  {section.content.map((item, idx) => (
                     <li
-                      key={itemIndex}
-                      className={`flex items-start space-x-3 ${
-                        state.darkMode ? "text-gray-300" : "text-gray-700"
-                      }`}
+                      key={idx}
+                      className="flex items-start space-x-3 text-gray-300"
                     >
-                      <div className="flex-shrink-0 mt-2 w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <div className="w-2 h-2 mt-2 rounded-full bg-gradient-to-tr from-blue-400 to-purple-400 flex-shrink-0"></div>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -206,36 +174,17 @@ const TermsOfService: React.FC = () => {
         </div>
 
         {/* Account Termination */}
-        <div
-          className={`${
-            state.darkMode
-              ? "bg-red-900/20 border-red-800"
-              : "bg-red-50 border-red-200"
-          } rounded-xl p-8 border mt-8`}
-        >
-          <h3
-            className={`text-xl font-bold mb-4 ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            }`}
-          >
+        <div className="rounded-2xl p-8 mt-8 border backdrop-blur-md shadow-lg bg-red-900/20 border-red-800 hover:scale-105 transition-transform">
+          <h3 className="text-xl font-bold mb-4 text-white">
             Account Termination
           </h3>
-          <p
-            className={`mb-4 ${
-              state.darkMode ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
+          <p className="mb-4 text-gray-300">
             We reserve the right to suspend or terminate accounts for the
             following reasons:
           </p>
-          <ul className="space-y-2">
-            {terminationReasons.map((reason, index) => (
-              <li
-                key={index}
-                className={`flex items-start space-x-3 ${
-                  state.darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
-              >
+          <ul className="space-y-2 text-gray-300">
+            {terminationReasons.map((reason, idx) => (
+              <li key={idx} className="flex items-start space-x-3">
                 <XCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
                 <span>{reason}</span>
               </li>
@@ -243,100 +192,34 @@ const TermsOfService: React.FC = () => {
           </ul>
         </div>
 
-        {/* Limitation of Liability */}
-        <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-yellow-50 border-yellow-200"
-          } rounded-xl p-8 border mt-8`}
-        >
-          <h3
-            className={`text-xl font-bold mb-4 ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            }`}
-          >
-            Limitation of Liability
-          </h3>
-          <div
-            className={`space-y-4 ${
-              state.darkMode ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
-            <p>
-              DevElevate is provided "as is" without warranties of any kind. We
-              do not guarantee that the platform will meet your specific
-              requirements or that it will be error-free, secure, or
-              continuously available.
-            </p>
-            <p>
-              To the maximum extent permitted by law, DevElevate shall not be
-              liable for any indirect, incidental, special, consequential, or
-              punitive damages, including but not limited to loss of profits,
-              data, or use.
-            </p>
-            <p>
-              Our total liability for any claims arising from your use of the
-              platform shall not exceed the amount you paid for the service in
-              the 12 months preceding the claim.
-            </p>
-          </div>
-        </div>
-
-        {/* Contact Information */}
-        <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-blue-50 border-blue-200"
-          } rounded-xl p-8 border mt-12`}
-        >
-          <h3
-            className={`text-xl font-bold mb-4 ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            }`}
-          >
+        {/* Contact Section */}
+        <div className="rounded-2xl p-8 mt-12 border backdrop-blur-md shadow-lg bg-white/10 border-gray-700/40 hover:scale-105 transition-transform">
+          <h3 className="text-xl font-bold mb-4 text-white">
             Questions or Concerns?
           </h3>
-          <p
-            className={`mb-4 ${
-              state.darkMode ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
+          <p className="mb-4 text-gray-300">
             If you have questions about these Terms of Service or need
-            clarification on any policies:
+            clarification:
           </p>
-          <div className="space-y-2">
-            <p
-              className={`${
-                state.darkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
+          <div className="space-y-2 text-gray-300">
+            <p>
               <strong>Email:</strong> legal@develevate.com
             </p>
-            <p
-              className={`${
-                state.darkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
+            <p>
               <strong>Creator:</strong> Abhisek Panda
             </p>
-            <p
-              className={`${
-                state.darkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
+            <p>
               <strong>GitHub:</strong>{" "}
               https://github.com/abhisek2004/Dev-Elevate.git
             </p>
           </div>
         </div>
 
-        {/* Return to Dashboard Button */}
+        {/* Return Button */}
         <div className="flex justify-center mt-10">
           <Link
             to="/dashboard"
-            className="flex gap-2 items-center px-6 py-3 font-medium text-white bg-purple-600 rounded-xl shadow-lg transition hover:bg-purple-700"
+            className="flex gap-2 items-center px-6 py-3 font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl shadow-lg hover:scale-105 hover:shadow-2xl transition-transform"
           >
             <Home className="w-5 h-5" />
             Return to Dashboard
