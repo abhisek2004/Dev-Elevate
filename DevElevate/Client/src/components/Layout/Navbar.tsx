@@ -38,6 +38,9 @@ const Navbar: React.FC = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { notifications } = useNotificationContext();
 
+
+  console.log("Avatar URL:", authState.user.avatar)
+  
   const navItems = [
     { path: "/dashboard", icon: Home, label: "Dashboard" },
     { path: "/learning", icon: BookOpen, label: "Learning Hub" },
@@ -106,7 +109,6 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Desktop Navigation Links */}
-          
 
             {/* Right side actions */}
             <div className="flex items-center space-x-2">
@@ -143,7 +145,7 @@ const Navbar: React.FC = () => {
                 )}
               </button>
 
-              {/* Dark mode toggle */}
+       
 
               {/* User Profile */}
               <div className="relative">
@@ -151,6 +153,8 @@ const Navbar: React.FC = () => {
                   onClick={handleProfileToggle}
                   className={`flex items-center p-1 space-x-2 rounded-lg transition-colors`}
                 >
+                  
+
                   <img
                     src={
                       authState.user?.avatar ||
