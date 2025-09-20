@@ -115,18 +115,18 @@ const HomePage = () => {
   ];
 
   // Load Chatbot Script
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://widget.cxgenie.ai/widget.js";
-    script.async = true;
-    script.setAttribute("data-aid", "57a742e1-0804-479d-bddb-9934f738f932");
-    script.setAttribute("data-lang", "en");
-    document.body.appendChild(script);
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src = "https://widget.cxgenie.ai/widget.js";
+  //   script.async = true;
+  //   script.setAttribute("data-aid", "57a742e1-0804-479d-bddb-9934f738f932");
+  //   script.setAttribute("data-lang", "en");
+  //   document.body.appendChild(script);
 
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+  //   return () => {
+  //     document.body.removeChild(script);
+  //   };
+  // }, []);
 
   return (
     <div className="text-white bg-black">
