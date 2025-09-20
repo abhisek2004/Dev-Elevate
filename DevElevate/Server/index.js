@@ -29,7 +29,10 @@ import Faq from "./routes/faq.js";
 import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
 
 // ratelimiting
-import { guestLimiter, authLimiter, userLimiter } from './middleware/rateLimiting/index.js'
+import { guestLimiter, authLimiter, userLimiter } from './middleware/rateLimiting/index.js';
+
+// SecurityMiddleware
+import { applySecurityMiddleware } from './middleware/security.js';
 
 
 // Connect to MongoDB only if MONGO_URI is available
@@ -57,6 +60,10 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+
+
+// security
+applySecurityMiddleware(app);
 
 //sanitize-html
 app.use(sanitizeMiddleware);
