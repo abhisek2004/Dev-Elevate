@@ -118,11 +118,7 @@ Click the link below to explore the complete guide:
 
 > ⚠️ **📢 Important Note – Must Read Before You Contribute!** ⚠️
 
----
-
-https://youtu.be/zCUTFe8gQEA?si=bS5lkWOxnIuJMXst
-
----
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 <!-- New Login Flow GIF -->
 <img src="DevElevate/login-flow.gif" alt="Login Flow Demo" width="100%">
@@ -747,6 +743,13 @@ Includes:
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=65&section=footer"/>
 </p>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
+
+**👨‍💻 Built with ❤️ by the Codify Team**
+**❤️ Roshan Suthar and Contributors ❤️** [open an issue](https://github.com/abhisek2004/Dev-Elevate/issues) | [Watch Demo](https://youtu.be/zCUTFe8gQEA?si=bS5lkWOxnIuJMXst)  | [Live ](https://develevate-ai.vercel.app)
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
 <div align="right">
 
