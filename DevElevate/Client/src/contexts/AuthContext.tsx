@@ -148,7 +148,6 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       return { ...state, ...action.payload };
 
     case "REGISTER_SUCCESS":
-      console.log("Reducer - REGISTER_SUCCESS payload:", action.payload);
       return {
         ...state,
         user: action.payload.user,

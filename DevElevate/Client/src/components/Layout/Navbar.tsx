@@ -27,6 +27,9 @@ import { useNotificationContext } from "../../contexts/NotificationContext";
 import SearchModal from "./SearchModal";
 import NotificationPanel from "./NotificationPanel";
 import ProfileDropdown from "./ProfileDropdown";
+import { MdOutlinePlaylistAddCircle } from "react-icons/md";
+import MainCalculator from "../Calculator/MainCalculator";
+import { CalculatorHistoryProvider } from "../../contexts/CalculatorHistoryContext";
 
 const Navbar: React.FC = () => {
   const { state: authState } = useAuth();
@@ -35,12 +38,12 @@ const Navbar: React.FC = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showCalculator, setShowCalculator] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { notifications } = useNotificationContext();
 
+  console.log("Avatar URL:", authState.user.avatar);
 
-  console.log("Avatar URL:", authState.user.avatar)
-  
   const navItems = [
     { path: "/dashboard", icon: Home, label: "Dashboard" },
     { path: "/learning", icon: BookOpen, label: "Learning Hub" },
@@ -79,6 +82,12 @@ const Navbar: React.FC = () => {
     setShowProfile(!showProfile);
     setShowSearch(false);
     setShowNotifications(false);
+  };
+
+  const handleCalculatorOpen = () => {
+    setShowCalculator(true);
+    setShowNotifications(false);
+    setShowProfile(false);
   };
 
   return (
@@ -125,6 +134,18 @@ const Navbar: React.FC = () => {
                 <Search className="w-5 h-5" />
               </button>
 
+              <button
+                onClick={handleCalculatorOpen}
+                className={`p-2 rounded-lg transition-colors ${
+                  state.darkMode
+                    ? "hover:bg-gray-800 text-gray-400 hover:text-white"
+                    : "hover:bg-gray-100 text-gray-600 hover:text-gray-900"
+                }`}
+                title="Search (Ctrl+K)"
+              >
+                <MdOutlinePlaylistAddCircle className="w-5 h-5" />
+              </button>
+
               {/* Notifications Button */}
               <button
                 onClick={handleNotificationsToggle}
@@ -145,16 +166,12 @@ const Navbar: React.FC = () => {
                 )}
               </button>
 
-       
-
               {/* User Profile */}
               <div className="relative">
                 <button
                   onClick={handleProfileToggle}
                   className={`flex items-center p-1 space-x-2 rounded-lg transition-colors`}
                 >
-                  
-
                   <img
                     src={
                       authState.user?.avatar ||
@@ -243,6 +260,13 @@ const Navbar: React.FC = () => {
 
       {/* Search Modal */}
       <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
+
+      <CalculatorHistoryProvider>
+        <MainCalculator
+          isOpen={showCalculator}
+          onClose={() => setShowCalculator(false)}
+        />
+      </CalculatorHistoryProvider>
 
       {/* Notification Panel */}
       <NotificationPanel
