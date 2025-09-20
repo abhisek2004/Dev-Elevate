@@ -729,7 +729,7 @@ Includes:
 | Role          | Name               | GitHub Profile                                      | LinkedIn Profile                                                        |
 | ------------- | ------------------ | --------------------------------------------------- | ----------------------------------------------------------------------- |
 | Project Admin | Abhisek Panda      | [abhisek2004](https://github.com/abhisek2004)       | [Abhisek Panda](http://www.linkedin.com/in/abhisekpanda2004)            |
-| Mentor 1      | Jay Sandeep Sawant | [Jay2006sawant](https://github.com/Jay2006sawant)   | [Jay Sandeep Sawant](https://www.linkedin.com/in/jay-sawant-4b59aa324/) |
+| Mentor 1      | Pinak viramgama | [Pinak viramgama](https://github.com/pinakviramgama)   | [Pinak viramgama](https://www.linkedin.com/in/gecr-ai230200143075) |
 | Mentor 2   | Avansh Yadav       | [Avansh2006](https://github.com/Avansh2006)         | [Avansh Yadav](https://www.linkedin.com/in/avanshyadav/)                |
 | Mentor 3    | Amisha Gupta       | [amishagupta31](https://github.com/amishagupta31)   | [Amisha Gupta](https://www.linkedin.com/in/amishagupta31/)              |
 
