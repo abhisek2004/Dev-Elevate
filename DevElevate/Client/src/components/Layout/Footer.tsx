@@ -48,22 +48,6 @@ const Footer: React.FC = () => {
     { name: "Placement Prep", path: "/placement" },
   ];
 
-  // Updated legal links with consistent naming
-  const legalLinks = [
-    { name: "Privacy Policy", path: "/privacy-policy" },
-    { name: "Terms of Service", path: "/terms-of-service" },
-    { name: "About Creator", path: "/about-creator" },
-    { name: "Disclaimer", path: "/disclaimer" },
-    { name: "Contributor Guide", path: "/contributor-guide" },
-  ];
-
-  const additionalLinks = [
-    { name: "Documentation", path: "/documentation" },
-    { name: "API Docs", path: "/api-docs" },
-  ];
-
-  const allLinks = [...legalLinks, ...additionalLinks];
-
   const techStack = [
     { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
     { name: "Express.js", icon: SiExpress, color: "#000000" },
@@ -75,14 +59,14 @@ const Footer: React.FC = () => {
 
   return (
     <footer
-      className={`${state.darkMode ? "bg-gray-900 border-gray-700" : "bg-gray-50 border-gray-200"} border-t border-opacity-40 transition-colors duration-200`}
+      className={`${state.darkMode ? "bg-gray-900 border-gray-700" : "bg-gray-50 border-gray-200"}  border-opacity-40 transition-colors duration-200`}
     >
       <div className="px-4 pt-6 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div
           className={`border-t w-full ${state.darkMode ? "border-gray-800" : "border-gray-200"}`}
         >
-          <div className="grid grid-cols-1 gap-8 pt-6 mb-12 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 pt-6 mb-12 md:grid-cols-2 lg:grid-cols-3">
             {/* Brand Section */}
             <div className="lg:col-span-1">
               <div className="flex items-center mb-4 space-x-2">
@@ -127,7 +111,7 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Quick Links */}
-            <div>
+            <div className="flex items-center flex-col">
               <h3 className={`text-lg font-semibold mb-4 ${state.darkMode ? "text-white" : "text-gray-900"}`}>
                 Quick Links
               </h3>
@@ -145,24 +129,7 @@ const Footer: React.FC = () => {
               </ul>
             </div>
 
-            {/* Legal & Support */}
-            <div>
-              <h3 className={`text-lg font-semibold mb-4 ${state.darkMode ? "text-white" : "text-gray-900"}`}>
-                Legal & Support
-              </h3>
-              <ul className="space-y-2">
-                {allLinks.map((link) => (
-                  <li key={link.path}>
-                    <Link
-                      to={link.path}
-                      className={`text-sm hover:text-blue-500 transition-colors ${state.darkMode ? "text-gray-400" : "text-gray-600"}`}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+     
 
             {/* Tech Stack */}
             <div>
