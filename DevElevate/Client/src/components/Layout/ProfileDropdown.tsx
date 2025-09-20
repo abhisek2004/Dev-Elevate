@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { User, Settings, LogOut, BookOpen, Target, FileText, Crown, Shield, Moon, Sun, Bell, HelpCircle, ExternalLink } from 'lucide-react';
+import React, { useRef, useEffect } from 'react';
+import { User,  LogOut,  Crown, Shield, Moon, Sun, HelpCircle,  } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useGlobalState } from '../../contexts/GlobalContext';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 interface ProfileDropdownProps {
   isOpen: boolean;
@@ -50,14 +50,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
         { icon: User, label: 'View Profile', action: () => navigate('/profile') },
       ]
     },
-    // {
-    //   section: 'Learning',
-    //   items: [
-    //     // { icon: BookOpen, label: 'My Courses', action: () => navigate('/learning') },
-    //     // { icon: Target, label: 'Progress & Goals', action: () => navigate('/') },
-    //     // { icon: FileText, label: 'My Resume', action: () => navigate('/resume') },
-    //   ]
-    // },
     {
       section: 'Premium',
       items: [

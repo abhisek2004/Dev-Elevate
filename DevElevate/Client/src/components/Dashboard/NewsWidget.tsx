@@ -106,7 +106,7 @@ const NewsWidget: React.FC = () => {
           className={
             viewMode === "card"
               ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-              : "space-y-4"
+              : "space-y-4 "
           }
         >
           {articles.map((item, index) => (
@@ -155,6 +155,7 @@ const NewsWidget: React.FC = () => {
                     state.darkMode ? "text-white" : "text-gray-800"
                   }`}
                 >
+
                   {item.title}
                 </h4>
                 <p

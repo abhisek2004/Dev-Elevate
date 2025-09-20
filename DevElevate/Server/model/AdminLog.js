@@ -4,7 +4,6 @@ const adminLogSchema = new mongoose.Schema(
   {
     actionType: {
       type: String,
-      required: true,
       enum: [
         'login',
         'logout', 
@@ -18,21 +17,22 @@ const adminLogSchema = new mongoose.Schema(
         'course_management',
         'content_management',
         'news_management',
-        'system_settings'
+        'system_settings',
+        'quiz_complete'
       ]
     },
     userId: {
       type: String,
-      required: true
+ 
     },
     userRole: {
       type: String,
-      required: true,
+   
       enum: ['user', 'admin']
     },
     message: {
       type: String,
-      required: true
+    
     },
     ipAddress: {
       type: String
@@ -42,7 +42,14 @@ const adminLogSchema = new mongoose.Schema(
     },
     additionalData: {
       type: mongoose.Schema.Types.Mixed
-    }
+    },
+    details:{
+      type:String
+    },
+    performedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // 👈 User model ka naam
+    },
   },
   {
     timestamps: true

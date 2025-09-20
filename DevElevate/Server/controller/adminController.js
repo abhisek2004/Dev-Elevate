@@ -14,10 +14,10 @@ export const createAdminLog = async (req, res) => {
         .json({ message: "Action and details are required" });
     }
 
-    const log = new Admin({
-      action,
-      details,
-      performedBy: req.user.id, // comes from authenticateToken middleware
+    const log = new AdminLog({
+      actionType:action,
+      details:details,
+      performedBy: req.user.id,
     });
 
     await log.save();
@@ -32,17 +32,48 @@ export const createAdminLog = async (req, res) => {
 // ✅ Get all admin logs
 export const getAdminLogs = async (req, res) => {
   try {
-    const logs = await AdminLog.find()
-      .populate("performedBy", "name email")
-      .sort({ createdAt: -1 });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
 
-    res.status(200).json(logs);
+    const totalCount = await AdminLog.countDocuments();
+
+    const logs = await AdminLog.find()
+      .populate("performedBy", "name email role")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean(); // return plain JS objects, so we can add fields
+
+    // attach timestamps (ms since epoch)
+    const logsWithTimestamps = logs.map(log => ({
+      ...log,
+      createdAtTimestamp: new Date(log.createdAt).getTime(),
+      updatedAtTimestamp: new Date(log.updatedAt).getTime(),
+    }));
+
+    const totalPages = Math.ceil(totalCount / limit);
+
+    res.status(200).json({
+      success: true,
+      log: logsWithTimestamps,
+      pagination: {
+        totalPages,
+        totalCount,
+        currentPage: page,
+        pageSize: limit,
+      },
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error fetching logs", error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Error fetching logs",
+      error: error.message,
+    });
   }
 };
+
+
 
 // ✅ Add new user (only admin can do this)
 export const addUser = async (req, res) => {
@@ -85,7 +116,7 @@ export const addUser = async (req, res) => {
 export const getAllUserRegister = async (req, res) => {
   try {
     // Fetch all users but exclude password
-    const users = await User.find().select("-password");
+    const users = await User.find().select("-password").sort({ createdAt: -1 });
 
     // Count by role
     const totalUsers = await User.countDocuments({ role: "user" });
@@ -111,10 +142,7 @@ export const getAllUserRegister = async (req, res) => {
 // ✅ Delete user by ID (matches /delete-user/:id route)
 export const deleteUserById = async (req, res) => {
   try {
-   
     const { id } = req.params;
-  
-  
 
     const user = await User.findByIdAndDelete(id);
 

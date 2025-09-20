@@ -259,10 +259,10 @@ const Chatbot: React.FC = () => {
                         <div className="relative group">
                           <div
                             className={`prose max-w-none ${
-                              state.darkMode ? "prose-invert" : ""
+                              state.darkMode ? "text-gray-50" : "text-gray-900"
                             }`}
                           >
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            <ReactMarkdown  remarkPlugins={[remarkGfm]}>
                               {msg.content}
                             </ReactMarkdown>
                           </div>
@@ -272,7 +272,7 @@ const Chatbot: React.FC = () => {
                             className={`absolute -bottom-8 left-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1 px-2 py-1 rounded text-xs ${
                               state.darkMode
                                 ? "text-gray-400 hover:text-gray-300"
-                                : "text-gray-600 hover:text-gray-900"
+                                : "text-gray-100 hover:text-gray-900"
                             }`}
                           >
                             {copiedIndex === index ? (

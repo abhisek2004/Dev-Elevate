@@ -406,7 +406,6 @@ const updateProfile = async (data: Partial<User>) => {
 
 
   
-console.log(data);
 
 
 
@@ -421,9 +420,6 @@ console.log(data);
     });
 
     const updateData = await response.json();
-
- console.log(updateData);
- 
 
     // merge properly
     const updatedUser = { ...state.user, ...updateData };

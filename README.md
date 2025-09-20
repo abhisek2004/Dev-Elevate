@@ -118,11 +118,7 @@ Click the link below to explore the complete guide:
 
 > ⚠️ **📢 Important Note – Must Read Before You Contribute!** ⚠️
 
----
-
-https://youtu.be/zCUTFe8gQEA?si=bS5lkWOxnIuJMXst
-
----
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 <!-- New Login Flow GIF -->
 <img src="DevElevate/login-flow.gif" alt="Login Flow Demo" width="100%">
@@ -733,7 +729,7 @@ Includes:
 | Role          | Name               | GitHub Profile                                      | LinkedIn Profile                                                        |
 | ------------- | ------------------ | --------------------------------------------------- | ----------------------------------------------------------------------- |
 | Project Admin | Abhisek Panda      | [abhisek2004](https://github.com/abhisek2004)       | [Abhisek Panda](http://www.linkedin.com/in/abhisekpanda2004)            |
-| Mentor 1      | Jay Sandeep Sawant | [Jay2006sawant](https://github.com/Jay2006sawant)   | [Jay Sandeep Sawant](https://www.linkedin.com/in/jay-sawant-4b59aa324/) |
+| Mentor 1      | Pinak viramgama | [Pinak viramgama](https://github.com/pinakviramgama)   | [Pinak viramgama](https://www.linkedin.com/in/gecr-ai230200143075) |
 | Mentor 2   | Avansh Yadav       | [Avansh2006](https://github.com/Avansh2006)         | [Avansh Yadav](https://www.linkedin.com/in/avanshyadav/)                |
 | Mentor 3    | Amisha Gupta       | [amishagupta31](https://github.com/amishagupta31)   | [Amisha Gupta](https://www.linkedin.com/in/amishagupta31/)              |
 
@@ -744,12 +740,27 @@ Includes:
 </div>
 
 <!--Footer-->
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=65&section=footer"/>
-</p>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
+
+<div align="center">
+
+<h3>👨‍💻 Built with ❤️ by the Dev Elevate Team</h3>
+
+<a href="https://github.com/abhisek2004/Dev-Elevate/issues">Open an Issue</a> | 
+<a href="https://youtu.be/zCUTFe8gQEA?si=bS5lkWOxnIuJMXst">Watch Demo</a> | 
+<a href="https://develevate-ai.vercel.app">Live</a>
+
+</div>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
 <div align="right">
 
 🔝 [**Back to Top**](#top)
 
 </div>
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=65&section=footer"/>
+</p>

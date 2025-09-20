@@ -50,6 +50,7 @@ const Sidebar: React.FC = () => {
     { path: "/tasks", icon: CheckSquare, label: "Tasks" },
     { path: "/notes", icon: StickyNote, label: "Notes" },
     { path: "/calendar", icon: Calendar, label: "Calendar" },
+    { path: "/leaderboard", icon: Calendar, label: "Leaderboard" },
   ];
 
   const isActive = (path: string) => location.pathname === path;

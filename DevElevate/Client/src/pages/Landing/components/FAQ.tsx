@@ -66,7 +66,7 @@ const FAQ: React.FC = () => {
     console.log(question);
 
     try {
-      const res = await fetch(`${baseUrl}/api/v1/faq`, {
+      const res = await fetch(`${baseUrl}/api/v1/user/faq`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
