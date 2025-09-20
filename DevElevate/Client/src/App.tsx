@@ -77,7 +77,19 @@ const AppContent = () => {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Overview />} />
+          <Route
+            index
+            element={
+              <Overview
+                courses={[]}
+                newsArticles={[]}
+                feedback={[]}
+                onAddCourse={() => console.log("add course")}
+                onAddNews={() => console.log("add news")}
+                onExportData={() => console.log("export data")}
+              />
+            }
+          />
           <Route path="users" element={<UserManagement />} />
           <Route path="content" element={<ContentManagement />} />
           <Route path="community" element={<Community />} />
@@ -97,7 +109,9 @@ const AppContent = () => {
               <AppProvider>
                 <Layout>
                   <div
-                    className={`flex-1 ${state.darkMode ? "bg-gray-900" : "bg-white"}`}
+                    className={`flex-1 ${
+                      state.darkMode ? "bg-gray-900" : "bg-white"
+                    }`}
                   >
                     <main className="flex-1">
                       <Routes>
@@ -108,10 +122,16 @@ const AppContent = () => {
                         <Route path="interview" element={<InterviewPage />} />
                         <Route path="chatbot" element={<Chatbot />} />
                         <Route path="news" element={<TechFeed />} />
-                        <Route path="community/*" element={<CommunityForum />} />
+                        <Route
+                          path="community/*"
+                          element={<CommunityForum />}
+                        />
                         <Route path="resume" element={<ResumeBuilder />} />
                         <Route path="placement" element={<PlacementPrep />} />
-                        <Route path="projects" element={<ProjectRecommender />} />
+                        <Route
+                          path="projects"
+                          element={<ProjectRecommender />}
+                        />
                         <Route path="tasks" element={<TasksView />} />
                         <Route path="notes" element={<NotesView />} />
                         <Route path="calendar" element={<CalendarView />} />

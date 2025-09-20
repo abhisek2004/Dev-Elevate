@@ -296,6 +296,11 @@ const UserProfile: React.FC = () => {
       ? "You're on a roll!"
       : "Complete daily goals to build your streak!";
 
+  console.log(
+    "x",
+    user?.avatar ||
+      `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`);
+
   return (
     <div
       className={`min-h-screen ${
@@ -336,20 +341,12 @@ const UserProfile: React.FC = () => {
                 <div className="relative inline-block">
                   <img
                     src={
-                      user.avatar ||
-                      `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                        user.name
-                      )}&background=3b82f6&color=fff&size=128`
+                      user?.avatar ||
+                      `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`
                     }
-                    alt={user.name}
-                    className="w-24 h-24 rounded-full border-4 border-blue-500 shadow-lg"
+                    alt={user?.name}
+                    className="w-16 h-16 rounded-full border-2 border-blue-500"
                   />
-                  <button
-                    onClick={() => setIsEditing(true)}
-                    className="absolute bottom-0 right-0 w-8 h-8 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-colors"
-                  >
-                    <Camera className="w-4 h-4" />
-                  </button>
                 </div>
                 <h2
                   className={`text-xl font-bold mt-4 ${
