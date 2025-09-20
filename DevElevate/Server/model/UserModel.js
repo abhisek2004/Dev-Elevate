@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
     },
     bio: {
       type: String,
-      default:""
+      default: "",
     },
     socialLinks: {
       github: { type: String, default: "" },
@@ -53,6 +53,10 @@ const userSchema = new mongoose.Schema(
     },
     streakEndDate: {
       type: Date,
+    },
+    rating: {
+      type: Number,
+      default: 1500,
     },
   },
   {

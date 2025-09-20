@@ -10,6 +10,7 @@ import { GlobalProvider, useGlobalState } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { AdminProvider } from "./contexts/AdminContext";
 import { AppProvider } from "./contexts/AppContext";
+import { SocketProvider } from "./contexts/SocketContext";
 
 import Footer from "./components/Layout/Footer";
 import { useEffect, useState } from "react";
@@ -190,17 +191,19 @@ function App() {
   return (
     <AuthProvider>
       <GlobalProvider>
-        <NotificationProvider>
-          {showSplash ? (
-            <SplashScreen
-              fullPage
-              title="DevElevate"
-              subtitle="Preparing awesomeness..."
-            />
-          ) : (
-            <AppContent />
-          )}
-        </NotificationProvider>
+        <SocketProvider>
+          <NotificationProvider>
+            {showSplash ? (
+              <SplashScreen
+                fullPage
+                title="DevElevate"
+                subtitle="Preparing awesomeness..."
+              />
+            ) : (
+              <AppContent />
+            )}
+          </NotificationProvider>
+        </SocketProvider>
       </GlobalProvider>
     </AuthProvider>
   );

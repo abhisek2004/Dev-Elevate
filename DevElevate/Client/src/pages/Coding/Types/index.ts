@@ -2,7 +2,7 @@ export interface User {
   id: string;
   email: string;
   username: string;
-  role: 'user' | 'admin';
+  role: "user" | "admin";
   stats: {
     solved: number;
     attempted: number;
@@ -17,7 +17,7 @@ export interface Problem {
   id: string;
   title: string;
   description: string;
-  difficulty: 'Easy' | 'Medium' | 'Hard';
+  difficulty: "Easy" | "Medium" | "Hard";
   category: string;
   tags: string[];
   examples: Example[];
@@ -27,6 +27,8 @@ export interface Problem {
   submissions: number;
   starterCode: Record<string, string>;
   createdAt: string;
+  contestSubmissions?: number;
+  contestAcceptance?: number;
 }
 
 export interface Example {
@@ -48,7 +50,12 @@ export interface Submission {
   problemId: string;
   code: string;
   language: string;
-  status: 'Accepted' | 'Wrong Answer' | 'Time Limit Exceeded' | 'Runtime Error' | 'Compilation Error';
+  status:
+    | "Accepted"
+    | "Wrong Answer"
+    | "Time Limit Exceeded"
+    | "Runtime Error"
+    | "Compilation Error";
   runtime?: number;
   memory?: number;
   submittedAt: string;
@@ -64,7 +71,7 @@ export interface Language {
 }
 
 export interface AIHint {
-  type: 'approach' | 'optimization' | 'syntax' | 'algorithm';
+  type: "approach" | "optimization" | "syntax" | "algorithm";
   content: string;
   difficulty: number;
 }
