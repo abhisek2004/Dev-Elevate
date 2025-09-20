@@ -746,8 +746,8 @@ Includes:
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
-**👨‍💻 Built with ❤️ by the Codify Team**
-**❤️ Roshan Suthar and Contributors ❤️** [open an issue](https://github.com/abhisek2004/Dev-Elevate/issues) | [Watch Demo](https://youtu.be/zCUTFe8gQEA?si=bS5lkWOxnIuJMXst)  | [Live ](https://develevate-ai.vercel.app)
+**👨‍💻 Built with ❤️ by the Dev Elevate Team**
+**❤️ Abhisek Panda and Contributors ❤️** [open an issue](https://github.com/abhisek2004/Dev-Elevate/issues) | [Watch Demo](https://youtu.be/zCUTFe8gQEA?si=bS5lkWOxnIuJMXst)  | [Live ](https://develevate-ai.vercel.app)
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
