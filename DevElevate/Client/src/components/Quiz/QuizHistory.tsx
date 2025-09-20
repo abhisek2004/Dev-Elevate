@@ -29,7 +29,7 @@ const QuizHistory: React.FC = () => {
   const fetchQuizAttempts = async () => {
     try {
       const response = await axiosInstance.get('/api/v1/quiz/attempts');
-      setAttempts(response.data.slice(0, 5)); // Show only last 5 attempts
+      setAttempts(response.data.slice(0, 2));
     } catch (error) {
       console.error('Error fetching quiz attempts:', error);
     } finally {

@@ -148,7 +148,6 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       return { ...state, ...action.payload };
 
     case "REGISTER_SUCCESS":
-      console.log("Reducer - REGISTER_SUCCESS payload:", action.payload);
       return {
         ...state,
         user: action.payload.user,
@@ -406,7 +405,6 @@ const updateProfile = async (data: Partial<User>) => {
 
 
   
-console.log(data);
 
 
 
@@ -421,9 +419,6 @@ console.log(data);
     });
 
     const updateData = await response.json();
-
- console.log(updateData);
- 
 
     // merge properly
     const updatedUser = { ...state.user, ...updateData };

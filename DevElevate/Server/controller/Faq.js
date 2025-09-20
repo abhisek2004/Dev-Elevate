@@ -3,6 +3,8 @@ import FAQ from "../model/Faq.js"
 export const postFaq = async (req, res) => {
   try {
     let { name, email, message } = req.body;
+ 
+    
 
 
     const newRequest = new FAQ({
@@ -37,4 +39,6 @@ export const getFaq = async (req ,res) => {
       error: error instanceof Error ? error.message : "Unknown error",
     });
   }
+
 };
+

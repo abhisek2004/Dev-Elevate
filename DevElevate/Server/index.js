@@ -21,18 +21,27 @@ import mernRoutes from "./routes/mernRoutes.js";
 import dsaRoutes from "./routes/dsaRoutes.js";
 import contestRoutes from "./routes/contestRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
+import contactSupport from "./routes/contactSupport.js";
+import newsRoutes from "./routes/newsRoutes.js";
 import Faq from "./routes/faq.js";
+import systemSettings from "./routes/SystemSettingRoute.js";
+
+// sanitizeMiddleware
+
+import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
+import analyticRoute from "./routes/analytics.js";
+
 import http from "http";
 import { initSocketIO } from "./socket.js";
 import { startContestFinalizationCron } from "./controller/contestController.js";
 
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
-  connectDB();
+    connectDB();
 } else {
-  console.log(
-    "MongoDB connection skipped - PDF routes will work without database"
-  );
+    console.log(
+        "MongoDB connection skipped - PDF routes will work without database"
+    );
 }
 
 // Load environment variables
@@ -43,14 +52,17 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
+    cors({
+        origin: process.env.FRONTEND_URL,
+        credentials: true,
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
 );
 app.use(express.json());
 app.use(cookieParser());
+
+//sanitize-html
+app.use(sanitizeMiddleware);
 
 app.set("trust proxy", true);
 
@@ -58,11 +70,9 @@ app.set("trust proxy", true);
 app.use("/api/v1/notifications", notificationRoutes);
 // USER ROUTES
 app.use("/api/v1", userRoutes);
-
+app.use("/api/v1", contactSupport)
 app.use("/api/v1", Faq);
-
 app.use("/api/v1/community", communityRoutes);
-
 app.use("/api/v1/ats", atsRoutes); // ATS resume scanner functionality
 
 // ADMIN ROUTES
@@ -72,6 +82,9 @@ app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
 app.use("/api/v1/admin/quiz", quizRoutes); //quiz-related
 app.use("/api/v1/quiz", userQuizRoutes); // user quiz routes
 app.use("/api/v1", aiRoutes);
+app.use('/api/v1/admin/analytics',analyticRoute)
+
+app.use('/api/v1/admin',systemSettings)
 
 // Learning Routes
 app.use("/api/v1/learning/java", javaRoutes); // Java learning content
@@ -88,31 +101,34 @@ startContestFinalizationCron(app);
 
 // Sample Usage of authenticate and authorize middleware for roleBased Features
 app.get(
-  "/api/admin/dashboard",
-  authenticateToken,
-  authorize("admin"),
-  (req, res) => {
-    res.send("Hello Admin");
-  }
+    "/api/admin/dashboard",
+    authenticateToken,
+    authorize("admin"),
+    (req, res) => {
+        res.send("Hello Admin");
+    }
 );
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    message: "Something went wrong!",
-    error: process.env.NODE_ENV === "development" ? err.message : undefined,
-  });
+    console.error(err.stack);
+    res.status(500).json({
+        success: false,
+        message: "Something went wrong!",
+        error: process.env.NODE_ENV === "development" ? err.message : undefined,
+    });
 });
 
 // 404 handler
 app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: "Route not found",
-  });
+    res.status(404).json({
+        success: false,
+        message: "Route not found",
+    });
 });
+
+// Use news routes
+app.use("/api/v1", newsRoutes);
 
 // Create HTTP server from Express app
 const server = http.createServer(app);
@@ -131,5 +147,5 @@ app.listen = function (...args) {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });

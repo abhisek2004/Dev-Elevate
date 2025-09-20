@@ -73,4 +73,6 @@ const QuizManagement: React.FC = () => {
   );
 };
 
+
 export default QuizManagement;
+

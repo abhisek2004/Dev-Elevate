@@ -57,14 +57,16 @@ const FAQ: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setQuestion({ ...question, [e.target.name]: e.target.value });
+
   };
+  
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     console.log(question);
 
     try {
-      const res = await fetch(`${baseUrl}/api/v1/faq`, {
+      const res = await fetch(`${baseUrl}/api/v1/user/faq`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

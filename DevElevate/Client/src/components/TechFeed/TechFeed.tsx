@@ -69,8 +69,25 @@ const TechFeed: React.FC = () => {
 
   useEffect(() => {
     if (state.newsItems.length === 0) {
+      fetch("/api/techfeed/latest")
+        .then((res)=>res.json())
+        .then((data)=>{
+          const formatted=data.map(
+            (a: any, index:number)=>({
+            id: String(index+1),
+            title: a.title,
+            summary:a.description|| "",
+            url: a.url,
+            publishDate: a.publishedAt,
+            category: a.category.toLowerCase(),
+          }));
+          dispatch({ type: 'UPDATE_NEWS', payload: formatted });
+        })
+        .catch((err)=>{
+          console.error("Error fetching tech feed:", err);
       dispatch({ type: 'UPDATE_NEWS', payload: sampleNewsItems });
-    }
+    });
+  }
   }, [state.newsItems.length, dispatch]);
 
   const filteredItems = state.newsItems.filter(item => {

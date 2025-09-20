@@ -27,6 +27,9 @@ import { useNotificationContext } from "../../contexts/NotificationContext";
 import SearchModal from "./SearchModal";
 import NotificationPanel from "./NotificationPanel";
 import ProfileDropdown from "./ProfileDropdown";
+import { MdOutlinePlaylistAddCircle } from "react-icons/md";
+import MainCalculator from "../Calculator/MainCalculator";
+import { CalculatorHistoryProvider } from "../../contexts/CalculatorHistoryContext";
 
 const Navbar: React.FC = () => {
   const { state: authState } = useAuth();
@@ -35,8 +38,11 @@ const Navbar: React.FC = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showCalculator, setShowCalculator] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { notifications } = useNotificationContext();
+
+  console.log("Avatar URL:", authState.user.avatar);
 
   const navItems = [
     { path: "/dashboard", icon: Home, label: "Dashboard" },
@@ -78,6 +84,12 @@ const Navbar: React.FC = () => {
     setShowNotifications(false);
   };
 
+  const handleCalculatorOpen = () => {
+    setShowCalculator(true);
+    setShowNotifications(false);
+    setShowProfile(false);
+  };
+
   return (
     <>
       <nav
@@ -106,7 +118,6 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Desktop Navigation Links */}
-          
 
             {/* Right side actions */}
             <div className="flex items-center space-x-2">
@@ -121,6 +132,18 @@ const Navbar: React.FC = () => {
                 title="Search (Ctrl+K)"
               >
                 <Search className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={handleCalculatorOpen}
+                className={`p-2 rounded-lg transition-colors ${
+                  state.darkMode
+                    ? "hover:bg-gray-800 text-gray-400 hover:text-white"
+                    : "hover:bg-gray-100 text-gray-600 hover:text-gray-900"
+                }`}
+                title="Search (Ctrl+K)"
+              >
+                <MdOutlinePlaylistAddCircle className="w-5 h-5" />
               </button>
 
               {/* Notifications Button */}
@@ -142,8 +165,6 @@ const Navbar: React.FC = () => {
                   </span>
                 )}
               </button>
-
-              {/* Dark mode toggle */}
 
               {/* User Profile */}
               <div className="relative">
@@ -239,6 +260,13 @@ const Navbar: React.FC = () => {
 
       {/* Search Modal */}
       <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
+
+      <CalculatorHistoryProvider>
+        <MainCalculator
+          isOpen={showCalculator}
+          onClose={() => setShowCalculator(false)}
+        />
+      </CalculatorHistoryProvider>
 
       {/* Notification Panel */}
       <NotificationPanel

@@ -38,10 +38,6 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     try {
       setLoading(true);
       const data = await getAllUsers();
-      console.log(data);
-      
-  
-      
       setUsers(data.data);
       setTotalUsers(data.totalUsers);
       setTotalAdmins(data.totalAdmins);
@@ -74,7 +70,7 @@ const deleteUserByAdmin = async (userId: string) => {
   console.log(userId);
   
   try {
-    const data = await deleteUser({ userId });
+    const data = await deleteUser(userId );
 
   
     setUsers(prev => prev.filter(user => user._id !== userId));

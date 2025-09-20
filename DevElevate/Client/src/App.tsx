@@ -10,7 +10,7 @@ import { GlobalProvider, useGlobalState } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { AdminProvider } from "./contexts/AdminContext";
 import { AppProvider } from "./contexts/AppContext";
-import { SocketProvider } from "./contexts/SocketContext";
+import Leaderboard from "./pages/Leaderboard/Leaderboard";import { SocketProvider } from "./contexts/SocketContext";
 
 import Footer from "./components/Layout/Footer";
 import { useEffect, useState } from "react";
@@ -20,14 +20,8 @@ import Chatbot from "./components/Chatbot/Chatbot";
 import TechFeed from "./components/TechFeed/TechFeed";
 import ResumeBuilder from "./components/ResumeBuilder/ResumeBuilder";
 import PlacementPrep from "./components/PlacementPrep/PlacementPrep";
-import PlacementStats from "./pages/Placements/PlacementStats";
 import UserProfile from "./components/Profile/UserProfile";
-import PrivacyPolicy from "./components/Legal/PrivacyPolicy";
-import TermsOfService from "./components/Legal/TermsOfService";
-import CreatorPage from "./components/Legal/CreatorPage";
-import Disclaimer from "./components/Legal/Disclaimer";
 import AdminDashboard from "./components/Admin/AdminDashboard";
-import AdminSystemLogs from "./components/Admin/AdminSystemLogs";
 import Overview from "./components/Admin/Overview";
 import UserManagement from "./components/Admin/UserManagement";
 import ContentManagement from "./components/Admin/ContentManagement";
@@ -46,7 +40,6 @@ import PaymentPage from "./components/Payment/PaymentPage";
 import ProjectRecommender from "./components/ProjectRecommender/ProjectRecommender";
 import Layout from "./components/Layout/Layout";
 import CommunityForum from "./components/Community/CommunityForum";
-import LandingPage from "./pages/Landing/LandingPage";
 import TasksView from "./components/tasks/TasksView";
 import NotesView from "./components/notes/NotesView";
 import CalendarView from "./components/calendar/CalendarView";
@@ -55,6 +48,7 @@ import InterviewPage from "./pages/Interview/InterviewPage";
 import QuizPage from "./components/Quiz/QuizPage";
 import BackToTopButton from "./components/Layout/BackToTopButton";
 import HelpCenter from "./components/HelpCenter/HelpCenter";
+import LandingPage from "./pages/Landing/LandingPage";
 
 // ✅ AppContent
 const AppContent = () => {
@@ -63,7 +57,7 @@ const AppContent = () => {
   return (
     <Router>
       <Routes>
-        {/* Public Routes */}
+        <Route path="/" element={<LandingPage />} />
         <Route
           path="/login"
           element={
@@ -72,20 +66,8 @@ const AppContent = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/placements" element={<PlacementStats />} />
 
         {/* Admin Routes */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute requireAdmin={true}>
-              <AdminProvider>
-                <AdminDashboard />
-              </AdminProvider>
-            </ProtectedRoute>
-          }
-        />
         <Route
           path="/admin/*"
           element={
@@ -95,19 +77,32 @@ const AppContent = () => {
               </AdminProvider>
             </ProtectedRoute>
           }
-        />
-        <Route
-          path="/admin/system-logs"
-          element={
-            <ProtectedRoute requireAdmin={true}>
-              <AdminProvider>
-                <AdminSystemLogs />
-              </AdminProvider>
-            </ProtectedRoute>
-          }
-        />
+        >
+          <Route
+            index
+            element={
+              <Overview
+                courses={[]}
+                newsArticles={[]}
+                feedback={[]}
+                onAddCourse={() => console.log("add course")}
+                onAddNews={() => console.log("add news")}
+                onExportData={() => console.log("export data")}
+              />
+            }
+          />
+          <Route path="users" element={<UserManagement />} />
+          <Route path="content" element={<ContentManagement />} />
+          <Route path="community" element={<Community />} />
+          <Route path="news" element={<NewsUpdates />} />
+          <Route path="quiz" element={<QuizManagement />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="logs" element={<SystemLogs />} />
+          <Route path="settings" element={<SystemSettings />} />
+          <Route path="feedback" element={<Feedback />} />
+        </Route>
 
-        {/* Protected Routes */}
+        {/* Protected Routes - Require Authentication */}
         <Route
           path="/*"
           element={
@@ -144,11 +139,8 @@ const AppContent = () => {
                         <Route path="premium" element={<PremiumPage />} />
                         <Route path="payment" element={<PaymentPage />} />
                         <Route path="profile" element={<UserProfile />} />
-                        <Route path="privacy" element={<PrivacyPolicy />} />
-                        <Route path="terms" element={<TermsOfService />} />
-                        <Route path="creator" element={<CreatorPage />} />
-                        <Route path="disclaimer" element={<Disclaimer />} />
                         <Route path="help-center" element={<HelpCenter />} />
+                        <Route path="leaderboard" element={<Leaderboard />} />
                         <Route
                           path="*"
                           element={<Navigate to="/dashboard" replace />}

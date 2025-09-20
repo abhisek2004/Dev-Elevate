@@ -47,4 +47,6 @@ const SystemLogs: React.FC = () => {
   );
 };
 
+
 export default SystemLogs;
+
