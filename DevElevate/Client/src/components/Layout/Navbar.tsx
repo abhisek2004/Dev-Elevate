@@ -8,7 +8,6 @@ import {
   Newspaper,
   FileText,
   Target,
-  CreditCard,
   Bell,
   Search,
   Menu,
