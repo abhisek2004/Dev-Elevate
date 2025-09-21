@@ -156,7 +156,7 @@ const AppContent = () => {
                           path="projects"
                           element={<ProjectRecommender />}
                         />
-                        <Route path="tasks" element={<Roadmap />} />
+                        <Route path="roadmap" element={<Roadmap />} />
                         <Route path="calendar" element={<CalendarView />} />
                         <Route path="premium" element={<PremiumPage />} />
                         <Route path="payment" element={<PaymentPage />} />
