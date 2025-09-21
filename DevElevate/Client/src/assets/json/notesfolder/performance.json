@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Google Web Fundamentals - Performance",
+        "link": "https://developers.google.com/web/fundamentals/performance",
+        "provider": "Google Developers",
+        "logo": "https://developers.google.com/favicon.ico",
+        "category": "Documentation",
+        "description": "Guides on web performance metrics, code splitting, caching strategies, and frontend optimization techniques"
+    },
+    {
+        "title": "MDN Web Docs - Performance",
+        "link": "https://developer.mozilla.org/en-US/docs/Web/Performance",
+        "provider": "MDN Web Docs",
+        "logo": "https://developer.mozilla.org/favicon-48x48.png",
+        "category": "Documentation",
+        "description": "Resources on measuring, analyzing, and improving web performance for modern applications"
+    },
+    {
+        "title": "FreeCodeCamp Frontend Optimization",
+        "link": "https://www.freecodecamp.org/news/frontend-performance-optimization-guide/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Tutorial",
+        "description": "Beginner-friendly guide covering web performance optimization, caching, and code splitting"
+    },
+    {
+        "title": "Frontend Masters - Web Performance",
+        "link": "https://frontendmasters.com/courses/web-performance/",
+        "provider": "Frontend Masters",
+        "logo": "https://frontendmasters.com/favicon.ico",
+        "category": "Interactive Course",
+        "description": "Comprehensive course on frontend performance optimization and best practices"
+    },
+    {
+        "title": "Web Performance StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/web-performance",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven questions and answers on web performance, code splitting, and caching strategies"
+    }
+]

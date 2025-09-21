@@ -1,0 +1,72 @@
+[
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e71" },
+"course_category": "Data Structures and Algorithms",
+"course_title": "Entire DSA by Rogit Negi in C++",
+"creator_name": "Rohit Negi",
+"creator_youtube_link": "https://youtube.com/playlist?list=PLQEaRBV9gAFu4ovJ41PywklqI7IyXwr01&si=bq8EbE0ErFIYz0jl",
+"creator_image": "https://yt3.ggpht.com/L5V_uwm8Dg7o40NU9gQ_c-r3TC6dkMxVil0fBG_N_wYnnSaHZc1dVYNlRNUy4U1gd5ViZR9V=s48-c-k-c0x00ffffff-no-rj",
+"course_image": "https://i.ytimg.com/vi/y3OOaXrFy-Q/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLC-Ap2wuqakV3A5MPlnny5bmnCYNAQ",
+"description": "Best Playlist for DSA on Youtube in Hindi"
+},
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e72" },
+"course_category": "Data Structures and Algorithms",
+"course_title": "DSA by Love Babber",
+"creator_name": "Love Babber",
+"creator_youtube_link": "https://youtube.com/playlist?list=PLDzeHZWIZsTryvtXdMr6rPh4IDexB5NIA&si=svoJ3Os1wcyNiChe",
+"creator_image": "https://yt3.googleusercontent.com/st0tjHROqHEs6scfJ0ZVyMPP1_bh18WJ7l4zAjR4yRf-9sX-eFz2heChzXkiF2TL2tyo2fj_mg=s160-c-k-c0x00ffffff-no-rj",
+"course_image": "https://i.ytimg.com/vi/WQoB2z67hvY/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLC67s1Sgk0k2zdN0cWG1WacUylIWQ",
+"description": "DSA course in C++ in Hindi"
+},
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e73" },
+"course_category": "Data Structures and Algorithms",
+"course_title": "DSA by Jenny",
+"creator_name": "Jenny's Lecture for CS IT",
+"creator_youtube_link": "https://youtube.com/playlist?list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU&si=lUl0VmAIwbGYU0JH",
+"creator_image": "https://yt3.ggpht.com/G_0IAqOglBkQz1-AFWsxxiRrT7DjPfrQksCMs-I82D6wCOrG1PCa9LjntW9zW5TodRLccBr6ew=s48-c-k-c0x00ffffff-no-rj",
+"course_image": "https://i.ytimg.com/vi/AT14lCXuMKI/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLALtdZ-hThyGVIxu6xaZu5vnvi1og",
+"description": "A complete Course for Building Intution In DSA"
+},
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e74" },
+"course_category": "Data Structures and Algorithms",
+"course_title": "DSA by Striver",
+"creator_name": "Striver- Take U Forward",
+"creator_youtube_link": "https://youtube.com/playlist?list=PLgUwDviBIf0oF6QL8m22w1hIDC1vJ_BHz&si=QTFCzqgOfiP9HRPw",
+"creator_image": "https://yt3.ggpht.com/dSkEwiYrGlZPE6t9irfN8RlpDlaU_n7u3oEnHxJIY_knycUXPzEVlFKbYtwzkcysNDVZPn5zmHg=s48-c-k-c0x00ffffff-no-rj",
+"course_image": "https://i.ytimg.com/vi/0bHoB32fuj0/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBaVe7ndTXmOLmC8Yom2Grzt5dQfg",
+"description": "This playlist is not lang specific, it covers DSA and we write pseudocode ie cover everything in depth."
+},
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e74" },
+"course_category": "Data Structures and Algorithms",
+"course_title": "DSA by Apna College",
+"creator_name": "Shraddha Khapra",
+"creator_youtube_link": "https://youtube.com/playlist?list=PLfqMhTWNBTe137I_EPQd34TsgV6IO55pt&si=ktJxE4eEkwrlbWxF",
+"creator_image": "https://yt3.ggpht.com/FEcjRtez5od8UowDo6tTt9WlE-MrIFEmcwPMTORmK9Swk6KCklOmA3xfIG9WuLWfNYfNThQE=s48-c-k-c0x00ffffff-no-rj",
+"course_image": "https://youtube.com/playlist?list=PLfqMhTWNBTe137I_EPQd34TsgV6IO55pt&si=ktJxE4eEkwrlbWxF",
+"description": "A DSA Series for Placement Preparation, Study only what's needed & Save Time"
+},
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e74" },
+"course_category": "Data Structures and Algorithms",
+"course_title": "DSA by CodewithHarry",
+"creator_name": "Haris Khan",
+"creator_youtube_link": "https://youtube.com/playlist?list=PLu0W_9lII9ahIappRPN0MCAgtOu3lQjQi&si=ZXmx2NfMCPnwd8Ek",
+"creator_image": "https://yt3.googleusercontent.com/ytc/AIdro_kX3sdbuu3KFmRPsmlu0R5Rx_BhpxwupjtvJmkEdNfla7w=s160-c-k-c0x00ffffff-no-rj",
+"course_image": "https://i.ytimg.com/vi/5_5oE5lgrhw/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAhTmcP8zB0VQKzDCeZDC-zIktxKw",
+"description": "This Course will teach you everything you need to prepare for placements, interviews and logic building."
+},
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e74" },
+"course_category": "Data Structures and Algorithms",
+"course_title": "DSA by Gate Smashers",
+"creator_name": "varun",
+"creator_youtube_link": "https://youtube.com/playlist?list=PLxCzCOWd7aiEwaANNt3OqJPVIxwp2ebiT&si=VorxMR_loks5hy0c",
+"creator_image": "https://yt3.googleusercontent.com/-cHDbfw9t-1ZylfXaNfTVGeiQ9Rr70fuM2SiOxuuO79Z_kaNxDVBbof_aCfFnITMTN15UFF4og=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
+"course_image": "https://i.ytimg.com/vi/qNGyI95E5AE/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBLywf1YzHBbC40QMG9ERx41r1Ttw",
+"description": "A playlist for understanding for at university level"
+}
+]

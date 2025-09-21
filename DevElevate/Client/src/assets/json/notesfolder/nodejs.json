@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Node.js Official Documentation",
+        "link": "https://nodejs.org/en/docs",
+        "provider": "Node.js Foundation",
+        "logo": "https://nodejs.org/static/images/favicons/favicon.ico",
+        "category": "Documentation",
+        "description": "Official Node.js documentation with API references and guides"
+    },
+    {
+        "title": "W3Schools Node.js Tutorial",
+        "link": "https://www.w3schools.com/nodejs/",
+        "provider": "W3Schools",
+        "logo": "https://www.w3schools.com/favicon.ico",
+        "category": "Tutorial",
+        "description": "Beginner-friendly Node.js tutorials covering server-side basics"
+    },
+    {
+        "title": "FreeCodeCamp Node.js Course",
+        "link": "https://www.freecodecamp.org/learn/back-end-development-and-apis/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Hands-on Node.js course covering APIs, Express, and backend development"
+    },
+    {
+        "title": "The Odin Project - Node.js",
+        "link": "https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs",
+        "provider": "The Odin Project",
+        "logo": "https://www.theodinproject.com/favicon.ico",
+        "category": "Curriculum",
+        "description": "Structured Node.js curriculum with projects for full-stack learning"
+    },
+    {
+        "title": "Node.js StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/node.js",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven Node.js programming questions and answers"
+    }
+]

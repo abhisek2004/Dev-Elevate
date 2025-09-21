@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Python Official Documentation",
+        "link": "https://docs.python.org/3/tutorial/index.html",
+        "provider": "Python.org",
+        "logo": "https://www.python.org/static/favicon.ico",
+        "category": "Documentation",
+        "description": "Official Python tutorial and reference documentation"
+    },
+    {
+        "title": "W3Schools Python Tutorial",
+        "link": "https://www.w3schools.com/python/",
+        "provider": "W3Schools",
+        "logo": "https://www.w3schools.com/favicon.ico",
+        "category": "Tutorial",
+        "description": "Beginner-friendly Python tutorials and examples"
+    },
+    {
+        "title": "FreeCodeCamp Python for Beginners",
+        "link": "https://www.freecodecamp.org/learn/scientific-computing-with-python/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Free interactive Python course covering basics and problem-solving"
+    },
+    {
+        "title": "Real Python Tutorials",
+        "link": "https://realpython.com/",
+        "provider": "Real Python",
+        "logo": "https://realpython.com/static/favicon.ico",
+        "category": "Tutorial",
+        "description": "In-depth Python tutorials, articles, and guides for beginners to advanced learners"
+    },
+    {
+        "title": "Python StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/python",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven Python programming questions and answers"
+    }
+]

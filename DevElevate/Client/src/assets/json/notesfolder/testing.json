@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Software Testing Tutorials - Guru99",
+        "link": "https://www.guru99.com/software-testing.html",
+        "provider": "Guru99",
+        "logo": "https://www.guru99.com/images/guru99-logo.png",
+        "category": "Tutorial",
+        "description": "Comprehensive tutorials on software testing concepts, types, and techniques"
+    },
+    {
+        "title": "FreeCodeCamp Software Testing Guide",
+        "link": "https://www.freecodecamp.org/news/software-testing-guide/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Beginner-friendly guide to learn testing, test cases, and automated testing principles"
+    },
+    {
+        "title": "ISTQB Official Syllabus",
+        "link": "https://www.istqb.org/certification-path-root/foundation-level.html",
+        "provider": "ISTQB",
+        "logo": "https://www.istqb.org/images/favicon.ico",
+        "category": "Documentation",
+        "description": "Official syllabus and best practices for foundation-level software testing certification"
+    },
+    {
+        "title": "Selenium Documentation",
+        "link": "https://www.selenium.dev/documentation/en/",
+        "provider": "Selenium",
+        "logo": "https://www.selenium.dev/images/favicon.ico",
+        "category": "Tool & Documentation",
+        "description": "Official documentation for Selenium framework used for automated browser testing"
+    },
+    {
+        "title": "Software Testing StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/software-testing",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven questions and answers on software testing concepts, tools, and best practices"
+    }
+]

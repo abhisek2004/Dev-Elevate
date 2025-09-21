@@ -61,6 +61,7 @@ import PythonNotes from "./pages/Notes/PythonBasics/PythonNotes.jsx"
 import GitNotes from "./pages/Notes/GitVersionControl/GitNotes.jsx"
 import FallBackNotes from "./pages/Notes/FallBackNotes.jsx"
 import ReactPattern from "./pages/Notes/ReactPatterns/ReactPattern.jsx"
+import Roadmap from "./pages/RoadmapPage/Roadmap"
 
 
 
@@ -155,7 +156,7 @@ const AppContent = () => {
                           path="projects"
                           element={<ProjectRecommender />}
                         />
-                        <Route path="tasks" element={<TasksView />} />
+                        <Route path="tasks" element={<Roadmap />} />
                         <Route path="calendar" element={<CalendarView />} />
                         <Route path="premium" element={<PremiumPage />} />
                         <Route path="payment" element={<PaymentPage />} />

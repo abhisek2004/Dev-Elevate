@@ -1,0 +1,42 @@
+[
+    {
+        "title": "DevOps Tutorial - Microsoft",
+        "link": "https://learn.microsoft.com/en-us/devops/",
+        "provider": "Microsoft Docs",
+        "logo": "https://learn.microsoft.com/favicon.ico",
+        "category": "Documentation",
+        "description": "Comprehensive guide on DevOps practices, CI/CD pipelines, and automation tools"
+    },
+    {
+        "title": "FreeCodeCamp DevOps Guide",
+        "link": "https://www.freecodecamp.org/news/devops-tutorial/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Tutorial",
+        "description": "Beginner-friendly guide covering DevOps concepts, tools, and workflows"
+    },
+    {
+        "title": "Docker & Kubernetes for DevOps",
+        "link": "https://www.udemy.com/course/docker-kubernetes-the-practical-guide/",
+        "provider": "Udemy",
+        "logo": "https://www.udemy.com/staticx/udemy/images/v7/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Hands-on course to learn containerization and orchestration for DevOps pipelines"
+    },
+    {
+        "title": "CI/CD with Jenkins - TutorialsPoint",
+        "link": "https://www.tutorialspoint.com/jenkins/index.htm",
+        "provider": "TutorialsPoint",
+        "logo": "https://www.tutorialspoint.com/images/favicon.ico",
+        "category": "Tutorial",
+        "description": "Step-by-step guide to implement continuous integration and continuous deployment pipelines using Jenkins"
+    },
+    {
+        "title": "DevOps StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/devops",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven questions and answers on DevOps practices, tools, and workflows"
+    }
+]

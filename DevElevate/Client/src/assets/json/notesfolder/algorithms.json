@@ -1,0 +1,42 @@
+[
+    {
+        "title": "GeeksforGeeks Data Structures & Algorithms",
+        "link": "https://www.geeksforgeeks.org/data-structures/",
+        "provider": "GeeksforGeeks",
+        "logo": "https://media.geeksforgeeks.org/wp-content/uploads/gfg_200X200.png",
+        "category": "Documentation",
+        "description": "Comprehensive resources on algorithms, data structures, time complexity, and problem-solving"
+    },
+    {
+        "title": "FreeCodeCamp Algorithms & Data Structures Course",
+        "link": "https://www.freecodecamp.org/learn/coding-interview-prep/data-structures/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Free hands-on course covering arrays, trees, graphs, sorting algorithms, and problem-solving patterns"
+    },
+    {
+        "title": "Visualgo - Data Structure Visualization",
+        "link": "https://visualgo.net/en",
+        "provider": "VisuAlgo",
+        "logo": "https://visualgo.net/images/favicon.ico",
+        "category": "Visualization Tool",
+        "description": "Interactive tool to visualize common data structures and algorithms"
+    },
+    {
+        "title": "HackerRank Data Structures & Algorithms Practice",
+        "link": "https://www.hackerrank.com/domains/data-structures",
+        "provider": "HackerRank",
+        "logo": "https://www.hackerrank.com/favicon.ico",
+        "category": "Practice Platform",
+        "description": "Platform to practice coding problems and algorithms with different difficulty levels"
+    },
+    {
+        "title": "DSA StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/algorithms",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven questions and discussions on algorithms, arrays, trees, graphs, and problem-solving patterns"
+    }
+]

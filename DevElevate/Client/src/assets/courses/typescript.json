@@ -1,0 +1,74 @@
+[
+  {
+    "course_category": "TypeScript",
+    "course_image": "https://i.ytimg.com/vi/d56mG7DezGs/hqdefault.jpg",
+    "course_title": "TypeScript Tutorial for Beginners",
+    "creator_image": "https://yt3.ggpht.com/HCv0fXFEEcD0HRyF0_qR1K7b7qO3KCzmIoyH1DEJYB94CIUFhIE5i2t2IDIPX97W1-DK4hegww=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Programming with Mosh",
+    "creator_youtube_link": "https://youtu.be/d56mG7DezGs?si=DEb_BA2IWmBbJdsP",
+    "description": "Everything you need to know about TypeScript—from basics to more advanced concepts."
+  },
+  {
+    "course_category": "TypeScript",
+    "course_image": "https://i.ytimg.com/vi/30LWjhZzg50/hqdefault.jpg",
+    "course_title": "Learn TypeScript – Full Tutorial",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "freeCodeCamp.org",
+    "creator_youtube_link": "https://youtu.be/30LWjhZzg50?si=0yKjqvg_o1Fs12Ha",
+    "description": "Learn how to program with TypeScript in this full course for beginners. TypeScript is a typed superset of JavaScript that compiles to plain JavaScript."
+  },
+  {
+    "course_category": "TypeScript",
+    "course_image": "https://i.ytimg.com/vi/zQnBQ4tB3ZA/hqdefault.jpg",
+    "course_title": "TypeScript Course for Beginners - Learn TypeScript from Scratch",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_mKzklyPPhghBJQH5H3HpZ108YcE618DBRLAvRUD1AjKNw=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Academind",
+    "creator_youtube_link": "https://youtu.be/zQnBQ4tB3ZA?si=gO6HIC9WDScOJFBX",
+    "description": "Dive into TypeScript with this beginner-friendly course. Understand core types, generics, interfaces, and how to set up a TypeScript project."
+  },
+  {
+    "course_category": "TypeScript",
+    "course_image": "https://i.ytimg.com/vi/ZvZ7gvcmPmI/hqdefault.jpg",
+    "course_title": "TypeScript Basics",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_mKzklyPPhghBJQH5H3HpZ108YcE618DBRLAvRUD1AjKNw=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Fireship",
+    "creator_youtube_link": "https://youtu.be/ZvZ7gvcmPmI?si=i4bfzX4DhHUEqItd",
+    "description": "Learn the basics of TypeScript in under 10 minutes. A quick, high-level overview of types, interfaces, and generics."
+  },
+  {
+    "course_category": "TypeScript",
+    "course_image": "https://i.ytimg.com/vi/K01hLNDdqg4/hqdefault.jpg",
+    "course_title": "The Only TypeScript Course You Need in 2025",
+    "creator_image": "https://yt3.ggpht.com/FtoScP7aO_Rfgh6QHJJMb_Xj3Yku17Cu7XY7ymSSxlIgAXybZvTdQ4n9v7BqmeGqXASzxBya8w=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Theo - t3.gg",
+    "creator_youtube_link": "https://youtu.be/K01hLNDdqg4?si=zrTxEmauBr_O2bgC",
+    "description": "A very thorough introduction to the language—valuable even if you’ve used TypeScript before. Covers modern patterns and practices."
+  },
+  {
+    "course_category": "TypeScript",
+    "course_image": "https://i.ytimg.com/vi/gieEQFIfgYc/hqdefault.jpg",
+    "course_title": "TypeScript Full Course for Beginners | Complete All-in-One",
+    "creator_image": "https://yt3.ggpht.com/nv365KiAJyURPEBZyCh0SV3hSBnZXbvVXrzRwcNDfgUpXPn9-3_4PY0SkQrAJWnzQOxKqfUtrQ=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Dave Gray",
+    "creator_youtube_link": "https://youtu.be/gieEQFIfgYc?si=OLP7-neJpA-Weqql",
+    "description": "TypeScript is a strongly typed programming language that builds on JavaScript. This course covers everything from setup to advanced type manipulation."
+  },
+  {
+    "course_category": "TypeScript",
+    "course_image": "https://i.ytimg.com/vi/SpwzRDUQ1GI/hqdefault.jpg",
+    "course_title": "TypeScript Full Course | TypeScript Tutorial For Beginners",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Simplilearn",
+    "creator_youtube_link": "https://youtu.be/SpwzRDUQ1GI?si=9iX1kMHJf2aakT0C",
+    "description": "A comprehensive tutorial for beginners to learn TypeScript. Understand its advantages over JavaScript and how to use it in real-world projects."
+  },
+  {
+    "course_category": "TypeScript",
+    "course_image": "https://i.ytimg.com/vi/JHEB7RhJG1Y/hqdefault.jpg",
+    "course_title": "TypeScript for React Developers - Full Course",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Laith Academy",
+    "creator_youtube_link": "https://youtu.be/JHEB7RhJG1Y?si=Od_QVkkGZsJtfJo9",
+    "description": "Master using TypeScript in your React applications. This course covers typing components, props, hooks, and state management for type safety."
+  }
+]

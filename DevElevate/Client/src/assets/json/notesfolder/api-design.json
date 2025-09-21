@@ -1,0 +1,42 @@
+[
+    {
+        "title": "REST API Tutorial - RESTful API",
+        "link": "https://restfulapi.net/",
+        "provider": "RESTful API",
+        "logo": "https://restfulapi.net/favicon.ico",
+        "category": "Tutorial",
+        "description": "Comprehensive guide on REST API design principles, best practices, and examples"
+    },
+    {
+        "title": "API Design Guide - Microsoft",
+        "link": "https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design",
+        "provider": "Microsoft Docs",
+        "logo": "https://learn.microsoft.com/favicon.ico",
+        "category": "Guide",
+        "description": "Microsoft’s best practices for designing scalable and maintainable APIs"
+    },
+    {
+        "title": "FreeCodeCamp API Design Course",
+        "link": "https://www.freecodecamp.org/news/rest-api-tutorial-rest-client-rest-service-and-api-calls-explained/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Beginner-friendly guide to learn API design, REST concepts, and practical examples"
+    },
+    {
+        "title": "Postman Learning Center",
+        "link": "https://learning.postman.com/docs/getting-started/introduction/",
+        "provider": "Postman",
+        "logo": "https://www.postman.com/favicon.ico",
+        "category": "Tool & Tutorial",
+        "description": "Learn how to design, test, and document APIs using Postman"
+    },
+    {
+        "title": "API StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/api",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven questions and answers on API design, REST, and web services"
+    }
+]

@@ -1,0 +1,83 @@
+[
+  {
+    "course_category": "Version Control",
+    "course_image": "https://i.ytimg.com/vi/RGOj5yH7evk/hqdefault.jpg",
+    "course_title": "Git & GitHub Crash Course",
+    "creator_image": "https://yt3.ggpht.com/ytc/AMLnZu80H4TuV7cW2fgvE6h7nZgKjQ8YqE7kz8N46w=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "freeCodeCamp",
+    "creator_youtube_link": "https://www.youtube.com/watch?v=RGOj5yH7evk",
+    "description": "Beginner-friendly Git and GitHub tutorial covering version control basics, branching, merging, pull requests, and collaboration workflows."
+  },
+  {
+    "course_category": "Version Control",
+    "course_image": "https://i.ytimg.com/vi/apGV9Kg7ics/hqdefault.jpg",
+    "course_title": "Git & GitHub for Beginners - Crash Course",
+    "creator_image": "https://yt3.ggpht.com/ytc/AKedOLR9U7sPt7HwC6j7Lja3ZJ5mwnmwlTKnWbZ_zl4j=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Academind",
+    "creator_youtube_link": "https://www.youtube.com/watch?v=apGV9Kg7ics",
+    "description": "Crash course on Git & GitHub for beginners covering setup, commits, branches, merging, and remote repositories."
+  },
+  {
+    "course_category": "Version Control",
+    "course_image": "https://i.ytimg.com/vi/8JJ101D3knE/hqdefault.jpg",
+    "course_title": "Git Tutorial for Beginners: Learn Git in 1 Hour",
+    "creator_image": "https://yt3.ggpht.com/ytc/AKedOLTn0yFPoxu4V4hVGRU5S6aU7nxnRgNH0mI9FZML=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Programming with Mosh",
+    "creator_youtube_link": "https://www.youtube.com/watch?v=8JJ101D3knE",
+    "description": "Learn Git in just 1 hour with this hands-on beginner-friendly tutorial covering commits, branches, and remote repositories."
+  },
+  {
+    "course_category": "Version Control",
+    "course_image": "https://i.ytimg.com/vi/apGV9Kg7ics/hqdefault.jpg",
+    "course_title": "Git & GitHub Full Course for Beginners",
+    "creator_image": "https://yt3.ggpht.com/ytc/AKedOLQNRDqjL3vFVgx24e0x4A7mbtV5sK-2twZo6V5y9A=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Kunal Kushwaha",
+    "creator_youtube_link": "https://www.youtube.com/watch?v=apGV9Kg7ics&t=335s",
+    "description": "Comprehensive Git & GitHub course for beginners explaining version control, branching, pull requests, and open-source collaboration."
+  },
+  {
+    "course_category": "Version Control",
+    "course_image": "https://i.ytimg.com/vi/uaeKhfhYE0U/hqdefault.jpg",
+    "course_title": "Git and GitHub for Beginners - Full Course",
+    "creator_image": "https://yt3.ggpht.com/ytc/AKedOLTyvY9zWgkT5C0YQwSGZP3C1L2o3Y5zB54wD53P=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Telusko",
+    "creator_youtube_link": "https://www.youtube.com/watch?v=uaeKhfhYE0U",
+    "description": "Step-by-step Git & GitHub course covering installation, repositories, commits, branching, merging, and GitHub collaboration."
+  },
+  {
+    "course_category": "Version Control",
+    "course_image": "https://i.ytimg.com/vi/Uszj_k0DGsg/hqdefault.jpg",
+    "course_title": "Introduction to Git and GitHub",
+    "creator_image": "https://yt3.ggpht.com/ytc/AKedOLRCKzP7uw7x7Ft-9NQGeXqV87YgG1C0Hg8WbQ=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Google Developers",
+    "creator_youtube_link": "https://www.youtube.com/watch?v=Uszj_k0DGsg",
+    "description": "Google Developers introduction to Git & GitHub covering version control fundamentals, collaboration workflows, and pull requests."
+  },
+  {
+    "course_category": "Version Control",
+    "course_image": "https://i.ytimg.com/vi/HkdAHXoRtos/hqdefault.jpg",
+    "course_title": "Git and GitHub for Beginners - Crash Course",
+    "creator_image": "https://yt3.ggpht.com/ytc/AKedOLRLvOeCIoOmyNqgXKwBt2Cja4uWvGGeAqPhMQ=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Tech with Tim",
+    "creator_youtube_link": "https://www.youtube.com/watch?v=HkdAHXoRtos",
+    "description": "Hands-on beginner crash course teaching Git basics, GitHub remote repositories, pull requests, and version control workflows."
+  },
+  {
+    "course_category": "Version Control",
+    "course_image": "https://i.ytimg.com/vi/DVRQoVRzMIY/hqdefault.jpg",
+    "course_title": "Learn Git In 15 Minutes",
+    "creator_image": "https://yt3.ggpht.com/ytc/AKedOLRcGl3KfIz5uGuX7mPR8CuzWYQx0rlnz5e7HT6q=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Colt Steele",
+    "creator_youtube_link": "https://www.youtube.com/watch?v=DVRQoVRzMIY",
+    "description": "Quick beginner guide to Git in just 15 minutes, covering repository creation, commits, branching, and pushing to GitHub."
+  },
+  {
+  "course_category": "Version Control",
+  "course_image": "https://i.ytimg.com/vi/oGlkmoiuWnA/hqdefault.jpg",
+  "course_title": "What Is Git & GitHub? Learn in 9 Minutes with Visuals In Tamil | 2025",
+  "creator_image": "https://yt3.ggpht.com/ytc/AMLnZu_N1u3u7c5wbFVcklA1bshFCl5Gk8vRkM0ZgY=s88-c-k-c0x00ffffff-no-rj",
+  "creator_name": "Brototype Tamil",
+  "creator_youtube_link": "https://www.youtube.com/watch?v=oGlkmoiuWnA",
+  "description": "Quick Tamil tutorial on Git & GitHub using visuals. Covers basics of Git, GitHub collaboration, tracking history, backups, and open-source projects in just 9 minutes."
+  }
+]

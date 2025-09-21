@@ -1,0 +1,142 @@
+[
+    {
+      "title": "React Official Learning Section",
+      "link": "https://react.dev/learn",
+      "provider": "React",
+      "logo": "https://react.dev/favicon.ico",
+      "category": "Documentation",
+      "description": "The official React documentation's learning section, a modern reference covering core concepts and hooks."
+    },
+    {
+        "title": "GeeksforGeeks React Tutorial",
+        "link": "https://www.geeksforgeeks.org/reactjs/react/",
+        "provider": "GeeksforGeeks",
+        "logo": "https://www.geeksforgeeks.org/favicon.ico",
+        "category": "Tutorial",
+        "description": "A step-by-step comprehensive React tutorial from fundamentals to advanced concepts, ideal for structured learning."
+      },
+    {
+        "title": "W3Schools React Tutorial",
+        "link": "https://www.w3schools.com/react/",
+        "provider": "W3Schools",
+        "logo": "https://www.w3schools.com/favicon.ico",
+        "category": "Tutorial",
+        "description": "Beginner-friendly React tutorial with hands-on examples and an interactive coding environment."
+    },
+    {
+      "title": "React Cheat Sheet by Devhints",
+      "link": "https://devhints.io/react",
+      "provider": "Devhints",
+      "logo": "https://react.dev/favicon.ico",
+      "category": "Cheat Sheet",
+      "description": "A quick reference cheat sheet for React covering components, props, state, and hooks."
+    },
+   
+    {
+      "title": "FreeCodeCamp React Hooks Cheatsheet",
+      "link": "https://www.freecodecamp.org/news/react-hooks-cheatsheet/",
+      "provider": "freeCodeCamp",
+      "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+      "category": "Cheat Sheet",
+      "description": "A practical cheatsheet covering essential React Hooks (useState, useEffect, etc.)—great for beginners."
+    },
+    {
+      "title": "Stack Overflow ReactJS Questions",
+      "link": "https://stackoverflow.com/questions/tagged/reactjs",
+      "provider": "Stack Overflow",
+      "logo": "https://stackoverflow.com/favicon.ico",
+      "category": "Q&A",
+      "description": "A community-driven Q&A hub for ReactJS where developers can ask questions and find answers to common problems."
+    },
+    {
+    "title": "Awesome React – Ecosystem Resources",
+    "link": "https://github.com/enaqx/awesome-react",
+    "provider": "enaqx",
+    "logo": "https://github.githubassets.com/favicons/favicon.svg",
+    "category": "Curated Resources",
+    "description": "A large curated collection of high-quality React ecosystem resources including tools, libraries, tutorials, and patterns."
+  },
+  {
+    "title": "Bulletproof React",
+    "link": "https://github.com/alan2207/bulletproof-react",
+    "provider": "alan2207",
+    "logo": "https://github.githubassets.com/favicons/favicon.svg",
+    "category": "Architecture & Patterns",
+    "description": "An opinionated architecture guide for scalable and maintainable production-ready React applications."
+  },
+  {
+    "title": "React Bits (Patterns & Tricks)",
+    "link": "https://github.com/vasanthk/react-bits",
+    "provider": "VasanthK",
+    "logo": "https://github.githubassets.com/favicons/favicon.svg",
+    "category": "Patterns & Tricks",
+    "description": "A rich collection of React patterns, performance optimizations, anti-patterns, and styling techniques."
+  },
+  {
+    "title": "30 Days of React",
+    "link": "https://github.com/Asabeneh/30-Days-Of-React",
+    "provider": "Asabeneh",
+    "logo": "https://github.githubassets.com/favicons/favicon.svg",
+    "category": "Learning Challenge",
+    "description": "A step-by-step 30-day guide to mastering React concepts through daily hands-on exercises."
+  },
+  
+  {
+    "title": "React in Patterns",
+    "link": "https://github.com/krasimir/react-in-patterns",
+    "provider": "krasimir",
+    "logo": "https://github.githubassets.com/favicons/favicon.svg",
+    "category": "Design Patterns",
+    "description": "A free book-style repo explaining design patterns and best practices for structuring React apps."
+  },
+  {
+    "title": "Advanced State Management Techniques in ReactJs",
+    "link": "https://medium.com/poojanarawad/advanced-state-management-techniques-in-reactjs-5a51e7cd88a9",
+    "provider": "Pooja Narawad",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Medium_logo_Monogram.svg/512px-Medium_logo_Monogram.svg.png",
+    "category": "State Management",
+    "description": "Covers Context API, Redux, MobX, Recoil, normalized state, selectors, and handling asynchronous state updates—ideal for scalable app design."
+  },
+  {
+    "title": "Best Practices and Design Patterns in React.js for High-Quality Applications",
+    "link": "https://medium.com/@obrm770/best-practices-and-design-patterns-in-react-js-for-high-quality-applications-6b203be747fb",
+    "provider": "Ori Baram",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Medium_logo_Monogram.svg/512px-Medium_logo_Monogram.svg.png",
+    "category": "Design Patterns",
+    "description": "Discusses using Context, reducers, component modularization, performance optimizations, and coding standards for building scalable React apps."
+  },
+  {
+    "title": "Master React.js Design Patterns with Real-World Examples — State Management Part 3",
+    "link": "https://mustafa-albaghdadi.medium.com/master-react-js-design-patterns-with-real-world-examples-state-management-patters-part-3-900675366859",
+    "provider": "Mustafa Albaghdadi",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Medium_logo_Monogram.svg/512px-Medium_logo_Monogram.svg.png",
+    "category": "Design Patterns",
+    "description": "Explores real-world React state management patterns like HOCs, render props, and Context API best practices in a practical context."
+  },
+  {
+    "title": "React Design Patterns: Best Practices for Building Scalable and Maintainable Apps",
+    "link": "https://medium.com/@agamkakkar/react-design-patterns-best-practices-for-building-scalable-and-maintainable-apps-70a1220eba92",
+    "provider": "Agam Kakkar",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Medium_logo_Monogram.svg/512px-Medium_logo_Monogram.svg.png",
+    "category": "Design Patterns",
+    "description": "Covers state reducer patterns, composing custom hooks, and provider patterns for clean and scalable React architecture."
+  },
+  {
+    "title": "React Interview Questions with Answers – Version 2",
+    "link": "https://medium.com/front-end-weekly/react-interview-questions-with-answers-version-2-cf106b50a992",
+    "provider": "Syed Khizaruddin / Frontend Weekly",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Medium_logo_Monogram.svg/512px-Medium_logo_Monogram.svg.png",
+    "category": "Interview Prep",
+    "description": "A curated set of React interview Q&A—covering error boundaries, PropTypes, SSR, code splitting, hooks, reconciliation, and more."
+  },
+  {
+    "title": "Top 30 React Interview Questions for Freshers",
+    "link": "https://ashishmisal.medium.com/top-30-react-interview-questions-for-freshers-74139e27cadd",
+    "provider": "Ashish Misal",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Medium_logo_Monogram.svg/512px-Medium_logo_Monogram.svg.png",
+    "category": "Interview Prep",
+    "description": "Quick-read guide featuring 30 fundamental React interview questions commonly asked in entry-level positions."
+  }
+  
+  ]
+  

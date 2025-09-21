@@ -1,0 +1,42 @@
+[
+    {
+        "title": "JavaScript MDN Documentation",
+        "link": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+        "provider": "MDN Web Docs",
+        "logo": "https://developer.mozilla.org/favicon-48x48.png",
+        "category": "Documentation",
+        "description": "Comprehensive JavaScript reference and guides"
+    },
+    {
+        "title": "JavaScript Info Tutorial",
+        "link": "https://javascript.info/",
+        "provider": "JavaScript.info",
+        "logo": "https://javascript.info/img/favicon/favicon.png",
+        "category": "Tutorial",
+        "description": "Modern JavaScript tutorial from basics to advanced topics"
+    },
+    {
+        "title": "FreeCodeCamp JavaScript Course",
+        "link": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Free interactive JavaScript course with certifications"
+    },
+    {
+        "title": "W3Schools JavaScript Reference",
+        "link": "https://www.w3schools.com/js/",
+        "provider": "W3Schools",
+        "logo": "https://www.w3schools.com/favicon.ico",
+        "category": "Reference",
+        "description": "JavaScript tutorials and references with examples"
+    },
+    {
+        "title": "JavaScript StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/javascript",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven JavaScript questions and answers"
+    }
+]

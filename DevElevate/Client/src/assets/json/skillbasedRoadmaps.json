@@ -1,0 +1,174 @@
+[
+    {
+        "skill_name": "Computer Science",
+        "skill_link": "https://roadmap.sh/computer-science",
+        "icon": "💻"
+    },
+    {
+        "skill_name": "React",
+        "skill_link": "https://roadmap.sh/react",
+        "icon": "⚛️"
+    },
+    {
+        "skill_name": "Vue",
+        "skill_link": "https://roadmap.sh/vue",
+        "icon": "💚"
+    },
+    {
+        "skill_name": "Angular",
+        "skill_link": "https://roadmap.sh/angular",
+        "icon": "🅰️"
+    },
+    {
+        "skill_name": "JavaScript",
+        "skill_link": "https://roadmap.sh/javascript",
+        "icon": "🟨"
+    },
+    {
+        "skill_name": "Node.js",
+        "skill_link": "https://roadmap.sh/nodejs",
+        "icon": "🟢"
+    },
+    {
+        "skill_name": "TypeScript",
+        "skill_link": "https://roadmap.sh/typescript",
+        "icon": "🔷"
+    },
+    {
+        "skill_name": "Python",
+        "skill_link": "https://roadmap.sh/python",
+        "icon": "🐍"
+    },
+    {
+        "skill_name": "SQL",
+        "skill_link": "https://roadmap.sh/sql",
+        "icon": "🗄️"
+    },
+    {
+        "skill_name": "System Design",
+        "skill_link": "https://roadmap.sh/system-design",
+        "icon": "🏗️"
+    },
+    {
+        "skill_name": "API Design",
+        "skill_link": "https://roadmap.sh/api-design",
+        "icon": "🔗"
+    },
+    {
+        "skill_name": "ASP.NET Core",
+        "skill_link": "https://roadmap.sh/aspnet-core",
+        "icon": "🔵"
+    },
+    {
+        "skill_name": "Java",
+        "skill_link": "https://roadmap.sh/java",
+        "icon": "☕"
+    },
+    {
+        "skill_name": "C++",
+        "skill_link": "https://roadmap.sh/cpp",
+        "icon": "➕"
+    },
+    {
+        "skill_name": "Flutter",
+        "skill_link": "https://roadmap.sh/flutter",
+        "icon": "🦋"
+    },
+    {
+        "skill_name": "Spring Boot",
+        "skill_link": "https://roadmap.sh/spring-boot",
+        "icon": "🍃"
+    },
+    {
+        "skill_name": "Go",
+        "skill_link": "https://roadmap.sh/golang",
+        "icon": "🐹"
+    },
+    {
+        "skill_name": "Rust",
+        "skill_link": "https://roadmap.sh/rust",
+        "icon": "🦀"
+    },
+    {
+        "skill_name": "GraphQL",
+        "skill_link": "https://roadmap.sh/graphql",
+        "icon": "📊"
+    },
+    {
+        "skill_name": "Design and Architecture",
+        "skill_link": "https://roadmap.sh/software-design-architecture",
+        "icon": "🎨"
+    },
+    {
+        "skill_name": "Design System",
+        "skill_link": "https://roadmap.sh/design-system",
+        "icon": "🎯"
+    },
+    {
+        "skill_name": "React Native",
+        "skill_link": "https://roadmap.sh/react-native",
+        "icon": "📱"
+    },
+    {
+        "skill_name": "AWS",
+        "skill_link": "https://roadmap.sh/aws",
+        "icon": "☁️"
+    },
+    {
+        "skill_name": "Code Review",
+        "skill_link": "https://roadmap.sh/code-review",
+        "icon": "👀"
+    },
+    {
+        "skill_name": "Docker",
+        "skill_link": "https://roadmap.sh/docker",
+        "icon": "🐳"
+    },
+    {
+        "skill_name": "Kubernetes",
+        "skill_link": "https://roadmap.sh/kubernetes",
+        "icon": "⚙️"
+    },
+    {
+        "skill_name": "Linux",
+        "skill_link": "https://roadmap.sh/linux",
+        "icon": "🐧"
+    },
+    {
+        "skill_name": "MongoDB",
+        "skill_link": "https://roadmap.sh/mongodb",
+        "icon": "🍃"
+    },
+
+    {
+        "roadmap_name": "UX Design",
+        "roadmap_link": "https://roadmap.sh/ux-design",
+        "icon": "✨"
+    },
+
+    {
+        "skill_name": "Prompt Engineering",
+        "skill_link": "https://roadmap.sh/prompt-engineering",
+        "icon": "🤖"
+    },
+    {
+        "skill_name": "Terraform",
+        "skill_link": "https://roadmap.sh/terraform",
+        "icon": "🏗️"
+    },
+    {
+        "skill_name": "Data Structures & Algorithms",
+        "skill_link": "https://roadmap.sh/datastructures-and-algorithms",
+        "icon": "🧮"
+    },
+    {
+        "skill_name": "Git and GitHub",
+        "skill_link": "https://roadmap.sh/git-github",
+        "icon": "🐙"
+    },
+    {
+        "skill_name": "Redis",
+        "skill_link": "https://roadmap.sh/redis",
+        "icon": "🔴"
+    }
+]

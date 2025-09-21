@@ -1,0 +1,83 @@
+[
+  {
+    "course_category": "Spring Boot",
+    "course_image": "https://i.ytimg.com/vi/35EQXmHKZYs/hqdefault.jpg",
+    "course_title": "Spring Boot Tutorial for Beginners",
+    "creator_image": "https://dtmvamahs40ux.cloudfront.net/gl-academy/faculty/faculty-120-Naveem%20Reddy%20Circle.png",
+    "creator_name": "Telusko",
+    "creator_youtube_link": "https://youtu.be/35EQXmHKZYs?si=McnQ2fgat56RWVw8",
+    "description": "Beginner-friendly introduction to Spring Boot covering REST APIs, dependency injection, and project setup."
+  },
+  {
+    "course_category": "Spring Boot",
+    "course_image": "https://i.ytimg.com/vi/9SGDpanrc8U/hqdefault.jpg",
+    "course_title": "Spring Boot Full Course [2021]",
+    "creator_image": "https://amigoscode.com/assets/instructors/no-background/nelson.webp",
+    "creator_name": "Amigoscode",
+    "creator_youtube_link": "https://youtu.be/9SGDpanrc8U?si=ad1to7mLKSEZ90pc",
+    "description": "Comprehensive Spring Boot full course by Telusko covering REST APIs, MVC framework, and advanced configurations."
+  },
+  {
+    "course_category": "Spring Boot",
+    "course_image": "https://i.ytimg.com/vi/gJrjgg1KVL4/hqdefault.jpg",
+    "course_title": "Spring Boot Tutorial for Beginners [2025]",
+    "creator_image": "https://yt3.googleusercontent.com/HCv0fXFEEcD0HRyF0_qR1K7b7qO3KCzmIoyH1DEJYB94CIUFhIE5i2t2IDIPX97W1-DK4hegww=s160-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Programming with Mosh",
+    "creator_youtube_link": "https://youtu.be/gJrjgg1KVL4?si=a6sUtnOpOk8o7ghF",
+    "description": "Up-to-date (2025) Spring Boot tutorial—learn basics to advanced concepts and build real-world apps."
+  },
+  {
+    "course_category": "Spring Boot",
+    "course_image": "https://i.ytimg.com/vi/-Fe0zk-F4OA/hqdefault.jpg",
+    "course_title": "Spring Framework & Spring Boot Tutorial with Project",
+    "creator_image": "https://dtmvamahs40ux.cloudfront.net/gl-academy/faculty/faculty-120-Naveem%20Reddy%20Circle.png",
+    "creator_name": "Telusko",
+    "creator_youtube_link": "https://youtu.be/-Fe0zk-F4OA?si=fkS6YJCXIXfo6TF_",
+    "description": "In-depth project-based Spring Framework and Spring Boot tutorial by Telusko."
+  },
+  {
+    "course_category": "Spring Boot",
+    "course_image": "https://i.ytimg.com/vi/vtPkZShrvXQ/hqdefault.jpg",
+    "course_title": "Spring Boot Crash Course",
+    "creator_image": "https://amigoscode.com/assets/instructors/no-background/nelson.webp",
+    "creator_name": "Amigoscode",
+    "creator_youtube_link": "https://youtu.be/vtPkZShrvXQ?si=7PD2Z98b3m_DaH6q",
+    "description": "Learn Spring Boot by building a RESTful API in this crash course by Amigoscode."
+  },
+  {
+    "course_category": "Spring Boot",
+    "course_image": "https://i.ytimg.com/vi/nKE8pqvhrs8/hqdefault.jpg",
+    "course_title": "Why You SHOULD Learn Spring Boot",
+    "creator_image": "https://yt3.googleusercontent.com/Hkx2BZc71IV_M9wosWj-lS-8fHSAcPpLaDkfZHvDnn1yULUAqQSCPXyyG1Ul3rGTypc5-mv-iA=s160-c-k-c0x00ffffff-no-rj",
+    "creator_name": "CodeHead",
+    "creator_youtube_link": "https://youtu.be/nKE8pqvhrs8?si=IMhtAY2J3CLTFGrR",
+    "description": "Spring Boot is fast, secure, scalable and doesn't make you question your life choices."
+  },
+  {
+    "course_category": "Spring Boot",
+    "course_image": "https://i.ytimg.com/vi/5rNk7m_zlAg/hqdefault.jpg",
+    "course_title": "Spring Boot & Spring Data JPA – Complete Course",
+   "creator_image": "https://yt3.googleusercontent.com/lN_qKLHlrrbGS_uEj-62MWeSsx7W2biOFfk2Dqz-mX1ConUV3Rop3fNeL24uZXx-77amh_c-Ng=s160-c-k-c0x00ffffff-no-rj",
+    "creator_name": "freeCodeCamp.org",
+    "creator_youtube_link": "https://youtu.be/5rNk7m_zlAg?si=uiC-gLnzvz-Y8KCf",
+    "description": "Learn how to use Spring Boot and Spring Data JPA in this full course for beginners."
+  },
+  {
+    "course_category": "Spring Boot",
+    "course_image": "https://i.ytimg.com/vi/oGhc5Z-WJSw/hqdefault.jpg",
+    "course_title": "Spring Boot, Spring Security, JWT Course – Shopping Cart ...",
+    "creator_image": "https://yt3.googleusercontent.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s900-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Java Guides",
+    "creator_youtube_link": "https://youtu.be/oGhc5Z-WJSw?si=89bTc4YQ8Cr0o5f7",
+    "description": "Master Spring Boot and Spring Security by building a shopping cart backend project."
+  },
+  {
+    "course_category": "Spring Boot",
+    "course_image": "https://i.ytimg.com/vi/Kq-DRboTVrc/hqdefault.jpg",
+    "course_title": "Latest Java Spring Boot Tutorial for Beginners | Spring Boot ...",
+    "creator_image": "https://yt3.googleusercontent.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s900-c-k-c0x00ffffff-no-rj",
+    "creator_name": "freeCodeCamp.org",
+    "creator_youtube_link": "https://youtu.be/Kq-DRboTVrc?si=c0cFVJA30kC2FbPm",
+    "description": "Spring Boot 3 Full Course for beginners in 2025—comprehensive 15-hour tutorial."
+  }
+]

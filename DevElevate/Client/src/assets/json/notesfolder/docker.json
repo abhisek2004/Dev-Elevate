@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Docker Official Documentation",
+        "link": "https://docs.docker.com/",
+        "provider": "Docker",
+        "logo": "https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png",
+        "category": "Documentation",
+        "description": "Comprehensive official Docker documentation covering containers, images, and CLI usage"
+    },
+    {
+        "title": "Docker Tutorial - W3Schools",
+        "link": "https://www.w3schools.com/whatis/whatis_docker.asp",
+        "provider": "W3Schools",
+        "logo": "https://www.w3schools.com/favicon.ico",
+        "category": "Tutorial",
+        "description": "Beginner-friendly Docker tutorial introducing containers and basic commands"
+    },
+    {
+        "title": "FreeCodeCamp Docker Course",
+        "link": "https://www.freecodecamp.org/news/docker-simplified/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Free interactive guide to Docker, containerization, and deployment"
+    },
+    {
+        "title": "Play with Docker Labs",
+        "link": "https://labs.play-with-docker.com/",
+        "provider": "Docker Labs",
+        "logo": "https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png",
+        "category": "Hands-on Lab",
+        "description": "Free online labs to practice Docker commands and container orchestration"
+    },
+    {
+        "title": "Docker StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/docker",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven Docker questions and solutions for real-world use cases"
+    }
+]

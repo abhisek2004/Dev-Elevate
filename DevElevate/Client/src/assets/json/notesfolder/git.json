@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Git Official Documentation",
+        "link": "https://git-scm.com/doc",
+        "provider": "Git",
+        "logo": "https://git-scm.com/images/favicon.png",
+        "category": "Documentation",
+        "description": "Official Git documentation covering installation, commands, and workflows"
+    },
+    {
+        "title": "GitHub Docs",
+        "link": "https://docs.github.com/en",
+        "provider": "GitHub",
+        "logo": "https://github.githubassets.com/favicons/favicon.png",
+        "category": "Documentation",
+        "description": "Comprehensive GitHub guides including repository management, collaboration, and workflows"
+    },
+    {
+        "title": "FreeCodeCamp Git & GitHub Course",
+        "link": "https://www.freecodecamp.org/news/learn-the-basics-of-git-and-github/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Beginner-friendly guide to learn Git version control and GitHub collaboration"
+    },
+    {
+        "title": "Git Tutorial - W3Schools",
+        "link": "https://www.w3schools.com/git/",
+        "provider": "W3Schools",
+        "logo": "https://www.w3schools.com/favicon.ico",
+        "category": "Tutorial",
+        "description": "Step-by-step Git tutorial covering basic commands, branching, and merging"
+    },
+    {
+        "title": "Git StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/git",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven Git and GitHub questions and solutions"
+    }
+]
