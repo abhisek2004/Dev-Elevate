@@ -1,8 +1,10 @@
-import React, { useState, useCallback } from 'react';
-import { Play, Save, Lightbulb, Zap, Settings } from 'lucide-react';
-import { languages } from '../../Data/languages';
-import type { Language } from '../../Types';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { Play, Save, Lightbulb, Zap, Settings } from "lucide-react";
+import { languages } from "../../Data/languages";
+import type { Language } from "../../Types";
+import { motion, AnimatePresence } from "framer-motion";
+import * as monaco from "monaco-editor";
+import Editor, { Monaco } from "@monaco-editor/react";
 
 interface CodeEditorProps {
   initialCode?: string;
@@ -16,40 +18,96 @@ interface CodeEditorProps {
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({
-  initialCode = '',
+  initialCode = "",
   language,
   onLanguageChange,
   onCodeChange,
   onRun,
   onSubmit,
   isRunning = false,
-  isSubmitting = false
+  isSubmitting = false,
 }) => {
   const [code, setCode] = useState(initialCode);
-  const [theme, setTheme] = useState<'vs-dark' | 'monokai'>('vs-dark');
+  const [theme, setTheme] = useState<"vs-dark" | "vs">("vs-dark");
   const [showSettings, setShowSettings] = useState(false);
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
-  const handleCodeChange = useCallback((value: string | undefined) => {
-    const newCode = value || '';
-    setCode(newCode);
-    onCodeChange(newCode);
-  }, [onCodeChange]);
+  const handleCodeChange = useCallback(
+    (value: string | undefined) => {
+      const newCode = value || "";
+      setCode(newCode);
+      onCodeChange(newCode);
+    },
+    [onCodeChange]
+  );
 
-  const currentLanguage = languages.find(lang => lang.id === language);
+  // When language changes, update the Monaco editor model
+  useEffect(() => {
+    if (editorRef.current) {
+      const currentModel = editorRef.current.getModel();
+      if (currentModel) {
+        monaco.editor.setModelLanguage(
+          currentModel,
+          getMonacoLanguage(language)
+        );
+      }
+    }
+  }, [language]);
+
+  // Update editor content when initialCode changes
+  useEffect(() => {
+    if (editorRef.current && initialCode !== code) {
+      setCode(initialCode);
+      editorRef.current.setValue(initialCode);
+    }
+  }, [initialCode]);
+
+  const currentLanguage = languages.find((lang) => lang.id === language);
+
+  // Map our language IDs to Monaco language IDs
+  const getMonacoLanguage = (languageId: string): string => {
+    const lang = languages.find((l) => l.id === languageId);
+    return lang?.monacoLanguage || "plaintext";
+  };
+
+  // Handle Monaco editor mount
+  const handleEditorDidMount = (
+    editor: monaco.editor.IStandaloneCodeEditor,
+    monaco: Monaco
+  ) => {
+    editorRef.current = editor;
+
+    // Add any custom editor configurations here
+    editor.addAction({
+      id: "run-code",
+      label: "Run Code",
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter],
+      run: () => onRun(code, language),
+    });
+
+    editor.addAction({
+      id: "submit-code",
+      label: "Submit Solution",
+      keybindings: [
+        monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.Enter,
+      ],
+      run: () => onSubmit(code, language),
+    });
+  };
 
   const editorOptions = {
     minimap: { enabled: false },
     fontSize: 14,
     lineHeight: 1.5,
-    fontFamily: 'JetBrains Mono, Monaco, Cascadia Code, Roboto Mono, monospace',
+    fontFamily: "JetBrains Mono, Monaco, Cascadia Code, Roboto Mono, monospace",
     scrollBeyondLastLine: false,
-    renderLineHighlight: 'line' as const,
+    renderLineHighlight: "line" as const,
     selectOnLineNumbers: true,
     automaticLayout: true,
     tabSize: 2,
     insertSpaces: true,
-    wordWrap: 'on' as const,
-    bracketPairColorization: { enabled: true }
+    wordWrap: "on" as const,
+    bracketPairColorization: { enabled: true },
   };
 
   return (
@@ -68,13 +126,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
               </option>
             ))}
           </select>
-          
+
           <div className="text-sm text-gray-400">
-            {currentLanguage?.name} • {code.split('\n').length} lines
+            {currentLanguage?.name} • {code.split("\n").length} lines
           </div>
         </div>
-        
-        <div className="flex items-center space-x-2">
+
+        <div className="flex flex-wrap items-center gap-2">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -83,7 +141,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           >
             <Settings className="w-4 h-4" />
           </motion.button>
-          
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -92,7 +150,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
             <Lightbulb className="w-4 h-4" />
             <span>Hint</span>
           </motion.button>
-          
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -105,9 +163,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
             ) : (
               <Play className="w-4 h-4" />
             )}
-            <span>{isRunning ? 'Running...' : 'Run'}</span>
+            <span>{isRunning ? "Running..." : "Run"}</span>
           </motion.button>
-          
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -120,7 +178,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
             ) : (
               <Zap className="w-4 h-4" />
             )}
-            <span>{isSubmitting ? 'Submitting...' : 'Submit'}</span>
+            <span>{isSubmitting ? "Submitting..." : "Submit"}</span>
           </motion.button>
         </div>
       </div>
@@ -130,7 +188,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
         {showSettings && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
+            animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             className="p-4 bg-gray-900 border-b border-gray-700"
           >
@@ -138,11 +196,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
               <label className="text-sm text-gray-300">Theme:</label>
               <select
                 value={theme}
-                onChange={(e) => setTheme(e.target.value as 'vs-dark' | 'monokai')}
+                onChange={(e) => setTheme(e.target.value as "vs-dark" | "vs")}
                 className="px-3 py-1 text-white bg-gray-800 rounded border border-gray-600 focus:border-electric-400 focus:outline-none"
               >
                 <option value="vs-dark">Dark</option>
-                <option value="monokai">Monokai</option>
+                <option value="vs">Light</option>
               </select>
             </div>
           </motion.div>
@@ -151,17 +209,20 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
 
       {/* Editor */}
       <div className="flex-1 min-h-0">
-        <textarea
+        <Editor
+          height="100%"
+          language={getMonacoLanguage(language)}
           value={code}
-          onChange={(e) => handleCodeChange(e.target.value)}
-          className="p-4 w-full h-full font-mono text-sm text-white bg-gray-800 border-none outline-none resize-none"
-          placeholder="// Start coding here..."
-          style={{ 
-            fontFamily: 'JetBrains Mono, Monaco, Cascadia Code, Roboto Mono, monospace',
-            fontSize: '14px',
-            lineHeight: '1.5',
-            tabSize: 2
-          }}
+          theme={theme}
+          onChange={handleCodeChange}
+          onMount={handleEditorDidMount}
+          options={editorOptions}
+          className="overflow-hidden"
+          loading={
+            <div className="flex items-center justify-center h-full text-gray-400">
+              Loading editor...
+            </div>
+          }
         />
       </div>
     </div>
