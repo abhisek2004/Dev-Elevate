@@ -1,0 +1,52 @@
+{
+    "Introduction": ["Introduction", "Execution", "Node.js Installation"],
+    "JavaScript Variables": [
+        "What are Variables",
+        "Variable Naming Rules",
+        "Primitives and Objects",
+        "Operators and Expressions",
+        "var vs let vs const"
+    ],
+    "JavaScript Basics": [
+        "If else conditionals",
+        "If else ladder",
+        "Switch case",
+        "Ternary Operator",
+        "For Loops",
+        "While Loops",
+        "Functions"
+    ],
+    "JavaScript Objects": [
+        "Strings",
+        "Arrays and Array Methods",
+        "Loops with Arrays",
+        "Map Filter Reduce",
+        "Date",
+        "Math",
+        "Number",
+        "Boolean"
+    ],
+    "DOM and BOM": [
+        "Window Object",
+        "History Object",
+        "Navigator Object",
+        "Screen Object",
+        "Document Object",
+        "getElementById",
+        "getElementsByClassName",
+        "getElementsByName",
+        "getElementsByTagName",
+        "innerHTML",
+        "outerHTML"
+    ],
+    "OOPS": [
+        "Class",
+        "Objects",
+        "Constructor",
+        "Static Method",
+        "Encapsulation",
+        "Inheritance",
+        "Polymorphism",
+        "Abstraction"
+    ]
+}
