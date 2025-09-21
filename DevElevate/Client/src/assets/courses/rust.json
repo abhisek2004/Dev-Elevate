@@ -1,0 +1,65 @@
+[
+{
+"course_category": "Rust",
+"course_image": "https://i.ytimg.com/vi/ygL_xcavzQ4/hqdefault.jpg",
+"course_title": "Rust Programming Tutorial for Beginners",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_naavCy-rkR4iU851a1vMh7LrBa_Hbxf3qpnRiMqK9IEZc=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "Derek Banas",
+"creator_youtube_link": "https://www.youtube.com/watch?v=ygL_xcavzQ4",
+"description": "Learn Rust from scratch. Covers syntax, ownership, borrowing, lifetimes, traits, and error handling in a beginner-friendly way."
+},
+{
+"course_category": "Rust",
+"course_image": "https://i.ytimg.com/vi/BpPEoZW5IiY/hqdefault.jpg",
+"course_title": "Rust Programming Full Course - 8 Hours",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "freeCodeCamp.org",
+"creator_youtube_link": "https://youtu.be/BpPEoZW5IiY?si=-TmwHxVzKGKBijPY",
+"description": "A complete 8-hour Rust course from basics to advanced concepts, including memory safety, concurrency, and real-world projects."
+},
+{
+"course_category": "Rust",
+"course_image": "https://i.ytimg.com/vi/bnnacleqg6k/hqdefault.jpg",
+"course_title": "Learn Rust in One Video",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_ndg1Q0vocIKu0U3Ks9SLkSCjZbGiZ2W1rhSsJoqZTgFK4=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "Caleb Curry",
+"creator_youtube_link": "https://www.youtube.com/watch?v=jAm7xrRxEUE&list=PL_c9BZzLwBRIymgB73pHXIgazpB-uszKU",
+"description": "A super fast crash course covering the essentials of Rust in one sitting."
+},
+{
+"course_category": "Rust",
+"course_image": "https://i.ytimg.com/vi/5C_HPTJg5ek/hqdefault.jpg",
+"course_title": "Rust Programming Crash Course",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_mKzklyPPhghBJQH5H3HpZ108YcE618DBRLAvRUD1AjKNw=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "Fireship",
+"creator_youtube_link": "https://youtu.be/5C_HPTJg5ek?si=TbdWUekvWym-OCeL",
+"description": "A quick start guide to learning Rust with practical coding examples."
+},
+{
+"course_category": "Rust",
+"course_image": "https://i.ytimg.com/vi/OX9HJsJUDxA/hqdefault.jpg",
+"course_title": "Rust for JavaScript Developers",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_nhsb1R9TQk_lpPs8bV8s2Pk5xoTCQEUn6i4C-Wtrt9Dw=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "Let's Get Rusty",
+"creator_youtube_link": "https://www.youtube.com/watch?v=OX9HJsJUDxA",
+"description": "A practical Rust tutorial for web developers and those coming from JavaScript backgrounds."
+},
+{
+"course_category": "Rust",
+"course_image": "https://i.ytimg.com/vi/d1uraoHM8Gg/hqdefault.jpg",
+"course_title": "Rust Crash Course for Beginners",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_np5QbjchJOQKKpyqO3Uo7sg3YUaFx2EWN1kCQ0N7HRrQ=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "Google TechTalks",
+"creator_youtube_link": "https://www.youtube.com/watch?v=d1uraoHM8Gg",
+"description": "Get started with Rust by building simple but meaningful projects, focusing on ownership and borrowing."
+},
+{
+"course_category": "Rust",
+"course_image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
+"course_title": "Rust Tutorial for Beginners - Full Course (With Notes and Project Ideas)",
+"creator_image": "https://yt3.ggpht.com/C25u3DcSguL-wd3GaO110Q1fyO5ClTraTjtF72kJhZtpQwuAv3zLmb7K-ZLJecQQJBVvP1McmA=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "Harkirat Singh",
+"creator_youtube_link": "https://www.youtube.com/watch?v=qP7LzZqGh30",
+"description": "Advanced Rust course for experienced developers. Covers lifetimes deeply, generics, traits, unsafe code, and building scalable Rust applications."
+}
+]

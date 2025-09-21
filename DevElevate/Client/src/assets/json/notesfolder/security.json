@@ -1,0 +1,42 @@
+[
+    {
+        "title": "OWASP Top Ten",
+        "link": "https://owasp.org/www-project-top-ten/",
+        "provider": "OWASP",
+        "logo": "https://owasp.org/images/OWASP_Favicon.ico",
+        "category": "Documentation",
+        "description": "Comprehensive guide on the top 10 security risks for web applications and mitigation strategies"
+    },
+    {
+        "title": "FreeCodeCamp Cybersecurity Guide",
+        "link": "https://www.freecodecamp.org/news/cybersecurity-tutorial-for-beginners/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Tutorial",
+        "description": "Beginner-friendly guide covering cybersecurity basics, common attacks, and best practices"
+    },
+    {
+        "title": "Cybersecurity and Infrastructure Security Agency (CISA)",
+        "link": "https://www.cisa.gov/cybersecurity",
+        "provider": "CISA",
+        "logo": "https://www.cisa.gov/sites/default/files/cisa_favicon.ico",
+        "category": "Documentation",
+        "description": "Official resources on cybersecurity threats, guidelines, and protection measures"
+    },
+    {
+        "title": "Krebs on Security",
+        "link": "https://krebsonsecurity.com/",
+        "provider": "Krebs on Security",
+        "logo": "https://krebsonsecurity.com/wp-content/themes/kb/images/favicon.ico",
+        "category": "Blog / Tutorials",
+        "description": "News and in-depth articles about cybersecurity trends, attacks, and defenses"
+    },
+    {
+        "title": "Security StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/security",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven questions and answers on cybersecurity concepts, tools, and best practices"
+    }
+]

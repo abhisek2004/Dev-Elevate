@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Microservices Guide - Microsoft",
+        "link": "https://learn.microsoft.com/en-us/azure/architecture/microservices/",
+        "provider": "Microsoft Docs",
+        "logo": "https://learn.microsoft.com/favicon.ico",
+        "category": "Documentation",
+        "description": "Comprehensive guide on microservices architecture, principles, and best practices"
+    },
+    {
+        "title": "FreeCodeCamp Microservices Tutorial",
+        "link": "https://www.freecodecamp.org/news/microservices-tutorial/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Tutorial",
+        "description": "Beginner-friendly tutorial covering the concepts, design patterns, and implementation of microservices"
+    },
+    {
+        "title": "Microservices.io Patterns",
+        "link": "https://microservices.io/patterns/index.html",
+        "provider": "Chris Richardson",
+        "logo": "https://microservices.io/favicon.ico",
+        "category": "Guide",
+        "description": "Detailed catalog of microservices design patterns, architecture strategies, and best practices"
+    },
+    {
+        "title": "Docker Microservices Hands-On",
+        "link": "https://hub.docker.com/editions/community/docker-ce-desktop-mac/",
+        "provider": "Docker",
+        "logo": "https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png",
+        "category": "Hands-on Lab",
+        "description": "Practice building and deploying microservices with Docker containers"
+    },
+    {
+        "title": "Microservices StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/microservices",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven questions and answers on microservices architecture, implementation, and patterns"
+    }
+]

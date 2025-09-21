@@ -1,0 +1,82 @@
+[
+  {
+    "_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e71"},
+    "course_category": "Low Level Design",
+    "course_title": "System Design Playlist",
+    "creator_name": "Aditya Tondon-CoderArmy",
+    "creator_youtube_link": "https://youtube.com/playlist?list=PLQEaRBV9gAFvzp6XhcNFpk1WdOcyVo9qT&si=5WQoxkHCOXd1HXvx",
+    "creator_image": "https://yt3.ggpht.com/L5V_uwm8Dg7o40NU9gQ_c-r3TC6dkMxVil0fBG_N_wYnnSaHZc1dVYNlRNUy4U1gd5ViZR9V=s48-c-k-c0x00ffffff-no-rj",
+    "course_image": "https://i.ytimg.com/vi/AK0hu0Zxua4/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLB7eQRR-TT_-xeWm_H-1FKK2a-Q2wg",
+    "description": "This is going to be a playlist on System Design, where we will cover Low Level Design from zero to Advance level. This LLD playlist is one stop solution for you."
+  },
+  {
+    "_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e72"},
+    "course_category": "Low Level Design",
+    "course_title": "Low Level Design + MultiThreading Course",
+    "creator_name": "Apna College",
+    "creator_youtube_link": "https://youtube.com/playlist?list=PLpxM6m39X_t-Rk9lZVVD4U6JycAAIIEDW&si=A3tMeM2NmH1A3I5d",
+    "creator_image": "https://yt3.googleusercontent.com/FEcjRtez5od8UowDo6tTt9WlE-MrIFEmcwPMTORmK9Swk6KCklOmA3xfIG9WuLWfNYfNThQE=s160-c-k-c0x00ffffff-no-rj",
+    "course_image": "https://i.ytimg.com/pl_c/PLpxM6m39X_t-Rk9lZVVD4U6JycAAIIEDW/studio_square_thumbnail.jpg?sqp=CJzj_MUG-oaymwEICKoDEPABSFqi85f_AwYI_9i2vgY=&rs=AOn4CLCZZayartw1LOt5LfZQmGpnJh81BQ",
+    "description": "This is a complete structured course of LLD. (Including Multi-threading). I BET YOU'LL NOT FIND ANYTHING EVEN CLOSE TO THIS PLAYLIST on Youtube 🗿"
+  },
+  {
+    "_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e73"},
+    "course_category": "Low Level Design",
+    "course_title": "Low Level Design",
+    "creator_name": "Gaurav Sen",
+    "creator_youtube_link": "https://youtube.com/playlist?list=PLMCXHnjXnTnvQVh7WsgZ8SurU1O2v_UM7&si=iYlQT08iTN9Oum2Z",
+    "creator_image": "https://yt3.ggpht.com/XKHaJyZ0UpbcT8j1bxGCq3hk52NWrTklEHnZLALYNdVCsOBue_ml9W8dhCTyp_e2xrfZ-D80SQ=s48-c-k-c0x00ffffff-no-rj",
+    "course_image": "https://i.ytimg.com/vi/gktZsX9Z8Kw/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDWyHaUwqu6dRkidt7IFOOjFspw-A",
+    "description": "Low level design is the breakdown of system requirements/specifications to object behaviours and relations."
+  },
+  {
+    "_id": {"$oid": "66b3e8a91f3aa6f2b2ff4e74"},
+    "course_category": "Low Level Design",
+    "course_title": "LLD from basic to Advance",
+    "creator_name": "Shreyansh",
+    "creator_youtube_link": "https://youtube.com/playlist?list=PL6W8uoQQ2c61X_9e6Net0WdYZidm7zooW&si=3IH-4ZqxTMADVp3s",
+    "creator_image": "https://yt3.googleusercontent.com/_zR6Uvi5wi2Jr98R9pj_YHcIAAXml9uX6PPRVa-5Er4EawidofoMQjvwLtft4kRXxoxNhfTCqQ=s160-c-k-c0x00ffffff-no-rj",
+    "course_image": "https://i.ytimg.com/vi/XI7zep97c-Y/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBaK2MOBtCr3gsnKibbVQQrb2x11w",
+    "description": "Complete Machine Learning course in Python covering supervised, unsupervised, and deep learning concepts."
+  },
+  {
+    "_id": {"$oid": "66b3e8a91f3aa6f2b2ff4e74"},
+    "course_category": "Low Level Design",
+    "course_title": "System Design",
+    "creator_name": "Piyush Garg",
+    "creator_youtube_link": "https://youtube.com/playlist?list=PLinedj3B30sBlBWRox2V2tg9QJ2zr4M3o&si=QFkEOEhHSRifnQS5",
+    "creator_image": "https://yt3.ggpht.com/3acddexuFlA5yKRS2--11NeqhCiik-0cntUPjk_QjlsA4ScmQUPWNmeBLweVUQjWXTCLT26lsw=s48-c-k-c0x00ffffff-no-rj",
+    "course_image": "https://i.ytimg.com/vi/lFeYU31TnQ8/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDZnITdOVZtTBTGQyD9nXxL7BKkSw",
+    "description": "Welcome to the ultimate System Design Playlist, where we discuss and learn all the important concepts and components of System Design. We will talk about scaling."
+  },
+  {
+    "_id": {"$oid": "66b3e8a91f3aa6f2b2ff4e74"},
+    "course_category": "Low Level Design",
+    "course_title": "System Design",
+    "creator_name": "Piyush Garg",
+    "creator_youtube_link": "https://youtube.com/playlist?list=PLinedj3B30sBlBWRox2V2tg9QJ2zr4M3o&si=QFkEOEhHSRifnQS5",
+    "creator_image": "https://yt3.ggpht.com/3acddexuFlA5yKRS2--11NeqhCiik-0cntUPjk_QjlsA4ScmQUPWNmeBLweVUQjWXTCLT26lsw=s48-c-k-c0x00ffffff-no-rj",
+    "course_image": "https://i.ytimg.com/vi/lFeYU31TnQ8/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDZnITdOVZtTBTGQyD9nXxL7BKkSw",
+    "description": "Welcome to the ultimate System Design Playlist, where we discuss and learn all the important concepts and components of System Design. We will talk about scaling."
+  },
+  {
+    "_id": {"$oid": "66b3e8a91f3aa6f2b2ff4e74"},
+    "course_category": "Low Level Design",
+    "course_title": "System Design for Beginners",
+    "creator_name": "FreeCode-Camp",
+    "creator_youtube_link": "https://youtu.be/m8Icp_Cid5o?si=RjWVnx7UtS-SWHr3",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+    "course_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+    "description": "This course is a detailed introduction to system design for software developers and engineers."
+  },
+  {
+    "_id": {"$oid": "66b3e8a91f3aa6f2b2ff4e74"},
+    "course_category": "Low Level Design",
+    "course_title": "Low Level Design Primer Course",
+    "creator_name": "Sudo-code",
+    "creator_youtube_link": "https://youtube.com/playlist?list=PLTCrU9sGybupCpY20eked6blbHI4zZ55k&si=1EQe466ja-IiF9cj",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_nP6MV3DnN1vGxuBeyQTcE48ryaKzjpPVYg5yExDul83w=s48-c-k-c0x00ffffff-no-rj",
+    "course_image": "https://i.ytimg.com/vi/B3zrIwz_t4M/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA_xXU1D8ghI_Vz5lPJA3VjiiG1jQ",
+    "description": "This course is a detailed introduction to system design with few problems."
+  }
+]

@@ -1,0 +1,42 @@
+[
+    {
+        "title": "CSS MDN Documentation",
+        "link": "https://developer.mozilla.org/en-US/docs/Web/CSS",
+        "provider": "MDN Web Docs",
+        "logo": "https://developer.mozilla.org/favicon-48x48.png",
+        "category": "Documentation",
+        "description": "Comprehensive CSS reference, guides, and browser compatibility data"
+    },
+    {
+        "title": "CSS Tricks Guide",
+        "link": "https://css-tricks.com/guides/",
+        "provider": "CSS-Tricks",
+        "logo": "https://css-tricks.com/favicon.ico",
+        "category": "Guide",
+        "description": "Detailed CSS guides, tips, and tutorials for practical use cases"
+    },
+    {
+        "title": "FreeCodeCamp Responsive Web Design",
+        "link": "https://www.freecodecamp.org/learn/2022/responsive-web-design/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Free course covering CSS basics, flexbox, grid, and responsive design"
+    },
+    {
+        "title": "W3Schools CSS Tutorial",
+        "link": "https://www.w3schools.com/css/",
+        "provider": "W3Schools",
+        "logo": "https://www.w3schools.com/favicon.ico",
+        "category": "Tutorial",
+        "description": "CSS tutorials and references with examples for beginners"
+    },
+    {
+        "title": "CSS StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/css",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven CSS questions, answers, and best practices"
+    }
+]

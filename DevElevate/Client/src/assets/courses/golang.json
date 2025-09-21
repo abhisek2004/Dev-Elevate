@@ -1,0 +1,65 @@
+[
+  {
+    "course_category": "Go",
+    "course_image": "https://i.ytimg.com/vi/un6ZyFkqFKo/hqdefault.jpg",
+    "course_title": "Go Tutorial for Beginners",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "freeCodeCamp.org",
+    "creator_youtube_link": "https://youtu.be/un6ZyFkqFKo?si=oEKSW0GNbvqtBvxM",
+    "description": "Learn Go from scratch in this beginner-friendly tutorial. Covers syntax, variables, functions, and how to build simple Go applications."
+  },
+  {
+    "course_category": "Go",
+    "course_image": "https://i.ytimg.com/vi/446E-r0rXHI/hqdefault.jpg",
+    "course_title": "Go Full Course",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "FireShip",
+    "creator_youtube_link": "https://youtu.be/446E-r0rXHI?si=j6X8smF769ZmMdJm",
+    "description": "A complete Go programming course covering the language fundamentals, concurrency, error handling, and real-world projects."
+  },
+  {
+    "course_category": "Go",
+    "course_image": "https://i.ytimg.com/vi/yyUHQIec83I/hqdefault.jpg",
+    "course_title": "Go for Beginners - Crash Course",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_mKzklyPPhghBJQH5H3HpZ108YcE618DBRLAvRUD1AjKNw=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "TechWorld with Nana",
+    "creator_youtube_link": "https://youtu.be/yyUHQIec83I?si=qhGbFEw1Ph49fXlD",
+    "description": "A quick crash course to get started with Go. Learn Go syntax, data structures, and how to build small applications."
+  },
+  {
+    "course_category": "Go",
+    "course_image": "https://i.ytimg.com/vi/akosxcqJorU/hqdefault.jpg",
+    "course_title": "Go in 50 Seconds",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_mKzklyPPhghBJQH5H3HpZ108YcE618DBRLAvRUD1AjKNw=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "freeCodeCamp.org",
+    "creator_youtube_link": "https://youtu.be/akosxcqJorU?si=jFP9tYbywIbqbH5r",
+    "description": "A lightning-fast overview of what the Go programming language is and why it's important."
+  },
+  {
+    "course_category": "Go",
+    "course_image": "https://i.ytimg.com/vi/JoJ8Sw5Yb4c/hqdefault.jpg",
+    "course_title": "Advanced Go Patterns",
+    "creator_image": "https://yt3.ggpht.com/FtoScP7aO_Rfgh6QHJJMb_Xj3Yku17Cu7XY7ymSSxlIgAXybZvTdQ4n9v7BqmeGqXASzxBya8w=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Hitesh Choudhary",
+    "creator_youtube_link": "https://youtu.be/JoJ8Sw5Yb4c?si=Cwi4QDhgaA5xg5Pc",
+    "description": "Explore advanced patterns in Go, including concurrency, interfaces, and clean architecture approaches."
+  },
+  {
+    "course_category": "Go",
+    "course_image": "https://i.ytimg.com/vi/etSN4X_fCnM/hqdefault.jpg",
+    "course_title": "Go and Web Development Tutorial",
+    "creator_image": "https://yt3.ggpht.com/nv365KiAJyURPEBZyCh0SV3hSBnZXbvVXrzRwcNDfgUpXPn9-3_4PY0SkQrAJWnzQOxKqfUtrQ=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Net Ninja",
+    "creator_youtube_link": "https://youtu.be/etSN4X_fCnM?si=HnedmiFpuGzhYxju",
+    "description": "Learn how to use Go for web development. This tutorial covers HTTP servers, routing, and building backend APIs with Go."
+  },
+  {
+    "course_category": "Go",
+    "course_image": "https://i.ytimg.com/vi/YS4e4q9oBaU/hqdefault.jpg",
+    "course_title": "Go Pro Course - From Zero to Hero",
+    "creator_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+    "creator_name": "Simplilearn",
+    "creator_youtube_link": "https://youtu.be/YS4e4q9oBaU?si=hpk9TcZzUB2KDE9t",
+    "description": "Master Go from the basics to professional-level projects. Perfect for developers looking to use Go in enterprise applications."
+  }
+]

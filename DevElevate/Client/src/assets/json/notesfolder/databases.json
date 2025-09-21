@@ -1,0 +1,42 @@
+[
+    {
+        "title": "SQL Tutorial - W3Schools",
+        "link": "https://www.w3schools.com/sql/",
+        "provider": "W3Schools",
+        "logo": "https://www.w3schools.com/favicon.ico",
+        "category": "Tutorial",
+        "description": "Beginner-friendly tutorials on SQL queries, database design, and operations"
+    },
+    {
+        "title": "SQL Official Documentation",
+        "link": "https://dev.mysql.com/doc/refman/8.0/en/",
+        "provider": "MySQL",
+        "logo": "https://www.mysql.com/common/logos/logo-mysql-170x115.png",
+        "category": "Documentation",
+        "description": "Official MySQL documentation with detailed SQL syntax and usage"
+    },
+    {
+        "title": "PostgreSQL Documentation",
+        "link": "https://www.postgresql.org/docs/",
+        "provider": "PostgreSQL",
+        "logo": "https://www.postgresql.org/favicon.ico",
+        "category": "Documentation",
+        "description": "Comprehensive PostgreSQL documentation on SQL, database design, and optimization"
+    },
+    {
+        "title": "FreeCodeCamp Relational Databases",
+        "link": "https://www.freecodecamp.org/learn/relational-database/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Free interactive course covering SQL queries, database design, and relational models"
+    },
+    {
+        "title": "Database StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/sql",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven Q&A on SQL queries, database design, normalization, and optimization"
+    }
+]

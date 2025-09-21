@@ -1,0 +1,75 @@
+[
+    {
+        "roadmap_name": "Frontend Developer",
+        "roadmap_link": "https://roadmap.sh/frontend",
+        "icon": "🎨"
+    },
+    {
+        "roadmap_name": "Backend Developer",
+        "roadmap_link": "https://roadmap.sh/backend",
+        "icon": "⚙️"
+    },
+    {
+        "roadmap_name": "DevOps Engineer",
+        "roadmap_link": "https://roadmap.sh/devops",
+        "icon": "🚀"
+    },
+    {
+        "roadmap_name": "Full Stack Developer",
+        "roadmap_link": "https://roadmap.sh/full-stack",
+        "icon": "🔄"
+    },
+    {
+        "roadmap_name": "AI Engineer",
+        "roadmap_link": "https://roadmap.sh/ai-engineer",
+        "icon": "🤖"
+    },
+    {
+        "roadmap_name": "Data Analyst",
+        "roadmap_link": "https://roadmap.sh/data-analyst",
+        "icon": "📊"
+    },
+    {
+        "roadmap_name": "Software Architect",
+        "roadmap_link": "https://roadmap.sh/software-architect",
+        "icon": "🏛️"
+    },
+    {
+        "roadmap_name": "Software Design and Architecture Engineer",
+        "roadmap_link": "https://roadmap.sh/software-design-architecture",
+        "icon": "🏗️"
+    },
+   
+    {
+        "roadmap_name": "QA Engineer",
+        "roadmap_link": "https://roadmap.sh/qa",
+        "icon": "🔍"
+    },
+    {
+        "roadmap_name": "Software Testing Engineer",
+        "roadmap_link": "https://roadmap.sh/software-testing",
+        "icon": "🧪"
+    },
+    {
+        "roadmap_name": "Cyber Security Engineer",
+        "roadmap_link": "https://roadmap.sh/cyber-security",
+        "icon": "🛡️"
+    },
+    {
+        "roadmap_name": "UX Designer",
+        "roadmap_link": "https://roadmap.sh/ux-design",
+        "icon": "✨"
+    },
+ 
+     {
+        "skill_name": "Prompt Engineer",
+        "skill_link": "https://roadmap.sh/prompt-engineering",
+        "icon": "🤖"
+    },
+
+    {
+        "roadmap_name": "Computer Science Engineer",
+        "roadmap_link": "https://roadmap.sh/computer-science",
+        "icon": "💻"
+    }    
+    ]

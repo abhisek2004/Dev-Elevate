@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useGlobalState } from '../../contexts/GlobalContext';
+import { useGlobalState } from '../../contexts/GlobalContext'; 
 import StatsCards from './StatsCards';
 import ProgressWidget from './ProgressWidget';
 import NewsWidget from './NewsWidget';

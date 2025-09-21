@@ -1,0 +1,42 @@
+[
+    {
+        "title": "TypeScript Official Documentation",
+        "link": "https://www.typescriptlang.org/docs/",
+        "provider": "TypeScript",
+        "logo": "https://www.typescriptlang.org/assets/images/favicon.ico",
+        "category": "Documentation",
+        "description": "Official TypeScript documentation covering language features, types, and best practices"
+    },
+    {
+        "title": "TypeScript Handbook",
+        "link": "https://www.typescriptlang.org/docs/handbook/intro.html",
+        "provider": "TypeScript",
+        "logo": "https://www.typescriptlang.org/assets/images/favicon.ico",
+        "category": "Guide",
+        "description": "In-depth guide to TypeScript syntax, types, and advanced concepts"
+    },
+    {
+        "title": "FreeCodeCamp TypeScript Tutorial",
+        "link": "https://www.freecodecamp.org/news/learn-typescript-beginners-guide/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Beginner-friendly guide to learn TypeScript with practical examples and exercises"
+    },
+    {
+        "title": "W3Schools TypeScript Tutorial",
+        "link": "https://www.w3schools.com/typescript/",
+        "provider": "W3Schools",
+        "logo": "https://www.w3schools.com/favicon.ico",
+        "category": "Tutorial",
+        "description": "Step-by-step TypeScript tutorials for learning variables, types, interfaces, and classes"
+    },
+    {
+        "title": "TypeScript StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/typescript",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven TypeScript questions and solutions from real-world projects"
+    }
+]

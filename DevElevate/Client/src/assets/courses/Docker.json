@@ -1,0 +1,64 @@
+[
+{
+"course_category": "Docker",
+"course_image": "https://i.ytimg.com/vi/3c-iBn73dDE/hqdefault.jpg",
+"course_title": "Docker Tutorial for Beginners",
+"creator_image": "https://yt3.ggpht.com/ZAuMKdMcyV3mhX857oCGWzQAQ4AqZhiDIO76MTC_DqckrujSNg5Mh2AQh6ngWYv7bzfu7TBoj24=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "TechWorld with Nana",
+"creator_youtube_link": "https://youtu.be/3c-iBn73dDE",
+"description": "A full Docker course for beginners. Learn how to containerize and deploy applications with Docker."
+},
+{
+"course_category": "Docker",
+"course_image": "https://i.ytimg.com/vi/fqMOX6JJhGo/hqdefault.jpg",
+"course_title": "Docker Full Course for Beginners",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "freeCodeCamp.org",
+"creator_youtube_link": "https://youtu.be/fqMOX6JJhGo",
+"description": "Learn Docker from scratch in this comprehensive full course. Understand containers, images, Dockerfiles, and container orchestration."
+},
+{
+"course_category": "Docker",
+"course_image": "https://i.ytimg.com/vi/pTFZFxd4hOI/hqdefault.jpg",
+"course_title": "Docker Tutorial for Beginners - Full Course",
+"creator_image": "https://yt3.ggpht.com/HCv0fXFEEcD0HRyF0_qR1K7b7qO3KCzmIoyH1DEJYB94CIUFhIE5i2t2IDIPX97W1-DK4hegww=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "Programming with Mosh",
+"creator_youtube_link": "https://youtu.be/pTFZFxd4hOI",
+"description": "A complete Docker tutorial for beginners. Learn how to use Docker to containerize applications and streamline development workflows."
+},
+{
+"course_category": "Docker",
+"course_image": "https://i.ytimg.com/vi/Gjnup-PuquQ/hqdefault.jpg",
+"course_title": "Learn Docker in 7 Easy Steps",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_mKzklyPPhghBJQH5H3HpZ108YcE618DBRLAvRUD1AjKNw=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "Fireship",
+"creator_youtube_link": "https://youtu.be/Gjnup-PuquQ",
+"description": "A quick Docker tutorial covering the fundamentals in 7 steps. Perfect for developers who want to quickly understand Docker basics."
+},
+{
+"course_category": "Docker",
+"course_image": "https://i.ytimg.com/vi/gAkwW2tuIqE/hqdefault.jpg",
+"course_title": "Docker Complete Course",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_mKzklyPPhghBJQH5H3HpZ108YcE618DBRLAvRUD1AjKNw=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "fireship",
+"creator_youtube_link": "https://youtu.be/gAkwW2tuIqE",
+"description": "A comprehensive Docker course covering everything from basic containerization to advanced Docker Compose and orchestration techniques."
+},
+{
+"course_category": "Docker",
+"course_image": "https://i.ytimg.com/vi/9zUHg7xjIqQ/hqdefault.jpg",
+"course_title": "Docker for Beginners Tutorial",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_mLysKc36lc_FVk2j777olWvLOjgDz6NCNGdiQBnAKRENM=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "Traversy Media",
+"creator_youtube_link": "https://youtu.be/9zUHg7xjIqQ",
+"description": "Learn Docker fundamentals in this beginner-friendly tutorial. Understand containers, images, volumes, and networking concepts."
+},{
+"course_category": "Docker",
+"course_image": "https://i.ytimg.com/vi/hP77Rua1E0c/hqdefault.jpg",
+"course_title": "Docker & Kubernetes Full Course",
+"creator_image": "https://yt3.ggpht.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s88-c-k-c0x00ffffff-no-rj",
+"creator_name": "Laith Academy",
+"creator_youtube_link": "https://youtu.be/hP77Rua1E0c",
+"description": "Learn Docker and Kubernetes together in this full course. Master containerization and container orchestration for modern applications."
+}
+]

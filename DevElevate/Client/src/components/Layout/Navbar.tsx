@@ -1,25 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Home,
-  BookOpen,
-  Code2,
-  MessageSquare,
-  Newspaper,
-  FileText,
-  Target,
-  Bell,
-  Search,
-  Menu,
-  X,
-  Lightbulb,
-  CheckSquare,
-  StickyNote,
-  Calendar,
-  Globe,
-  Brain,
-  Users,
-} from "lucide-react";
+
 import { useAuth } from "../../contexts/AuthContext";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import { useNotificationContext } from "../../contexts/NotificationContext";
@@ -29,10 +10,15 @@ import ProfileDropdown from "./ProfileDropdown";
 import { MdOutlinePlaylistAddCircle } from "react-icons/md";
 import MainCalculator from "../Calculator/MainCalculator";
 import { CalculatorHistoryProvider } from "../../contexts/CalculatorHistoryContext";
+import { FiBookOpen, FiCalendar, FiCode, FiCpu, FiFileText, FiGlobe, FiHome, FiMessageSquare, FiTarget, FiTrendingUp, FiUsers } from "react-icons/fi";
+import { FaBookOpen, FaNewspaper, FaRegStickyNote } from "react-icons/fa";
+import { MdLightbulbOutline, MdMap } from "react-icons/md";
+import { CiBellOn, CiMenuBurger, CiSearch } from "react-icons/ci";
+import { X } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const { state: authState } = useAuth();
-  const { state, dispatch } = useGlobalState();
+  const { state } = useGlobalState();
   const location = useLocation();
   const [showSearch, setShowSearch] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -41,23 +27,22 @@ const Navbar: React.FC = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { notifications } = useNotificationContext();
 
-  console.log("Avatar URL:", authState.user.avatar);
-
   const navItems = [
-    { path: "/dashboard", icon: Home, label: "Dashboard" },
-    { path: "/learning", icon: BookOpen, label: "Learning Hub" },
-    { path: "/quiz", icon: Brain, label: "Quiz Center" },
-    { path: "/coding", icon: Code2, label: "Coding" },
-    { path: "/interview", icon: Users, label: "Interview" },
-    { path: "/chatbot", icon: MessageSquare, label: "Study Buddy" },
-    { path: "/news", icon: Newspaper, label: "Tech Feed" },
-    { path: "/community", icon: Globe, label: "Community" },
-    { path: "/resume", icon: FileText, label: "Resume Builder" },
-    { path: "/placement", icon: Target, label: "Placement Prep" },
-    { path: "/projects", icon: Lightbulb, label: "AI Projects" },
-    { path: "/tasks", icon: CheckSquare, label: "Tasks" },
-    { path: "/notes", icon: StickyNote, label: "Notes" },
-    { path: "/calendar", icon: Calendar, label: "Calendar" },
+    { path: "/dashboard", icon: FiHome, label: "Dashboard" },
+    { path: "/learning", icon: FiBookOpen, label: "Learning Hub" },
+    { path: "/quiz", icon: FiCpu, label: "Quiz Center" },
+    { path: "/coding", icon: FiCode, label: "Coding" },
+    { path: "/interview", icon: FiUsers, label: "Interview" },
+    { path: "/chatbot", icon: FiMessageSquare, label: "Study Buddy" },
+    { path: "/news", icon: FaNewspaper, label: "Tech Feed" },
+    { path: "/community", icon: FiGlobe, label: "Community" },
+    { path: "/resume", icon: FiFileText, label: "Resume Builder" },
+    { path: "/placement", icon: FiTarget, label: "Placement Prep" },
+    { path: "/projects", icon: MdLightbulbOutline, label: "AI Projects" },
+    { path: "/roadmap", icon: MdMap, label: "Road Map" },
+    { path: "/notes", icon: FaRegStickyNote , label: "Notes" },
+    { path: "/calendar", icon: FiCalendar, label: "Calendar" },
+    { path: "/leaderboard", icon: FiTrendingUp, label: "Leaderboard" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -104,7 +89,7 @@ const Navbar: React.FC = () => {
             <div className="flex items-center">
               <Link to="/" className="flex items-center space-x-2">
                 <div className="flex justify-center items-center w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
-                  <BookOpen className="w-5 h-5 text-white" />
+                  <FaBookOpen className="w-5 h-5 text-white" />
                 </div>
                 <span
                   className={`text-xl font-bold ${
@@ -130,7 +115,7 @@ const Navbar: React.FC = () => {
                 }`}
                 title="Search (Ctrl+K)"
               >
-                <Search className="w-5 h-5" />
+                <CiSearch className="w-5 h-5" />
               </button>
 
               <button
@@ -157,7 +142,7 @@ const Navbar: React.FC = () => {
                 }`}
                 title="Notifications"
               >
-                <Bell className="w-5 h-5" />
+                <CiBellOn className="w-5 h-5" />
                 {unreadCount > 0 && (
                   <span className="flex absolute -top-1 -right-1 justify-center items-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full">
                     {unreadCount > 9 ? "9+" : unreadCount}
@@ -217,7 +202,7 @@ const Navbar: React.FC = () => {
                 {showMobileMenu ? (
                   <X className="w-5 h-5" />
                 ) : (
-                  <Menu className="w-5 h-5" />
+                  <CiMenuBurger className="w-5 h-5" />
                 )}
               </button>
             </div>

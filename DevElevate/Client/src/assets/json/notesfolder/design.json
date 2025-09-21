@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Interaction Design Foundation",
+        "link": "https://www.interaction-design.org/",
+        "provider": "Interaction Design Foundation",
+        "logo": "https://www.interaction-design.org/favicon.ico",
+        "category": "Documentation",
+        "description": "Comprehensive resources on UI/UX design concepts, prototyping, and design systems"
+    },
+    {
+        "title": "Figma Learning Resources",
+        "link": "https://www.figma.com/resources/learn-design/",
+        "provider": "Figma",
+        "logo": "https://static.figma.com/app/icon/1/favicon.png",
+        "category": "Tutorial",
+        "description": "Guides and tutorials for designing, prototyping, and building design systems using Figma"
+    },
+    {
+        "title": "FreeCodeCamp UI/UX Design Course",
+        "link": "https://www.freecodecamp.org/news/learn-ui-ux-design/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Free course covering fundamentals of user interface design, prototyping, and design systems"
+    },
+    {
+        "title": "Adobe XD Learn & Support",
+        "link": "https://helpx.adobe.com/xd/tutorials.html",
+        "provider": "Adobe",
+        "logo": "https://www.adobe.com/favicon.ico",
+        "category": "Tutorial",
+        "description": "Tutorials on UI design, prototyping, and implementing design systems using Adobe XD"
+    },
+    {
+        "title": "UI/UX StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/ui-ux",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven questions and discussions on user interface design, prototyping, and design systems"
+    }
+]

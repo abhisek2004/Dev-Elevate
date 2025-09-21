@@ -1,0 +1,42 @@
+[
+    {
+        "title": "AWS Official Documentation",
+        "link": "https://docs.aws.amazon.com/",
+        "provider": "Amazon Web Services",
+        "logo": "https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png",
+        "category": "Documentation",
+        "description": "Comprehensive AWS documentation covering all services, SDKs, and best practices"
+    },
+    {
+        "title": "AWS Free Tier Tutorials",
+        "link": "https://aws.amazon.com/getting-started/",
+        "provider": "Amazon Web Services",
+        "logo": "https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png",
+        "category": "Tutorial",
+        "description": "Beginner-friendly tutorials to get started with AWS services using the Free Tier"
+    },
+    {
+        "title": "FreeCodeCamp AWS Course",
+        "link": "https://www.freecodecamp.org/news/aws-certified-solutions-architect-associate-course/",
+        "provider": "FreeCodeCamp",
+        "logo": "https://www.freecodecamp.org/favicon-32x32.png",
+        "category": "Interactive Course",
+        "description": "Free course to learn AWS services, architecture, and deployment practices"
+    },
+    {
+        "title": "AWS Hands-On Labs - qwiklabs",
+        "link": "https://www.qwiklabs.com/",
+        "provider": "Qwiklabs",
+        "logo": "https://www.qwiklabs.com/images/favicon.png",
+        "category": "Hands-on Lab",
+        "description": "Practice AWS services and real-world cloud scenarios with guided labs"
+    },
+    {
+        "title": "AWS StackOverflow Questions",
+        "link": "https://stackoverflow.com/questions/tagged/amazon-web-services",
+        "provider": "StackOverflow",
+        "logo": "https://stackoverflow.com/favicon.ico",
+        "category": "Q&A Community",
+        "description": "Community-driven questions and answers on AWS services and best practices"
+    }
+]

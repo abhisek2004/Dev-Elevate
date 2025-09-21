@@ -1,0 +1,42 @@
+[
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e71" },
+"course_category": "Java Full stack",
+"course_title": "Java Full stack by Hum or Code",
+"creator_name": "Muhammad Latif",
+"creator_youtube_link": "https://youtube.com/playlist?list=PLq0IPBF63Mw2zVkPrucUoIAWNzh9tN4Nm&si=P4-AO9iE16e_lAod",
+"creator_image": "https://i.ytimg.com/vi/Js4FlB0zTbg/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCjTLngTDIIkp9pKo4r1tReW5a6tQ",
+"course_image": "https://i.ytimg.com/vi/Js4FlB0zTbg/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCjTLngTDIIkp9pKo4r1tReW5a6tQ",
+"description": "Learn Java Full stack in Hindi."
+},
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e72" },
+"course_category": "Java Full stack",
+"course_title": "Java Full stack in 48 Hours",
+"creator_name": "Telusko",
+"creator_youtube_link": "https://youtu.be/4XTsAAHW_Tc?si=-vnB9vbfqgdHSBeO",
+"creator_image": "https://yt3.ggpht.com/0nsZM3NF0C9bFr2IFXicMJ1w82ldRaZvGKFnezBe2lpW7F9gI92FaLubcTghnNNt4Ld8DfRvEMo=s88-c-k-c0x00ffffff-no-rj",
+"course_image": "https://yt3.ggpht.com/0nsZM3NF0C9bFr2IFXicMJ1w82ldRaZvGKFnezBe2lpW7F9gI92FaLubcTghnNNt4Ld8DfRvEMo=s88-c-k-c0x00ffffff-no-rj",
+"description": "Java developer in 48 hours, it will take months to master"
+},
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e73" },
+"course_category": "Java Full stack",
+"course_title": "Java Full stack",
+"creator_name": "rajonlinetrainings",
+"creator_youtube_link": "https://youtube.com/playlist?list=PLU2wpJsXyAjmi_sMxDz5nxAb80zGhqTzu&si=KEgQ5gnOJwvTvuLu",
+"creator_image": "https://yt3.ggpht.com/rIXi3nVCJ8eDalAKlveY0gCnFig2WOFX7BgC6UIyTVeiiSuS4_yNbOo1pe5nbvKsnEsAW6_EMw=s48-c-k-c0x00ffffff-no-rj",
+"course_image": "https://i.ytimg.com/vi/83HOffnkXFo/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBiByXNTnePPxghvlrgEXuPs_PbdA",
+"description": "A complete Java course in Hindi, explained with practical examples and problem solving."
+},
+{
+"_id": { "$oid": "66b3e8a91f3aa6f2b2ff4e74" },
+"course_category": "Java Full stack",
+"course_title": "Java Full stack by Coding Wallah",
+"creator_name": "Coding Wallah",
+"creator_youtube_link": "https://youtube.com/playlist?list=PLhvdldYcnZMku_viVb2tU7NuW5DZxwIfw&si=jlzCUowlBPYz5Zu1",
+"creator_image": "https://i.ytimg.com/vi/fMMz9UUjFY8/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCanElnSLH735AJp9-_3iQnNxjYWg",
+"course_image": "https://i.ytimg.com/vi/fMMz9UUjFY8/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCanElnSLH735AJp9-_3iQnNxjYWg",
+"description": "A complete Java course in Hindi and Easy Approach."
+}
+]
