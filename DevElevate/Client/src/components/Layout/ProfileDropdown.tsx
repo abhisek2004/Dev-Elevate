@@ -60,7 +60,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
       section: 'Support',
       items: [
         { icon: HelpCircle, label: 'Help Center', action: () => navigate('/help-center') },
-        // { icon: ExternalLink, label: 'Contact Support', action: () => navigate('/contact-support') },
       ]
     }
   ];
