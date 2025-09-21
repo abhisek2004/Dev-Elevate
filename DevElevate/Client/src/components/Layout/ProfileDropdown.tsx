@@ -54,7 +54,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
       section: 'Premium',
       items: [
         { icon: Crown, label: 'Upgrade to Pro', action: () => navigate('/premium'), highlight: true },
-        { icon: Shield, label: 'Privacy Settings', action: () => navigate('/privacy') },
       ]
     },
     {
@@ -92,9 +91,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
             <img
               src={authState.user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(authState.user?.name || 'User')}&background=3b82f6&color=fff`}
               alt={authState.user?.name}
-              className="w-12 h-12 rounded-full border-2 border-blue-500"
+              className="w-12 h-12 border-2 border-blue-500 rounded-full"
             />
-            <div className="absolute -right-1 -bottom-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
+            <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full -right-1 -bottom-1 dark:border-gray-900"></div>
           </div>
           <div className="flex-1">
             <h3 className={`font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -166,7 +165,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
 
       {/* Theme Toggle & Logout */}
       <div className={`p-4 border-t ${state.darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-gray-50'}`}>
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex items-center justify-between mb-3">
           <span className={`text-sm font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             Theme
           </span>
@@ -194,7 +193,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
         
         <button
           onClick={handleLogout}
-          className="flex justify-center items-center px-4 py-2 space-x-2 w-full text-white bg-red-500 rounded-lg transition-colors hover:bg-red-600"
+          className="flex items-center justify-center w-full px-4 py-2 space-x-2 text-white transition-colors bg-red-500 rounded-lg hover:bg-red-600"
         >
           <LogOut className="w-4 h-4" />
           <span>Sign Out</span>
