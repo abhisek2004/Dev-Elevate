@@ -39,7 +39,11 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                animation: `spin ${(1 + Math.random() * 3).toFixed(2)}s cubic-bezier(0.4, 0.2, 0.2, 1) ${(Math.random() * 2).toFixed(2)}s infinite`,
+                animation: `spin ${(0.5 + Math.random() * 1.5).toFixed(
+                  2
+                )}s cubic-bezier(0.4, 0.2, 0.2, 1) ${(
+                  Math.random() * 1
+                ).toFixed(2)}s infinite`,
               }}
             />
           ))}
@@ -125,5 +129,3 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
 };
 
 export default SplashScreen;
-
-
