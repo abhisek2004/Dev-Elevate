@@ -53,6 +53,14 @@ interface User {
     streakEndDate?: string;
   };
 }
+
+interface RatingResponse {
+  success: boolean;
+  data: {
+    rating?: number;
+  };
+}
+
 const defaultUser: User = {
   id: "0",
   name: "Guest User",
@@ -102,11 +110,13 @@ const UserProfile: React.FC = () => {
     confirmPassword: "",
   });
   const [passwordError, setPasswordError] = useState("");
+  const [finalRating, setFinalRating] = useState<number>(0); // Default initial rating
 
-  // Fetch profile on mount
+  // Fetch profile and contest rating on mount
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        // Fetch user profile
         const res = await fetch(`${baseUrl}/api/v1/get-profile`, {
           credentials: "include",
         });
@@ -116,36 +126,50 @@ const UserProfile: React.FC = () => {
         // Merge with defaults
         const mergedUser: User = {
           ...defaultUser,
-          id: data._id || defaultUser.id,
-          name: data.name || defaultUser.name,
-          email: data.email || defaultUser.email,
-          role: data.role || defaultUser.role,
-          bio: data.bio || defaultUser.bio,
+          id: data._id ?? defaultUser.id,
+          name: data.name ?? defaultUser.name,
+          email: data.email ?? defaultUser.email,
+          role: data.role ?? defaultUser.role,
+          bio: data.bio ?? defaultUser.bio,
           socialLinks: {
             ...defaultUser.socialLinks,
             ...data.socialLinks,
           },
-          joinDate: data.createdAt || defaultUser.joinDate,
-          lastLogin: data.updatedAt || defaultUser.lastLogin,
+          joinDate: data.createdAt ?? defaultUser.joinDate,
+          lastLogin: data.updatedAt ?? defaultUser.lastLogin,
           progress: {
             ...defaultUser.progress,
-            streak: data.currentStreak || defaultUser.progress.streak,
+            streak: data.currentStreak ?? defaultUser.progress.streak,
             longestStreak:
-              data.longestStreak || defaultUser.progress.longestStreak,
+              data.longestStreak ?? defaultUser.progress.longestStreak,
             currentStreak:
-              data.currentStreak || defaultUser.progress.currentStreak,
+              data.currentStreak ?? defaultUser.progress.currentStreak,
           },
         };
 
         setUser(mergedUser);
-
         setFormData({
           name: mergedUser.name,
           bio: mergedUser.bio,
           socialLinks: { ...mergedUser.socialLinks },
         });
       } catch (err) {
-        console.error(err);
+        console.error("Failed to fetch profile", err);
+      }
+
+      try {
+        // Fetch contest rating
+        const res = await fetch(`${baseUrl}/api/v1/contests/user/rating`, {
+          credentials: "include",
+        });
+        if (!res.ok) throw new Error("Failed to fetch rating");
+
+        const data: RatingResponse = await res.json();
+        const rating: number = data.data?.rating ?? 1500;
+        setFinalRating(rating);
+      } catch (err) {
+        console.error("Failed to fetch contest rating", err);
+        setFinalRating(1500);
       }
     };
 
@@ -425,6 +449,22 @@ const UserProfile: React.FC = () => {
                       {user.progress.streak} days
                     </span>
                   </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span
+                    className={`text-sm ${
+                      globalState.darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    Current Rating
+                  </span>
+                  <span
+                    className={`text-sm font-medium ${
+                      globalState.darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {finalRating}
+                  </span>
                 </div>
               </div>
 

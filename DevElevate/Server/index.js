@@ -19,6 +19,7 @@ import javaRoutes from "./routes/javaRoutes.js";
 import aimlRoutes from "./routes/aimlRoutes.js";
 import mernRoutes from "./routes/mernRoutes.js";
 import dsaRoutes from "./routes/dsaRoutes.js";
+import contestRoutes from "./routes/contestRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
 import contactSupport from "./routes/contactSupport.js";
 import newsRoutes from "./routes/newsRoutes.js";
@@ -30,6 +31,9 @@ import systemSettings from "./routes/SystemSettingRoute.js";
 import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
 import analyticRoute from "./routes/analytics.js";
 
+import http from "http";
+import { initSocketIO } from "./socket.js";
+import { startContestFinalizationCron } from "./controller/contestController.js";
 
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
@@ -91,6 +95,10 @@ app.use("/api/v1/learning/dsa", dsaRoutes); // DSA learning content
 // Placement Routes
 app.use("/api/v1/placements", placementRoutes);
 
+// Contest Routes
+app.use("/api/v1/contests", contestRoutes);
+startContestFinalizationCron(app);
+
 // Sample Usage of authenticate and authorize middleware for roleBased Features
 app.get(
     "/api/admin/dashboard",
@@ -121,6 +129,21 @@ app.use((req, res) => {
 
 // Use news routes
 app.use("/api/v1", newsRoutes);
+
+// Create HTTP server from Express app
+const server = http.createServer(app);
+initSocketIO(server);
+
+// Override app.listen to use the HTTP server internally
+const originalListen = app.listen;
+app.listen = function (...args) {
+  console.log(
+    `Server with WebSocket support starting on port ${
+      args[0] || process.env.PORT || 3001
+    }`
+  );
+  return server.listen.apply(server, args);
+};
 
 // Start server
 app.listen(PORT, () => {
