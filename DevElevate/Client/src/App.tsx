@@ -40,7 +40,7 @@ import ProjectRecommender from "./components/ProjectRecommender/ProjectRecommend
 import Layout from "./components/Layout/Layout";
 import CommunityForum from "./components/Community/CommunityForum";
 import TasksView from "./components/tasks/TasksView";
-import NotesView from "./components/notes/NotesView";
+import NotesPage from "./pages/Notes/NotesPage";
 import CalendarView from "./components/calendar/CalendarView";
 import Coding from "./pages/Coding/Coding";
 import InterviewPage from "./pages/Interview/InterviewPage";
@@ -55,6 +55,13 @@ import ApiDocs from "./pages/Landing/components/ApiDocs";
 import DocumentationPage from "./pages/Landing/components/DocumentationPage";
 import ContributorGuide from "./pages/Leaderboard/ContributorGuide";
 import CreatorPage from "./pages/Landing/components/CreatorPage";
+import JavaScriptFundamentals from "./pages/Notes/JavaScriptFundamentals/JavaScriptFundamentals"
+import PythonNotes from "./pages/Notes/PythonBasics/PythonNotes.jsx"
+import GitNotes from "./pages/Notes/GitVersionControl/GitNotes.jsx"
+import FallBackNotes from "./pages/Notes/FallBackNotes.jsx"
+import ReactPattern from "./pages/Notes/ReactPatterns/ReactPattern.jsx"
+
+
 
 // ✅ AppContent
 const AppContent = () => {
@@ -64,14 +71,13 @@ const AppContent = () => {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/terms-of-service" element={<TermsOfService />} />
-      <Route path="/about-creator" element={<CreatorPage />} />
-      <Route path="/disclaimer" element={<Disclaimer />} />
-      <Route path="/api-docs" element={<ApiDocs />} />
-      <Route path="/documentation" element={<DocumentationPage />} />
-      <Route path="/contributor-guide" element={<ContributorGuide />} />
-
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/about-creator" element={<CreatorPage />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
+        <Route path="/api-docs" element={<ApiDocs />} />
+        <Route path="/documentation" element={<DocumentationPage />} />
+        <Route path="/contributor-guide" element={<ContributorGuide />} />
 
         <Route
           path="/login"
@@ -149,7 +155,6 @@ const AppContent = () => {
                           element={<ProjectRecommender />}
                         />
                         <Route path="tasks" element={<TasksView />} />
-                        <Route path="notes" element={<NotesView />} />
                         <Route path="calendar" element={<CalendarView />} />
                         <Route path="premium" element={<PremiumPage />} />
                         <Route path="payment" element={<PaymentPage />} />
@@ -159,6 +164,19 @@ const AppContent = () => {
                         <Route
                           path="*"
                           element={<Navigate to="/dashboard" replace />}
+                        />
+                        //All note related routes
+                        <Route path="notes" element={<NotesPage />} />
+                        <Route
+                          path="/notes/javascript/*"
+                          element={<JavaScriptFundamentals />}
+                        />
+                        <Route path="/notes/python" element={<PythonNotes />} />
+                        <Route path="/notes/git" element={<GitNotes />} />
+                        <Route path="/notes/react" element={<ReactPattern />} />
+                        <Route
+                          path="/notes/:topic"
+                          element={<FallBackNotes />}
                         />
                       </Routes>
                     </main>
