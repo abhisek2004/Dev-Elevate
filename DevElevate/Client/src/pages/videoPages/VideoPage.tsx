@@ -16,7 +16,17 @@ interface ThemeContextType {
 
 const ThemeContext = React.createContext<ThemeContextType | undefined>(undefined);
 
-const UserVideoPage: React.FC<{ videoData: VideoData }> = ({ videoData }) => {
+const UserVideoPage: React.FC = () => {
+    const videoData={
+        title: "React Tutorial for Beginners",
+        creator: "John Doe",
+        courseImage: "https://example.com/course-image.jpg",
+        creatorImage: "https://example.com/creator-image.jpg",
+        link: "https://www.youtube.com/watch?v=dGcsHMXbSOA",
+        description: "Learn the basics of React in this comprehensive tutorial for beginners.",
+        videoId: "dGcsHMXbSOA"
+
+    }
     const { darkMode } = useContext(ThemeContext) || { darkMode: false }; // Default to false if context is undefined
 
     return (
