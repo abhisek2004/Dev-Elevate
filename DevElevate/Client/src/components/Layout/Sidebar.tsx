@@ -20,6 +20,7 @@ const Sidebar: React.FC = () => {
   const navItems = [
     { path: "/dashboard", icon: FiHome, label: "Dashboard" },
     { path: "/learning", icon: FiBookOpen, label: "Learning Hub" },
+    { path: "/video", icon: FiBookOpen, label: "Video" },
     { path: "/quiz", icon: FiCpu, label: "Quiz Center" },
     { path: "/coding", icon: FiCode, label: "Coding" },
     { path: "/interview", icon: FiUsers, label: "Interview" },
@@ -30,7 +31,7 @@ const Sidebar: React.FC = () => {
     { path: "/placement", icon: FiTarget, label: "Placement Prep" },
     { path: "/projects", icon: MdLightbulbOutline, label: "AI Projects" },
     { path: "/roadmap", icon: MdMap, label: "Road Map" },
-    { path: "/notes", icon: FaRegStickyNote , label: "Notes" },
+    { path: "/notes", icon: FaRegStickyNote, label: "Notes" },
     { path: "/calendar", icon: FiCalendar, label: "Calendar" },
     { path: "/leaderboard", icon: FiTrendingUp, label: "Leaderboard" },
   ];
@@ -46,11 +47,10 @@ const Sidebar: React.FC = () => {
     <>
       {/* Sidebar */}
       <div
-        className={`fixed top-0 h-full left-0 w-64 border-r backdrop-blur-md transition-colors duration-200 ${
-          state.darkMode
+        className={`fixed top-0 h-full left-0 w-64 border-r backdrop-blur-md transition-colors duration-200 ${state.darkMode
             ? "bg-gray-900/90 border-gray-800"
             : "bg-white border-gray-200"
-        }`}
+          }`}
       >
         <div className="flex flex-col h-full p-4 space-y-6">
           {/* Navigation Items */}
@@ -61,13 +61,12 @@ const Sidebar: React.FC = () => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    isActive(item.path)
+                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive(item.path)
                       ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
                       : state.darkMode
-                      ? "text-gray-300 hover:text-white hover:bg-gray-800"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                  }`}
+                        ? "text-gray-300 hover:text-white hover:bg-gray-800"
+                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    }`}
                 >
                   <Icon size={18} />
                   <span>{item.label}</span>
