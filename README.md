@@ -722,25 +722,13 @@ Includes:
 | Mentor 2   | Avansh Yadav       | [Avansh2006](https://github.com/Avansh2006)         | [Avansh Yadav](https://www.linkedin.com/in/avanshyadav/)                |
 | Mentor 3    | Amisha Gupta       | [amishagupta31](https://github.com/amishagupta31)   | [Amisha Gupta](https://www.linkedin.com/in/amishagupta31/)              |
 
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
 <div align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&duration=3000&pause=1000&color=00C853&center=true&vCenter=true&width=700&lines=Thanks+for+visiting+DevElevate!+🙌;Start+the+repo+✅;Share+it+with+others+🌍;Contribute+and+grow+🛠️;Happy+Coding+✨!" alt="Thanks Banner Typing SVG" />
 </div>
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
-
-<h1 align="center">
-  <img src="https://github.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/blob/master/Emojis/Travel%20and%20places/Glowing%20Star.png?raw=true" alt="Glowing Star" width="25" height="25" /> 
-  Give us a Star and let's make magic! 
-  <img src="https://github.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/blob/master/Emojis/Travel%20and%20places/Glowing%20Star.png?raw=true" alt="Glowing Star" width="25" height="25" />
-</h1>
-
-
-
-<!--Footer-->
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
