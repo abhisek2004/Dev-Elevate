@@ -25,6 +25,7 @@ import SystemSettings from "./SystemSettings";
 import Feedback from "./Feedback";
 import { CiLogout } from "react-icons/ci";
 import AdminSystemLogs from "./AdminSystemLogs";
+import CourseManager from "./CourseManagements";
 
 const AdminDashboard: React.FC = () => {
   const { state: authState, logout } = useAuth();
@@ -92,6 +93,12 @@ const AdminDashboard: React.FC = () => {
       label: "Feedback",
       icon: Shield,
       path: "/admin/feedback",
+    },
+    {
+      id: "Course Management",
+      label: "Course Management",
+      icon: Shield,
+      path: "/admin/course",
     },
   ];
 
@@ -228,6 +235,7 @@ const AdminDashboard: React.FC = () => {
             <Route path="/system-logs" element={<AdminSystemLogs />} />
             <Route path="/settings" element={<SystemSettings />} />
             <Route path="/feedback" element={<Feedback />} />
+            <Route path="/course" element={<CourseManager />} />
           </Routes>
         </div>
       </div>
