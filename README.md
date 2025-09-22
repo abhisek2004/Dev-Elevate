@@ -442,17 +442,6 @@ Includes:
   - Visual task representation
   - Date navigation and today highlighting
 
-### 4. Budget & Expense Tracking
-
-- **Location**: `/budget`
-- **Features**:
-  - Create and manage budgets by category
-  - Track expenses and spending
-  - Visual charts and progress indicators
-  - AI-powered budget optimization
-  - Expense categorization
-  - Budget vs. actual spending analysis
-
 ---
 
 ### 🔒 _Strict Contribution Guidelines (Must Follow):_
