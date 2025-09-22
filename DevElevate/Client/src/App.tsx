@@ -40,7 +40,6 @@ import PaymentPage from "./components/Payment/PaymentPage";
 import ProjectRecommender from "./components/ProjectRecommender/ProjectRecommender";
 import Layout from "./components/Layout/Layout";
 import CommunityForum from "./components/Community/CommunityForum";
-import TasksView from "./components/tasks/TasksView";
 import NotesPage from "./pages/Notes/NotesPage";
 import CalendarView from "./components/calendar/CalendarView";
 import Coding from "./pages/Coding/Coding";
@@ -62,6 +61,7 @@ import GitNotes from "./pages/Notes/GitVersionControl/GitNotes.jsx"
 import FallBackNotes from "./pages/Notes/FallBackNotes.jsx"
 import ReactPattern from "./pages/Notes/ReactPatterns/ReactPattern.jsx"
 import Roadmap from "./pages/RoadmapPage/Roadmap"
+import UserVideoPage from "./pages/videoPages/VideoPage.js";
 
 
 
@@ -146,6 +146,8 @@ const AppContent = () => {
                         <Route path="interview" element={<InterviewPage />} />
                         <Route path="chatbot" element={<Chatbot />} />
                         <Route path="news" element={<TechFeed />} />
+                        <Route path="course" element={<UserVideoPage />} />
+
                         <Route
                           path="community/*"
                           element={<CommunityForum />}

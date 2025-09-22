@@ -20,7 +20,7 @@ const Sidebar: React.FC = () => {
   const navItems = [
     { path: "/dashboard", icon: FiHome, label: "Dashboard" },
     { path: "/learning", icon: FiBookOpen, label: "Learning Hub" },
-    { path: "/video", icon: FiBookOpen, label: "Video" },
+    { path: "/course", icon: FiBookOpen, label: "Video" },
     { path: "/quiz", icon: FiCpu, label: "Quiz Center" },
     { path: "/coding", icon: FiCode, label: "Coding" },
     { path: "/interview", icon: FiUsers, label: "Interview" },
