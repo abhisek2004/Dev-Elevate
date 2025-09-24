@@ -1,14 +1,19 @@
-name: Auto Comment on Pull Requests
+
+
+name: Auto Comment, Label & Size PRs
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
-  auto-comment:
+  auto-comment-label-size:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
+
     steps:
       - name: Auto Comment on New PR
         uses: actions/github-script@v7
@@ -22,6 +27,10 @@ jobs:
             const branchName = pr.head.ref;
             const baseBranch = pr.base.ref;
 
+            const truncatedBody = prBody
+              ? (prBody.length > 300 ? prBody.substring(0, 300) + '...' : prBody)
+              : '*No description provided*';
+
             const welcomeMessage = [
               `## 🚀 Welcome to DevElevate PR!`,
               ``,
@@ -33,7 +42,7 @@ jobs:
               `- **Status**: 🆕 New Pull Request`,
               ``,
               `### 🔍 PR Analysis`,
-              prBody ? `**Description**: ${prBody.length > 300 ? prBody.substring(0, 300) + '...' : prBody}` : '**No description provided**',
+              `**Description:**\n\`\`\`\n${truncatedBody}\n\`\`\``,
               ``,
               `### ✅ Checklist for Review`,
               `- [ ] Code follows project style guidelines`,
@@ -44,10 +53,10 @@ jobs:
               `- [ ] All CI checks passing`,
               ``,
               `### 🚀 Next Steps`,
-              `1. **Review**: Our maintainers will review your PR within 24-48 hours`,
-              `2. **CI/CD**: Automated checks will run to ensure code quality`,
-              `3. **Discussion**: Feel free to respond to review comments`,
-              `4. **Merge**: Once approved, your PR will be merged!`,
+              `1. **Review**: Maintainers will review your PR within 24–48 hours.`,
+              `2. **CI/CD**: Automated checks will run to ensure code quality.`,
+              `3. **Discussion**: Feel free to respond to review comments.`,
+              `4. **Merge**: Once approved, your PR will be merged.`,
               ``,
               `### 📚 Helpful Resources`,
               `- 📖 [Contributing Guidelines](https://github.com/abhisek2004/Dev-Elevate/blob/main/README.md)`,
@@ -58,8 +67,8 @@ jobs:
               `### 🏷️ Auto-Labeling`,
               `This PR will be automatically labeled based on its content and files changed.`,
               ``,
-              `---
-              *This is an automated message. For immediate assistance, please join our [Discord server](https://discord.gg/BtqrauPm).*`
+              `---`,
+              `*This is an automated message. For urgent help, [join our Discord](https://discord.gg/BtqrauPm).*`
             ].join('\n');
 
             await github.rest.issues.createComment({
@@ -77,33 +86,33 @@ jobs:
             const prNumber = pr.number;
             const prTitle = pr.title.toLowerCase();
             const prBody = (pr.body || '').toLowerCase();
+
             const files = await github.rest.pulls.listFiles({
-              pull_number: prNumber,
               owner: context.repo.owner,
-              repo: context.repo.repo
+              repo: context.repo.repo,
+              pull_number: prNumber
             });
 
-            let labels = ['new-pr'];
+            const fileNames = files.data.map(f => f.filename.toLowerCase());
 
-            // Check file types
-            const fileNames = files.data.map(file => file.filename.toLowerCase());
-            const hasFrontendFiles = fileNames.some(file => 
+            const labels = ['new-pr'];
+
+            const hasFrontendFiles = fileNames.some(file =>
               file.includes('.tsx') || file.includes('.ts') || file.includes('.jsx') || 
               file.includes('.js') || file.includes('.css') || file.includes('.scss') ||
               file.includes('components/') || file.includes('src/')
             );
 
-            const hasBackendFiles = fileNames.some(file => 
+            const hasBackendFiles = fileNames.some(file =>
               file.includes('.py') || file.includes('.java') || file.includes('.php') ||
               file.includes('server/') || file.includes('api/') || file.includes('routes/')
             );
 
-            const hasDocs = fileNames.some(file => 
+            const hasDocs = fileNames.some(file =>
               file.includes('.md') || file.includes('readme') || file.includes('docs/')
             );
 
-            // Content-based labeling
-            if (prTitle.includes('bug') || prTitle.includes('fix') || 
+            if (prTitle.includes('bug') || prTitle.includes('fix') ||
                 prBody.includes('bug') || prBody.includes('fix')) {
               labels.push('bug-fix');
             }
@@ -117,17 +126,9 @@ jobs:
               labels.push('refactor');
             }
 
-            if (hasFrontendFiles) {
-              labels.push('frontend');
-            }
-
-            if (hasBackendFiles) {
-              labels.push('backend');
-            }
-
-            if (hasDocs) {
-              labels.push('documentation');
-            }
+            if (hasFrontendFiles) labels.push('frontend');
+            if (hasBackendFiles) labels.push('backend');
+            if (hasDocs) labels.push('documentation');
 
             if (prTitle.includes('gssoc') || prTitle.includes('gsoc') ||
                 prBody.includes('gssoc') || prBody.includes('gsoc')) {
@@ -141,13 +142,13 @@ jobs:
               labels: labels
             });
 
-      - name: Check PR Size
+      - name: Label PR by Size
         uses: actions/github-script@v7
         with:
           script: |
             const pr = context.payload.pull_request;
-            const additions = pr.additions;
-            const deletions = pr.deletions;
+            const additions = pr.additions || 0;
+            const deletions = pr.deletions || 0;
             const totalChanges = additions + deletions;
 
             let sizeLabel = '';
