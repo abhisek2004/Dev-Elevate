@@ -2,13 +2,21 @@ import Course from "../model/Course.js";
 import LearningModule from "../model/LearningModule.js";
 import { createNotification } from "./notificationController.js";
 
+/**
+ * ===========================
+ *   Course Controller
+ * ===========================
+ */
+
+// Create a new course
 export const createCourse = async (req, res) => {
   try {
     const { courseTitle, description, tags } = req.body;
+
     if (!courseTitle || !description || !tags) {
-      return res.status(400).json({
-        message: "Course title and category are required.",
-      });
+      return res
+        .status(400)
+        .json({ message: "Course title, description, and tags are required." });
     }
 
     const course = await Course.create({
@@ -18,25 +26,23 @@ export const createCourse = async (req, res) => {
       createdBy: req.id,
     });
 
-    // Creating notification for course creation.
+    // Notify user about course creation
     await createNotification(
       req.id,
       `Course '${courseTitle}' created successfully!`,
       "milestone"
     );
 
-    return res.status(201).json({
-      course,
-      message: "Course created.",
-    });
+    return res
+      .status(201)
+      .json({ course, message: "Course created successfully." });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "failed to create course",
-    });
+    console.error("Course creation failed:", error);
+    return res.status(500).json({ message: "Failed to create course" });
   }
 };
 
+// Edit an existing course and optionally its module
 export const editCourse = async (req, res) => {
   try {
     const { courseId, moduleId } = req.params;
@@ -53,44 +59,30 @@ export const editCourse = async (req, res) => {
       duration,
     } = req.body;
 
-    let course = await Course.findById(courseId);
+    const course = await Course.findById(courseId);
     if (!course) {
-      return res.status(404).json({
-        message: "Course not found!",
-      });
+      return res.status(404).json({ message: "Course not found!" });
     }
-
-    const updatedCourseData = {
-      courseTitle,
-      subTitle,
-      description,
-      dificulty,
-      coursePrice,
-      courseThumbnail,
-    };
 
     const updatedCourse = await Course.findByIdAndUpdate(
       courseId,
-      updatedCourseData,
       {
-        new: true,
-      }
+        courseTitle,
+        subTitle,
+        description,
+        dificulty,
+        coursePrice,
+        courseThumbnail,
+      },
+      { new: true }
     );
 
     let updatedModule = null;
     if (moduleId) {
-      const moduleData = {
-        moduleTitle,
-        videoUrl,
-        resourceLinks,
-        duration,
-      };
       updatedModule = await LearningModule.findByIdAndUpdate(
         moduleId,
-        moduleData,
-        {
-          new: true,
-        }
+        { moduleTitle, videoUrl, resourceLinks, duration },
+        { new: true }
       );
     }
 
@@ -100,31 +92,29 @@ export const editCourse = async (req, res) => {
       message: "Course updated successfully.",
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Failed to update course",
-    });
+    console.error("Course update failed:", error);
+    return res.status(500).json({ message: "Failed to update course" });
   }
 };
 
-export const getAllCourses = async (req, res) => {
+// Get all courses
+export const getAllCourses = async (_req, res) => {
   try {
     const courses = await Course.find()
       .populate("modules")
       .populate("createdBy");
-
-    return res.status(200).json({
-      courses,
-      message: "All courses fetched successfully",
-    });
+    return res
+      .status(200)
+      .json({ courses, message: "All courses fetched successfully." });
   } catch (error) {
     console.error("Failed to fetch courses:", error);
-    return res.status(500).json({
-      message: "Internal server error while fetching courses",
-    });
+    return res
+      .status(500)
+      .json({ message: "Internal server error while fetching courses" });
   }
 };
 
+// Delete a course and its associated modules
 export const deleteCourse = async (req, res) => {
   try {
     const { courseId } = req.params;
@@ -135,16 +125,13 @@ export const deleteCourse = async (req, res) => {
     }
 
     await LearningModule.deleteMany({ _id: { $in: course.modules } });
-
     await Course.findByIdAndDelete(courseId);
 
-    return res.status(200).json({
-      message: "Course and its modules deleted successfully",
-    });
+    return res
+      .status(200)
+      .json({ message: "Course and its modules deleted successfully." });
   } catch (error) {
-    console.error("Delete error:", error);
-    return res.status(500).json({
-      message: "Failed to delete course",
-    });
+    console.error("Course deletion failed:", error);
+    return res.status(500).json({ message: "Failed to delete course" });
   }
 };
