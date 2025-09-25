@@ -49,6 +49,7 @@ import BackToTopButton from "./components/Layout/BackToTopButton";
 import HelpCenter from "./components/HelpCenter/HelpCenter";
 import LandingPage from "./pages/Landing/LandingPage";
 import PrivacyPolicy from "./pages/Landing/components/PrivacyPolicy";
+import CookiePolicy from "./components/Legal/CookiePolicy";
 import TermsOfService from "./pages/Landing/components/TermsOfService";
 import Disclaimer from "./pages/Landing/components/Disclaimer";
 import ApiDocs from "./pages/Landing/components/ApiDocs";
@@ -74,6 +75,7 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/about-creator" element={<CreatorPage />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
