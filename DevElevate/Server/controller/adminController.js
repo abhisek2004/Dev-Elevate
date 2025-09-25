@@ -3,7 +3,9 @@ import bcrypt from "bcryptjs";
 import User from "../model/UserModel.js";
 import AdminLog from "../model/AdminLog.js";
 
-// ✅ Create an admin log entry
+// ================== Admin Log Controllers ==================
+
+// Create an admin log entry
 export const createAdminLog = async (req, res) => {
   try {
     const { action, details } = req.body;
@@ -15,57 +17,56 @@ export const createAdminLog = async (req, res) => {
     }
 
     const log = new AdminLog({
-      actionType:action,
-      details:details,
+      actionType: action,
+      details,
       performedBy: req.user.id,
     });
 
     await log.save();
-    res.status(201).json({ message: "Log created successfully", log });
+    return res.status(201).json({ message: "Log created successfully", log });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error creating log", error: error.message });
+    return res.status(500).json({
+      message: "Error creating log",
+      error: error.message,
+    });
   }
 };
 
-// ✅ Get all admin logs
+// Get all admin logs with pagination
 export const getAdminLogs = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.max(1, parseInt(req.query.limit) || 10);
     const skip = (page - 1) * limit;
 
-    const totalCount = await AdminLog.countDocuments();
+    const [totalCount, logs] = await Promise.all([
+      AdminLog.countDocuments(),
+      AdminLog.find()
+        .populate("performedBy", "name email role")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+    ]);
 
-    const logs = await AdminLog.find()
-      .populate("performedBy", "name email role")
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean(); // return plain JS objects, so we can add fields
-
-    // attach timestamps (ms since epoch)
-    const logsWithTimestamps = logs.map(log => ({
+    const logsWithTimestamps = logs.map((log) => ({
       ...log,
       createdAtTimestamp: new Date(log.createdAt).getTime(),
       updatedAtTimestamp: new Date(log.updatedAt).getTime(),
     }));
 
-    const totalPages = Math.ceil(totalCount / limit);
-
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       log: logsWithTimestamps,
       pagination: {
-        totalPages,
+        totalPages: Math.ceil(totalCount / limit),
         totalCount,
         currentPage: page,
         pageSize: limit,
       },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Error fetching logs",
       error: error.message,
@@ -73,9 +74,9 @@ export const getAdminLogs = async (req, res) => {
   }
 };
 
+// ================== User Management Controllers ==================
 
-
-// ✅ Add new user (only admin can do this)
+// Add new user (only admin can do this)
 export const addUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -91,7 +92,6 @@ export const addUser = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
@@ -102,27 +102,28 @@ export const addUser = async (req, res) => {
     });
 
     await newUser.save();
-    res
-      .status(201)
-      .json({ message: "User created successfully", user: newUser });
+    return res.status(201).json({
+      message: "User created successfully",
+      user: newUser,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error adding user", error: error.message });
+    return res.status(500).json({
+      message: "Error adding user",
+      error: error.message,
+    });
   }
 };
 
-// ✅ Get all registered users
+// Get all registered users with role counts
 export const getAllUserRegister = async (req, res) => {
   try {
-    // Fetch all users but exclude password
-    const users = await User.find().select("-password").sort({ createdAt: -1 });
+    const [users, totalUsers, totalAdmins] = await Promise.all([
+      User.find().select("-password").sort({ createdAt: -1 }),
+      User.countDocuments({ role: "user" }),
+      User.countDocuments({ role: "admin" }),
+    ]);
 
-    // Count by role
-    const totalUsers = await User.countDocuments({ role: "user" });
-    const totalAdmins = await User.countDocuments({ role: "admin" });
-
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Users fetched successfully",
       totalUsers,
@@ -131,7 +132,7 @@ export const getAllUserRegister = async (req, res) => {
       data: users,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Error fetching users",
       error: error.message,
@@ -139,21 +140,21 @@ export const getAllUserRegister = async (req, res) => {
   }
 };
 
-// ✅ Delete user by ID (matches /delete-user/:id route)
+// Delete user by ID
 export const deleteUserById = async (req, res) => {
   try {
     const { id } = req.params;
 
     const user = await User.findByIdAndDelete(id);
-
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ message: "User deleted successfully" });
+    return res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error deleting user", error: error.message });
+    return res.status(500).json({
+      message: "Error deleting user",
+      error: error.message,
+    });
   }
 };
