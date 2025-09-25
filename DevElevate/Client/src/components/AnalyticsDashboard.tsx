@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
+import { Download, FileSpreadsheet } from "lucide-react";
 import {
   fetchTotalUsers,
   fetchActiveUsers,
@@ -31,8 +33,6 @@ type Stats = {
   quizAttempts: number;
   feedbackCount: number;
 };
-
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A020F0"];
 
 const AnalyticsDashboard: React.FC = () => {
   const [stats, setStats] = useState<Stats>({
@@ -92,16 +92,69 @@ const AnalyticsDashboard: React.FC = () => {
     { name: "Sessions", value: stats.sessions },
     { name: "Feedback", value: stats.feedbackCount },
   ];
+
+  // CSV export data formatting
+  const csvData = [
+    { metric: "Total Users", value: stats.totalUsers },
+    { metric: "Active Users", value: stats.activeUsers },
+    { metric: "Sessions", value: stats.sessions },
+    { metric: "Modules Completed", value: stats.modulesCompleted },
+    { metric: "Quiz Attempts", value: stats.quizAttempts },
+    { metric: "Feedback Count", value: stats.feedbackCount },
+  ];
+
+  const csvHeaders = [
+    { label: "Metric", key: "metric" },
+    { label: "Value", key: "value" },
+  ];
+
+  const chartDataCsv = [
+    ...barData.map(item => ({ type: "User Overview", ...item })),
+    ...lineData.map(item => ({ type: "Learning Progress", ...item })),
+    ...pieData.map(item => ({ type: "Distribution", ...item })),
+  ];
+
+  const chartCsvHeaders = [
+    { label: "Type", key: "type" },
+    { label: "Name", key: "name" },
+    { label: "Value", key: "value" },
+  ];
+
 const COLORS = ["#3b82f6", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6"];
   return (
 <div className="min-h-screen p-6 bg-gradient-to-br from-gray-900 via-gray-950 to-black">
-  {/* Title */}
-  <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 drop-shadow-lg">
-    📊 Analytics Dashboard
-  </h2>
+  {/* Header with Title and Export Buttons */}
+  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+    <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 drop-shadow-lg">
+      📊 Analytics Dashboard
+    </h2>
+    
+    {/* Export Buttons */}
+    <div className="flex gap-3">
+      <CSVLink
+        data={csvData}
+        headers={csvHeaders}
+        filename={`analytics-summary-${new Date().toISOString().split('T')[0]}.csv`}
+        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
+      >
+        <Download className="w-4 h-4" />
+        Export Summary
+      </CSVLink>
+      
+      <CSVLink
+        data={chartDataCsv}
+        headers={chartCsvHeaders}
+        filename={`analytics-charts-${new Date().toISOString().split('T')[0]}.csv`}
+        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-green-500/25"
+      >
+        <FileSpreadsheet className="w-4 h-4" />
+        Export Charts Data
+      </CSVLink>
+    </div>
+  </div>
 
   {/* Overview Stats */}
-  <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {[
       { label: "Total Users", value: stats.totalUsers },
       { label: "Active Users (7 days)", value: stats.activeUsers },
@@ -198,7 +251,7 @@ const COLORS = ["#3b82f6", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6"];
             cx="50%"
             cy="50%"
             outerRadius={85}
-            label={({ name, percent }) =>
+            label={({ name, percent }: { name: string; percent: number }) =>
               `${name} ${(percent * 100).toFixed(0)}%`
             }
           >
