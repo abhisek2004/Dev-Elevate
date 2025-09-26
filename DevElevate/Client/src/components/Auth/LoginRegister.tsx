@@ -8,7 +8,6 @@ import {
   Eye,
   EyeOff,
   User as UserIcon,
-  Shield,
   Mail,
   Lock,
   UserPlus,
@@ -21,7 +20,6 @@ const LoginRegister: React.FC = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState<"user" | "admin">("user");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -52,7 +50,6 @@ const LoginRegister: React.FC = () => {
         name: firebaseUser.displayName || "",
         email: firebaseUser.email || "",
         password: "",
-        role: role,
       };
       const response = await fetch(`${baseUrl}/api/v1/auth/google`, {
         method: "POST",
@@ -67,9 +64,9 @@ const LoginRegister: React.FC = () => {
           id: data.user.id,
           name: data.user.name,
           email: data.user.email,
-          role: data.user.role,
+          role: data.user.role, // Role determined by backend
           avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
-          bio: data.user.bio,
+          bio: data.user.bio || "",
           socialLinks: {},
           joinDate: new Date().toISOString(),
           lastLogin: new Date().toISOString(),
@@ -118,7 +115,7 @@ const LoginRegister: React.FC = () => {
       dispatch({
         type: "LOGIN_FAILURE",
         payload:
-          "Please use a valid email from gmail.com, outlook.com. To log in, verify your email via OTP using your original and active email address.",
+          "Please use a valid email from gmail.com, outlook.com, yahoo.com, hotmail.com, icloud.com, protonmail.com, or aol.com.",
       });
       return;
     }
@@ -130,7 +127,8 @@ const LoginRegister: React.FC = () => {
 
     try {
       if (isLogin) {
-        await login(formData.email, formData.password, role);
+        // Login without role; backend determines role based on email
+        await login(formData.email, formData.password);
       } else {
         if (state.otpPending) {
           await verifySignupOtp(
@@ -138,16 +136,13 @@ const LoginRegister: React.FC = () => {
             otp.join("")
           );
         } else {
-          await register(
-            formData.name,
-            formData.email,
-            formData.password,
-            role
-          );
+          // Register as user only
+          await register(formData.name, formData.email, formData.password);
         }
       }
     } catch (error) {
       console.error("Auth error:", error);
+      dispatch({ type: "LOGIN_FAILURE", payload: "Authentication failed" });
     }
   };
 
@@ -182,7 +177,10 @@ const LoginRegister: React.FC = () => {
     }
   };
 
-  const handleOtpKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+  const handleOtpKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       otpRefs.current[index - 1]?.focus();
     }
@@ -202,48 +200,8 @@ const LoginRegister: React.FC = () => {
           <p className="text-gray-600 dark:text-gray-400">
             {isLogin
               ? "Sign in to continue your learning journey"
-              : "Start your learning journey today"}
+              : "Create a user account to start learning"}
           </p>
-        </div>
-
-        {/* Role Toggle */}
-        <div className="mb-6">
-          <label className="block mb-3 text-sm font-medium text-gray-700 dark:text-gray-300">
-            Select Role
-          </label>
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <button
-              type="button"
-              onClick={() => setRole("user")}
-              className={`flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl border-2 transition-all duration-200 ${role === "user"
-                  ? "border-blue-500 bg-blue-100 dark:bg-blue-900/20"
-                  : "border-gray-300 dark:border-gray-700 hover:border-blue-400"
-                }`}
-            >
-              <div className="flex items-center justify-center gap-3">
-                <UserIcon size={25} className="w-6 h-6 text-blue-500" />
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  User
-                </span>
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setRole("admin")}
-              className={`flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl border-2 transition-all duration-200 ${role === "admin"
-                  ? "border-purple-500 bg-purple-100 dark:bg-purple-900/20"
-                  : "border-gray-300 dark:border-gray-700 hover:border-purple-400"
-                }`}
-            >
-              <div className="flex items-center justify-center gap-3">
-                <Shield size={25} className="text-purple-600" />
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  Admin
-                </span>
-              </div>
-            </button>
-          </div>
         </div>
 
         {state.error && (
@@ -290,8 +248,8 @@ const LoginRegister: React.FC = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|yahoo\.com)$"
-                    title="Only gmail.com, outlook.com, or yahoo.com emails are allowed"
+                    pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|yahoo\.com|hotmail\.com|icloud\.com|protonmail\.com|aol\.com)$"
+                    title="Only gmail.com, outlook.com, yahoo.com, hotmail.com, icloud.com, protonmail.com, or aol.com emails are allowed"
                     className="w-full py-3 pl-10 pr-4 text-gray-900 bg-white border border-gray-300 rounded-lg dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
                     placeholder="Enter your email"
                     required
@@ -338,7 +296,6 @@ const LoginRegister: React.FC = () => {
                 )}
               </div>
             )}
-
             {!isLogin && (
               <div>
                 <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -380,17 +337,45 @@ const LoginRegister: React.FC = () => {
               </div>
             )}
 
-            {isLogin && role === "admin" && (
-              <div className="p-4 border rounded-xl bg-slate-800/30 border-slate-700/50">
-                <p className="mb-2 text-xs text-center text-slate-400">
-                  Admin Credentials:
-                </p>
-                <p className="text-xs text-center text-slate-300">
-                  Email: officialdevelevate@gmail.com
-                </p>
-                <p className="text-xs text-center text-slate-300">
-                  Password: Develevate@2025
-                </p>
+            {isLogin && (
+              <div className="absolute top-0 right-1 w-full max-w-sm mx-auto h-60">
+                {/* Swing wrapper (everything inside sways) */}
+                <div className="relative animate-sway">
+                  {/* Right rope */}
+                  <div className="right-10 top-0 flex flex-col items-center">
+                    <div className="w-3 h-3 rounded-full bg-slate-500 shadow-md border border-slate-300"></div>
+                    <div className="w-1 h-20 bg-gradient-to-b from-amber-200 to-amber-600 rounded-full shadow-sm"></div>
+                  </div>
+
+                  {/* Hanging card */}
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 top-10 w-80 p-4 rounded-2xl border border-slate-600/40 
+          bg-slate-800/40 backdrop-blur-md shadow-2xl"
+                  >
+                    <p className="mb-2 text-xs text-center text-slate-400 tracking-wide">
+                      🔑 Admin Credentials
+                    </p>
+                    <p className="text-sm text-center text-slate-200 font-mono">
+                      Email:{" "}
+                      <span className="text-amber-300">
+                        officialdevelevate@gmail.com
+                      </span>
+                    </p>
+                    <p className="text-sm text-center text-slate-200 font-mono">
+                      Password:{" "}
+                      <span className="text-amber-300">Develevate@2025</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Shadow under everything */}
+                <div
+                  className="absolute left-1/2 -translate-x-1/2 top-[11rem] w-72 h-3 rounded-full blur-md opacity-25"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse at center, rgba(0,0,0,0.35), rgba(0,0,0,0))",
+                  }}
+                />
               </div>
             )}
 
@@ -412,8 +397,8 @@ const LoginRegister: React.FC = () => {
                     {isLogin
                       ? "Sign In"
                       : state.otpPending
-                        ? "Verify OTP"
-                        : "Create Account"}
+                      ? "Verify OTP"
+                      : "Create User Account"}
                   </span>
                 </>
               )}
@@ -478,6 +463,12 @@ const LoginRegister: React.FC = () => {
               {isLogin ? "Sign Up" : "Sign In"}
             </button>
           </p>
+          {!isLogin && (
+            <p className="mt-2 text-sm text-gray-500">
+              Note: Only user accounts can be created. Admin access is
+              restricted.
+            </p>
+          )}
         </div>
       </div>
     </div>
