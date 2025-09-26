@@ -91,3 +91,13 @@ section[id] {
 .custom-scrollbar.scrollbar-dark {
   scrollbar-color: #374151 #1f2937;
 }
+
+@keyframes sway {
+  0% { transform: translate(-50%, 0) rotate(-2deg); }
+  50% { transform: translate(-50%, 0) rotate(2deg); }
+  100% { transform: translate(-50%, 0) rotate(-2deg); }
+}
+
+.animate-sway {
+  animation: sway 4s ease-in-out infinite;
+}

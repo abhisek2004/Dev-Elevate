@@ -177,14 +177,12 @@ const AuthContext = createContext<{
   dispatch: React.Dispatch<AuthAction>;
   login: (
     email: string,
-    password: string,
-    role: "user" | "admin"
+    password: string
   ) => Promise<void>;
   register: (
     name: string,
     email: string,
-    password: string,
-    role: "user" | "admin"
+    password: string
   ) => Promise<void>;
   verifySignupOtp: (email: string, otp: string) => Promise<void>;
   logout: () => void;
@@ -223,8 +221,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const login = async (
     email: string,
-    password: string,
-    role: "user" | "admin"
+    password: string
   ) => {
     dispatch({ type: "LOGIN_START" });
     try {
@@ -239,8 +236,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       });
 
       const data = await response.json();
-    
-      
+
+
 
       if (!response.ok) {
         throw new Error(data.message || "Login failed");
@@ -248,20 +245,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
       // Backend returns real JWT token and user data
       if (data.token && data.user) {
-        // Check if the role matches what the user selected
-        if (data.user.role !== role) {
-          throw new Error(
-            `unauthozrized - expected role ${role}`
-          );
-        }
-
         const user: User = {
           id: data.user.id,
           name: data.user.name,
           email: data.user.email,
           role: data.user.role,
           avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
-          bio:data.user.bio,
+          bio: data.user.bio,
           socialLinks: {},
           joinDate: new Date().toISOString(),
           lastLogin: new Date().toISOString(),
@@ -299,8 +289,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const register = async (
     name: string,
     email: string,
-    password: string,
-    role: "user" | "admin"
+    password: string
   ) => {
     dispatch({ type: "REGISTER_START" });
 
@@ -312,7 +301,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password, role }),
+        body: JSON.stringify({ name, email, password, role: "user" }),
       });
 
       const data = await response.json();
@@ -361,7 +350,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           email: data.user.email,
           role: data.user.role,
           avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
-          bio:data.user.bio,
+          bio: data.user.bio,
           socialLinks: {},
           joinDate: new Date().toISOString(),
           lastLogin: new Date().toISOString(),
@@ -400,67 +389,48 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.removeItem("devElevateAuth");
   };
 
-const updateProfile = async (data: Partial<User>) => {
-  if (!state.user) return;
-
-
-  
+  const updateProfile = async (data: Partial<User>) => {
+    if (!state.user) return;
 
 
 
-  try {
-    const response = await fetch(`${baseUrl}/api/v1/update-profile`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    const updateData = await response.json();
-
-    // merge properly
-    const updatedUser = { ...state.user, ...updateData };
-
-    // Update in localStorage
-    const savedUsers = JSON.parse(
-      localStorage.getItem("devElevateUsers") || "[]"
-    );
-    const userIndex = savedUsers.findIndex(
-      (u: User) => u.id === state.user!.id
-    );
-    if (userIndex !== -1) {
-      savedUsers[userIndex] = updatedUser;
-      localStorage.setItem("devElevateUsers", JSON.stringify(savedUsers));
-    }
-
-    // dispatch full updated user
-    dispatch({ type: "UPDATE_PROFILE", payload: updatedUser });
-  } catch (error) {
-    console.error("Profile update failed:", error);
-  }
-};
 
 
-  const changePassword = async (
-    currentPassword: string,
-    newPassword: string
-  ) => {
+
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      const response = await fetch(`${baseUrl}/api/v1/update-profile`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-      // In real app, verify current password and update
-      if (currentPassword !== "password123") {
-        throw new Error("Current password is incorrect");
+      const updateData = await response.json();
+
+      // merge properly
+      const updatedUser = { ...state.user, ...updateData };
+
+      // Update in localStorage
+      const savedUsers = JSON.parse(
+        localStorage.getItem("devElevateUsers") || "[]"
+      );
+      const userIndex = savedUsers.findIndex(
+        (u: User) => u.id === state.user!.id
+      );
+      if (userIndex !== -1) {
+        savedUsers[userIndex] = updatedUser;
+        localStorage.setItem("devElevateUsers", JSON.stringify(savedUsers));
       }
 
-      dispatch({ type: "CHANGE_PASSWORD_SUCCESS" });
+      // dispatch full updated user
+      dispatch({ type: "UPDATE_PROFILE", payload: updatedUser });
     } catch (error) {
-      throw error;
+      console.error("Profile update failed:", error);
     }
   };
+
 
   const loadUsers = () => {
     const savedUsers = JSON.parse(
@@ -504,7 +474,6 @@ const updateProfile = async (data: Partial<User>) => {
         verifySignupOtp,
         logout,
         updateProfile,
-        changePassword,
         loadUsers,
         updateUser,
         deleteUser,
