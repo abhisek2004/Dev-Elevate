@@ -354,13 +354,13 @@ export default function Leaderboard() {
             <span className="block text-indigo-700 dark:text-indigo-400">GSSoC'25</span>
             <span className="text-gray-800 dark:text-gray-200">Contributor Leaderboard</span>
           </h1>
-          <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+          <p className="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-400">
             Recognizing the amazing contributions from our open source community
           </p>
         </div>
 
         {/* Search + Sort Dropdown */}
-        <div className="flex justify-center items-center mb-6 space-x-4">
+        <div className="flex items-center justify-center mb-6 space-x-4">
           <input
             type="text"
             value={search}
@@ -369,12 +369,12 @@ export default function Leaderboard() {
               setCurrentPage(1);
             }}
             placeholder="Search contributors..."
-            className="px-4 py-2 w-full max-w-xs text-sm text-gray-900 bg-white rounded-lg border border-gray-300 shadow-sm dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 dark:bg-gray-800 dark:text-gray-100"
+            className="w-full max-w-xs px-4 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 dark:bg-gray-800 dark:text-gray-100"
           />
-          <Menu as="div" className="inline-block relative text-left">
-            <Menu.Button className="inline-flex justify-center px-4 py-2 w-48 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-300 shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400">
+          <Menu as="div" className="relative inline-block text-left">
+            <Menu.Button className="inline-flex justify-center w-48 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400">
               Sort by: {sortOptions.find((opt) => opt.value === sortBy)?.label}
-              <FaChevronDown className="ml-2 w-4 h-4" />
+              <FaChevronDown className="w-4 h-4 ml-2" />
             </Menu.Button>
             <Transition
               as={Fragment}
@@ -385,7 +385,7 @@ export default function Leaderboard() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 z-50 mt-2 w-48 bg-white rounded-md border border-gray-200 divide-y divide-gray-100 shadow-lg origin-top-right dark:bg-gray-800 dark:border-gray-700 dark:divide-gray-700 focus:outline-none">
+              <Menu.Items className="absolute right-0 z-50 w-48 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-700 dark:divide-gray-700 focus:outline-none">
                 {sortOptions.map((option) => (
                   <Menu.Item key={option.value}>
                     {({ active }) => (
@@ -405,7 +405,7 @@ export default function Leaderboard() {
         </div>
 
         {/* Leaderboard Table */}
-        <div className="overflow-hidden mb-12 bg-gray-50 rounded-2xl shadow-lg dark:bg-gray-800">
+        <div className="mb-12 overflow-hidden shadow-lg bg-gray-50 rounded-2xl dark:bg-gray-800">
           {loading ? (
             <div className="p-6 text-center text-gray-600 dark:text-gray-400">
               Loading contributors...
@@ -435,7 +435,7 @@ export default function Leaderboard() {
                     return (
                       <tr
                         key={c.username}
-                        className="border-b border-gray-100 transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-700/50 dark:border-gray-700"
+                        className="transition-colors duration-150 border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700/50 dark:border-gray-700"
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
@@ -455,7 +455,7 @@ export default function Leaderboard() {
                           <div className="flex items-center">
                             <div className="flex-shrink-0 w-10 h-10">
                               <img
-                                className="w-10 h-10 rounded-full border-2 border-indigo-200 dark:border-gray-600"
+                                className="w-10 h-10 border-2 border-indigo-200 rounded-full dark:border-gray-600"
                                 src={c.avatar}
                                 alt={c.username}
                               />
@@ -494,11 +494,11 @@ export default function Leaderboard() {
               </table>
 
               {totalPages > 1 && (
-                <div className="flex justify-center items-center py-4 space-x-2 bg-white dark:bg-gray-800">
+                <div className="flex items-center justify-center py-4 space-x-2 bg-white dark:bg-gray-800">
                   <button
                     onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                     disabled={currentPage === 1}
-                    className="flex items-center px-3 py-1 text-sm text-gray-700 bg-white rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-300"
+                    className="flex items-center px-3 py-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg dark:border-gray-600 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-300"
                   >
                     <FaChevronLeft />
                   </button>
@@ -517,7 +517,7 @@ export default function Leaderboard() {
                   <button
                     onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                     disabled={currentPage === totalPages}
-                    className="flex items-center px-3 py-1 text-sm text-gray-700 bg-white rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-300"
+                    className="flex items-center px-3 py-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg dark:border-gray-600 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-300"
                   >
                     <FaChevronRight />
                   </button>
@@ -525,7 +525,7 @@ export default function Leaderboard() {
               )}
             </div>
           )}
-          <div className="px-6 py-2 text-right bg-gray-50 border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+          <div className="px-6 py-2 text-right border-t border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
             {lastUpdated && (
               <span className="text-xs text-gray-500 dark:text-gray-400">{lastUpdated}</span>
             )}
@@ -556,7 +556,7 @@ export default function Leaderboard() {
                 {currentContributors.map((c, i) => (
                   <motion.div
                     key={c.id}
-                    className="flex relative flex-col items-center p-6 text-center bg-gradient-to-br rounded-2xl border border-gray-100 shadow-lg backdrop-blur-xl transition-all duration-300 ease-out from-white/90 to-indigo-50/80 dark:from-gray-700/80 dark:to-gray-800/70 dark:border-gray-700"
+                    className="relative flex flex-col items-center p-6 text-center transition-all duration-300 ease-out border border-gray-100 shadow-lg bg-gradient-to-br rounded-2xl backdrop-blur-xl from-white/90 to-indigo-50/80 dark:from-gray-700/80 dark:to-gray-800/70 dark:border-gray-700"
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
@@ -566,12 +566,12 @@ export default function Leaderboard() {
                       boxShadow: "0px 8px 25px rgba(99,102,241,0.25)",
                     }}
                   >
-                    <div className="absolute -top-8 left-1/2 -translate-x-1/2">
+                    <div className="absolute -translate-x-1/2 -top-8 left-1/2">
                       <div className="relative">
                         <img
                           src={c.avatar_url}
                           alt={c.username}
-                          className="w-20 h-20 rounded-full border-4 border-indigo-500 shadow-xl"
+                          className="w-20 h-20 border-4 border-indigo-500 rounded-full shadow-xl"
                         />
                         <div className="absolute inset-0 rounded-full blur-md animate-pulse bg-indigo-400/20"></div>
                       </div>
@@ -581,13 +581,13 @@ export default function Leaderboard() {
                       <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">
                         {c.name}
                       </h3>
-                      <p className="flex gap-1 justify-center items-center mb-3 text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                      <p className="flex items-center justify-center gap-1 mb-3 text-sm font-medium text-indigo-600 dark:text-indigo-400">
                         <FaMedal className="text-yellow-500 animate-bounce" />{" "}
                         {c.role}
                       </p>
                       {i === 0 && (
                         <span className="px-3 py-1 text-xs font-semibold text-yellow-700 bg-yellow-100 rounded-full dark:bg-yellow-900/50 dark:text-yellow-300">
-                          🥇 Top Contributor
+                          🥇 Gold Contributor
                         </span>
                       )}
                       {i === 1 && (
@@ -602,7 +602,7 @@ export default function Leaderboard() {
                       )}
                     </div>
 
-                    <div className="grid grid-cols-3 gap-3 my-5 w-full text-sm text-gray-700 dark:text-gray-300">
+                    <div className="grid w-full grid-cols-3 gap-3 my-5 text-sm text-gray-700 dark:text-gray-300">
                       <div className="flex flex-col items-center p-2 rounded-lg shadow-sm backdrop-blur-md bg-white/60 dark:bg-gray-600/50">
                         <FaCodeBranch className="mb-1 text-indigo-600 dark:text-indigo-400" />
                         <span className="font-semibold">{c.public_repos}</span>
@@ -628,7 +628,7 @@ export default function Leaderboard() {
                       </div>
                     </div>
 
-                    <div className="overflow-hidden mb-4 w-full h-2 bg-gray-200 rounded-full dark:bg-gray-600">
+                    <div className="w-full h-2 mb-4 overflow-hidden bg-gray-200 rounded-full dark:bg-gray-600">
                       <div
                         className="h-2 bg-gradient-to-r from-indigo-500 to-purple-500"
                         style={{
@@ -642,18 +642,18 @@ export default function Leaderboard() {
 
                     <div className="flex flex-col gap-1 mb-4 text-xs text-gray-500 dark:text-gray-400">
                       {c.company && (
-                        <span className="flex gap-1 justify-center items-center">
+                        <span className="flex items-center justify-center gap-1">
                           <FaBuilding /> {c.company}
                         </span>
                       )}
                       {c.location && (
-                        <span className="flex gap-1 justify-center items-center">
+                        <span className="flex items-center justify-center gap-1">
                           <FaMapMarkerAlt /> {c.location}
                         </span>
                       )}
                     </div>
 
-                    <div className="mt-auto w-full">
+                    <div className="w-full mt-auto">
                       <a
                         href={c.html_url}
                         target="_blank"
@@ -662,7 +662,7 @@ export default function Leaderboard() {
                       >
                         <FaGithub className="text-lg transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 group-hover:text-blue-200" />
                         <span>Profile</span>
-                        <FaExternalLinkAlt className="text-xs opacity-80 transition-transform duration-300 group-hover:translate-x-1" />
+                        <FaExternalLinkAlt className="text-xs transition-transform duration-300 opacity-80 group-hover:translate-x-1" />
                       </a>
                     </div>
                   </motion.div>

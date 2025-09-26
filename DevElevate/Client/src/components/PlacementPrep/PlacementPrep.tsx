@@ -803,61 +803,131 @@ const PlacementPrep: React.FC = () => {
       name: "Arrays",
       url: "https://leetcode.com/tag/array/",
       description: "Array problems for all levels.",
+      questions: [
+        { name: "Two Sum", url: "https://leetcode.com/problems/two-sum/" },
+        { name: "Best Time to Buy and Sell Stock", url: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" },
+        { name: "Maximum Subarray (Kadane's Algo)", url: "https://leetcode.com/problems/maximum-subarray/" },
+        { name: "Move Zeroes", url: "https://leetcode.com/problems/move-zeroes/" },
+        { name: "Merge Intervals", url: "https://leetcode.com/problems/merge-intervals/" },
+      ],
     },
     {
       name: "Strings",
       url: "https://leetcode.com/tag/string/",
       description: "String manipulation and logic.",
+      questions: [
+        { name: "Valid Palindrome", url: "https://leetcode.com/problems/valid-palindrome/" },
+        { name: "Valid Anagram", url: "https://leetcode.com/problems/valid-anagram/" },
+        { name: "Longest Substring Without Repeating Characters", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
+        { name: "Group Anagrams", url: "https://leetcode.com/problems/group-anagrams/" },
+      ],
     },
     {
       name: "Dynamic Programming",
       url: "https://leetcode.com/tag/dynamic-programming/",
       description: "Master optimal substructure patterns.",
+      questions: [
+        { name: "Climbing Stairs", url: "https://leetcode.com/problems/climbing-stairs/" },
+        { name: "House Robber", url: "https://leetcode.com/problems/house-robber/" },
+        { name: "Longest Increasing Subsequence", url: "https://leetcode.com/problems/longest-increasing-subsequence/" },
+        { name: "Coin Change", url: "https://leetcode.com/problems/coin-change/" },
+      ],
     },
     {
       name: "Trees",
       url: "https://leetcode.com/tag/tree/",
       description: "Binary trees, traversals, and more.",
+      questions: [
+        { name: "Invert Binary Tree", url: "https://leetcode.com/problems/invert-binary-tree/" },
+        { name: "Maximum Depth of Binary Tree", url: "https://leetcode.com/problems/maximum-depth-of-binary-tree/" },
+        { name: "Diameter of Binary Tree", url: "https://leetcode.com/problems/diameter-of-binary-tree/" },
+      ],
     },
     {
       name: "Graphs",
       url: "https://leetcode.com/tag/graph/",
       description: "DFS, BFS, shortest paths, etc.",
+      questions: [
+        { name: "Number of Islands", url: "https://leetcode.com/problems/number-of-islands/" },
+        { name: "Course Schedule (Topological Sort)", url: "https://leetcode.com/problems/course-schedule/" },
+        { name: "Pacific Atlantic Water Flow", url: "https://leetcode.com/problems/pacific-atlantic-water-flow/" },
+      ],
     },
     {
       name: "Heaps",
       url: "https://leetcode.com/tag/heap/",
       description: "Minimum and Maximum Heaps.",
+      questions: [],
     },
     {
       name: "Linked Lists",
       url: "https://leetcode.com/tag/linked-list/",
       description: "Singly and doubly linked list problems.",
+      questions: [],
     },
     {
       name: "Stacks",
       url: "https://leetcode.com/tag/stack/",
       description: "Stack-based logic and applications.",
+      questions: [
+        { name: "Valid Parentheses", url: "https://leetcode.com/problems/valid-parentheses/" },
+        { name: "Min Stack", url: "https://leetcode.com/problems/min-stack/" },
+        { name: "Daily Temperatures", url: "https://leetcode.com/problems/daily-temperatures/" },
+      ],
     },
     {
       name: "Queues",
       url: "https://leetcode.com/tag/queue/",
       description: "Queue problems including circular and priority queues.",
+      questions: [],
     },
     {
       name: "Bit Manipulation",
       url: "https://leetcode.com/tag/bit-manipulation/",
       description: "Problems involving bits and bitmasks.",
+      questions: [],
     },
     {
       name: "Greedy",
       url: "https://leetcode.com/tag/greedy/",
       description: "Optimize step-by-step with local choices.",
+      questions: [],
     },
     {
       name: "Backtracking",
       url: "https://leetcode.com/tag/backtracking/",
       description: "Explore all possibilities using recursion.",
+      questions: [],
+    },
+    {
+      name: "Hashing",
+      url: "https://leetcode.com/tag/hash-table/",
+      description: "HashMap and HashSet based problems.",
+      questions: [
+        { name: "Two Sum (HashMap)", url: "https://leetcode.com/problems/two-sum/" },
+        { name: "Contains Duplicate", url: "https://leetcode.com/problems/contains-duplicate/" },
+        { name: "Top K Frequent Elements", url: "https://leetcode.com/problems/top-k-frequent-elements/" },
+      ],
+    },
+    {
+      name: "Sliding Window",
+      url: "https://leetcode.com/tag/sliding-window/",
+      description: "Problems using sliding window technique.",
+      questions: [
+        { name: "Max Consecutive Ones III", url: "https://leetcode.com/problems/max-consecutive-ones-iii/" },
+        { name: "Longest Substring Without Repeating Characters", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
+        { name: "Permutation in String", url: "https://leetcode.com/problems/permutation-in-string/" },
+      ],
+    },
+    {
+      name: "Two Pointers",
+      url: "https://leetcode.com/tag/two-pointers/",
+      description: "Problems using two-pointer technique.",
+      questions: [
+        { name: "3Sum", url: "https://leetcode.com/problems/3sum/" },
+        { name: "Valid Palindrome", url: "https://leetcode.com/problems/valid-palindrome/" },
+        { name: "Container With Most Water", url: "https://leetcode.com/problems/container-with-most-water/" },
+      ],
     },
   ];
 
@@ -903,8 +973,8 @@ const PlacementPrep: React.FC = () => {
 
     return (
       <div className="space-y-6">
-        <div className="flex flex-col gap-4 justify-between sm:flex-row sm:items-center">
-          <div className="flex gap-3 items-center">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-3">
             <h3
               className={`text-xl font-semibold ${state.darkMode ? "text-white" : "text-gray-900"
                 }`}
@@ -957,7 +1027,7 @@ const PlacementPrep: React.FC = () => {
                 : "bg-white border-gray-200"
                 } hover:shadow-md transition-shadow`}
             >
-              <div className="flex justify-between items-start mb-3">
+              <div className="flex items-start justify-between mb-3">
                 <div>
                   <h4
                     className={`text-lg font-semibold tracking-tight ${state.darkMode ? "text-white" : "text-gray-900"
@@ -1007,7 +1077,7 @@ const PlacementPrep: React.FC = () => {
                   ))}
                 </ul>
               </div>
-              <div className="flex justify-between items-center mt-4">
+              <div className="flex items-center justify-between mt-4">
                 <div>
                   <span
                     className={`text-sm font-semibold ${state.darkMode ? "text-green-400" : "text-green-600"
@@ -1041,7 +1111,7 @@ const PlacementPrep: React.FC = () => {
                       );
                     }
                   }}
-                  className="flex items-center px-4 py-2 space-x-2 text-sm font-medium text-white bg-blue-500 transition-colors hover:bg-blue-600"
+                  className="flex items-center px-4 py-2 space-x-2 text-sm font-medium text-white transition-colors bg-blue-500 hover:bg-blue-600"
                 >
                   <ExternalLink className="w-4 h-4" />
                   <span>Apply</span>
@@ -1112,7 +1182,7 @@ const PlacementPrep: React.FC = () => {
                   );
                 }
               }}
-              className="px-4 py-2 mt-5 w-full text-sm font-medium text-white bg-blue-500 rounded-xl transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+              className="w-full px-4 py-2 mt-5 text-sm font-medium text-white transition-colors bg-blue-500 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
             >
               Practice {category.category} Questions
             </button>
@@ -1156,8 +1226,8 @@ const PlacementPrep: React.FC = () => {
                 >
                   {resource.description}
                 </p>
-                <div className="flex justify-between items-center">
-                  <div className="flex flex-wrap gap-4 items-center text-sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-center gap-4 text-sm">
                     <span
                       className={`${state.darkMode ? "text-gray-400" : "text-gray-600"
                         }`}
@@ -1210,7 +1280,7 @@ const PlacementPrep: React.FC = () => {
                         );
                       }
                     }}
-                    className="flex items-center px-4 py-2 space-x-2 text-sm font-medium text-white bg-green-500 rounded-lg transition-all hover:bg-green-600"
+                    className="flex items-center px-4 py-2 space-x-2 text-sm font-medium text-white transition-all bg-green-500 rounded-lg hover:bg-green-600"
                   >
                     <Download className="w-4 h-4" />
                     <span>Download</span>
