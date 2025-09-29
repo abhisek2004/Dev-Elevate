@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 
-// Types
+// ------------------- Types -------------------
 export interface User {
   id: string;
   name: string;
@@ -14,8 +14,8 @@ export interface User {
   avatar?: string;
   joinDate: string;
   streak: number;
-  totalPoints: number;
-  level: string;
+  totalPoints?: number; // ✅ Optional with defaults
+  level?: string; // ✅ Optional with defaults
 }
 
 export interface LearningProgress {
@@ -94,7 +94,6 @@ export interface Resume {
   };
 }
 
-// Add Notification type and notifications to GlobalState
 export interface Notification {
   id: string;
   message: string;
@@ -116,10 +115,10 @@ export interface GlobalState {
   dailyGoals: string[];
   completedGoals: string[];
   streakData: { [date: string]: boolean };
-  notifications: Notification[]; // <-- Added notifications property
+  notifications: Notification[];
 }
 
-// Actions
+// ------------------- Actions -------------------
 type GlobalAction =
   | { type: "SET_USER"; payload: User }
   | {
@@ -143,9 +142,9 @@ type GlobalAction =
   | { type: "ADD_NOTIFICATION"; payload: Notification }
   | { type: "MARK_NOTIFICATION_READ"; payload: string }
   | { type: "MARK_ALL_NOTIFICATIONS_READ" }
-  | { type: "SET_NOTIFICATIONS"; payload: Notification[] }
+  | { type: "SET_NOTIFICATIONS"; payload: Notification[] };
 
-// Initial state
+// ------------------- Initial State -------------------
 const initialState: GlobalState = {
   user: null,
   learningProgress: {},
@@ -153,52 +152,42 @@ const initialState: GlobalState = {
   bookmarks: [],
   assignments: [],
   newsItems: [],
-  resume: null,//{
-//   id: '',
-//   personalInfo: {
-//     name: '',
-//     email: '',
-//     phone: '',
-//     location: '',
-//     linkedin: '',
-//     github: '',
-//   },
-//   summary: '',
-//   experience: [],
-//   education: [],
-//   projects: [],
-//   skills: {
-//     technical: [],
-//     soft: [],
-//   },
-// },
+  resume: null,
   darkMode: false,
   currentModule: "dashboard",
   dailyGoals: [],
   completedGoals: [],
   streakData: {},
-  notifications: [], // <-- Initialize notifications as empty array
+  notifications: [],
 };
 
-// Reducer
-const globalReducer = (
-  state: GlobalState,
-  action: GlobalAction
-): GlobalState => {
+// ------------------- Reducer -------------------
+const globalReducer = (state: GlobalState, action: GlobalAction): GlobalState => {
   switch (action.type) {
     case "SET_USER":
       return { ...state, user: action.payload };
 
-    case "UPDATE_LEARNING_PROGRESS":
+    case "UPDATE_LEARNING_PROGRESS": {
       const { topic, moduleId, progress } = action.payload;
+      const topicData = state.learningProgress[topic] || {
+        completed: 0,
+        total: 0,
+        modules: {},
+      };
+
+      const wasCompleted = topicData.modules[moduleId]?.completed || false;
+      const newCompletedCount =
+        topicData.completed + (!wasCompleted && progress >= 100 ? 1 : 0);
+
       return {
         ...state,
         learningProgress: {
           ...state.learningProgress,
           [topic]: {
-            ...state.learningProgress[topic],
+            ...topicData,
+            completed: newCompletedCount,
             modules: {
-              ...state.learningProgress[topic]?.modules,
+              ...topicData.modules,
               [moduleId]: {
                 completed: progress >= 100,
                 progress,
@@ -208,18 +197,13 @@ const globalReducer = (
           },
         },
       };
+    }
 
     case "ADD_CHAT_MESSAGE":
-      return {
-        ...state,
-        chatHistory: [...state.chatHistory, action.payload],
-      };
+      return { ...state, chatHistory: [...state.chatHistory, action.payload] };
 
     case "ADD_BOOKMARK":
-      return {
-        ...state,
-        bookmarks: [...state.bookmarks, action.payload],
-      };
+      return { ...state, bookmarks: [...state.bookmarks, action.payload] };
 
     case "REMOVE_BOOKMARK":
       return {
@@ -228,63 +212,43 @@ const globalReducer = (
       };
 
     case "ADD_ASSIGNMENT":
-      return {
-        ...state,
-        assignments: [...state.assignments, action.payload],
-      };
+      return { ...state, assignments: [...state.assignments, action.payload] };
 
     case "COMPLETE_ASSIGNMENT":
       return {
         ...state,
-        assignments: state.assignments.map((assignment) =>
-          assignment.id === action.payload
-            ? { ...assignment, completed: true }
-            : assignment
+        assignments: state.assignments.map((a) =>
+          a.id === action.payload ? { ...a, completed: true } : a
         ),
       };
 
     case "UPDATE_NEWS":
-      return {
-        ...state,
-        newsItems: action.payload,
-      };
+      return { ...state, newsItems: action.payload };
 
     case "UPDATE_RESUME":
-      return {
-        ...state,
-        resume: action.payload,
-      };
+      return { ...state, resume: action.payload };
 
     case "TOGGLE_DARK_MODE":
-      return {
-        ...state,
-        darkMode: !state.darkMode,
-      };
+      return { ...state, darkMode: !state.darkMode };
 
     case "SET_CURRENT_MODULE":
-      return {
-        ...state,
-        currentModule: action.payload,
-      };
+      return { ...state, currentModule: action.payload };
 
     case "ADD_DAILY_GOAL":
-      return {
-        ...state,
-        dailyGoals: [...state.dailyGoals, action.payload],
-      };
+      return { ...state, dailyGoals: [...state.dailyGoals, action.payload] };
 
     case "COMPLETE_DAILY_GOAL":
       return {
         ...state,
         completedGoals: [...state.completedGoals, action.payload],
-        dailyGoals: state.dailyGoals.filter((goal) => goal !== action.payload),
+        dailyGoals: state.dailyGoals.filter((g) => g !== action.payload),
       };
 
     case "UNDO_DAILY_GOAL":
       return {
         ...state,
         completedGoals: state.completedGoals.filter(
-          (goal) => goal !== action.payload
+          (g) => g !== action.payload
         ),
         dailyGoals: [...state.dailyGoals, action.payload],
       };
@@ -299,12 +263,8 @@ const globalReducer = (
       };
 
     case "HYDRATE_STATE":
-      return {
-        ...state,
-        ...action.payload,
-      };
+      return { ...state, ...action.payload };
 
-    // --- Notification actions ---
     case "ADD_NOTIFICATION":
       return {
         ...state,
@@ -322,45 +282,45 @@ const globalReducer = (
     case "MARK_ALL_NOTIFICATIONS_READ":
       return {
         ...state,
-        notifications: state.notifications.map((n) => ({ ...n, read: true })),
+        notifications: state.notifications.map((n) => ({
+          ...n,
+          read: true,
+        })),
       };
 
     case "SET_NOTIFICATIONS":
-      return {
-        ...state,
-        notifications: action.payload,
-      };
+      return { ...state, notifications: action.payload };
 
     default:
       return state;
   }
 };
 
-// Context
+// ------------------- Context -------------------
 const GlobalContext = createContext<{
   state: GlobalState;
   dispatch: React.Dispatch<GlobalAction>;
 } | null>(null);
 
-// Provider
+// ------------------- Provider -------------------
 export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(globalReducer, initialState);
 
-  // Persist state to localStorage
+  // ✅ Load saved state
   useEffect(() => {
     const savedState = localStorage.getItem("devElevateState");
     if (savedState) {
       try {
-        const parsedState = JSON.parse(savedState);
-        dispatch({ type: "HYDRATE_STATE", payload: parsedState });
+        dispatch({ type: "HYDRATE_STATE", payload: JSON.parse(savedState) });
       } catch (error) {
         console.error("Error parsing saved state:", error);
       }
     }
   }, []);
 
+  // ✅ Persist state on every change
   useEffect(() => {
     localStorage.setItem("devElevateState", JSON.stringify(state));
   }, [state]);
@@ -372,11 +332,50 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-// Hook
+// ------------------- Hooks -------------------
 export const useGlobalState = () => {
   const context = useContext(GlobalContext);
   if (!context) {
     throw new Error("useGlobalState must be used within a GlobalProvider");
   }
   return context;
+};
+
+// ✅ Helper to update learning progress and persist immediately
+export const useGlobalActions = () => {
+  const { state, dispatch } = useGlobalState();
+
+  const updateLearningProgress = (topic: string, moduleId: string) => {
+    dispatch({
+      type: "UPDATE_LEARNING_PROGRESS",
+      payload: { topic, moduleId, progress: 100 },
+    });
+
+    // Save immediately to localStorage (prevents refresh reset)
+    localStorage.setItem(
+      "devElevateState",
+      JSON.stringify({
+        ...state,
+        learningProgress: {
+          ...state.learningProgress,
+          [topic]: {
+            ...(state.learningProgress[topic] || { completed: 0, total: 0, modules: {} }),
+            completed:
+              (state.learningProgress[topic]?.completed || 0) + 1,
+            modules: {
+              ...(state.learningProgress[topic]?.modules || {}),
+              [moduleId]: {
+                completed: true,
+                progress: 100,
+                lastAccessed: new Date().toISOString(),
+              },
+            },
+            total: state.learningProgress[topic]?.total || 1,
+          },
+        },
+      })
+    );
+  };
+
+  return { updateLearningProgress };
 };

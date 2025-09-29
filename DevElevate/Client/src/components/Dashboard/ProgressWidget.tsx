@@ -1,99 +1,74 @@
-import React from 'react';
-import { BookOpen, Code, Brain, Database, ArrowRight } from 'lucide-react';
-import { useGlobalState } from '../../contexts/GlobalContext';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useGlobalState } from "../../contexts/GlobalContext";
+
 const ProgressWidget: React.FC = () => {
   const { state } = useGlobalState();
-  const navigate= useNavigate()
+  const navigate = useNavigate();
 
-  const learningTracks = [
-    {
-      id: 'dsa',
-      title: 'Data Structures & Algorithms',
-      icon: Code,
-      progress: 65,
-      color: 'from-blue-500 to-cyan-500',
-      modules: 12,
-      completed: 8
-    },
-    {
-      id: 'java',
-      title: 'Java Programming',
-      icon: BookOpen,
-      progress: 78,
-      color: 'from-orange-500 to-red-500',
-      modules: 10,
-      completed: 8
-    },
-    {
-      id: 'mern',
-      title: 'MERN Stack',
-      icon: Database,
-      progress: 45,
-      color: 'from-green-500 to-teal-500',
-      modules: 15,
-      completed: 7
-    },
-    {
-      id: 'aiml',
-      title: 'AI/ML & Data Science',
-      icon: Brain,
-      progress: 32,
-      color: 'from-purple-500 to-pink-500',
-      modules: 18,
-      completed: 6
-    }
-  ];
-  const handleViewAllClick = () => {
-    navigate("/learning")
+  // ✅ Check if the user has any learning progress
+  const hasProgress =
+    state.learningProgress &&
+    Object.keys(state.learningProgress).length > 0 &&
+    Object.values(state.learningProgress).some(
+      (topic) =>
+        topic.completed > 0 ||
+        topic.total > 0 ||
+        Object.keys(topic.modules || {}).length > 0
+    );
+
+  if (!hasProgress) {
+    // ✅ Empty state UI for new users
+    return (
+      <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+        <h2 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100">
+          Learning Progress
+        </h2>
+        <p className="text-gray-500 dark:text-gray-400">
+          You haven't started learning yet.{" "}
+          <span
+            className="text-blue-500 font-medium hover:underline cursor-pointer"
+            onClick={() => navigate("/learning")} // ✅ Use navigate instead of full reload
+          >
+            Explore the Learning Hub
+          </span>{" "}
+          and start your first course!
+        </p>
+      </div>
+    );
   }
 
+  // ✅ Show progress bars if user has progress
   return (
-    <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
-      <div className="flex items-center justify-between mb-6">
-        <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-          Learning Progress
-        </h3>
-<button
-  className="flex items-center gap-1 text-sm font-medium text-blue-500 transition-colors duration-150 hover:text-blue-600"
-  onClick={handleViewAllClick}
->
-  <span>View All</span>
-  <ArrowRight className='w-4 h-4'/>
-</button>
-      </div>
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+      <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100">
+        Learning Progress
+      </h2>
 
-      <div className="space-y-4">
-        {learningTracks.map((track) => {
-          const Icon = track.icon;
-          return (
-            <div key={track.id} className="flex items-center space-x-4">
-              <div className={`p-3 rounded-lg bg-gradient-to-r ${track.color}`}>
-                <Icon className="w-5 h-5 text-white" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center justify-between mb-1">
-                  <h4 className={`font-medium ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                    {track.title}
-                  </h4>
-                  <span className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                    {track.completed}/{track.modules} modules
-                  </span>
-                </div>
-                <div className="w-full h-2 bg-gray-200 rounded-full dark:bg-gray-700">
-                  <div
-                    className={`h-2 rounded-full bg-gradient-to-r ${track.color}`}
-                    style={{ width: `${track.progress}%` }}
-                  ></div>
-                </div>
-                <p className={`text-sm mt-1 ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {track.progress}% Complete
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {Object.entries(state.learningProgress).map(([topic, progress]) => (
+        <div key={topic} className="mb-4">
+          <div className="flex justify-between text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span>{topic}</span>
+            <span>
+              {progress.completed}/{progress.total} modules
+            </span>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-1">
+            <div
+              className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+              style={{
+                width: `${
+                  progress.total > 0
+                    ? Math.min((progress.completed / progress.total) * 100, 100)
+                    : 0
+                }%`,
+              }}
+            ></div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
