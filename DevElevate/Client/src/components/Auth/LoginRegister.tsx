@@ -336,6 +336,13 @@ const LoginRegister: React.FC = () => {
                 )}
               </div>
             )}
+            
+            <p
+              className="text-sm text-blue-400 cursor-pointer hover:underline mt-2"
+              onClick={() => navigate("/forgot-password")}
+            >
+              Forgot Password?
+            </p>
 
             {isLogin && (
               <div className="absolute top-0 right-1 w-full max-w-sm mx-auto h-60">

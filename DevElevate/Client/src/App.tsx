@@ -63,7 +63,7 @@ import FallBackNotes from "./pages/Notes/FallBackNotes.jsx"
 import ReactPattern from "./pages/Notes/ReactPatterns/ReactPattern.jsx"
 import Roadmap from "./pages/RoadmapPage/Roadmap"
 import UserVideoPage from "./pages/videoPages/VideoPage.js";
-
+import ForgotPass from "./components/Auth/ForgotPass";
 
 
 // ✅ AppContent
@@ -88,6 +88,15 @@ const AppContent = () => {
           element={
             <ProtectedRoute requireAuth={false}>
               <LoginRegister />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/forgot-password"
+          element={
+            <ProtectedRoute requireAuth={false}>
+            <ForgotPass />
             </ProtectedRoute>
           }
         />
