@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, Clock, BookOpen, MessageSquare, FileText, Target, Newspaper, User, ExternalLink } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { useNavigate } from 'react-router-dom';
+import { searchableContent, filterSearchResults, getTypeDisplayName } from '../../utils/search';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -17,34 +18,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Sample searchable content
-  const searchableContent = [
-    // Learning Hub
-    { type: 'course', title: 'Data Structures & Algorithms', path: '/learning', icon: BookOpen, description: 'Master DSA concepts and problem solving' },
-    { type: 'course', title: 'Java Programming', path: '/learning', icon: BookOpen, description: 'Learn Java from basics to advanced' },
-    { type: 'course', title: 'MERN Stack Development', path: '/learning', icon: BookOpen, description: 'Full-stack web development with MERN' },
-    { type: 'course', title: 'AI/ML & Data Science', path: '/learning', icon: BookOpen, description: 'Machine learning and data science fundamentals' },
-    
-    // Features
-    { type: 'feature', title: 'Study Buddy AI', path: '/chatbot', icon: MessageSquare, description: 'Get AI-powered help with your queries' },
-    { type: 'feature', title: 'Resume Builder', path: '/resume', icon: FileText, description: 'Create ATS-friendly resumes' },
-    { type: 'feature', title: 'Placement Preparation', path: '/placement', icon: Target, description: 'Interview prep and job opportunities' },
-    { type: 'feature', title: 'Tech News Feed', path: '/news', icon: Newspaper, description: 'Latest tech news and updates' },
-    
-    // Topics
-    { type: 'topic', title: 'Arrays and Strings', path: '/learning?topic=arrays', icon: BookOpen, description: 'Learn array manipulation and string algorithms' },
-    { type: 'topic', title: 'Binary Trees', path: '/learning?topic=trees', icon: BookOpen, description: 'Tree data structures and traversals' },
-    { type: 'topic', title: 'Dynamic Programming', path: '/learning?topic=dp', icon: BookOpen, description: 'Master DP concepts and patterns' },
-    { type: 'topic', title: 'System Design', path: '/learning?topic=system-design', icon: BookOpen, description: 'Learn to design scalable systems' },
-    { type: 'topic', title: 'React Hooks', path: '/learning?topic=react', icon: BookOpen, description: 'Modern React development patterns' },
-    { type: 'topic', title: 'Node.js APIs', path: '/learning?topic=nodejs', icon: BookOpen, description: 'Backend development with Node.js' },
-    
-    // Tools
-    { type: 'tool', title: 'Mock Interview', path: '/placement?tab=mock', icon: Target, description: 'Practice interviews with AI' },
-    { type: 'tool', title: 'Code Practice', path: '/learning?practice=true', icon: BookOpen, description: 'Solve coding problems' },
-    { type: 'tool', title: 'Progress Tracker', path: '/', icon: Target, description: 'Track your learning progress' },
-    { type: 'tool', title: 'Daily Goals', path: '/', icon: Target, description: 'Set and achieve daily learning goals' }
-  ];
+
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -61,10 +35,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (query.trim()) {
-      const filtered = searchableContent.filter(item =>
-        item.title.toLowerCase().includes(query.toLowerCase()) ||
-        item.description.toLowerCase().includes(query.toLowerCase())
-      );
+      const filtered = filterSearchResults(searchableContent, query, {});
       setResults(filtered.slice(0, 8));
       setSelectedIndex(-1);
     } else {
@@ -129,13 +100,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   };
 
   const getTypeLabel = (type: string) => {
-    switch (type) {
-      case 'course': return 'Course';
-      case 'feature': return 'Feature';
-      case 'topic': return 'Topic';
-      case 'tool': return 'Tool';
-      default: return 'Result';
-    }
+    return getTypeDisplayName(type as any);
   };
 
   if (!isOpen) return null;

@@ -1,5 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
+
+// Load environment variables first
+dotenv.config();
+
 import connectDB from "./config/db.js";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
@@ -43,9 +47,6 @@ if (process.env.MONGO_URI) {
         "MongoDB connection skipped - PDF routes will work without database"
     );
 }
-
-// Load environment variables
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;

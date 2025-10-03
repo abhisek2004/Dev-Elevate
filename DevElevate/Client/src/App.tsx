@@ -10,7 +10,8 @@ import { GlobalProvider, useGlobalState } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { AdminProvider } from "./contexts/AdminContext";
 import { AppProvider } from "./contexts/AppContext";
-import Leaderboard from "./pages/Leaderboard/Leaderboard";import { SocketProvider } from "./contexts/SocketContext";
+import Leaderboard from "./pages/Leaderboard/Leaderboard";
+import { SocketProvider } from "./contexts/SocketContext";
 
 import Footer from "./components/Layout/Footer";
 import { useEffect, useState } from "react";
@@ -56,14 +57,15 @@ import ApiDocs from "./pages/Landing/components/ApiDocs";
 import DocumentationPage from "./pages/Landing/components/DocumentationPage";
 import ContributorGuide from "./pages/Leaderboard/ContributorGuide";
 import CreatorPage from "./pages/Landing/components/CreatorPage";
-import JavaScriptFundamentals from "./pages/Notes/JavaScriptFundamentals/JavaScriptFundamentals"
-import PythonNotes from "./pages/Notes/PythonBasics/PythonNotes.jsx"
-import GitNotes from "./pages/Notes/GitVersionControl/GitNotes.jsx"
-import FallBackNotes from "./pages/Notes/FallBackNotes.jsx"
-import ReactPattern from "./pages/Notes/ReactPatterns/ReactPattern.jsx"
-import Roadmap from "./pages/RoadmapPage/Roadmap"
+import JavaScriptFundamentals from "./pages/Notes/JavaScriptFundamentals/JavaScriptFundamentals";
+import PythonNotes from "./pages/Notes/PythonBasics/PythonNotes.jsx";
+import GitNotes from "./pages/Notes/GitVersionControl/GitNotes.jsx";
+import FallBackNotes from "./pages/Notes/FallBackNotes.jsx";
+import ReactPattern from "./pages/Notes/ReactPatterns/ReactPattern.jsx";
+import Roadmap from "./pages/RoadmapPage/Roadmap";
 import UserVideoPage from "./pages/videoPages/VideoPage.js";
 import ForgotPass from "./components/Auth/ForgotPass";
+import SearchPage from "./pages/Search/SearchPage";
 
 
 // ✅ AppContent
@@ -176,11 +178,12 @@ const AppContent = () => {
                         <Route path="profile" element={<UserProfile />} />
                         <Route path="help-center" element={<HelpCenter />} />
                         <Route path="leaderboard" element={<Leaderboard />} />
+                        <Route path="search" element={<SearchPage />} />
                         <Route
                           path="*"
                           element={<Navigate to="/dashboard" replace />}
                         />
-                        //All note related routes
+                        {/* All note related routes */}
                         <Route path="notes" element={<NotesPage />} />
                         <Route
                           path="/notes/javascript/*"
