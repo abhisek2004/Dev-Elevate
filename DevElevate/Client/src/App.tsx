@@ -22,6 +22,7 @@ import TechFeed from "./components/TechFeed/TechFeed";
 import ResumeBuilder from "./components/ResumeBuilder/ResumeBuilder";
 import PlacementPrep from "./components/PlacementPrep/PlacementPrep";
 import UserProfile from "./components/Profile/UserProfile";
+import UserSettings from "./components/Settings/UserSettings";
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import Overview from "./components/Admin/Overview";
 import UserManagement from "./components/Admin/UserManagement";
@@ -176,6 +177,7 @@ const AppContent = () => {
                         <Route path="premium" element={<PremiumPage />} />
                         <Route path="payment" element={<PaymentPage />} />
                         <Route path="profile" element={<UserProfile />} />
+                        <Route path="settings/*" element={<UserSettings />} />
                         <Route path="help-center" element={<HelpCenter />} />
                         <Route path="leaderboard" element={<Leaderboard />} />
                         <Route path="search" element={<SearchPage />} />

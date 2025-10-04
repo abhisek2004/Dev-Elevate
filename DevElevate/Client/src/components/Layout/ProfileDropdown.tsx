@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { User,  LogOut,  Crown, Shield, Moon, Sun, HelpCircle,  } from 'lucide-react';
+import { User,  LogOut,  Crown, Shield, Moon, Sun, HelpCircle, Settings  } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import {  useNavigate } from 'react-router-dom';
@@ -48,6 +48,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
       section: 'Account',
       items: [
         { icon: User, label: 'View Profile', action: () => navigate('/profile') },
+        { icon: Settings, label: 'Settings', action: () => navigate('/settings') },
       ]
     },
     {
