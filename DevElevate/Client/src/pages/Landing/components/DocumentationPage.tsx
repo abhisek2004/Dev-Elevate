@@ -8,6 +8,8 @@ import {
   FiGitBranch,
   FiUsers,
 } from "react-icons/fi";
+import { Home } from "lucide-react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function DocumentationPage() {
@@ -21,9 +23,9 @@ export default function DocumentationPage() {
     "bg-indigo-50 dark:bg-gray-900 p-6 rounded-xl overflow-x-auto shadow text-indigo-900 dark:text-indigo-300 text-sm font-mono leading-relaxed";
 
   return (
-    <div className="relative overflow-hidden py-24 min-h-screen bg-gradient-to-b from-gray-900 to-black">
+    <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
       {/* Header */}
-      <header className="mx-auto max-w-6xl text-center">
+      <header className="max-w-6xl mx-auto text-center">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -36,7 +38,7 @@ export default function DocumentationPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="mx-auto max-w-3xl text-lg leading-relaxed text-indigo-600 dark:text-indigo-400 sm:text-xl"
+          className="max-w-3xl mx-auto text-lg leading-relaxed text-indigo-600 dark:text-indigo-400 sm:text-xl"
         >
           Full-Stack AI-Powered Smart Education and Career Advancement Platform
           for Students, Developers, and Job Seekers
@@ -45,7 +47,7 @@ export default function DocumentationPage() {
 
       {/* Features Section */}
       <motion.section
-        className="p-6 mx-auto max-w-6xl rounded-2xl border shadow-lg backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
+        className="max-w-6xl p-6 mx-auto border shadow-lg rounded-2xl backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -155,7 +157,7 @@ export default function DocumentationPage() {
 
       {/* Tech Stack Section */}
       <motion.section
-        className="p-6 mx-auto max-w-6xl rounded-2xl border shadow-lg backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
+        className="max-w-6xl p-6 mx-auto border shadow-lg rounded-2xl backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -206,7 +208,7 @@ export default function DocumentationPage() {
 
       {/* Architecture Section */}
       <motion.section
-        className="p-6 mx-auto max-w-6xl rounded-2xl border shadow-lg backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
+        className="max-w-6xl p-6 mx-auto border shadow-lg rounded-2xl backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -260,7 +262,7 @@ export default function DocumentationPage() {
 
       {/* Quick Start Section */}
       <motion.section
-        className="p-6 mx-auto max-w-6xl rounded-2xl border shadow-lg backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
+        className="max-w-6xl p-6 mx-auto border shadow-lg rounded-2xl backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -297,7 +299,7 @@ npm run dev   # Runs on http://localhost:5173`}
 
       {/* Deployment Section */}
       <motion.section
-        className="p-6 mx-auto max-w-6xl rounded-2xl border shadow-lg backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
+        className="max-w-6xl p-6 mx-auto border shadow-lg rounded-2xl backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -307,7 +309,7 @@ npm run dev   # Runs on http://localhost:5173`}
           <FiGitBranch className="flex-shrink-0 mr-3 text-3xl" />
           <h2 className="text-2xl font-bold sm:text-3xl">Deployment</h2>
         </div>
-        <ul className="space-y-2 text-sm leading-relaxed list-disc list-inside text-gray-700 dark:text-gray-300 sm:text-base">
+        <ul className="space-y-2 text-sm leading-relaxed text-gray-700 list-disc list-inside dark:text-gray-300 sm:text-base">
           <li>Frontend: Deployed on Vercel (vite.config.ts optimized)</li>
           <li>Backend: Deployed on Render (Node.js + MongoDB Atlas)</li>
           <li>Database: MongoDB Atlas (Cloud-hosted)</li>
@@ -322,7 +324,7 @@ npm run dev   # Runs on http://localhost:5173`}
 
       {/* License Section */}
       <motion.section
-        className="p-6 mx-auto max-w-6xl rounded-2xl border shadow-lg backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
+        className="max-w-6xl p-6 mx-auto border shadow-lg rounded-2xl backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -341,7 +343,7 @@ npm run dev   # Runs on http://localhost:5173`}
 
       {/* Contributing Section */}
       <motion.section
-        className="p-6 mx-auto max-w-6xl rounded-2xl border shadow-lg backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
+        className="max-w-6xl p-6 mx-auto border shadow-lg rounded-2xl backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 sm:p-8 border-gray-200/50 dark:border-gray-700/50"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -356,7 +358,7 @@ npm run dev   # Runs on http://localhost:5173`}
           guidelines: No changes to core backend/routes/auth. Always pull latest
           main, add PR comments with files edited/testing steps/screenshots.
         </p>
-        <ol className="space-y-3 text-sm leading-relaxed list-decimal list-inside text-gray-700 dark:text-gray-300 sm:text-base">
+        <ol className="space-y-3 text-sm leading-relaxed text-gray-700 list-decimal list-inside dark:text-gray-300 sm:text-base">
           <li>
             Fork the repository and create a feature branch:{" "}
             <code className="px-2 py-1 text-indigo-900 bg-indigo-100 rounded dark:bg-gray-700 dark:text-indigo-300">
@@ -414,7 +416,7 @@ npm run dev   # Runs on http://localhost:5173`}
           </a>{" "}
           | Live:{" "}
           <a
-            href="https://dev-elevate.vercel.app/" // Assuming live URL; update if needed
+            href="https://develevate-ai.vercel.app"
             className="font-semibold text-indigo-800 underline transition-colors dark:text-indigo-200 hover:text-indigo-700 dark:hover:text-indigo-300"
             target="_blank"
             rel="noopener noreferrer"
@@ -423,6 +425,17 @@ npm run dev   # Runs on http://localhost:5173`}
           </a>
         </p>
       </footer>
+
+      {/* Return Button */}
+      <div className="flex justify-center mt-10">
+        <Link
+          to="/"
+          className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-transform shadow-lg bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl hover:scale-105 hover:shadow-2xl"
+        >
+          <Home className="w-5 h-5" />
+          Return to Dashboard
+        </Link>
+      </div>
     </div>
   );
 }

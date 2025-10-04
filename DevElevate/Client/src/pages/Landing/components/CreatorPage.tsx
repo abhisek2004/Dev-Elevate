@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Github,
   Linkedin,
@@ -88,61 +89,57 @@ const CreatorPage: React.FC = () => {
   ];
 
   return (
-    <div className="overflow-hidden relative py-24 bg-gradient-to-b from-gray-900 to-black transition-colors duration-200">
-      <div className="px-4 py-12 mx-auto max-w-6xl sm:px-6 lg:px-8">
+    <div className="relative py-24 overflow-hidden transition-colors duration-200 bg-gradient-to-b from-gray-900 to-black">
+      <div className="max-w-6xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
         {/* Hero Section */}
 
         {/* Abhisek Panda Section */}
         <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-2xl p-8 border shadow-lg mb-12`}
+          className={`${state.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } rounded-2xl p-8 border shadow-lg mb-12`}
         >
           <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-8">
             <div className="relative">
               <img
                 src="https://github.com/abhisek2004.png"
                 alt="Abhisek Panda"
-                className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg"
+                className="w-32 h-32 border-4 border-blue-500 rounded-full shadow-lg"
               />
-              <div className="flex absolute -right-2 -bottom-2 justify-center items-center w-8 h-8 bg-green-500 rounded-full border-4 border-white dark:border-gray-800">
+              <div className="absolute flex items-center justify-center w-8 h-8 bg-green-500 border-4 border-white rounded-full -right-2 -bottom-2 dark:border-gray-800">
                 <span className="text-xs text-white">✨</span>
               </div>
             </div>
 
             <div className="flex-1 text-center lg:text-left">
               <h1
-                className={`text-4xl font-bold mb-2 ${
-                  state.darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-4xl font-bold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Abhisek Panda 👨‍💻
               </h1>
               <p
-                className={`text-xl mb-4 ${
-                  state.darkMode ? "text-blue-400" : "text-blue-600"
-                }`}
+                className={`text-xl mb-4 ${state.darkMode ? "text-blue-400" : "text-blue-600"
+                  }`}
               >
                 Full-Stack Developer (Project Admin)
               </p>
               <p
-                className={`text-lg mb-6 ${
-                  state.darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
+                className={`text-lg mb-6 ${state.darkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
               >
                 Passionate about creating innovative solutions that empower
                 developers and students. Building the future of education
                 technology, one line of code at a time. ☕💡💻
               </p>
 
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
                 <a
                   href="https://github.com/abhisek2004"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-gray-800 rounded-lg transition-colors hover:bg-gray-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
                 >
                   <Github className="w-5 h-5" />
                   <span>GitHub</span>
@@ -151,7 +148,7 @@ const CreatorPage: React.FC = () => {
                   href="https://www.linkedin.com/in/abhisekpanda2004/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-blue-600 rounded-lg transition-colors hover:bg-blue-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
                 >
                   <Linkedin className="w-5 h-5" />
                   <span>LinkedIn</span>
@@ -160,7 +157,7 @@ const CreatorPage: React.FC = () => {
                   href="https://abhisekpanda072.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-purple-600 rounded-lg transition-colors hover:bg-purple-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-purple-600 rounded-lg hover:bg-purple-700"
                 >
                   <Globe className="w-5 h-5" />
                   <span>Portfolio</span>
@@ -171,55 +168,51 @@ const CreatorPage: React.FC = () => {
         </div>
         {/* Jay Sawant Section */}
         <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-2xl p-8 border shadow-lg mb-12`}
+          className={`${state.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } rounded-2xl p-8 border shadow-lg mb-12`}
         >
           <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-8">
             <div className="relative">
               <img
                 src="https://github.com/Jay2006sawant.png"
                 alt="Jay Sawant"
-                className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg"
+                className="w-32 h-32 border-4 border-blue-500 rounded-full shadow-lg"
               />
-              <div className="flex absolute -right-2 -bottom-2 justify-center items-center w-8 h-8 bg-green-500 rounded-full border-4 border-white dark:border-gray-800">
+              <div className="absolute flex items-center justify-center w-8 h-8 bg-green-500 border-4 border-white rounded-full -right-2 -bottom-2 dark:border-gray-800">
                 <span className="text-xs text-white">✨</span>
               </div>
             </div>
 
             <div className="flex-1 text-center lg:text-left">
               <h1
-                className={`text-4xl font-bold mb-2 ${
-                  state.darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-4xl font-bold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Jay Sawant 👨‍💻
               </h1>
               <p
-                className={`text-xl mb-4 ${
-                  state.darkMode ? "text-blue-400" : "text-blue-600"
-                }`}
+                className={`text-xl mb-4 ${state.darkMode ? "text-blue-400" : "text-blue-600"
+                  }`}
               >
                 Full-Stack Developer (👨‍🏫 🤝 Project Mentor)
               </p>
               <p
-                className={`text-lg mb-6 ${
-                  state.darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
+                className={`text-lg mb-6 ${state.darkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
               >
                 Passionate about creating innovative solutions that empower
                 developers and students. Building the future of education
                 technology, one line of code at a time. ☕💡💻
               </p>
 
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
                 <a
                   href="https://github.com/Jay2006sawant"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-gray-800 rounded-lg transition-colors hover:bg-gray-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
                 >
                   <Github className="w-5 h-5" />
                   <span>GitHub</span>
@@ -228,7 +221,7 @@ const CreatorPage: React.FC = () => {
                   href="https://www.linkedin.com/in/jay-sawant-4b59aa324/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-blue-600 rounded-lg transition-colors hover:bg-blue-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
                 >
                   <Linkedin className="w-5 h-5" />
                   <span>LinkedIn</span>
@@ -237,7 +230,7 @@ const CreatorPage: React.FC = () => {
                   href="#"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-purple-600 rounded-lg transition-colors hover:bg-purple-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-purple-600 rounded-lg hover:bg-purple-700"
                 >
                   <Globe className="w-5 h-5" />
                   <span>Portfolio</span>
@@ -248,55 +241,51 @@ const CreatorPage: React.FC = () => {
         </div>
         {/* Avansh Yadav Section */}
         <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-2xl p-8 border shadow-lg mb-12`}
+          className={`${state.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } rounded-2xl p-8 border shadow-lg mb-12`}
         >
           <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-8">
             <div className="relative">
               <img
                 src="https://avatars.githubusercontent.com/u/92374411?v=4"
                 alt="Avansh Yadav"
-                className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg"
+                className="w-32 h-32 border-4 border-blue-500 rounded-full shadow-lg"
               />
-              <div className="flex absolute -right-2 -bottom-2 justify-center items-center w-8 h-8 bg-green-500 rounded-full border-4 border-white dark:border-gray-800">
+              <div className="absolute flex items-center justify-center w-8 h-8 bg-green-500 border-4 border-white rounded-full -right-2 -bottom-2 dark:border-gray-800">
                 <span className="text-xs text-white">✨</span>
               </div>
             </div>
 
             <div className="flex-1 text-center lg:text-left">
               <h1
-                className={`text-4xl font-bold mb-2 ${
-                  state.darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-4xl font-bold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Avansh Yadav 👨‍💻
               </h1>
               <p
-                className={`text-xl mb-4 ${
-                  state.darkMode ? "text-blue-400" : "text-blue-600"
-                }`}
+                className={`text-xl mb-4 ${state.darkMode ? "text-blue-400" : "text-blue-600"
+                  }`}
               >
                 Full-Stack Developer (👨‍🏫 🤝 Project Mentor)
               </p>
               <p
-                className={`text-lg mb-6 ${
-                  state.darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
+                className={`text-lg mb-6 ${state.darkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
               >
                 Passionate about creating innovative solutions that empower
                 developers and students. Building the future of education
                 technology, one line of code at a time. ☕💡💻
               </p>
 
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
                 <a
                   href="https://github.com/Avansh2006"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-gray-800 rounded-lg transition-colors hover:bg-gray-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
                 >
                   <Github className="w-5 h-5" />
                   <span>GitHub</span>
@@ -305,7 +294,7 @@ const CreatorPage: React.FC = () => {
                   href="https://www.linkedin.com/in/avanshyadav/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-blue-600 rounded-lg transition-colors hover:bg-blue-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
                 >
                   <Linkedin className="w-5 h-5" />
                   <span>LinkedIn</span>
@@ -314,7 +303,7 @@ const CreatorPage: React.FC = () => {
                   href="#"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-purple-600 rounded-lg transition-colors hover:bg-purple-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-purple-600 rounded-lg hover:bg-purple-700"
                 >
                   <Globe className="w-5 h-5" />
                   <span>Portfolio</span>
@@ -325,55 +314,51 @@ const CreatorPage: React.FC = () => {
         </div>
         {/* Amisha Gupta Section */}
         <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-2xl p-8 border shadow-lg mb-12`}
+          className={`${state.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } rounded-2xl p-8 border shadow-lg mb-12`}
         >
           <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-8">
             <div className="relative">
               <img
                 src="https://avatars.githubusercontent.com/u/154073004?v=4"
                 alt="Amisha Gupta"
-                className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg"
+                className="w-32 h-32 border-4 border-blue-500 rounded-full shadow-lg"
               />
-              <div className="flex absolute -right-2 -bottom-2 justify-center items-center w-8 h-8 bg-green-500 rounded-full border-4 border-white dark:border-gray-800">
+              <div className="absolute flex items-center justify-center w-8 h-8 bg-green-500 border-4 border-white rounded-full -right-2 -bottom-2 dark:border-gray-800">
                 <span className="text-xs text-white">✨</span>
               </div>
             </div>
 
             <div className="flex-1 text-center lg:text-left">
               <h1
-                className={`text-4xl font-bold mb-2 ${
-                  state.darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-4xl font-bold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Amisha Gupta 👨‍💻
               </h1>
               <p
-                className={`text-xl mb-4 ${
-                  state.darkMode ? "text-blue-400" : "text-blue-600"
-                }`}
+                className={`text-xl mb-4 ${state.darkMode ? "text-blue-400" : "text-blue-600"
+                  }`}
               >
                 MERN , Next.js Developer (👨‍🏫 🤝 Project Mentor)
               </p>
               <p
-                className={`text-lg mb-6 ${
-                  state.darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
+                className={`text-lg mb-6 ${state.darkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
               >
                 Passionate about creating innovative solutions that empower
                 developers and students. Building the future of education
                 technology, one line of code at a time. ☕💡💻
               </p>
 
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
                 <a
                   href="https://github.com/amishagupta31"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-gray-800 rounded-lg transition-colors hover:bg-gray-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
                 >
                   <Github className="w-5 h-5" />
                   <span>GitHub</span>
@@ -382,7 +367,7 @@ const CreatorPage: React.FC = () => {
                   href="https://www.linkedin.com/in/amishagupta31/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-blue-600 rounded-lg transition-colors hover:bg-blue-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
                 >
                   <Linkedin className="w-5 h-5" />
                   <span>LinkedIn</span>
@@ -391,7 +376,7 @@ const CreatorPage: React.FC = () => {
                   href="#"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-purple-600 rounded-lg transition-colors hover:bg-purple-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-purple-600 rounded-lg hover:bg-purple-700"
                 >
                   <Globe className="w-5 h-5" />
                   <span>Portfolio</span>
@@ -402,55 +387,51 @@ const CreatorPage: React.FC = () => {
         </div>
         {/* Gobinda Gagan Dey Section */}
         <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-2xl p-8 border shadow-lg mb-12`}
+          className={`${state.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } rounded-2xl p-8 border shadow-lg mb-12`}
         >
           <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-8">
             <div className="relative">
               <img
                 src="https://avatars.githubusercontent.com/u/180097366?v=4"
                 alt="Gobinda Gagan"
-                className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg"
+                className="w-32 h-32 border-4 border-blue-500 rounded-full shadow-lg"
               />
-              <div className="flex absolute -right-2 -bottom-2 justify-center items-center w-8 h-8 bg-green-500 rounded-full border-4 border-white dark:border-gray-800">
+              <div className="absolute flex items-center justify-center w-8 h-8 bg-green-500 border-4 border-white rounded-full -right-2 -bottom-2 dark:border-gray-800">
                 <span className="text-xs text-white">✨</span>
               </div>
             </div>
 
             <div className="flex-1 text-center lg:text-left">
               <h1
-                className={`text-4xl font-bold mb-2 ${
-                  state.darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-4xl font-bold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
+                  }`}
               >
                 Gobinda Gagan Dey👨‍💻
               </h1>
               <p
-                className={`text-xl mb-4 ${
-                  state.darkMode ? "text-blue-400" : "text-blue-600"
-                }`}
+                className={`text-xl mb-4 ${state.darkMode ? "text-blue-400" : "text-blue-600"
+                  }`}
               >
                 Backend Developer (🤝 Major Contributor 50+ PR)
               </p>
               <p
-                className={`text-lg mb-6 ${
-                  state.darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
+                className={`text-lg mb-6 ${state.darkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
               >
                 Passionate about creating innovative solutions that empower
                 developers and students. Building the future of education
                 technology, one line of code at a time. ☕💡💻
               </p>
 
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
                 <a
                   href="https://github.com/GOBINDA-GAGAN"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-gray-800 rounded-lg transition-colors hover:bg-gray-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
                 >
                   <Github className="w-5 h-5" />
                   <span>GitHub</span>
@@ -459,7 +440,7 @@ const CreatorPage: React.FC = () => {
                   href="https://www.linkedin.com/in/gobinda-gagan-dey/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-blue-600 rounded-lg transition-colors hover:bg-blue-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
                 >
                   <Linkedin className="w-5 h-5" />
                   <span>LinkedIn</span>
@@ -468,7 +449,7 @@ const CreatorPage: React.FC = () => {
                   href="https://gobinda-gagan-dey.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 space-x-2 text-white bg-purple-600 rounded-lg transition-colors hover:bg-purple-700"
+                  className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-purple-600 rounded-lg hover:bg-purple-700"
                 >
                   <Globe className="w-5 h-5" />
                   <span>Portfolio</span>
@@ -480,27 +461,24 @@ const CreatorPage: React.FC = () => {
 
         {/* Disclaimer & Acknowledgement Section */}
         <div
-          className={`${
-            state.darkMode
-              ? "bg-yellow-900/20 border-yellow-800"
-              : "bg-yellow-50 border-yellow-200"
-          } rounded-xl p-8 border mb-8`}
+          className={`${state.darkMode
+            ? "bg-yellow-900/20 border-yellow-800"
+            : "bg-yellow-50 border-yellow-200"
+            } rounded-xl p-8 border mb-8`}
         >
           <div className="flex items-start space-x-3">
-            <AlertTriangle className="flex-shrink-0 mt-1 w-6 h-6 text-yellow-500" />
+            <AlertTriangle className="flex-shrink-0 w-6 h-6 mt-1 text-yellow-500" />
             <div>
               <h2
-                className={`text-2xl font-bold mb-4 ${
-                  state.darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-2xl font-bold mb-4 ${state.darkMode ? "text-white" : "text-gray-900"
+                  }`}
               >
                 ⚠️ Disclaimer & Acknowledgement 💻🌐
               </h2>
 
               <div
-                className={`space-y-4 ${
-                  state.darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
+                className={`space-y-4 ${state.darkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
               >
                 <div>
                   <p className="mb-2">
@@ -551,85 +529,73 @@ const CreatorPage: React.FC = () => {
 
                   <div className="grid grid-cols-2 gap-4 mb-6 md:grid-cols-4">
                     <div
-                      className={`p-4 rounded-lg ${
-                        state.darkMode ? "bg-gray-800" : "bg-white"
-                      } text-center`}
+                      className={`p-4 rounded-lg ${state.darkMode ? "bg-gray-800" : "bg-white"
+                        } text-center`}
                     >
                       <div className="mb-2 text-2xl">🧠</div>
                       <div
-                        className={`font-semibold ${
-                          state.darkMode ? "text-white" : "text-gray-900"
-                        }`}
+                        className={`font-semibold ${state.darkMode ? "text-white" : "text-gray-900"
+                          }`}
                       >
                         MongoDB
                       </div>
                       <div
-                        className={`text-sm ${
-                          state.darkMode ? "text-gray-400" : "text-gray-600"
-                        }`}
+                        className={`text-sm ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                          }`}
                       >
                         for the database
                       </div>
                     </div>
                     <div
-                      className={`p-4 rounded-lg ${
-                        state.darkMode ? "bg-gray-800" : "bg-white"
-                      } text-center`}
+                      className={`p-4 rounded-lg ${state.darkMode ? "bg-gray-800" : "bg-white"
+                        } text-center`}
                     >
                       <div className="mb-2 text-2xl">🚀</div>
                       <div
-                        className={`font-semibold ${
-                          state.darkMode ? "text-white" : "text-gray-900"
-                        }`}
+                        className={`font-semibold ${state.darkMode ? "text-white" : "text-gray-900"
+                          }`}
                       >
                         Express.js
                       </div>
                       <div
-                        className={`text-sm ${
-                          state.darkMode ? "text-gray-400" : "text-gray-600"
-                        }`}
+                        className={`text-sm ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                          }`}
                       >
                         for the backend
                       </div>
                     </div>
                     <div
-                      className={`p-4 rounded-lg ${
-                        state.darkMode ? "bg-gray-800" : "bg-white"
-                      } text-center`}
+                      className={`p-4 rounded-lg ${state.darkMode ? "bg-gray-800" : "bg-white"
+                        } text-center`}
                     >
                       <div className="mb-2 text-2xl">⚛️</div>
                       <div
-                        className={`font-semibold ${
-                          state.darkMode ? "text-white" : "text-gray-900"
-                        }`}
+                        className={`font-semibold ${state.darkMode ? "text-white" : "text-gray-900"
+                          }`}
                       >
                         React.js
                       </div>
                       <div
-                        className={`text-sm ${
-                          state.darkMode ? "text-gray-400" : "text-gray-600"
-                        }`}
+                        className={`text-sm ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                          }`}
                       >
                         for the frontend
                       </div>
                     </div>
                     <div
-                      className={`p-4 rounded-lg ${
-                        state.darkMode ? "bg-gray-800" : "bg-white"
-                      } text-center`}
+                      className={`p-4 rounded-lg ${state.darkMode ? "bg-gray-800" : "bg-white"
+                        } text-center`}
                     >
                       <div className="mb-2 text-2xl">🛠️</div>
                       <div
-                        className={`font-semibold ${
-                          state.darkMode ? "text-white" : "text-gray-900"
-                        }`}
+                        className={`font-semibold ${state.darkMode ? "text-white" : "text-gray-900"
+                          }`}
                       >
                         Node.js
                       </div>
                       <div
-                        className={`text-sm ${
-                          state.darkMode ? "text-gray-400" : "text-gray-600"
-                        }`}
+                        className={`text-sm ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                          }`}
                       >
                         as the runtime engine
                       </div>
@@ -739,16 +705,14 @@ const CreatorPage: React.FC = () => {
 
         {/* Achievements */}
         <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-xl p-8 border shadow-sm mb-8`}
+          className={`${state.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } rounded-xl p-8 border shadow-sm mb-8`}
         >
           <h2
-            className={`text-2xl font-bold mb-6 ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-2xl font-bold mb-6 ${state.darkMode ? "text-white" : "text-gray-900"
+              }`}
           >
             🏆 Achievements & Recognition
           </h2>
@@ -758,24 +722,21 @@ const CreatorPage: React.FC = () => {
               return (
                 <div
                   key={index}
-                  className={`p-6 rounded-lg border text-center ${
-                    state.darkMode
-                      ? "border-gray-700 bg-gray-700/50"
-                      : "border-gray-200 bg-gray-50"
-                  }`}
-                >
-                  <Icon className="mx-auto mb-3 w-8 h-8 text-blue-500" />
-                  <h3
-                    className={`font-semibold mb-2 ${
-                      state.darkMode ? "text-white" : "text-gray-900"
+                  className={`p-6 rounded-lg border text-center ${state.darkMode
+                    ? "border-gray-700 bg-gray-700/50"
+                    : "border-gray-200 bg-gray-50"
                     }`}
+                >
+                  <Icon className="w-8 h-8 mx-auto mb-3 text-blue-500" />
+                  <h3
+                    className={`font-semibold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
+                      }`}
                   >
                     {achievement.title}
                   </h3>
                   <p
-                    className={`text-sm ${
-                      state.darkMode ? "text-gray-400" : "text-gray-600"
-                    }`}
+                    className={`text-sm ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
                   >
                     {achievement.description}
                   </p>
@@ -787,16 +748,14 @@ const CreatorPage: React.FC = () => {
 
         {/* Projects */}
         <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-xl p-8 border shadow-sm mb-8`}
+          className={`${state.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } rounded-xl p-8 border shadow-sm mb-8`}
         >
           <h2
-            className={`text-2xl font-bold mb-6 ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-2xl font-bold mb-6 ${state.darkMode ? "text-white" : "text-gray-900"
+              }`}
           >
             💼 Featured Projects
           </h2>
@@ -804,36 +763,32 @@ const CreatorPage: React.FC = () => {
             {projects.map((project, index) => (
               <div
                 key={index}
-                className={`p-6 rounded-lg border ${
-                  state.darkMode
-                    ? "border-gray-700 hover:border-gray-600"
-                    : "border-gray-200 hover:border-gray-300"
-                } transition-colors hover:shadow-md`}
+                className={`p-6 rounded-lg border ${state.darkMode
+                  ? "border-gray-700 hover:border-gray-600"
+                  : "border-gray-200 hover:border-gray-300"
+                  } transition-colors hover:shadow-md`}
               >
-                <div className="flex justify-between items-start mb-3">
+                <div className="flex items-start justify-between mb-3">
                   <h3
-                    className={`font-semibold ${
-                      state.darkMode ? "text-white" : "text-gray-900"
-                    }`}
+                    className={`font-semibold ${state.darkMode ? "text-white" : "text-gray-900"
+                      }`}
                   >
                     {project.name}
                   </h3>
                   <span
-                    className={`px-2 py-1 rounded-full text-xs ${
-                      project.status === "Active"
-                        ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-                        : project.status === "Live"
+                    className={`px-2 py-1 rounded-full text-xs ${project.status === "Active"
+                      ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
+                      : project.status === "Live"
                         ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
                         : "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300"
-                    }`}
+                      }`}
                   >
                     {project.status}
                   </span>
                 </div>
                 <p
-                  className={`text-sm mb-4 ${
-                    state.darkMode ? "text-gray-400" : "text-gray-600"
-                  }`}
+                  className={`text-sm mb-4 ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
                 >
                   {project.description}
                 </p>
@@ -841,11 +796,10 @@ const CreatorPage: React.FC = () => {
                   {project.tech.map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className={`px-2 py-1 rounded text-xs ${
-                        state.darkMode
-                          ? "bg-gray-700 text-gray-300"
-                          : "bg-gray-100 text-gray-700"
-                      }`}
+                      className={`px-2 py-1 rounded text-xs ${state.darkMode
+                        ? "bg-gray-700 text-gray-300"
+                        : "bg-gray-100 text-gray-700"
+                        }`}
                     >
                       {tech}
                     </span>
@@ -866,16 +820,14 @@ const CreatorPage: React.FC = () => {
 
         {/* Timeline */}
         <div
-          className={`${
-            state.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-xl p-8 border shadow-sm mb-8`}
+          className={`${state.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } rounded-xl p-8 border shadow-sm mb-8`}
         >
           <h2
-            className={`text-2xl font-bold mb-6 ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-2xl font-bold mb-6 ${state.darkMode ? "text-white" : "text-gray-900"
+              }`}
           >
             📅 Journey Timeline
           </h2>
@@ -885,32 +837,29 @@ const CreatorPage: React.FC = () => {
               return (
                 <div key={index} className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
-                    <div className="flex justify-center items-center w-10 h-10 bg-blue-100 rounded-full dark:bg-blue-900">
+                    <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full dark:bg-blue-900">
                       <Icon className="w-5 h-5 text-blue-600 dark:text-blue-300" />
                     </div>
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center mb-1 space-x-2">
                       <span
-                        className={`font-bold ${
-                          state.darkMode ? "text-white" : "text-gray-900"
-                        }`}
+                        className={`font-bold ${state.darkMode ? "text-white" : "text-gray-900"
+                          }`}
                       >
                         {item.year}
                       </span>
                       <span className="text-blue-500">•</span>
                       <span
-                        className={`font-semibold ${
-                          state.darkMode ? "text-white" : "text-gray-900"
-                        }`}
+                        className={`font-semibold ${state.darkMode ? "text-white" : "text-gray-900"
+                          }`}
                       >
                         {item.title}
                       </span>
                     </div>
                     <p
-                      className={`${
-                        state.darkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
+                      className={`${state.darkMode ? "text-gray-400" : "text-gray-600"
+                        }`}
                     >
                       {item.description}
                     </p>
@@ -923,24 +872,21 @@ const CreatorPage: React.FC = () => {
 
         {/* Philosophy & Quote */}
         <div
-          className={`${
-            state.darkMode
-              ? "bg-gradient-to-r from-blue-900 to-purple-900"
-              : "bg-gradient-to-r from-blue-50 to-purple-50"
-          } rounded-xl p-8 text-center`}
+          className={`${state.darkMode
+            ? "bg-gradient-to-r from-blue-900 to-purple-900"
+            : "bg-gradient-to-r from-blue-50 to-purple-50"
+            } rounded-xl p-8 text-center`}
         >
-          <Coffee className="mx-auto mb-4 w-12 h-12 text-blue-500" />
+          <Coffee className="w-12 h-12 mx-auto mb-4 text-blue-500" />
           <h2
-            className={`text-2xl font-bold mb-4 ${
-              state.darkMode ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-2xl font-bold mb-4 ${state.darkMode ? "text-white" : "text-gray-900"
+              }`}
           >
             My Philosophy
           </h2>
           <blockquote
-            className={`text-lg italic mb-4 ${
-              state.darkMode ? "text-gray-300" : "text-gray-700"
-            }`}
+            className={`text-lg italic mb-4 ${state.darkMode ? "text-gray-300" : "text-gray-700"
+              }`}
           >
             "Code + Coffee + Curiosity = Innovation"
           </blockquote>

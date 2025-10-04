@@ -14,8 +14,9 @@ import {
   BookOpen,
   Users,
   CheckCircle,
+  Home,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // ---------- Types ----------
 interface Command {
@@ -55,7 +56,7 @@ interface WideCardProps {
 const SmallCard: React.FC<CardProps> = ({ icon, title, description }) => (
   <motion.div
     whileHover={{ scale: 1.05 }}
-    className="flex flex-col items-center p-6 text-center bg-white rounded-2xl border shadow-md dark:bg-gray-700/50 dark:border-gray-700"
+    className="flex flex-col items-center p-6 text-center bg-white border shadow-md rounded-2xl dark:bg-gray-700/50 dark:border-gray-700"
   >
     {icon}
     <h3 className="mt-2 text-lg font-semibold text-indigo-600 dark:text-indigo-400">{title}</h3>
@@ -75,11 +76,11 @@ const WideCard: React.FC<WideCardProps> = ({
   <div
     className={`p-8 bg-gradient-to-r rounded-2xl border shadow-md transition-colors duration-300 ${gradientFrom} ${gradientTo} dark:from-gray-700 dark:to-gray-800 dark:border-gray-700`}
   >
-    <div className="flex gap-3 items-center mb-4">
+    <div className="flex items-center gap-3 mb-4">
       {icon}
       <h3 className={`text-xl font-semibold text-gray-900 dark:text-gray-100`}>{title}</h3>
     </div>
-    <ul className="pl-6 space-y-2 list-disc text-gray-700 dark:text-gray-300">
+    <ul className="pl-6 space-y-2 text-gray-700 list-disc dark:text-gray-300">
       {items.map((item, idx) => (
         <li key={idx}>{item}</li>
       ))}
@@ -131,13 +132,13 @@ const ContributorGuide: React.FC = () => {
   ];
 
   return (
-    <div className="px-4 py-12 mx-auto space-y-16 max-w-7xl min-h-screen bg-gray-50 dark:bg-black sm:px-6 lg:px-12">
+    <div className="min-h-screen px-4 py-12 mx-auto space-y-16 max-w-7xl bg-gray-50 dark:bg-black sm:px-6 lg:px-12">
       {/* ---------- Top GSSoC Section ---------- */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="p-10 bg-gradient-to-br from-indigo-50 via-white to-purple-50 rounded-3xl border border-gray-200 shadow-lg dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 dark:border-gray-700"
+        className="p-10 border border-gray-200 shadow-lg bg-gradient-to-br from-indigo-50 via-white to-purple-50 rounded-3xl dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 dark:border-gray-700"
       >
         <h2 className="mb-4 text-3xl font-bold text-center text-indigo-700 dark:text-indigo-400">🌟 About Dev-Elevate</h2>
         <p className="mb-12 text-lg leading-relaxed text-center text-gray-700 dark:text-gray-300">
@@ -145,10 +146,10 @@ const ContributorGuide: React.FC = () => {
         </p>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          <SmallCard icon={<Lightbulb className="mb-3 w-10 h-10 text-yellow-500" />} title="Explore Issues" description={<><span className="font-medium">Beginner-friendly tasks</span> to get familiar with the project.</>} />
-          <SmallCard icon={<Code2 className="mb-3 w-10 h-10 text-green-500" />} title="Clean Contributions" description="Keep your PRs neat, tested, and documented." />
-          <SmallCard icon={<GitBranch className="mb-3 w-10 h-10 text-purple-500" />} title="Collaborate Actively" description="Discuss ideas, review code, and learn with other contributors." />
-          <SmallCard icon={<BookOpen className="mb-3 w-10 h-10 text-blue-500" />} title="Follow Docs" description="Always read the project documentation before contributing." />
+          <SmallCard icon={<Lightbulb className="w-10 h-10 mb-3 text-yellow-500" />} title="Explore Issues" description={<><span className="font-medium">Beginner-friendly tasks</span> to get familiar with the project.</>} />
+          <SmallCard icon={<Code2 className="w-10 h-10 mb-3 text-green-500" />} title="Clean Contributions" description="Keep your PRs neat, tested, and documented." />
+          <SmallCard icon={<GitBranch className="w-10 h-10 mb-3 text-purple-500" />} title="Collaborate Actively" description="Discuss ideas, review code, and learn with other contributors." />
+          <SmallCard icon={<BookOpen className="w-10 h-10 mb-3 text-blue-500" />} title="Follow Docs" description="Always read the project documentation before contributing." />
         </div>
       </motion.div>
 
@@ -159,22 +160,22 @@ const ContributorGuide: React.FC = () => {
       </div>
 
       {/* ---------- Buttons Section ---------- */}
-      <div className="flex gap-6 justify-center mt-12">
-        <motion.button whileHover={{ scale: 1.05 }} className="px-8 py-3 font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full shadow-lg transition-all duration-300 hover:from-indigo-700 hover:to-purple-700" onClick={() => navigate("/contributorguide")}>
+      <div className="flex justify-center gap-6 mt-12">
+        <motion.button whileHover={{ scale: 1.05 }} className="px-8 py-3 font-semibold text-white transition-all duration-300 rounded-full shadow-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700" onClick={() => navigate("/contributorguide")}>
           Contributor’s Guide
         </motion.button>
 
-        <motion.button whileHover={{ scale: 1.05 }} className="px-8 py-3 font-semibold text-white bg-gradient-to-r from-pink-500 to-orange-500 rounded-full shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-orange-600" onClick={() => window.open("https://github.com/abhisek2004/Dev-Elevate", "_blank")}>
+        <motion.button whileHover={{ scale: 1.05 }} className="px-8 py-3 font-semibold text-white transition-all duration-300 rounded-full shadow-lg bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600" onClick={() => window.open("https://github.com/abhisek2004/Dev-Elevate", "_blank")}>
           Start Contributing
         </motion.button>
       </div>
 
       {/* ---------- Contribution Steps ---------- */}
-      <div className="p-8 bg-white rounded-xl shadow-md dark:bg-gray-800">
+      <div className="p-8 bg-white shadow-md rounded-xl dark:bg-gray-800">
         <h2 className="mt-8 mb-8 text-3xl font-bold text-center text-gray-900 dark:text-gray-100">Step-by-Step Contribution Journey</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {contributionTypes.map((type, idx) => (
-            <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: idx * 0.1 }} className="p-4 bg-gray-200 rounded border-l-4 border-indigo-500 shadow-sm dark:border-indigo-400 dark:bg-gray-700">
+            <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: idx * 0.1 }} className="p-4 bg-gray-200 border-l-4 border-indigo-500 rounded shadow-sm dark:border-indigo-400 dark:bg-gray-700">
               <div className="flex items-center mb-2"><FiInfo className="mr-2 text-indigo-500 dark:text-indigo-400" /><h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{type.title}</h3></div>
               <p className="mb-2 text-gray-700 dark:text-gray-300">{type.description}</p>
               <p className="italic text-gray-600 dark:text-gray-400">💡 {type.example}</p>
@@ -184,16 +185,16 @@ const ContributorGuide: React.FC = () => {
       </div>
 
       {/* ---------- Git Commands ---------- */}
-      <div className="p-8 bg-white rounded-xl shadow-md dark:bg-gray-800">
+      <div className="p-8 bg-white shadow-md rounded-xl dark:bg-gray-800">
         <h2 className="mb-6 text-3xl font-bold text-gray-900 dark:text-gray-100">Essential Git Commands</h2>
         <div className="space-y-4">
           {commands.map((c) => (
-            <div key={c.id} className="flex justify-between items-center p-4 bg-gray-100 rounded-lg border border-gray-200 dark:bg-gray-700/50 dark:border-gray-700">
+            <div key={c.id} className="flex items-center justify-between p-4 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-700/50 dark:border-gray-700">
               <div>
                 <h3 className="font-semibold text-gray-900 dark:text-gray-100">{c.title}</h3>
-                <pre className="overflow-x-auto p-2 mt-1 text-sm text-blue-600 bg-gray-200 rounded dark:bg-gray-900/50 dark:text-blue-400">{c.cmd}</pre>
+                <pre className="p-2 mt-1 overflow-x-auto text-sm text-blue-600 bg-gray-200 rounded dark:bg-gray-900/50 dark:text-blue-400">{c.cmd}</pre>
               </div>
-              <button onClick={() => copyCommand(c.cmd, c.id)} className="flex gap-2 items-center px-3 py-1 text-gray-700 bg-gray-200 rounded transition dark:bg-gray-600 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-500">
+              <button onClick={() => copyCommand(c.cmd, c.id)} className="flex items-center gap-2 px-3 py-1 text-gray-700 transition bg-gray-200 rounded dark:bg-gray-600 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-500">
                 {copied === c.id ? <FiCheck /> : <FiCopy />}
                 <span>{copied === c.id ? "Copied" : "Copy"}</span>
               </button>
@@ -203,14 +204,14 @@ const ContributorGuide: React.FC = () => {
       </div>
 
       {/* ---------- FAQ Section ---------- */}
-      <div className="p-8 bg-white rounded-xl shadow-md dark:bg-gray-800">
+      <div className="p-8 bg-white shadow-md rounded-xl dark:bg-gray-800">
         <h2 className="mb-6 text-3xl font-bold text-gray-900 dark:text-gray-100">Frequently Asked Questions</h2>
         <div className="space-y-2">
           {faqs.map((faq, idx) => {
             const isOpen = expandedFAQ === idx;
             return (
-              <div key={idx} className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
-                <button onClick={() => setExpandedFAQ(isOpen ? null : idx)} className="flex justify-between items-center p-4 w-full bg-gray-50 transition dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700">
+              <div key={idx} className="overflow-hidden border border-gray-200 rounded-lg dark:border-gray-700">
+                <button onClick={() => setExpandedFAQ(isOpen ? null : idx)} className="flex items-center justify-between w-full p-4 transition bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700">
                   <span className="text-gray-900 dark:text-gray-100">{faq.question}</span>
                   {isOpen ? <FiChevronUp /> : <FiChevronDown />}
                 </button>
@@ -225,6 +226,17 @@ const ContributorGuide: React.FC = () => {
             );
           })}
         </div>
+      </div>
+
+      {/* Return Button */}
+      <div className="flex justify-center mt-10">
+        <Link
+          to="/"
+          className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-transform shadow-lg bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl hover:scale-105 hover:shadow-2xl"
+        >
+          <Home className="w-5 h-5" />
+          Return to Dashboard
+        </Link>
       </div>
     </div>
   );

@@ -136,7 +136,7 @@ const HomePage = () => {
           <div className="grid grid-cols-2 gap-8 md:grid-cols-6">
             <div className="col-span-2 md:col-span-2">
               <div className="flex items-center mb-6 space-x-3">
-                <div className="flex justify-center items-center w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500">
                   <Rocket className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -161,7 +161,7 @@ const HomePage = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex justify-center items-center w-10 h-10 rounded-lg border transition-all duration-300 bg-white/5 border-white/10 hover:bg-white/10 hover:border-purple-500/30"
+                    className="flex items-center justify-center w-10 h-10 transition-all duration-300 border rounded-lg bg-white/5 border-white/10 hover:bg-white/10 hover:border-purple-500/30"
                   >
                     <social.icon className="w-4 h-4 text-gray-400" />
                   </a>
@@ -210,13 +210,13 @@ const HomePage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="flex-grow px-4 py-2 text-gray-900 bg-white rounded-md border border-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="flex-grow px-4 py-2 text-gray-900 bg-white border border-gray-300 rounded-md dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   disabled={isSubmitting}
                 />
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-4 py-2 text-white bg-indigo-600 rounded-md transition-colors hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-white transition-colors bg-indigo-600 rounded-md hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? "Subscribing..." : "Subscribe"}
                 </button>
@@ -226,13 +226,22 @@ const HomePage = () => {
               </p>
             </div>
           </div>
-          <div className="flex flex-col justify-between items-center pt-8 mt-12 border-t border-white/10 md:flex-row">
-            <div className="mb-4 text-sm text-gray-400 md:mb-0">
-              © 2025 DevElevate. All rights reserved.
+          <div className="flex items-center justify-center pt-8 mt-12 border-t border-white/10">
+            <div className="text-sm text-yellow-400 flex items-center gap-2 
+                  transition duration-300 hover:text-pink-400 hover:drop-shadow-[0_0_12px_rgba(255,20,147,0.9)]">
+              © 2025 <span className="font-semibold">DevElevate</span>. All rights reserved. | Made with ❤️ by
+              <a
+                href="https://www.linkedin.com/in/abhisekpanda2004/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-1 font-semibold text-yellow-400 transition duration-300 hover:text-pink-400"
+              >
+                Abhisek Panda
+              </a>
             </div>
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t to-transparent pointer-events-none from-purple-900/5"></div>
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-t to-transparent from-purple-900/5"></div>
       </footer>
     </div>
   );

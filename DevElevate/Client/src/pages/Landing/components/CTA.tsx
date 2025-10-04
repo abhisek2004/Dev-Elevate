@@ -325,7 +325,7 @@ const CommunityAndCTA = () => {
             Ready to transform your tech career?
           </h3>
           <p className="max-w-2xl mx-auto mb-8 text-lg text-gray-400">
-            Join 50,000+ developers who are already learning, growing, and
+            Join 100+ developers who are already learning, growing, and
             landing their dream jobs with DevElevate's AI-powered platform.
           </p>
           <div className="flex flex-col justify-center gap-4 mb-8 sm:flex-row">

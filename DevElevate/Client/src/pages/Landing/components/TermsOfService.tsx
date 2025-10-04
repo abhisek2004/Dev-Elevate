@@ -99,24 +99,24 @@ const TermsOfService: React.FC = () => {
   ];
 
   return (
-    <div className="overflow-hidden relative min-h-screen bg-gradient-to-b from-gray-900 to-black">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-gray-900 to-black">
       {/* Optional floating neon blobs for futuristic effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-40 h-40 bg-blue-500 opacity-20 rounded-full blur-3xl animate-blob top-10 left-10"></div>
-        <div className="absolute w-60 h-60 bg-purple-500 opacity-20 rounded-full blur-3xl animate-blob animation-delay-2000 top-1/3 right-20"></div>
-        <div className="absolute w-32 h-32 bg-pink-500 opacity-20 rounded-full blur-3xl animate-blob animation-delay-4000 bottom-20 left-1/4"></div>
+        <div className="absolute w-40 h-40 bg-blue-500 rounded-full opacity-20 blur-3xl animate-blob top-10 left-10"></div>
+        <div className="absolute bg-purple-500 rounded-full w-60 h-60 opacity-20 blur-3xl animate-blob animation-delay-2000 top-1/3 right-20"></div>
+        <div className="absolute w-32 h-32 bg-pink-500 rounded-full opacity-20 blur-3xl animate-blob animation-delay-4000 bottom-20 left-1/4"></div>
       </div>
 
-      <div className="relative px-4 py-24 mx-auto max-w-4xl sm:px-6 lg:px-8">
+      <div className="relative max-w-4xl px-4 py-24 mx-auto sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-12 text-center">
-          <div className="flex justify-center items-center mb-4">
+          <div className="flex items-center justify-center mb-4">
             <FileText className="w-12 h-12 text-indigo-400 animate-bounce" />
           </div>
-          <h1 className="text-4xl font-extrabold mb-4 text-white text-center">
+          <h1 className="mb-4 text-4xl font-extrabold text-center text-white">
             Terms of Service
           </h1>
-          <p className="text-lg mb-2 text-gray-300 max-w-2xl mx-auto">
+          <p className="max-w-2xl mx-auto mb-2 text-lg text-gray-300">
             Please read these terms carefully before using DevElevate. They
             govern your use of our platform and services.
           </p>
@@ -126,8 +126,8 @@ const TermsOfService: React.FC = () => {
         </div>
 
         {/* Introduction */}
-        <div className="rounded-2xl p-8 mb-8 border backdrop-blur-md shadow-lg bg-white/10 border-gray-700/40">
-          <h2 className="text-2xl font-bold mb-4 text-white">
+        <div className="p-8 mb-8 border shadow-lg rounded-2xl backdrop-blur-md bg-white/10 border-gray-700/40">
+          <h2 className="mb-4 text-2xl font-bold text-white">
             Welcome to DevElevate
           </h2>
           <p className="text-lg leading-relaxed text-gray-300">
@@ -147,10 +147,10 @@ const TermsOfService: React.FC = () => {
             return (
               <div
                 key={index}
-                className="rounded-2xl p-8 border backdrop-blur-md shadow-lg bg-white/10 border-gray-700/40 hover:scale-105 transition-transform"
+                className="p-8 transition-transform border shadow-lg rounded-2xl backdrop-blur-md bg-white/10 border-gray-700/40 hover:scale-105"
               >
                 <div className="flex items-center mb-6 space-x-3">
-                  <div className="p-3 bg-gradient-to-br from-indigo-400 to-blue-400 rounded-lg">
+                  <div className="p-3 rounded-lg bg-gradient-to-br from-indigo-400 to-blue-400">
                     <Icon className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-white">
@@ -163,7 +163,7 @@ const TermsOfService: React.FC = () => {
                       key={idx}
                       className="flex items-start space-x-3 text-gray-300"
                     >
-                      <div className="w-2 h-2 mt-2 rounded-full bg-gradient-to-tr from-blue-400 to-purple-400 flex-shrink-0"></div>
+                      <div className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-gradient-to-tr from-blue-400 to-purple-400"></div>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -174,8 +174,8 @@ const TermsOfService: React.FC = () => {
         </div>
 
         {/* Account Termination */}
-        <div className="rounded-2xl p-8 mt-8 border backdrop-blur-md shadow-lg bg-red-900/20 border-red-800 hover:scale-105 transition-transform">
-          <h3 className="text-xl font-bold mb-4 text-white">
+        <div className="p-8 mt-8 transition-transform border border-red-800 shadow-lg rounded-2xl backdrop-blur-md bg-red-900/20 hover:scale-105">
+          <h3 className="mb-4 text-xl font-bold text-white">
             Account Termination
           </h3>
           <p className="mb-4 text-gray-300">
@@ -193,8 +193,8 @@ const TermsOfService: React.FC = () => {
         </div>
 
         {/* Contact Section */}
-        <div className="rounded-2xl p-8 mt-12 border backdrop-blur-md shadow-lg bg-white/10 border-gray-700/40 hover:scale-105 transition-transform">
-          <h3 className="text-xl font-bold mb-4 text-white">
+        <div className="p-8 mt-12 transition-transform border shadow-lg rounded-2xl backdrop-blur-md bg-white/10 border-gray-700/40 hover:scale-105">
+          <h3 className="mb-4 text-xl font-bold text-white">
             Questions or Concerns?
           </h3>
           <p className="mb-4 text-gray-300">
@@ -203,7 +203,7 @@ const TermsOfService: React.FC = () => {
           </p>
           <div className="space-y-2 text-gray-300">
             <p>
-              <strong>Email:</strong> legal@develevate.com
+              <strong>Email:</strong> officialdevelevate@gmail.com
             </p>
             <p>
               <strong>Creator:</strong> Abhisek Panda
@@ -218,8 +218,8 @@ const TermsOfService: React.FC = () => {
         {/* Return Button */}
         <div className="flex justify-center mt-10">
           <Link
-            to="/dashboard"
-            className="flex gap-2 items-center px-6 py-3 font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl shadow-lg hover:scale-105 hover:shadow-2xl transition-transform"
+            to="/"
+            className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-transform shadow-lg bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl hover:scale-105 hover:shadow-2xl"
           >
             <Home className="w-5 h-5" />
             Return to Dashboard
