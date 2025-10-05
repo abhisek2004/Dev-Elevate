@@ -95,13 +95,15 @@ const CreatorPage: React.FC = () => {
 
         {/* Abhisek Panda Section */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="100"
           className={`${state.darkMode
             ? "bg-gray-800 border-gray-700"
             : "bg-white border-gray-200"
             } rounded-2xl p-8 border shadow-lg mb-12`}
         >
           <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-8">
-            <div className="relative">
+            <div className="relative" data-aos="zoom-in" data-aos-delay="200">
               <img
                 src="https://github.com/abhisek2004.png"
                 alt="Abhisek Panda"
@@ -116,25 +118,31 @@ const CreatorPage: React.FC = () => {
               <h1
                 className={`text-4xl font-bold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
                   }`}
+                data-aos="fade-right"
+                data-aos-delay="250"
               >
                 Abhisek Panda 👨‍💻
               </h1>
               <p
                 className={`text-xl mb-4 ${state.darkMode ? "text-blue-400" : "text-blue-600"
                   }`}
+                data-aos="fade-up"
+                data-aos-delay="300"
               >
                 Full-Stack Developer (Project Admin)
               </p>
               <p
                 className={`text-lg mb-6 ${state.darkMode ? "text-gray-300" : "text-gray-700"
                   }`}
+                data-aos="fade-up"
+                data-aos-delay="350"
               >
                 Passionate about creating innovative solutions that empower
                 developers and students. Building the future of education
                 technology, one line of code at a time. ☕💡💻
               </p>
 
-              <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 lg:justify-start" data-aos="fade-left" data-aos-delay="400">
                 <a
                   href="https://github.com/abhisek2004"
                   target="_blank"
@@ -168,13 +176,15 @@ const CreatorPage: React.FC = () => {
         </div>
         {/* Jay Sawant Section */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="200"
           className={`${state.darkMode
             ? "bg-gray-800 border-gray-700"
             : "bg-white border-gray-200"
             } rounded-2xl p-8 border shadow-lg mb-12`}
         >
           <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-8">
-            <div className="relative">
+            <div className="relative" data-aos="zoom-in" data-aos-delay="300">
               <img
                 src="https://github.com/Jay2006sawant.png"
                 alt="Jay Sawant"
@@ -189,25 +199,31 @@ const CreatorPage: React.FC = () => {
               <h1
                 className={`text-4xl font-bold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
                   }`}
+                data-aos="fade-right"
+                data-aos-delay="350"
               >
                 Jay Sawant 👨‍💻
               </h1>
               <p
                 className={`text-xl mb-4 ${state.darkMode ? "text-blue-400" : "text-blue-600"
                   }`}
+                data-aos="fade-up"
+                data-aos-delay="400"
               >
                 Full-Stack Developer (👨‍🏫 🤝 Project Mentor)
               </p>
               <p
                 className={`text-lg mb-6 ${state.darkMode ? "text-gray-300" : "text-gray-700"
                   }`}
+                data-aos="fade-up"
+                data-aos-delay="450"
               >
                 Passionate about creating innovative solutions that empower
                 developers and students. Building the future of education
                 technology, one line of code at a time. ☕💡💻
               </p>
 
-              <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 lg:justify-start" data-aos="fade-left" data-aos-delay="500">
                 <a
                   href="https://github.com/Jay2006sawant"
                   target="_blank"
@@ -241,13 +257,15 @@ const CreatorPage: React.FC = () => {
         </div>
         {/* Avansh Yadav Section */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="300"
           className={`${state.darkMode
             ? "bg-gray-800 border-gray-700"
             : "bg-white border-gray-200"
             } rounded-2xl p-8 border shadow-lg mb-12`}
         >
           <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-8">
-            <div className="relative">
+            <div className="relative" data-aos="zoom-in" data-aos-delay="400">
               <img
                 src="https://avatars.githubusercontent.com/u/92374411?v=4"
                 alt="Avansh Yadav"
@@ -262,25 +280,31 @@ const CreatorPage: React.FC = () => {
               <h1
                 className={`text-4xl font-bold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
                   }`}
+                data-aos="fade-right"
+                data-aos-delay="450"
               >
                 Avansh Yadav 👨‍💻
               </h1>
               <p
                 className={`text-xl mb-4 ${state.darkMode ? "text-blue-400" : "text-blue-600"
                   }`}
+                data-aos="fade-up"
+                data-aos-delay="500"
               >
                 Full-Stack Developer (👨‍🏫 🤝 Project Mentor)
               </p>
               <p
                 className={`text-lg mb-6 ${state.darkMode ? "text-gray-300" : "text-gray-700"
                   }`}
+                data-aos="fade-up"
+                data-aos-delay="550"
               >
                 Passionate about creating innovative solutions that empower
                 developers and students. Building the future of education
                 technology, one line of code at a time. ☕💡💻
               </p>
 
-              <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 lg:justify-start" data-aos="fade-left" data-aos-delay="600">
                 <a
                   href="https://github.com/Avansh2006"
                   target="_blank"
@@ -314,13 +338,15 @@ const CreatorPage: React.FC = () => {
         </div>
         {/* Amisha Gupta Section */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="400"
           className={`${state.darkMode
             ? "bg-gray-800 border-gray-700"
             : "bg-white border-gray-200"
             } rounded-2xl p-8 border shadow-lg mb-12`}
         >
           <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-8">
-            <div className="relative">
+            <div className="relative" data-aos="zoom-in" data-aos-delay="500">
               <img
                 src="https://avatars.githubusercontent.com/u/154073004?v=4"
                 alt="Amisha Gupta"
@@ -335,25 +361,31 @@ const CreatorPage: React.FC = () => {
               <h1
                 className={`text-4xl font-bold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
                   }`}
+                data-aos="fade-right"
+                data-aos-delay="550"
               >
                 Amisha Gupta 👨‍💻
               </h1>
               <p
                 className={`text-xl mb-4 ${state.darkMode ? "text-blue-400" : "text-blue-600"
                   }`}
+                data-aos="fade-up"
+                data-aos-delay="600"
               >
                 MERN , Next.js Developer (👨‍🏫 🤝 Project Mentor)
               </p>
               <p
                 className={`text-lg mb-6 ${state.darkMode ? "text-gray-300" : "text-gray-700"
                   }`}
+                data-aos="fade-up"
+                data-aos-delay="650"
               >
                 Passionate about creating innovative solutions that empower
                 developers and students. Building the future of education
                 technology, one line of code at a time. ☕💡💻
               </p>
 
-              <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 lg:justify-start" data-aos="fade-left" data-aos-delay="700">
                 <a
                   href="https://github.com/amishagupta31"
                   target="_blank"
@@ -387,13 +419,15 @@ const CreatorPage: React.FC = () => {
         </div>
         {/* Gobinda Gagan Dey Section */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="500"
           className={`${state.darkMode
             ? "bg-gray-800 border-gray-700"
             : "bg-white border-gray-200"
             } rounded-2xl p-8 border shadow-lg mb-12`}
         >
           <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-8">
-            <div className="relative">
+            <div className="relative" data-aos="zoom-in" data-aos-delay="600">
               <img
                 src="https://avatars.githubusercontent.com/u/180097366?v=4"
                 alt="Gobinda Gagan"
@@ -408,25 +442,31 @@ const CreatorPage: React.FC = () => {
               <h1
                 className={`text-4xl font-bold mb-2 ${state.darkMode ? "text-white" : "text-gray-900"
                   }`}
+                data-aos="fade-right"
+                data-aos-delay="650"
               >
                 Gobinda Gagan Dey👨‍💻
               </h1>
               <p
                 className={`text-xl mb-4 ${state.darkMode ? "text-blue-400" : "text-blue-600"
                   }`}
+                data-aos="fade-up"
+                data-aos-delay="700"
               >
                 Backend Developer (🤝 Major Contributor 50+ PR)
               </p>
               <p
                 className={`text-lg mb-6 ${state.darkMode ? "text-gray-300" : "text-gray-700"
                   }`}
+                data-aos="fade-up"
+                data-aos-delay="750"
               >
                 Passionate about creating innovative solutions that empower
                 developers and students. Building the future of education
                 technology, one line of code at a time. ☕💡💻
               </p>
 
-              <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 lg:justify-start" data-aos="fade-left" data-aos-delay="800">
                 <a
                   href="https://github.com/GOBINDA-GAGAN"
                   target="_blank"
@@ -461,6 +501,8 @@ const CreatorPage: React.FC = () => {
 
         {/* Disclaimer & Acknowledgement Section */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="600"
           className={`${state.darkMode
             ? "bg-yellow-900/20 border-yellow-800"
             : "bg-yellow-50 border-yellow-200"
@@ -633,7 +675,7 @@ const CreatorPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <p className="mb-2">
+                  <p className="mb-4">
                     <strong>📊 About the Content:</strong>
                   </p>
                   <p className="mb-4">
@@ -668,27 +710,6 @@ const CreatorPage: React.FC = () => {
                   </p>
                 </div>
 
-                <div>
-                  <p className="mb-4">
-                    <strong>
-                      🧠 Calling Developers, Learners & Recruiters!
-                    </strong>
-                  </p>
-                  <p className="mb-2">If you're someone who's into:</p>
-                  <ul className="mb-4 space-y-1 list-disc list-inside">
-                    <li>Learning the MERN stack</li>
-                    <li>Working with real-time data APIs and scraping</li>
-                    <li>Exploring frontend or backend architecture</li>
-                    <li>Collaborating on open-source projects</li>
-                  </ul>
-                  <p className="mb-4">📬 Feel free to reach out!</p>
-                  <p className="mb-4">
-                    Let's connect on LinkedIn or check out more of my work on
-                    GitHub. I'm always up for feedback, collaboration, or just
-                    tech talk 🤝✨
-                  </p>
-                </div>
-
                 <div className="text-center">
                   <p className="text-xl font-bold">
                     🧪 This project = Code + Coffee + Curiosity ☕💡💻
@@ -705,6 +726,8 @@ const CreatorPage: React.FC = () => {
 
         {/* Achievements */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="700"
           className={`${state.darkMode
             ? "bg-gray-800 border-gray-700"
             : "bg-white border-gray-200"
@@ -722,6 +745,8 @@ const CreatorPage: React.FC = () => {
               return (
                 <div
                   key={index}
+                  data-aos="fade-up"
+                  data-aos-delay={`${index * 120}`}
                   className={`p-6 rounded-lg border text-center ${state.darkMode
                     ? "border-gray-700 bg-gray-700/50"
                     : "border-gray-200 bg-gray-50"
@@ -748,6 +773,8 @@ const CreatorPage: React.FC = () => {
 
         {/* Projects */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="800"
           className={`${state.darkMode
             ? "bg-gray-800 border-gray-700"
             : "bg-white border-gray-200"
@@ -763,6 +790,8 @@ const CreatorPage: React.FC = () => {
             {projects.map((project, index) => (
               <div
                 key={index}
+                data-aos="fade-up"
+                data-aos-delay={`${index * 120}`}
                 className={`p-6 rounded-lg border ${state.darkMode
                   ? "border-gray-700 hover:border-gray-600"
                   : "border-gray-200 hover:border-gray-300"
@@ -820,6 +849,8 @@ const CreatorPage: React.FC = () => {
 
         {/* Timeline */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="900"
           className={`${state.darkMode
             ? "bg-gray-800 border-gray-700"
             : "bg-white border-gray-200"
@@ -834,8 +865,9 @@ const CreatorPage: React.FC = () => {
           <div className="space-y-6">
             {timeline.map((item, index) => {
               const Icon = item.icon;
+              const aosType = index % 2 === 0 ? "fade-right" : "fade-left";
               return (
-                <div key={index} className="flex items-start space-x-4">
+                <div key={index} data-aos={aosType} data-aos-delay={`${index * 120}`} className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
                     <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full dark:bg-blue-900">
                       <Icon className="w-5 h-5 text-blue-600 dark:text-blue-300" />
@@ -872,6 +904,8 @@ const CreatorPage: React.FC = () => {
 
         {/* Philosophy & Quote */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="1000"
           className={`${state.darkMode
             ? "bg-gradient-to-r from-blue-900 to-purple-900"
             : "bg-gradient-to-r from-blue-50 to-purple-50"
