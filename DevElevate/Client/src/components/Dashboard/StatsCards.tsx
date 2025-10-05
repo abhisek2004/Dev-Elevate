@@ -45,8 +45,6 @@ const StatsCards: React.FC = () => {
         return (
           <div
             key={index}
-            data-aos="fade-up"
-            data-aos-delay={`${index * 100}`}
             className={`${
               state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             } rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow duration-200 mb-6`}
