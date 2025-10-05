@@ -77,11 +77,18 @@
   <img src="https://github.com/apu52/METAVERSE/assets/114172928/e79eb6de-81b1-4ffb-b6ed-f018bb977e88" alt="GSSOC" width="80%">
 </div>
 
+
+<div align="center">
+ 
+  <img width="1201" height="631" alt="image" src="https://github.com/user-attachments/assets/2c5183df-77c8-4220-beab-69e01290ea56" />
+
 [![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2025-blueviolet?style=for-the-badge&logo=hacktoberfest)](https://hacktoberfest.com/)
 
 ### 🎃 Contribute to this project during Hacktoberfest 2025!  
 
 ### We welcome all meaningful contributions — from code to documentation.
+
+</div>
 
 🌟 **Exciting News...**
 
