@@ -93,10 +93,10 @@ const FAQ: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-l via-transparent -z-10 from-indigo-900/40 to-purple-900/30" />
 
       <div className="container px-4 mx-auto max-w-6xl">
-        <h2 className="text-3xl font-extrabold text-center text-white">
+        <h2 data-aos="fade-up" data-aos-delay="120" className="text-3xl font-extrabold text-center text-white">
           Frequently Asked Questions
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-gray-300">
+        <p data-aos="fade-up" data-aos-delay="200" className="mx-auto mt-3 max-w-2xl text-center text-gray-300">
           Find answers to common questions about DevElevate
         </p>
 
