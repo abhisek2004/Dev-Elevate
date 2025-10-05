@@ -49,6 +49,8 @@ const Hero: React.FC = () => {
   return (
     <section
       ref={heroRef}
+      data-aos="fade-up"
+      data-aos-delay="100"
       className="relative flex items-center justify-center min-h-screen px-4 pt-20 sm:px-6 lg:px-8"
     >
       {/* Background Grid */}
