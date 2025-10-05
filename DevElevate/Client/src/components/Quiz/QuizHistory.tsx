@@ -51,7 +51,7 @@ const QuizHistory: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={`rounded-lg border p-6 ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+      <div data-aos="fade-up" data-aos-delay="100" className={`rounded-lg border p-6 ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
         <h3 className="text-lg font-semibold mb-4">Recent Quiz Attempts</h3>
         <div className="animate-pulse space-y-3">
           {[1, 2, 3].map(i => (
@@ -63,7 +63,7 @@ const QuizHistory: React.FC = () => {
   }
 
   return (
-    <div className={`rounded-lg border p-6 ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+    <div data-aos="fade-up" data-aos-delay="120" className={`rounded-lg border p-6 ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
       <h3 className="text-lg font-semibold mb-4">Recent Quiz Attempts</h3>
       
       {attempts.length === 0 ? (
@@ -74,11 +74,13 @@ const QuizHistory: React.FC = () => {
         </div>
       ) : (
         <div className="space-y-3">
-          {attempts.map((attempt) => {
+          {attempts.map((attempt, index) => {
             const percentage = Math.round((attempt.score / attempt.totalQuestions) * 100);
             return (
               <div
                 key={attempt._id}
+                data-aos="fade-up"
+                data-aos-delay={`${index * 120}`}
                 className={`p-4 rounded-lg border ${state.darkMode ? 'border-gray-600 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}
               >
                 <div className="flex items-center justify-between">
