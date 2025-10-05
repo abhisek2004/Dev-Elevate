@@ -131,7 +131,7 @@ const HomePage = () => {
   return (
     <div className="text-white bg-black">
       {/* Footer Section */}
-      <footer className="relative bg-black border-t border-white/10">
+      <footer data-aos="fade-up" data-aos-delay="120" className="relative bg-black border-t border-white/10">
         <div className="px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-6">
             <div className="col-span-2 md:col-span-2">
