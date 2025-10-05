@@ -63,12 +63,12 @@ const ProgressWidget: React.FC = () => {
 </button>
       </div>
 
-      <div className="space-y-4">
-        {learningTracks.map((track) => {
+      <div className="space-y-4" data-aos="fade-up">
+        {learningTracks.map((track, index) => {
           const Icon = track.icon;
           return (
-            <div key={track.id} className="flex items-center space-x-4">
-              <div className={`p-3 rounded-lg bg-gradient-to-r ${track.color}`}>
+            <div key={track.id} data-aos="fade-right" data-aos-delay={`${index * 120}`} className="flex items-center space-x-4">
+              <div className={`p-3 rounded-lg bg-gradient-to-r ${track.color}`} data-aos="zoom-in" data-aos-delay={`${index * 120}`}>
                 <Icon className="w-5 h-5 text-white" />
               </div>
               <div className="flex-1">
