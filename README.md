@@ -77,6 +77,12 @@
   <img src="https://github.com/apu52/METAVERSE/assets/114172928/e79eb6de-81b1-4ffb-b6ed-f018bb977e88" alt="GSSOC" width="80%">
 </div>
 
+[![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2025-blueviolet?style=for-the-badge&logo=hacktoberfest)](https://hacktoberfest.com/)
+
+### 🎃 Contribute to this project during Hacktoberfest 2025!  
+
+### We welcome all meaningful contributions — from code to documentation.
+
 🌟 **Exciting News...**
 
 🚀 This project is now an official part of GirlScript Summer of Code – GSSoC 2025! 💃🎉💻 We’re thrilled to welcome contributors from all over India and beyond to collaborate, build, and grow with DevElevate. Let’s make learning and career development smarter – together! 🌟👨‍💻👩‍💻
