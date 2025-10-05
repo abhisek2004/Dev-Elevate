@@ -131,11 +131,11 @@ const HomePage = () => {
   return (
     <div className="text-white bg-black">
       {/* Footer Section */}
-      <footer className="relative bg-black border-t border-white/10">
+      <footer data-aos="fade-up" data-aos-delay="120" className="relative bg-black border-t border-white/10">
         <div className="px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-6">
             <div className="col-span-2 md:col-span-2">
-              <div className="flex items-center mb-6 space-x-3">
+              <div data-aos="fade-right" data-aos-delay="180" className="flex items-center mb-6 space-x-3">
                 <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500">
                   <Rocket className="w-5 h-5 text-white" />
                 </div>
@@ -146,10 +146,10 @@ const HomePage = () => {
                   <p className="text-xs text-gray-500">Smart Learning Hub</p>
                 </div>
               </div>
-              <p className="mb-6 leading-relaxed text-gray-400">
+              <p data-aos="fade-up" data-aos-delay="220" className="mb-6 leading-relaxed text-gray-400">
                 Empowering developers worldwide with AI-powered learning, personalized guidance, and comprehensive career support.
               </p>
-              <div className="flex space-x-4">
+              <div data-aos="fade-left" data-aos-delay="260" className="flex space-x-4">
                 {[
                   { icon: Github, href: "https://github.com/abhisek2004/Dev-Elevate" },
                   { icon: FaBriefcase, href: "https://abhisekpanda072.vercel.app/" },
@@ -197,7 +197,7 @@ const HomePage = () => {
                 })}
               </ul>
             </div>
-            <div className="col-span-2">
+            <div data-aos="fade-up" data-aos-delay="300" className="col-span-2">
               <h4 className="mb-2 text-sm font-semibold tracking-wider text-gray-900 uppercase dark:text-gray-100">
                 Subscribe to our newsletter
               </h4>

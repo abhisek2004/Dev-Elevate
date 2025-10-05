@@ -68,6 +68,8 @@ import UserVideoPage from "./pages/videoPages/VideoPage.js";
 import ForgotPass from "./components/Auth/ForgotPass";
 import SearchPage from "./pages/Search/SearchPage";
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 // ✅ AppContent
 const AppContent = () => {
@@ -231,6 +233,10 @@ function App() {
       window.removeEventListener("load", hide as EventListener);
       if (timeoutId) window.clearTimeout(timeoutId);
     };
+  }, []);
+
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true, easing: 'ease-out-cubic' });
   }, []);
 
   return (

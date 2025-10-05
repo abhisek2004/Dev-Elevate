@@ -54,6 +54,8 @@ const NewsWidget: React.FC = () => {
 
   return (
     <div
+      data-aos="fade-up"
+      data-aos-delay="120"
       className={`${
         state.darkMode
           ? "bg-gray-800 border-gray-700"
@@ -112,6 +114,8 @@ const NewsWidget: React.FC = () => {
           {articles.map((item, index) => (
             <div
               key={item.article_id ?? index}
+              data-aos="fade-up"
+              data-aos-delay={`${index * 100}`}
               className={`border rounded-lg overflow-hidden ${
                 state.darkMode ? "bg-gray-900" : "bg-white"
               } ${
