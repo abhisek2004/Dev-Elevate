@@ -49,7 +49,7 @@ const ProgressWidget: React.FC = () => {
   }
 
   return (
-    <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
+    <div data-aos="fade-up" data-aos-delay="100" className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
       <div className="flex items-center justify-between mb-6">
         <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
           Learning Progress
@@ -63,12 +63,12 @@ const ProgressWidget: React.FC = () => {
 </button>
       </div>
 
-      <div className="space-y-4">
-        {learningTracks.map((track) => {
+      <div className="space-y-4" data-aos="fade-up">
+        {learningTracks.map((track, index) => {
           const Icon = track.icon;
           return (
-            <div key={track.id} className="flex items-center space-x-4">
-              <div className={`p-3 rounded-lg bg-gradient-to-r ${track.color}`}>
+            <div key={track.id} data-aos="fade-right" data-aos-delay={`${index * 120}`} className="flex items-center space-x-4">
+              <div className={`p-3 rounded-lg bg-gradient-to-r ${track.color}`} data-aos="zoom-in" data-aos-delay={`${index * 120}`}>
                 <Icon className="w-5 h-5 text-white" />
               </div>
               <div className="flex-1">

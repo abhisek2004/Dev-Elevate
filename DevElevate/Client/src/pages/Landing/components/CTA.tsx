@@ -192,7 +192,7 @@ const CommunityAndCTA = () => {
         </motion.p>
 
         {/* Social Cards */}
-        <div className="flex flex-wrap justify-center gap-6 mb-16">
+        <div data-aos="fade-up" data-aos-delay="180" className="flex flex-wrap justify-center gap-6 mb-16">
           {socials.map((social, idx) => (
             <motion.div
               key={idx}

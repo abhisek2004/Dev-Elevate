@@ -157,6 +157,8 @@ const HomePage = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
+                data-aos="fade-up"
+                data-aos-delay={`${index * 100}`}
                 className="relative p-6 rounded-2xl border backdrop-blur-sm transition-all duration-500 group bg-black/50 border-white/10 sm:p-8 hover:border-purple-500/30 hover:scale-105"
               >
                 <div className={`absolute inset-0 bg-gradient-to-r ${feature.gradient} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-500`}></div>

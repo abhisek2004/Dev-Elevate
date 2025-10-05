@@ -80,8 +80,8 @@ const StreakCalendar: React.FC = () => {
   const yearOptions = Array.from({ length: 11 }, (_, i) => today.getFullYear() - 5 + i);
 
   return (
-    <div className={`rounded-2xl p-6 border transition-all duration-300 ease-in-out shadow-md ${globalState.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-      <div className="flex items-center justify-between mb-4">
+    <div data-aos="fade-up" data-aos-delay="150" className={`rounded-2xl p-6 border transition-all duration-300 ease-in-out shadow-md ${globalState.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+      <div className="flex items-center justify-between mb-4" data-aos="fade-right" data-aos-delay="200">
         <h3 className={`text-xl font-semibold tracking-tight ${globalState.darkMode ? 'text-white' : 'text-gray-900'}`}>
           Learning Streak
         </h3>
@@ -121,7 +121,7 @@ const StreakCalendar: React.FC = () => {
       </div>
 
       {/* Day grid */}
-      <div className="mb-4">
+      <div className="mb-4" data-aos="fade-up" data-aos-delay="250">
         <div className="grid grid-cols-7 gap-1 text-[13px] font-semibold text-gray-50 mb-2">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
             <div key={day} className="text-center py-1 rounded-md bg-sky-50 dark:bg-sky-900 text-sky-700 dark:text-sky-200">

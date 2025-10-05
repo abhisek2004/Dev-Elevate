@@ -39,8 +39,8 @@ const QuickActions: React.FC = () => {
   ];
 
   return (
-    <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm transition-colors duration-300`}>
-      <h3 className={`text-2xl font-semibold tracking-tight mb-6 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+    <div data-aos="fade-up" data-aos-delay="150" className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm transition-colors duration-300`}>
+      <h3 data-aos="fade-right" data-aos-delay="200" className={`text-2xl font-semibold tracking-tight mb-6 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
         Quick Actions
       </h3>
       
@@ -50,6 +50,8 @@ const QuickActions: React.FC = () => {
           return (
             <button
               key={index}
+              data-aos="fade-up"
+              data-aos-delay={`${index * 100}`}
               onClick={action.onClick}
               className={`p-4 rounded-xl border w-full text-left ${state.darkMode ? 'border-gray-700 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'} transition-all hover:shadow-md group`}
             >
