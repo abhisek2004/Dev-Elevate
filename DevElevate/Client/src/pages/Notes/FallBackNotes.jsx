@@ -49,8 +49,13 @@ const headerVariants = {
         }
     }
 };
+
+// Eagerly load all JSON note files so Vite/esbuild can statically analyze them
+const notesModules = import.meta.glob('../assets/json/notesfolder/*.json', { eager: true, as: 'json' });
+
 function FallBackNotes() {
     const { state, dispatch } = useGlobalState();
+    const isDark = !!state?.darkMode;
     const { topic } = useParams();
     const [subjectData, setSubjectData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -59,11 +64,23 @@ function FallBackNotes() {
         const loadSubjectData = async () => {
             try {
                 setLoading(true);
-                const response = await import(`../assets/json/notesfolder/${topic}.json`);
-                setSubjectData(response.default);
+                if (!topic) {
+                    setSubjectData(null);
+                    return;
+                }
+
+                const key = `../assets/json/notesfolder/${topic}.json`;
+
+                if (notesModules[key]) {
+                    // notesModules[key] is the parsed JSON because of eager:true and as:'json'
+                    setSubjectData(notesModules[key]);
+                } else {
+                    // If not found, set null to show fallback UI
+                    setSubjectData(null);
+                }
             } catch (error) {
                 console.error('Error loading notes:', error);
-                // Handle error (show 404 page, etc.)
+                setSubjectData(null);
             } finally {
                 setLoading(false);
             }
@@ -74,7 +91,7 @@ function FallBackNotes() {
 
     if (loading) return <Loader />;
     if (!subjectData) return (
-        <div className={`relative min-h-screen-minus-nav overflow-hidden z-10 ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+        <div className={`relative min-h-screen-minus-nav overflow-hidden z-10 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
             {/* Enhanced Background with gradient overlay */}
             <motion.div
                 variants={backgroundVariants}
