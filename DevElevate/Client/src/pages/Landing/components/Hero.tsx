@@ -72,7 +72,7 @@ const Hero: React.FC = () => {
 
           {/* Headings */}
           <div className="space-y-4">
-            <h1 className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 data-aos="fade-right" data-aos-delay="200" className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
               <span className="text-transparent bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text">
                 Master Your
               </span>
@@ -81,7 +81,7 @@ const Hero: React.FC = () => {
                 Tech Journey
               </span>
             </h1>
-            <p className="max-w-2xl text-base leading-relaxed text-gray-400 sm:text-lg md:text-xl">
+            <p data-aos="fade-up" data-aos-delay="300" className="max-w-2xl text-base leading-relaxed text-gray-400 sm:text-lg md:text-xl">
               Your personalized smart learning & placement hub powered by AI.
               Master DSA, MERN, AI/ML, and land your dream job with our
               comprehensive platform.
@@ -89,7 +89,7 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Stats */}
-          <div className="flex flex-wrap gap-8">
+          <div data-aos="fade-up" data-aos-delay="350" className="flex flex-wrap gap-8">
             {[
               { label: "Active Learners", value: "50K+", color: "text-purple-400" },
               { label: "Success Stories", value: "1000+", color: "text-blue-400" },
@@ -105,7 +105,7 @@ const Hero: React.FC = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col gap-4 sm:flex-row">
+          <div data-aos="fade-up" data-aos-delay="400" className="flex flex-col gap-4 sm:flex-row">
             <Link to="/dashboard">
               <button className="flex items-center justify-center px-8 py-4 space-x-2 font-semibold text-white transition-all duration-300 transform group bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl hover:shadow-2xl hover:shadow-purple-500/25 hover:scale-105">
                 <span>Start Learning Now</span>
@@ -180,7 +180,7 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Right Content */}
-        <div className="relative flex items-center justify-center mt-10 lg:mt-0">
+        <div data-aos="zoom-in" data-aos-delay="450" className="relative flex items-center justify-center mt-10 lg:mt-0">
           <AnimatedCube />
 
           {/* Floating Effects */}
