@@ -104,6 +104,8 @@ const FAQ: React.FC = () => {
           {faqs.map((faq, index) => (
             <div
               key={index}
+              data-aos="fade-up"
+              data-aos-delay={`${index * 120}`}
               className={`rounded-xl border transition-all duration-200 bg-gray-900/60 border-white/10 shadow-lg ${
                 activeIndex === index ? "ring-1 ring-indigo-500/50" : ""
               }`}
@@ -150,15 +152,15 @@ const FAQ: React.FC = () => {
         </div>
 
         {/* Still Questions? */}
-        <div className="grid gap-6 items-center p-6 mt-14 rounded-2xl border md:grid-cols-2 bg-gray-900/70 border-white/10">
-          <div className="flex justify-center items-center">
+        <div data-aos="fade-up" data-aos-delay="600" className="grid gap-6 items-center p-6 mt-14 rounded-2xl border md:grid-cols-2 bg-gray-900/70 border-white/10">
+          <div data-aos="zoom-in" data-aos-delay="650" className="flex justify-center items-center">
             <img
               src="https://cdn.dribbble.com/userupload/33383923/file/still-9868069a3086067a79d11680d672d458.gif?resize=400x0"
               alt="Get in Touch"
               className="object-cover w-full max-w-xs h-72 bg-white rounded-xl shadow-xl md:max-w-md"
             />
           </div>
-          <div>
+          <div data-aos="fade-left" data-aos-delay="700">
             <h3 className="mb-4 text-2xl font-bold text-white">
               Still Questions?
             </h3>
