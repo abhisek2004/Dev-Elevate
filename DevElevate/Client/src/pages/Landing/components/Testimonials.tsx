@@ -54,7 +54,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="overflow-hidden relative py-24 bg-gradient-to-b from-gray-900 to-black" data-aos="fade-up">
+    <section className="overflow-hidden relative py-24 bg-gradient-to-b from-gray-900 to-black">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {/* Section Title */}
         <motion.div
@@ -98,8 +98,6 @@ const Testimonials = () => {
               {[...testimonials, ...testimonials].map((testimonial, index) => (
                 <motion.div
                   key={index}
-                  data-aos="fade-right"
-                  data-aos-delay={`${(index % testimonials.length) * 120}`}
                   className="flex-shrink-0 p-8 w-full rounded-2xl border backdrop-blur-sm transition-all duration-500 group sm:w-80 md:w-96 bg-black/50 border-white/10 hover:border-purple-500/50"
                   whileHover={{ scale: 1.05, boxShadow: '0 10px 20px rgba(0, 0, 0, 0.3)' }}
                   role="article"
