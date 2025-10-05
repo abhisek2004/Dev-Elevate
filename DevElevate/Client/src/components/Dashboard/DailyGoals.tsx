@@ -112,7 +112,7 @@ const FocusMode: React.FC = () => {
   };
 
   return (
-    <div className="p-6 mb-8 text-gray-900 bg-white rounded-2xl border border-gray-200 shadow-md transition-all duration-300 ease-in-out dark:bg-gray-900 dark:border-gray-700 dark:text-white">
+    <div data-aos="fade-up" data-aos-delay="100" className="p-6 mb-8 text-gray-900 bg-white rounded-2xl border border-gray-200 shadow-md transition-all duration-300 ease-in-out dark:bg-gray-900 dark:border-gray-700 dark:text-white">
       <h3 className="mb-2 text-2xl font-semibold tracking-tight">Focus Mode</h3>
       <p className="mb-4 text-gray-500 dark:text-gray-400">Pomodoro Timer with advanced features</p>
       <div className="mb-4 text-center">
@@ -212,7 +212,7 @@ const DailyGoals: React.FC = () => {
     <>
       <FocusMode />
       
-      <div className={`rounded-2xl p-6 border transition-all duration-300 ease-in-out shadow-md ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+      <div data-aos="fade-up" data-aos-delay="150" className={`rounded-2xl p-6 border transition-all duration-300 ease-in-out shadow-md ${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
         <div className="flex justify-between items-center mb-6">
           <h3 className={`text-2xl font-semibold tracking-tight ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             Daily Goals
@@ -260,6 +260,8 @@ const DailyGoals: React.FC = () => {
             state.dailyGoals.map((goal, index) => (
               <div
                 key={index}
+                data-aos="fade-up"
+                data-aos-delay={`${index * 100}`}
                 className={`flex items-center gap-4 p-4 rounded-xl border shadow-sm transition-all duration-200 ${
                   state.darkMode ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' : 'bg-white border-gray-200 hover:bg-gray-100'
                 }`}
@@ -287,6 +289,8 @@ const DailyGoals: React.FC = () => {
               {state.completedGoals.map((goal, index) => (
                 <div
                   key={index}
+                  data-aos="fade-up"
+                  data-aos-delay={`${index * 100}`}
                   className={`flex items-center gap-4 p-3 rounded-xl transition-all duration-200 ${
                     state.darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
                   }`}
