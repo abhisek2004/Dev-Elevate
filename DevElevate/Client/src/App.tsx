@@ -10,7 +10,7 @@ import { GlobalProvider, useGlobalState } from "./contexts/GlobalContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { AdminProvider } from "./contexts/AdminContext";
 import { AppProvider } from "./contexts/AppContext";
-import Leaderboard from "./pages/Leaderboard/Leaderboard";
+import ContributorsPageClient from "./pages/Leaderboard/ContributorsPageClient";
 import { SocketProvider } from "./contexts/SocketContext";
 
 import Footer from "./components/Layout/Footer";
@@ -179,7 +179,7 @@ const AppContent = () => {
                         <Route path="profile" element={<UserProfile />} />
                         <Route path="settings/*" element={<UserSettings />} />
                         <Route path="help-center" element={<HelpCenter />} />
-                        <Route path="leaderboard" element={<Leaderboard />} />
+                        <Route path="leaderboard" element={<ContributorsPageClient />} />
                         <Route path="search" element={<SearchPage />} />
                         <Route
                           path="*"
