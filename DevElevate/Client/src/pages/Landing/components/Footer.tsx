@@ -226,9 +226,8 @@ const HomePage = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center justify-center pt-8 mt-12 border-t border-white/10">
-            <div className="text-sm text-yellow-400 flex items-center gap-2 
-                  transition duration-300 hover:text-pink-400 hover:drop-shadow-[0_0_12px_rgba(255,20,147,0.9)]">
+          <div className="flex flex-col items-center justify-center gap-2 pt-8 mt-12 text-center border-t sm:flex-row border-white/10">
+            <div className="text-sm text-yellow-400 flex flex-wrap items-center justify-center gap-1 sm:gap-2 transition duration-300 hover:text-pink-400 hover:drop-shadow-[0_0_12px_rgba(255,20,147,0.9)]">
               © 2025 <span className="font-semibold">DevElevate</span>. All rights reserved. | Made with ❤️ by
               <a
                 href="https://www.linkedin.com/in/abhisekpanda2004/"
