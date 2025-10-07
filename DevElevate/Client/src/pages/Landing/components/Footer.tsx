@@ -175,6 +175,7 @@ const HomePage = () => {
                   <li key={link.name}>
                     <Link
                       to={link.path}
+                      onClick={scrollToTop}
                       className="text-gray-400 transition-colors duration-300 hover:text-white"
                     >
                       {link.name}
