@@ -214,14 +214,14 @@ const Testimonials = () => {
               Get access to exclusive challenges, leaderboards, and open-source projects — all in one place!
             </p>
             <motion.a
-              href="https://forms.gle/AaZmRedsBWvDbaJFA"
+              href="https://forms.gle/QDbb8Tg5Km6CyNHWA"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-300 shadow-lg bg-gradient-to-r from-blue-600 to-pink-600 hover:from-blue-700 hover:to-pink-700 rounded-2xl hover:shadow-pink-500/50"
             >
-              🚀 Join the Movement
+              💡 Share Your Feedback
             </motion.a>
             <p className="mt-6 text-sm text-gray-400">
               Let’s build, learn & grow — together with{' '}
