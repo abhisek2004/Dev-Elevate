@@ -56,21 +56,34 @@ function FallBackNotes() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const loadSubjectData = async () => {
-            try {
-                setLoading(true);
-                const response = await import(`../assets/json/notesfolder/${topic}.json`);
-                setSubjectData(response.default);
-            } catch (error) {
-                console.error('Error loading notes:', error);
-                // Handle error (show 404 page, etc.)
-            } finally {
-                setLoading(false);
-            }
-        };
+    const loadSubjectData = async () => {
+        try {
+            setLoading(true);
 
-        loadSubjectData();
-    }, [topic]);
+            // Import all JSON files in the folder
+            const notesFiles = import.meta.glob('../assets/json/notesfolder/*.json');
+
+            // Construct the file path
+            const topicPath = `../assets/json/notesfolder/${topic}.json`;
+
+            if (notesFiles[topicPath]) {
+                const module = await notesFiles[topicPath]();
+                setSubjectData(module.default);
+            } else {
+                console.error('No notes found for topic:', topic);
+                setSubjectData(null);
+            }
+        } catch (error) {
+            console.error('Error loading notes:', error);
+            setSubjectData(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    loadSubjectData();
+}, [topic]);
+
 
     if (loading) return <Loader />;
     if (!subjectData) return (

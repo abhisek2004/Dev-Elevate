@@ -4,25 +4,38 @@ import { useGlobalState } from "../../contexts/GlobalContext";
 import { Link } from "react-router-dom";
 import { FileText, Link2 } from "lucide-react";
 import NotesData from "./NotesData";
+import { AIService } from "../../services/aiService";
+import { searchNotes } from "../../utils/searchNotes";
 
 const NotesPage = () => {
   const { state, dispatch } = useGlobalState();
-
+  
   const [searchQuery, setSearchQuery] = useState("");
-
-  // Filter notes based on search query
-  const filteredNotes = NotesData.filter(
-    (note) =>
-      note.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
+  const [summaries, setSummaries] = useState({});
+  const [loadingSummary, setLoadingSummary] = useState({});
+  
+  // Filter notes based on search query using searchNotes utility
+  //const filteredNotes = searchNotes(NotesData, searchQuery);
+  
+  // Handle search input change
+  const filteredNotes = searchQuery
+    ? searchNotes(searchQuery, NotesData)
+    : NotesData;
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
+  // Clear search query
   const clearSearch = () => {
     setSearchQuery("");
+  };
+
+  // Generate AI summary for a note
+  const generateSummary = async (noteId, content) => {
+    setLoadingSummary((prev) => ({ ...prev, [noteId]: true }));
+    const summary = await AIService.summarizeText(content);
+    setSummaries((prev) => ({ ...prev, [noteId]: summary }));
+    setLoadingSummary((prev) => ({ ...prev, [noteId]: false }));
   };
 
   // Animation variants
@@ -136,6 +149,7 @@ const NotesPage = () => {
             >
               Notes & Resources
             </motion.h1>
+
             <motion.div
               initial="hidden"
               animate="visible"
@@ -148,6 +162,7 @@ const NotesPage = () => {
               }`}
             ></motion.div>
           </div>
+
           <motion.p
             className={`m-6 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed ${
               state.darkMode
@@ -161,6 +176,8 @@ const NotesPage = () => {
             Access curated notes, study materials, and resources to enhance your
             learning journey.
           </motion.p>
+
+          {/* Search Input */}
           <motion.div
             initial="hidden"
             animate="visible"
@@ -187,6 +204,7 @@ const NotesPage = () => {
                   />
                 </svg>
               </div>
+
               <input
                 type="text"
                 value={searchQuery}
@@ -198,6 +216,7 @@ const NotesPage = () => {
                     : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-primary focus:border-transparent shadow-sm"
                 }`}
               />
+
               {searchQuery && (
                 <button
                   onClick={clearSearch}
@@ -222,6 +241,7 @@ const NotesPage = () => {
                 </button>
               )}
             </div>
+
             {searchQuery && (
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
@@ -286,6 +306,7 @@ const NotesPage = () => {
             </div>
           </motion.div>
 
+          {/* Notes Grid */}
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             initial="hidden"
@@ -304,6 +325,7 @@ const NotesPage = () => {
                   }`}
                   variants={item}
                 >
+                  {/* Top-right icon */}
                   <div className="absolute top-3 right-3">
                     {note.customDocs ? (
                       <div
@@ -327,6 +349,8 @@ const NotesPage = () => {
                       </div>
                     )}
                   </div>
+
+                  {/* Note Content */}
                   <div className="flex flex-col h-full">
                     <div className="flex items-center space-x-4 mb-4">
                       <div
@@ -352,6 +376,7 @@ const NotesPage = () => {
                         {note.name}
                       </h3>
                     </div>
+
                     <p
                       className={`text-sm mb-6 ${
                         state.darkMode ? "text-gray-300" : "text-gray-600"
@@ -359,6 +384,26 @@ const NotesPage = () => {
                     >
                       {note.content}
                     </p>
+
+                    {/* AI Summary Button */}
+                    {note.content && (
+                      <div className="mb-4">
+                        {loadingSummary[note.id] ? (
+                          <p className="text-sm text-gray-500">Loading summary...</p>
+                        ) : summaries[note.id] ? (
+                          <p className="text-sm text-gray-500">{summaries[note.id]}</p>
+                        ) : (
+                          <button
+                            onClick={() => generateSummary(note.id, note.content)}
+                            className="text-sm text-primary hover:underline"
+                          >
+                            Generate Summary
+                          </button>
+                        )}
+                      </div>
+                    )}
+
+                    {/* View Link */}
                     <div className="mt-auto">
                       <div className="flex items-center justify-between">
                         <Link
