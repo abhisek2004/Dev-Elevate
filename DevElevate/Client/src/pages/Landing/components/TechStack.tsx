@@ -315,7 +315,7 @@ const TechStackAndStats: React.FC = () => {
               </span>
             </p>
             <motion.a
-              href="https://forms.gle/YOUR_GOOGLE_FORM_LINK"
+              href="https://forms.gle/a3ekDJfWMpWYmakAA"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{
