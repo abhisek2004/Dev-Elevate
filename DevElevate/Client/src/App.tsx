@@ -67,6 +67,9 @@ import Roadmap from "./pages/RoadmapPage/Roadmap";
 import UserVideoPage from "./pages/videoPages/VideoPage.js";
 import ForgotPass from "./components/Auth/ForgotPass";
 import SearchPage from "./pages/Search/SearchPage";
+import DsaLanding from "./pages/Dsa/DsaLanding";
+import CompanyQuestionsPage from "./pages/Dsa/CompanyQuestionsPage";
+import PracticeProblemsPage from "./pages/Dsa/PracticeProblemsPage";
 
 
 // ✅ AppContent
@@ -168,6 +171,9 @@ const AppContent = () => {
                         />
                         <Route path="resume" element={<ResumeBuilder />} />
                         <Route path="placement" element={<PlacementPrep />} />
+                        <Route path="placement/dsa" element={<DsaLanding />} />
+                        <Route path="placement/dsa/company" element={<CompanyQuestionsPage />} />
+                        <Route path="placement/dsa/practice" element={<PracticeProblemsPage />} />
                         <Route
                           path="projects"
                           element={<ProjectRecommender />}
