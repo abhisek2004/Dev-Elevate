@@ -139,7 +139,7 @@ const TechStackAndStats: React.FC = () => {
   const learningPaths = [
     { title: "DSA Mastery", skills: ["Arrays", "Trees", "Graphs", "DP"], color: "purple" },
     { title: "Java Fundamentals", skills: ["OOP", "Multithreading", "JDBC"], color: "blue" },
-    { title: "MERN Stack", skills: ["React", "Node", "MongoDB", "Express"], color: "cyan" },
+    { title: "MERN Stack", skills: ["React", "Node", "MongoDB", "Express"], color: "indigo" },
     { title: "AI/ML Essentials", skills: ["Regression", "Classification", "Clustering"], color: "green" },
     { title: "Data Science", skills: ["Pandas", "Numpy", "Scikit-Learn"], color: "indigo" },
   ];

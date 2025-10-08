@@ -275,16 +275,17 @@ const CommunityAndCTA = () => {
                   aria-label={`Partner: ${partner.name}`}
                   variants={carouselItemVariant}
                 >
-                  <div className="p-2 border rounded-lg bg-white/10 border-gray-700/50 backdrop-blur-sm">
-                    <img
-                      src={partner.logo}
-                      alt={`${partner.name} logo`}
-                      className="object-contain w-auto h-10"
-                      onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/100x40?text=Logo";
-                      }}
-                    />
-                  </div>
+                  <div className="flex items-center justify-center p-2 border rounded-lg bg-white/10 border-gray-700/50 backdrop-blur-sm">
+  <img
+    src={partner.logo}
+    alt={`${partner.name} logo`}
+    className="object-contain max-h-12 max-w-full"
+    onError={(e) => {
+      e.target.src = "https://via.placeholder.com/100x40?text=Logo";
+    }}
+  />
+</div>
+
                 </motion.div>
               ))}
               {/* Duplicate items for seamless looping */}
