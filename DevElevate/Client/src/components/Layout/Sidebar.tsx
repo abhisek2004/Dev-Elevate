@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
     { path: "/roadmap", icon: MdMap, label: "Road Map" },
     { path: "/notes", icon: FaRegStickyNote, label: "Notes" },
     { path: "/calendar", icon: FiCalendar, label: "Calendar" },
-    { path: "/leaderboard", icon: FiTrendingUp, label: "Leaderboard" },
+    { path: "/leaderboard", icon: FiTrendingUp, label: "Contributors" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -47,14 +47,14 @@ const Sidebar: React.FC = () => {
     <>
       {/* Sidebar */}
       <div
-        className={`fixed top-0 h-full left-0 w-64 border-r backdrop-blur-md transition-colors duration-200 ${state.darkMode
+        className={`fixed top-0 left-0 w-64 h-screen overflow-y-auto border-r backdrop-blur-md transition-colors duration-200 ${state.darkMode
             ? "bg-gray-900/90 border-gray-800"
             : "bg-white border-gray-200"
           }`}
       >
         <div className="flex flex-col h-full p-4 space-y-6">
           {/* Navigation Items */}
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 flex-1 overflow-y-auto pb-20 pr-2 overscroll-contain">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
