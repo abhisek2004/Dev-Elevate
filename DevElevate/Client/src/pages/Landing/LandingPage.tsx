@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
@@ -8,6 +10,43 @@ import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
+
+function ReportIssueButton() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="fixed bottom-4 left-4 sm:bottom-5 sm:left-5 z-[1000]">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-900 transition-all duration-300 bg-white border border-gray-300 rounded-full shadow-lg dark:bg-zinc-800 dark:text-white dark:border-gray-600 sm:py-3 sm:px-5 hover:shadow-2xl"
+      >
+        💬 Report an Issue
+        <span className="text-xs">{open ? "▲" : "▼"}</span>
+      </button>
+
+      {open && (
+        <div className="flex flex-col w-56 py-2 mt-2 bg-white border border-gray-300 shadow-lg dark:bg-zinc-800 dark:border-gray-600 rounded-xl">
+          <a
+            href="https://github.com/abhisek2004/Dev-Elevate/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 text-gray-900 transition-colors rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700"
+          >
+            🐙 Open GitHub Issues
+          </a>
+          <a
+            href="https://forms.gle/978JqVENLK3K53ar8"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 text-gray-900 transition-colors rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700"
+          >
+            📄 Open Google Form
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function LandingPage() {
   const [showBanner, setShowBanner] = useState(true);
@@ -69,6 +108,9 @@ function LandingPage() {
         <CTA />
         <Footer />
       </div>
+
+      {/* Report Issue Button */}
+      <ReportIssueButton />
 
       {/* Privacy Banner */}
       {showBanner && (

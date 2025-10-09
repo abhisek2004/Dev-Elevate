@@ -48,7 +48,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isOpen, onClose }) =>
       section: 'Account',
       items: [
         { icon: User, label: 'View Profile', action: () => navigate('/profile') },
-        { icon: Settings, label: 'Settings', action: () => navigate('/settings') },
+        // { icon: Settings, label: 'Settings', action: () => navigate('/settings') },
       ]
     },
     {

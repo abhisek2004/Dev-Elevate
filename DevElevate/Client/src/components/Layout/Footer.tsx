@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
             {/* Brand Section */}
             <div className="lg:col-span-1">
               <div className="flex items-center mb-4 space-x-2">
-                <div className="flex justify-center items-center w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600">
                   <Code className="w-5 h-5 text-white" />
                 </div>
                 <span className={`text-xl font-bold ${state.darkMode ? "text-white" : "text-gray-900"}`}>
@@ -80,7 +80,7 @@ const Footer: React.FC = () => {
               <p className={`text-sm mb-4 ${state.darkMode ? "text-gray-400" : "text-gray-600"}`}>
                 AI-powered education and career advancement platform for developers and students.
               </p>
-              <div className="flex flex-wrap gap-3 items-center mt-4 text-sm">
+              <div className="flex flex-wrap items-center gap-3 mt-4 text-sm">
                 <div className="flex items-center gap-x-0.5 text-purple-600">
                   <a
                     href="https://github.com/abhisek2004/Dev-Elevate"
@@ -111,7 +111,7 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Quick Links */}
-            <div className="flex items-center flex-col">
+            <div className="flex flex-col items-center">
               <h3 className={`text-lg font-semibold mb-4 ${state.darkMode ? "text-white" : "text-gray-900"}`}>
                 Quick Links
               </h3>
@@ -129,7 +129,7 @@ const Footer: React.FC = () => {
               </ul>
             </div>
 
-     
+
 
             {/* Tech Stack */}
             <div>
@@ -152,12 +152,20 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className={`border-t w-full ${state.darkMode ? "border-gray-800" : "border-gray-200"}`}>
-          <p className={`text-center text-sm mt-3 mb-1 ${state.darkMode ? "text-gray-400" : "text-gray-600"}`}>
-            © 2025 DevElevate. Built with{" "}
-            <Heart className="inline w-4 h-4 text-red-500" /> for the developer community.
-          </p>
+        <div className="flex flex-col items-center justify-center gap-2 pt-8 mt-12 text-center border-t sm:flex-row border-white/10">
+          <div className="text-sm text-yellow-400 flex flex-wrap items-center justify-center gap-1 sm:gap-2 transition duration-300 hover:text-pink-400 hover:drop-shadow-[0_0_12px_rgba(255,20,147,0.9)]">
+            © 2025 <span className="font-semibold">DevElevate</span>. All rights reserved. | Made with ❤️ by
+            <a
+              href="https://www.linkedin.com/in/abhisekpanda2004/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-1 font-semibold text-yellow-400 transition duration-300 hover:text-pink-400"
+            >
+              Team DevElevate
+            </a>
+          </div>
         </div>
+
       </div>
     </footer>
   );

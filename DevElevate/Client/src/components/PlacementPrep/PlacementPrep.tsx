@@ -11,6 +11,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Code } from "lucide-react";
+import { Link } from "react-router-dom";
 import { baseUrl } from "../../config/routes";
 const PlacementPrep: React.FC = () => {
   const { state } = useGlobalState();
@@ -1338,6 +1339,16 @@ const PlacementPrep: React.FC = () => {
               );
             })}
           </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          <Link to="/placement/dsa" className={`${state.darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"} border rounded-xl p-4 hover:shadow transition-shadow`}>
+            <div className="font-medium mb-1 text-blue-600">DSA Practice Problems</div>
+            <div className={`${state.darkMode ? "text-gray-300" : "text-gray-600"}`}>Topic-wise problems and company-wise sets.</div>
+          </Link>
+          <Link to="/placement/dsa/company" className={`${state.darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"} border rounded-xl p-4 hover:shadow transition-shadow`}>
+            <div className="font-medium mb-1 text-blue-600">Company-wise Questions</div>
+            <div className={`${state.darkMode ? "text-gray-300" : "text-gray-600"}`}>Curated sets asked in interviews.</div>
+          </Link>
         </div>
         {/* Tab Content */}
         <div
