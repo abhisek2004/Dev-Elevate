@@ -37,7 +37,7 @@ interface GitHubStatsResponse {
 type LevelKey = 'level-1' | 'level-2' | 'level-3';
 const LEVEL_POINTS: Record<LevelKey, number> = {
   'level-1': 3,
-  'level-2': 5,
+  'level-2': 7,
   'level-3': 10,
 };
 

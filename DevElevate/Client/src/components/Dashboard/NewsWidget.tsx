@@ -27,8 +27,8 @@ const NewsWidget: React.FC = () => {
         const data = await res.json();
 
         if (data.results) {
-        setArticles(data.results.slice(0, 9)); // ✅ limit to 9
-      }
+          setArticles(data.results.slice(0, 12)); // ✅ limit to 9
+        }
       } catch (err) {
         console.error("Failed to fetch news", err);
       } finally {
@@ -54,17 +54,15 @@ const NewsWidget: React.FC = () => {
 
   return (
     <div
-      className={`${
-        state.darkMode
+      className={`${state.darkMode
           ? "bg-gray-800 border-gray-700"
           : "bg-white border-gray-200"
-      } rounded-xl p-6 border shadow-sm transition-colors duration-200`}
+        } rounded-xl p-6 border shadow-sm transition-colors duration-200`}
     >
       <div className="flex items-center justify-between mb-6">
         <h3
-          className={`text-2xl font-semibold tracking-tight ${
-            state.darkMode ? "text-white" : "text-gray-900"
-          }`}
+          className={`text-2xl font-semibold tracking-tight ${state.darkMode ? "text-white" : "text-gray-900"
+            }`}
         >
           Tech News Feed
         </h3>
@@ -72,22 +70,20 @@ const NewsWidget: React.FC = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setViewMode("list")}
-            className={`p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
-              viewMode === "list" ? "bg-gray-300 dark:bg-gray-700" : ""
-            }`}
+            className={`p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${viewMode === "list" ? "bg-gray-300 dark:bg-gray-700" : ""
+              }`}
           >
             <List className="w-5 h-5" />
           </button>
           <button
             onClick={() => setViewMode("card")}
-            className={`p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
-              viewMode === "card" ? "bg-gray-300 dark:bg-gray-700" : ""
-            }`}
+            className={`p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${viewMode === "card" ? "bg-gray-300 dark:bg-gray-700" : ""
+              }`}
           >
             <LayoutGrid className="w-5 h-5" />
           </button>
           <button
-            className="flex items-center gap-1 text-blue-500 hover:text-blue-600 text-sm font-medium"
+            className="flex items-center gap-1 text-sm font-medium text-blue-500 hover:text-blue-600"
             onClick={handleClick}
           >
             <span>View All</span>
@@ -99,7 +95,7 @@ const NewsWidget: React.FC = () => {
       {/* Loading State */}
       {loading ? (
         <div className="flex justify-center py-10">
-          <Loader2 className="animate-spin w-6 h-6 text-blue-500" />
+          <Loader2 className="w-6 h-6 text-blue-500 animate-spin" />
         </div>
       ) : (
         <div
@@ -112,23 +108,20 @@ const NewsWidget: React.FC = () => {
           {articles.map((item, index) => (
             <div
               key={item.article_id ?? index}
-              className={`border rounded-lg overflow-hidden ${
-                state.darkMode ? "bg-gray-900" : "bg-white"
-              } ${
-                viewMode === "card"
+              className={`border rounded-lg overflow-hidden ${state.darkMode ? "bg-gray-900" : "bg-white"
+                } ${viewMode === "card"
                   ? "hover:shadow-md transition duration-300"
                   : "flex items-start gap-4 p-3"
-              }`}
+                }`}
             >
               {item.image_url && (
                 <img
                   src={item.image_url || "https://via.placeholder.com/300x200?text=No+Image"}
                   alt="thumbnail"
-                  className={`${
-                    viewMode === "card"
+                  className={`${viewMode === "card"
                       ? "w-full h-28 object-cover"
                       : "w-28 h-20 rounded-md object-cover"
-                  }`}
+                    }`}
                 />
               )}
 
@@ -151,17 +144,15 @@ const NewsWidget: React.FC = () => {
                   </div>
                 </div>
                 <h4
-                  className={`text-sm font-semibold mb-1 ${
-                    state.darkMode ? "text-white" : "text-gray-800"
-                  }`}
+                  className={`text-sm font-semibold mb-1 ${state.darkMode ? "text-white" : "text-gray-800"
+                    }`}
                 >
 
                   {item.title}
                 </h4>
                 <p
-                  className={`text-xs ${
-                    state.darkMode ? "text-gray-400" : "text-gray-600"
-                  } mb-2`}
+                  className={`text-xs ${state.darkMode ? "text-gray-400" : "text-gray-600"
+                    } mb-2`}
                 >
                   {item.description?.slice(0, 100)}...
                 </p>
@@ -169,7 +160,7 @@ const NewsWidget: React.FC = () => {
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-blue-500 hover:text-blue-600 text-xs font-medium"
+                  className="flex items-center gap-1 text-xs font-medium text-blue-500 hover:text-blue-600"
                 >
                   <span>Read More</span>
                   <ExternalLink className="w-3 h-3" />
