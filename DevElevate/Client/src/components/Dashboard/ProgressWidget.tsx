@@ -1,52 +1,91 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BookOpen, Code, Brain, Database, ArrowRight } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { useNavigate } from 'react-router-dom';
+
+interface LearningTrack {
+  id: string;
+  title: string;
+  icon: React.ComponentType<{ className?: string }>;
+  color: string;
+  modules: number;
+  completed: number;
+}
+
 const ProgressWidget: React.FC = () => {
   const { state } = useGlobalState();
-  const navigate= useNavigate()
-
-  const learningTracks = [
+  const navigate = useNavigate();
+  const [learningTracks, setLearningTracks] = useState<LearningTrack[]>([
     {
       id: 'dsa',
       title: 'Data Structures & Algorithms',
       icon: Code,
-      progress: 65,
       color: 'from-blue-500 to-cyan-500',
       modules: 12,
-      completed: 8
+      completed: 0 // Initialize as 0 for new users
     },
     {
       id: 'java',
       title: 'Java Programming',
       icon: BookOpen,
-      progress: 78,
       color: 'from-orange-500 to-red-500',
       modules: 10,
-      completed: 8
+      completed: 0
     },
     {
       id: 'mern',
       title: 'MERN Stack',
       icon: Database,
-      progress: 45,
       color: 'from-green-500 to-teal-500',
       modules: 15,
-      completed: 7
+      completed: 0
     },
     {
       id: 'aiml',
       title: 'AI/ML & Data Science',
       icon: Brain,
-      progress: 32,
       color: 'from-purple-500 to-pink-500',
       modules: 18,
-      completed: 6
+      completed: 0
     }
-  ];
+  ]);
+
+  // Simulate fetching user progress from an API or local storage
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      try {
+        // Simulated API call to fetch user-specific progress
+        const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+        const updatedTracks = learningTracks.map(track => ({
+          ...track,
+          completed: userProgress[track.id]?.completed || 0
+        }));
+        setLearningTracks(updatedTracks);
+      } catch (error) {
+        console.error('Error fetching user progress:', error);
+      }
+    };
+    fetchUserProgress();
+  }, []);
+
+  // Function to update progress (e.g., when a module is completed)
+  const updateProgress = (trackId: string, completed: number) => {
+    const updatedTracks = learningTracks.map(track =>
+      track.id === trackId ? { ...track, completed } : track
+    );
+    setLearningTracks(updatedTracks);
+
+    // Save updated progress to local storage (or send to API)
+    const userProgress = updatedTracks.reduce((acc, track) => ({
+      ...acc,
+      [track.id]: { completed: track.completed }
+    }), {});
+    localStorage.setItem('userProgress', JSON.stringify(userProgress));
+  };
+
   const handleViewAllClick = () => {
-    navigate("/learning")
-  }
+    navigate("/learning");
+  };
 
   return (
     <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
@@ -54,18 +93,19 @@ const ProgressWidget: React.FC = () => {
         <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
           Learning Progress
         </h3>
-<button
-  className="flex items-center gap-1 text-sm font-medium text-blue-500 transition-colors duration-150 hover:text-blue-600"
-  onClick={handleViewAllClick}
->
-  <span>View All</span>
-  <ArrowRight className='w-4 h-4'/>
-</button>
+        <button
+          className="flex items-center gap-1 text-sm font-medium text-blue-500 transition-colors duration-150 hover:text-blue-600"
+          onClick={handleViewAllClick}
+        >
+          <span>View All</span>
+          <ArrowRight className='w-4 h-4' />
+        </button>
       </div>
 
       <div className="space-y-4">
         {learningTracks.map((track) => {
           const Icon = track.icon;
+          const progress = Math.round((track.completed / track.modules) * 100);
           return (
             <div key={track.id} className="flex items-center space-x-4">
               <div className={`p-3 rounded-lg bg-gradient-to-r ${track.color}`}>
@@ -83,11 +123,11 @@ const ProgressWidget: React.FC = () => {
                 <div className="w-full h-2 bg-gray-200 rounded-full dark:bg-gray-700">
                   <div
                     className={`h-2 rounded-full bg-gradient-to-r ${track.color}`}
-                    style={{ width: `${track.progress}%` }}
+                    style={{ width: `${progress}%` }}
                   ></div>
                 </div>
                 <p className={`text-sm mt-1 ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {track.progress}% Complete
+                  {progress}% Complete
                 </p>
               </div>
             </div>
