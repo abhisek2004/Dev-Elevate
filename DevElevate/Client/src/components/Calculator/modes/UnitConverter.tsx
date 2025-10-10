@@ -24,67 +24,67 @@ const conversionCategories: ConversionCategory[] = [
       mi: { name: 'Miles', factor: 1609.34 },
     },
   },
-  {
-    id: 'weight',
-    name: 'Weight',
-    icon: '⚖️',
-    units: {
-      kg: { name: 'Kilograms', factor: 1 },
-      g: { name: 'Grams', factor: 0.001 },
-      lb: { name: 'Pounds', factor: 0.453592 },
-      oz: { name: 'Ounces', factor: 0.0283495 },
-      ton: { name: 'Tons', factor: 1000 },
-      stone: { name: 'Stones', factor: 6.35029 },
-    },
-  },
-  {
-    id: 'temperature',
-    name: 'Temperature',
-    icon: '🌡️',
-    units: {
-      c: { name: 'Celsius', factor: 1 },
-      f: { name: 'Fahrenheit', factor: 1 },
-      k: { name: 'Kelvin', factor: 1 },
-    },
-  },
-  {
-    id: 'volume',
-    name: 'Volume',
-    icon: '🥤',
-    units: {
-      l: { name: 'Liters', factor: 1 },
-      ml: { name: 'Milliliters', factor: 0.001 },
-      gal: { name: 'Gallons', factor: 3.78541 },
-      qt: { name: 'Quarts', factor: 0.946353 },
-      pt: { name: 'Pints', factor: 0.473176 },
-      cup: { name: 'Cups', factor: 0.236588 },
-    },
-  },
-  {
-    id: 'area',
-    name: 'Area',
-    icon: '📐',
-    units: {
-      'm2': { name: 'Square Meters', factor: 1 },
-      'km2': { name: 'Square Kilometers', factor: 1000000 },
-      'cm2': { name: 'Square Centimeters', factor: 0.0001 },
-      'ft2': { name: 'Square Feet', factor: 0.092903 },
-      'in2': { name: 'Square Inches', factor: 0.00064516 },
-      acre: { name: 'Acres', factor: 4046.86 },
-    },
-  },
-  {
-    id: 'speed',
-    name: 'Speed',
-    icon: '🚗',
-    units: {
-      'mps': { name: 'Meters per Second', factor: 1 },
-      'kmh': { name: 'Kilometers per Hour', factor: 0.277778 },
-      'mph': { name: 'Miles per Hour', factor: 0.44704 },
-      'fps': { name: 'Feet per Second', factor: 0.3048 },
-      'knot': { name: 'Knots', factor: 0.514444 },
-    },
-  },
+  // {
+  //   id: 'weight',
+  //   name: 'Weight',
+  //   icon: '⚖️',
+  //   units: {
+  //     kg: { name: 'Kilograms', factor: 1 },
+  //     g: { name: 'Grams', factor: 0.001 },
+  //     lb: { name: 'Pounds', factor: 0.453592 },
+  //     oz: { name: 'Ounces', factor: 0.0283495 },
+  //     ton: { name: 'Tons', factor: 1000 },
+  //     stone: { name: 'Stones', factor: 6.35029 },
+  //   },
+  // },
+  // {
+  //   id: 'temperature',
+  //   name: 'Temperature',
+  //   icon: '🌡️',
+  //   units: {
+  //     c: { name: 'Celsius', factor: 1 },
+  //     f: { name: 'Fahrenheit', factor: 1 },
+  //     k: { name: 'Kelvin', factor: 1 },
+  //   },
+  // },
+  // {
+  //   id: 'volume',
+  //   name: 'Volume',
+  //   icon: '🥤',
+  //   units: {
+  //     l: { name: 'Liters', factor: 1 },
+  //     ml: { name: 'Milliliters', factor: 0.001 },
+  //     gal: { name: 'Gallons', factor: 3.78541 },
+  //     qt: { name: 'Quarts', factor: 0.946353 },
+  //     pt: { name: 'Pints', factor: 0.473176 },
+  //     cup: { name: 'Cups', factor: 0.236588 },
+  //   },
+  // },
+  // {
+  //   id: 'area',
+  //   name: 'Area',
+  //   icon: '📐',
+  //   units: {
+  //     'm2': { name: 'Square Meters', factor: 1 },
+  //     'km2': { name: 'Square Kilometers', factor: 1000000 },
+  //     'cm2': { name: 'Square Centimeters', factor: 0.0001 },
+  //     'ft2': { name: 'Square Feet', factor: 0.092903 },
+  //     'in2': { name: 'Square Inches', factor: 0.00064516 },
+  //     acre: { name: 'Acres', factor: 4046.86 },
+  //   },
+  // },
+  // {
+  //   id: 'speed',
+  //   name: 'Speed',
+  //   icon: '🚗',
+  //   units: {
+  //     'mps': { name: 'Meters per Second', factor: 1 },
+  //     'kmh': { name: 'Kilometers per Hour', factor: 0.277778 },
+  //     'mph': { name: 'Miles per Hour', factor: 0.44704 },
+  //     'fps': { name: 'Feet per Second', factor: 0.3048 },
+  //     'knot': { name: 'Knots', factor: 0.514444 },
+  //   },
+  // },
 ];
 
 const UnitConverter: React.FC = () => {
@@ -147,7 +147,7 @@ const UnitConverter: React.FC = () => {
   ];
 
   return (
-    <div className="p-4 h-full overflow-auto">
+    <div className="h-full p-4 overflow-auto">
       {/* Category Selector */}
       <div className="flex flex-wrap gap-2 mb-4">
         {conversionCategories.map((category) => (
@@ -169,15 +169,15 @@ const UnitConverter: React.FC = () => {
       </div>
 
       {/* Converter */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md mb-4">
-        <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+      <div className="p-4 mb-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
           {selectedCategory.icon} {selectedCategory.name} Converter
         </h3>
 
         <div className="space-y-4">
           {/* From Unit */}
           <div>
-            <label className="text-sm text-gray-600 dark:text-gray-400 mb-2 block">From</label>
+            <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">From</label>
             <div className="flex gap-2">
               <input
                 type="number"
@@ -204,7 +204,7 @@ const UnitConverter: React.FC = () => {
           <div className="flex justify-center">
             <motion.button
               onClick={swapUnits}
-              className="p-2 bg-gray-200 dark:bg-gray-600 rounded-full hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
+              className="p-2 transition-colors bg-gray-200 rounded-full dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -214,7 +214,7 @@ const UnitConverter: React.FC = () => {
 
           {/* To Unit */}
           <div>
-            <label className="text-sm text-gray-600 dark:text-gray-400 mb-2 block">To</label>
+            <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">To</label>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -240,8 +240,8 @@ const UnitConverter: React.FC = () => {
       </div>
 
       {/* Quick Conversions */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md">
-        <h4 className="text-md font-semibold mb-3 text-gray-900 dark:text-white">
+      <div className="p-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <h4 className="mb-3 font-semibold text-gray-900 text-md dark:text-white">
           Quick Conversions
         </h4>
         <div className="space-y-2">
@@ -255,7 +255,7 @@ const UnitConverter: React.FC = () => {
             return (
               <motion.div
                 key={index}
-                className="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                className="flex items-center justify-between p-2 transition-colors rounded cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
                 onClick={() => setFromValue(conversion.from)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
