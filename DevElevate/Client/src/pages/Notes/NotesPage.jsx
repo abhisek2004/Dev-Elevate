@@ -8,19 +8,17 @@ import { AIService } from "../../services/aiService";
 import { searchNotes } from "../../utils/searchNotes";
 
 const NotesPage = () => {
-  const { state, dispatch } = useGlobalState();
-  
+  const { state } = useGlobalState();
   const [searchQuery, setSearchQuery] = useState("");
   const [summaries, setSummaries] = useState({});
   const [loadingSummary, setLoadingSummary] = useState({});
-  
-  // Filter notes based on search query using searchNotes utility
-  //const filteredNotes = searchNotes(NotesData, searchQuery);
-  
-  // Handle search input change
+
+  // Filter notes based on search query
   const filteredNotes = searchQuery
     ? searchNotes(searchQuery, NotesData)
     : NotesData;
+
+  // Handle search input change
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -114,8 +112,8 @@ const NotesPage = () => {
     <div
       className={`relative min-h-screen-minus-nav overflow-hidden z-10 ${
         state.darkMode
-          ? "bg-dark-bg-primary text-dark-text-primary"
-          : "bg-light-bg-primary text-light-text-primary"
+          ? "bg-gray-900 text-gray-100"
+          : "bg-white text-gray-900"
       }`}
     >
       {/* Background */}
@@ -127,21 +125,19 @@ const NotesPage = () => {
         <div
           className={`absolute inset-0 ${
             state.darkMode
-              ? "bg-gradient-to-br from-dark-bg-primary/90 via-transparent to-dark-bg-primary/50"
-              : "bg-gradient-to-br from-light-bg-primary/90 via-transparent to-light-bg-primary/50"
+              ? "bg-gradient-to-br from-gray-900/90 via-transparent to-gray-900/50"
+              : "bg-gradient-to-br from-white/90 via-transparent to-white/50"
           }`}
         ></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-12 md:py-16 lg:py-20">
+      <div className="px-4 py-12 mx-auto max-w-7xl md:py-16 lg:py-20">
         {/* Header Section */}
-        <div className="text-center mb-12">
+        <div className="mb-12 text-center">
           <div className="inline-block overflow-hidden">
             <motion.h1
               className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-righteous tracking-wider mb-4 ${
-                state.darkMode
-                  ? "text-dark-text-primary"
-                  : "text-light-text-primary"
+                state.darkMode ? "text-gray-100" : "text-gray-900"
               }`}
               initial="hidden"
               animate="visible"
@@ -154,20 +150,17 @@ const NotesPage = () => {
               initial="hidden"
               animate="visible"
               variants={titleLine}
-              transition={{ delay: 0.6 }}
               className={`h-1 rounded-full bg-gradient-to-r ${
                 state.darkMode
-                  ? "from-primary via-primary-dark to-primary"
-                  : "from-primary via-primary-dark to-primary"
+                  ? "from-blue-500 via-blue-600 to-blue-500"
+                  : "from-blue-600 via-blue-700 to-blue-600"
               }`}
             ></motion.div>
           </div>
 
           <motion.p
             className={`m-6 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed ${
-              state.darkMode
-                ? "text-dark-text-secondary"
-                : "text-light-text-secondary"
+              state.darkMode ? "text-gray-300" : "text-gray-600"
             }`}
             initial="hidden"
             animate="visible"
@@ -185,12 +178,10 @@ const NotesPage = () => {
             className="max-w-2xl mx-auto mb-12"
           >
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                 <svg
                   className={`h-5 w-5 ${
-                    state.darkMode
-                      ? "text-dark-text-secondary"
-                      : "text-gray-400"
+                    state.darkMode ? "text-gray-300" : "text-gray-500"
                   }`}
                   fill="none"
                   stroke="currentColor"
@@ -212,8 +203,8 @@ const NotesPage = () => {
                 placeholder="Search notes by name or content..."
                 className={`w-full pl-12 pr-12 py-3 text-base rounded-xl border transition-all duration-200 focus:outline-none focus:ring-2 ${
                   state.darkMode
-                    ? "bg-dark-bg-secondary border-dark-border text-white placeholder-gray-400 focus:ring-primary focus:border-transparent"
-                    : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-primary focus:border-transparent shadow-sm"
+                    ? "bg-gray-800 border-gray-700 text-gray-100 placeholder-gray-400 focus:ring-blue-500"
+                    : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-blue-600"
                 }`}
               />
 
@@ -221,12 +212,12 @@ const NotesPage = () => {
                 <button
                   onClick={clearSearch}
                   className={`absolute inset-y-0 right-0 pr-4 flex items-center hover:opacity-70 transition-opacity ${
-                    state.darkMode ? "text-gray-400" : "text-gray-500"
+                    state.darkMode ? "text-gray-300" : "text-gray-500"
                   }`}
                   aria-label="Clear search"
                 >
                   <svg
-                    className="h-5 w-5"
+                    className="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -248,9 +239,7 @@ const NotesPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
                 className={`mt-3 text-sm text-center ${
-                  state.darkMode
-                    ? "text-dark-text-secondary"
-                    : "text-light-text-secondary"
+                  state.darkMode ? "text-gray-300" : "text-gray-600"
                 }`}
               >
                 {filteredNotes.length === 1
@@ -265,16 +254,20 @@ const NotesPage = () => {
             initial="hidden"
             animate="visible"
             variants={contentAnimation}
-            className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4"
+            className="flex flex-col items-center justify-between gap-4 mb-8 sm:flex-row"
           >
             <div className="w-full sm:w-auto">
-              <h2 className="text-2xl sm:text-3xl font-righteous tracking-wider text-center sm:text-left">
+              <h2
+                className={`text-2xl sm:text-3xl font-righteous tracking-wider text-center sm:text-left ${
+                  state.darkMode ? "text-gray-100" : "text-gray-900"
+                }`}
+              >
                 Notes Topics
               </h2>
               <p
-                className={`text-sm mt-1 ${
-                  state.darkMode ? "text-dark-text-secondary" : "text-gray-500"
-                } text-center sm:text-left`}
+                className={`text-sm mt-1 text-center sm:text-left ${
+                  state.darkMode ? "text-gray-300" : "text-gray-600"
+                }`}
               >
                 Browse through our collection of curated notes and resources
               </p>
@@ -282,21 +275,17 @@ const NotesPage = () => {
 
             <div
               className={`px-4 py-2 rounded-lg ${
-                state.darkMode ? "bg-dark-bg-secondary" : "bg-gray-50"
-              } border ${
-                state.darkMode ? "border-dark-border" : "border-gray-200"
-              }`}
+                state.darkMode ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-200"
+              } border`}
             >
               <p
-                className={`text-sm font-medium ${
-                  state.darkMode ? "text-primary" : "text-primary-dark"
-                } flex items-center`}
+                className={`text-sm font-medium flex items-center ${
+                  state.darkMode ? "text-blue-500" : "text-blue-600"
+                }`}
               >
                 <span
                   className={`mr-2 ${
-                    state.darkMode
-                      ? "text-dark-text-secondary"
-                      : "text-gray-500"
+                    state.darkMode ? "text-gray-300" : "text-gray-500"
                   }`}
                 >
                   Total Notes:
@@ -308,7 +297,7 @@ const NotesPage = () => {
 
           {/* Notes Grid */}
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
             initial="hidden"
             animate="visible"
             variants={container}
@@ -320,9 +309,9 @@ const NotesPage = () => {
                   key={index}
                   className={`relative group overflow-hidden rounded-xl p-6 transition-all transform hover:-translate-y-0.5 ${
                     state.darkMode
-                      ? "bg-dark-bg-secondary hover:bg-dark-bg-tertiary border border-dark-border hover:shadow-lg"
-                      : "bg-white hover:bg-gray-50 border border-gray-200 hover:shadow-md"
-                  }`}
+                      ? "bg-gray-800 border-gray-700 hover:bg-gray-700 hover:shadow-lg"
+                      : "bg-white border-gray-200 hover:bg-gray-50 hover:shadow-md"
+                  } border`}
                   variants={item}
                 >
                   {/* Top-right icon */}
@@ -352,25 +341,21 @@ const NotesPage = () => {
 
                   {/* Note Content */}
                   <div className="flex flex-col h-full">
-                    <div className="flex items-center space-x-4 mb-4">
+                    <div className="flex items-center mb-4 space-x-4">
                       <div
                         className={`p-2 rounded-lg ${
-                          state.darkMode
-                            ? "bg-dark-bg-primary/50"
-                            : "bg-gray-100"
+                          state.darkMode ? "bg-gray-900/50" : "bg-gray-100"
                         }`}
                       >
                         <Icon
                           className={`w-5 h-5 ${
-                            state.darkMode
-                              ? "text-primary"
-                              : "text-primary-dark"
+                            state.darkMode ? "text-blue-500" : "text-blue-600"
                           }`}
                         />
                       </div>
                       <h3
                         className={`text-lg font-semibold ${
-                          state.darkMode ? "text-white" : "text-gray-900"
+                          state.darkMode ? "text-gray-100" : "text-gray-900"
                         }`}
                       >
                         {note.name}
@@ -378,9 +363,9 @@ const NotesPage = () => {
                     </div>
 
                     <p
-                      className={`text-sm mb-6 ${
+                      className={`text-sm mb-6 line-clamp-3 ${
                         state.darkMode ? "text-gray-300" : "text-gray-600"
-                      } line-clamp-3`}
+                      }`}
                     >
                       {note.content}
                     </p>
@@ -389,13 +374,29 @@ const NotesPage = () => {
                     {note.content && (
                       <div className="mb-4">
                         {loadingSummary[note.id] ? (
-                          <p className="text-sm text-gray-500">Loading summary...</p>
+                          <p
+                            className={`text-sm ${
+                              state.darkMode ? "text-gray-400" : "text-gray-500"
+                            }`}
+                          >
+                            Loading summary...
+                          </p>
                         ) : summaries[note.id] ? (
-                          <p className="text-sm text-gray-500">{summaries[note.id]}</p>
+                          <p
+                            className={`text-sm ${
+                              state.darkMode ? "text-gray-400" : "text-gray-500"
+                            }`}
+                          >
+                            {summaries[note.id]}
+                          </p>
                         ) : (
                           <button
                             onClick={() => generateSummary(note.id, note.content)}
-                            className="text-sm text-primary hover:underline"
+                            className={`text-sm ${
+                              state.darkMode
+                                ? "text-blue-500 hover:text-blue-400"
+                                : "text-blue-600 hover:text-blue-700"
+                            } hover:underline`}
                           >
                             Generate Summary
                           </button>
@@ -405,23 +406,21 @@ const NotesPage = () => {
 
                     {/* View Link */}
                     <div className="mt-auto">
-                      <div className="flex items-center justify-between">
-                        <Link
-                          to={note.link}
-                          className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium ${
-                            state.darkMode
-                              ? "bg-dark-bg-primary/50 text-primary hover:bg-dark-bg-primary/80"
-                              : "bg-gray-100 text-primary-dark hover:bg-gray-200"
-                          } transition-all`}
-                        >
-                          <span className="mr-2">
-                            {note.customDocs ? "View Notes" : "View Resources"}
-                          </span>
-                          <span className="inline-block transition-transform group-hover:translate-x-1">
-                            →
-                          </span>
-                        </Link>
-                      </div>
+                      <Link
+                        to={note.link}
+                        className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                          state.darkMode
+                            ? "bg-gray-900/50 text-blue-500 hover:bg-gray-900/80"
+                            : "bg-gray-100 text-blue-600 hover:bg-gray-200"
+                        }`}
+                      >
+                        <span className="mr-2">
+                          {note.customDocs ? "View Notes" : "View Resources"}
+                        </span>
+                        <span className="inline-block transition-transform group-hover:translate-x-1">
+                          →
+                        </span>
+                      </Link>
                     </div>
                   </div>
                 </motion.div>

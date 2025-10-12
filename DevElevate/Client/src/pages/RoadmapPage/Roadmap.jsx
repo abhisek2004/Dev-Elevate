@@ -536,8 +536,8 @@ const Roadmap = () => {
     <div
       className={`relative min-h-screen-minus-nav overflow-hidden z-10 ${
         state.darkMode
-          ? "bg-dark-bg-primary text-dark-text-primary"
-          : "bg-light-bg-primary text-light-text-primary"
+          ? "bg-gray-900 text-gray-100"
+          : "bg-white text-gray-900"
       }`}
     >
       {/* Enhanced Background with gradient overlay */}
@@ -552,26 +552,24 @@ const Roadmap = () => {
         <div
           className={`absolute inset-0 ${
             state.darkMode
-              ? "bg-gradient-to-br from-dark-bg-primary/90 via-transparent to-dark-bg-primary/50"
-              : "bg-gradient-to-br from-light-bg-primary/90 via-transparent to-light-bg-primary/50"
+              ? "bg-gradient-to-br from-gray-900/90 via-transparent to-gray-900/50"
+              : "bg-gradient-to-br from-white/90 via-transparent to-white/50"
           }`}
         ></div>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 py-12 md:py-16 lg:py-20">
+      <div className="px-4 py-12 mx-auto max-w-7xl md:py-16 lg:py-20">
         {/* Enhanced Header Section */}
         <motion.div
           variants={headerVariants}
           initial="hidden"
           animate="visible"
-          className="text-center mb-12"
+          className="mb-12 text-center"
         >
           <div className="inline-block">
             <h1
               className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-righteous tracking-wider mb-4 ${
-                state.darkMode
-                  ? "text-dark-text-primary"
-                  : "text-light-text-primary"
+                state.darkMode ? "text-gray-100" : "text-gray-900"
               }`}
             >
               Learning Roadmaps
@@ -582,8 +580,8 @@ const Roadmap = () => {
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
               className={`h-1 rounded-full bg-gradient-to-r ${
                 state.darkMode
-                  ? "from-primary via-primary-dark to-primary"
-                  : "from-primary via-primary-dark to-primary"
+                  ? "from-blue-500 via-blue-600 to-blue-500"
+                  : "from-blue-600 via-blue-700 to-blue-600"
               }`}
             ></motion.div>
           </div>
@@ -592,9 +590,7 @@ const Roadmap = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             className={`mt-6 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed ${
-              state.darkMode
-                ? "text-dark-text-secondary"
-                : "text-light-text-secondary"
+              state.darkMode ? "text-gray-300" : "text-gray-600"
             }`}
           >
             Discover comprehensive learning paths designed to guide your journey
@@ -616,16 +612,14 @@ const Roadmap = () => {
                 whileFocus={{ scale: 1.02 }}
                 className={`relative rounded-2xl overflow-hidden ${
                   state.darkMode
-                    ? "bg-dark-bg-secondary border border-dark-border"
-                    : "bg-light-bg-secondary border border-light-border"
+                    ? "bg-gray-800 border border-gray-700"
+                    : "bg-gray-100 border border-gray-300"
                 } transition-all duration-300`}
               >
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                   <svg
                     className={`h-5 w-5 ${
-                      state.darkMode
-                        ? "text-dark-text-secondary"
-                        : "text-light-text-secondary"
+                      state.darkMode ? "text-gray-300" : "text-gray-600"
                     }`}
                     fill="none"
                     stroke="currentColor"
@@ -646,8 +640,8 @@ const Roadmap = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className={`w-full pl-12 pr-4 py-4 text-lg placeholder-opacity-50 bg-transparent border-none outline-none focus:ring-0 ${
                     state.darkMode
-                      ? "text-dark-text-primary placeholder-dark-text-secondary"
-                      : "text-light-text-primary placeholder-light-text-secondary"
+                      ? "text-gray-100 placeholder-gray-400"
+                      : "text-gray-900 placeholder-gray-500"
                   }`}
                 />
                 {searchQuery && (
@@ -657,12 +651,12 @@ const Roadmap = () => {
                     onClick={() => setSearchQuery("")}
                     className={`absolute inset-y-0 right-0 pr-4 flex items-center ${
                       state.darkMode
-                        ? "text-dark-text-secondary hover:text-dark-text-primary"
-                        : "text-light-text-secondary hover:text-light-text-primary"
+                        ? "text-gray-300 hover:text-gray-100"
+                        : "text-gray-600 hover:text-gray-900"
                     } transition-colors duration-200`}
                   >
                     <svg
-                      className="h-5 w-5"
+                      className="w-5 h-5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -683,8 +677,8 @@ const Roadmap = () => {
             <div
               className={`flex flex-wrap justify-center gap-3 p-2 rounded-xl ${
                 state.darkMode
-                  ? "bg-white text-black"
-                  : "text-black"
+                  ? "bg-gray-800 text-gray-100"
+                  : "bg-gray-100 text-gray-900"
               }`}
             >
               {[
@@ -708,10 +702,10 @@ const Roadmap = () => {
                   }}
                   className={`px-4 py-2 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 ${
                     activeFilter === filter.key
-                      ? "bg-primary text-white shadow-lg"
+                      ? "bg-blue-500 text-white shadow-lg"
                       : state.darkMode
-                      ? "text-dark-text-secondary hover:text-dark-text-primary hover:bg-dark-bg-primary"
-                      : "text-light-text-secondary hover:text-light-text-primary hover:bg-light-bg-primary"
+                      ? "text-gray-300 hover:text-gray-100 hover:bg-gray-700"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-200"
                   }`}
                 >
                   {filter.label}
@@ -720,8 +714,8 @@ const Roadmap = () => {
                       activeFilter === filter.key
                         ? "bg-white/20"
                         : state.darkMode
-                        ? "bg-dark-bg-primary text-dark-text-secondary"
-                        : "bg-light-bg-primary text-light-text-secondary"
+                        ? "bg-gray-700 text-gray-300"
+                        : "bg-gray-200 text-gray-600"
                     }`}
                   >
                     {filter.count}
@@ -736,9 +730,7 @@ const Roadmap = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className={`text-sm ${
-                  state.darkMode
-                    ? "text-dark-text-secondary"
-                    : "text-light-text-secondary"
+                  state.darkMode ? "text-gray-300" : "text-gray-600"
                 }`}
               >
                 Found{" "}
@@ -759,26 +751,20 @@ const Roadmap = () => {
               initial="hidden"
               animate="visible"
               className={`text-center py-16 rounded-2xl ${
-                state.darkMode
-                  ? "bg-dark-bg-secondary"
-                  : "bg-light-bg-secondary"
+                state.darkMode ? "bg-gray-800" : "bg-gray-100"
               }`}
             >
-              <div className="text-6xl mb-4">🔍</div>
+              <div className="mb-4 text-6xl">🔍</div>
               <h3
                 className={`text-2xl font-semibold mb-2 ${
-                  state.darkMode
-                    ? "text-dark-text-primary"
-                    : "text-light-text-primary"
+                  state.darkMode ? "text-gray-100" : "text-gray-900"
                 }`}
               >
                 No roadmaps found
               </h3>
               <p
                 className={`text-lg ${
-                  state.darkMode
-                    ? "text-dark-text-secondary"
-                    : "text-light-text-secondary"
+                  state.darkMode ? "text-gray-300" : "text-gray-600"
                 } max-w-md mx-auto`}
               >
                 Try adjusting your search terms or browse our available
@@ -793,7 +779,7 @@ const Roadmap = () => {
                   setSearchQuery("");
                   setActiveFilter("all");
                 }}
-                className="mt-4 px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-xl transition-colors duration-300"
+                className="px-6 py-3 mt-4 font-semibold text-white transition-colors duration-300 bg-blue-500 hover:bg-blue-600 rounded-xl"
               >
                 Show All Roadmaps
               </motion.button>
@@ -804,7 +790,7 @@ const Roadmap = () => {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-              className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full"
+              className="w-16 h-16 border-4 border-blue-500 rounded-full border-t-transparent"
             />
           </div>
         ) : (
@@ -827,23 +813,19 @@ const Roadmap = () => {
                   >
                     <div
                       className={`h-px flex-1 ${
-                        state.darkMode ? "bg-dark-border" : "bg-light-border"
+                        state.darkMode ? "bg-gray-700" : "bg-gray-300"
                       }`}
                     ></div>
                     <h2
                       className={`text-2xl sm:text-3xl md:text-4xl font-righteous tracking-wider px-4 sm:px-8 ${
-                        state.darkMode
-                          ? "text-dark-text-primary"
-                          : "text-light-text-primary"
+                        state.darkMode ? "text-gray-100" : "text-gray-900"
                       }`}
                     >
                       Role Based Roadmaps
                       {searchQuery && (
                         <span
                           className={`ml-2 text-base font-normal ${
-                            state.darkMode
-                              ? "text-dark-text-secondary"
-                              : "text-light-text-secondary"
+                            state.darkMode ? "text-gray-300" : "text-gray-600"
                           }`}
                         >
                           ({filteredRoadmaps.roles.length})
@@ -852,7 +834,7 @@ const Roadmap = () => {
                     </h2>
                     <div
                       className={`h-px flex-1 ${
-                        state.darkMode ? "bg-dark-border" : "bg-light-border"
+                        state.darkMode ? "bg-gray-700" : "bg-gray-300"
                       }`}
                     ></div>
                   </motion.div>
@@ -862,25 +844,25 @@ const Roadmap = () => {
                     initial="hidden"
                     animate="visible"
                     transition={{ delay: 1.4 }}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
+                    className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-6 lg:gap-8"
                   >
                     {filteredRoadmaps.roles.map((item, index) => (
                       <motion.div
                         key={`role-${item.name}-${index}`}
                         variants={cardVariants}
                         whileHover="hover"
-                        className={`group relative p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg flex flex-col justify-between min-h-[200px] bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900 backdrop-blur-xl ${
+                        className={`group relative p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg flex flex-col justify-between min-h-[200px] backdrop-blur-xl ${
                           state.darkMode
-                            ? "border border-dark-border hover:border-primary/50"
-                            : "bg-light-bg-secondary border border-light-border hover:border-primary/50"
+                            ? "bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-blue-500/50"
+                            : "bg-gradient-to-br from-blue-50 to-indigo-50 border border-gray-300 hover:border-blue-500/50"
                         } transition-all duration-300 overflow-hidden`}
                       >
                         {/* Bookmark Button */}
                         <button
                           onClick={() => toggleBookmark(item)}
-                          className={`absolute top-4 right-4 z-20 text-primary hover:text-primary-dark ${
+                          className={`absolute top-4 right-4 z-20 text-blue-500 hover:text-blue-600 ${
                             bookmarkSaving[(item.name || "").toLowerCase()]
-                              ? "opacity-60 cursor-not-allowed hover:text-primary"
+                              ? "opacity-60 cursor-not-allowed hover:text-blue-500"
                               : ""
                           }`}
                           aria-busy={
@@ -892,7 +874,7 @@ const Roadmap = () => {
                         >
                           {bookmarkSaving[(item.name || "").toLowerCase()] ? (
                             <svg
-                              className="animate-spin h-5 w-5 text-current"
+                              className="w-5 h-5 text-current animate-spin"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"
@@ -926,14 +908,14 @@ const Roadmap = () => {
 
                         {/* Animated border on right and bottom */}
                         <motion.div
-                          className="absolute top-0 right-0 w-0 h-full bg-primary rounded-r-2xl"
+                          className="absolute top-0 right-0 w-0 h-full bg-blue-500 rounded-r-2xl"
                           whileHover={{
                             width: "3px",
                             transition: { duration: 0.3, ease: "easeOut" },
                           }}
                         />
                         <motion.div
-                          className="absolute bottom-0 left-0 w-full h-0 bg-primary rounded-b-2xl"
+                          className="absolute bottom-0 left-0 w-full h-0 bg-blue-500 rounded-b-2xl"
                           whileHover={{
                             height: "3px",
                             transition: {
@@ -947,33 +929,29 @@ const Roadmap = () => {
                         {/* Role icon with enhanced animation */}
                         <motion.div
                           className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg mb-4 flex items-center justify-center ${
-                            state.darkMode
-                              ? "bg-dark-bg-primary"
-                              : "bg-light-bg-primary"
+                            state.darkMode ? "bg-gray-900" : "bg-gray-200"
                           }`}
                           whileHover={{ rotate: 360 }}
                           transition={{ duration: 0.5 }}
                         >
-                          <span className="text-3xl sm:text-4xl flex items-center justify-center">
+                          <span className="flex items-center justify-center text-3xl sm:text-4xl">
                             {skillIcons[item.name] || item.icon || "⚡"}
                           </span>
                         </motion.div>
 
-                        <div className="flex-1 relative z-10">
+                        <div className="relative z-10 flex-1">
                           <h3
                             className={`text-lg sm:text-xl lg:text-2xl font-semibold mb-3 leading-tight ${
                               state.darkMode
-                                ? "text-dark-text-primary"
-                                : "text-light-text-primary"
-                            } group-hover:text-primary transition-colors duration-300`}
+                                ? "text-gray-100 group-hover:text-blue-400"
+                                : "text-gray-900 group-hover:text-blue-600"
+                            } transition-colors duration-300`}
                           >
                             {item.name || "Untitled Roadmap"}
                           </h3>
                           <p
                             className={`text-sm ${
-                              state.darkMode
-                                ? "text-dark-text-secondary"
-                                : "text-light-text-secondary"
+                              state.darkMode ? "text-gray-300" : "text-gray-600"
                             } mb-6`}
                           >
                             {getDescription(item.name, item.type)}
@@ -988,12 +966,16 @@ const Roadmap = () => {
                           initial="initial"
                           whileHover="hover"
                           whileTap="tap"
-                           className="text-white flex items-center justify-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-3 text-center me-2 mb-2"
+                          className={`text-white flex items-center justify-center bg-gradient-to-r ${
+                            state.darkMode
+                              ? "from-purple-600 via-purple-700 to-purple-800 hover:from-purple-700 hover:via-purple-800 hover:to-purple-900"
+                              : "from-purple-500 via-purple-600 to-purple-700 hover:from-purple-600 hover:via-purple-700 hover:to-purple-800"
+                          } focus:ring-4 focus:outline-none focus:ring-purple-300 shadow-lg shadow-purple-500/50 font-medium rounded-lg text-sm px-5 py-3 text-center me-2 mb-2`}
                         >
                           Explore Path
                           <motion.svg
                             variants={iconVariants}
-                            className="ml-2 w-4 h-4"
+                            className="w-4 h-4 ml-2"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -1029,23 +1011,19 @@ const Roadmap = () => {
                   >
                     <div
                       className={`h-px flex-1 ${
-                        state.darkMode ? "bg-dark-border" : "bg-light-border"
+                        state.darkMode ? "bg-gray-700" : "bg-gray-300"
                       }`}
                     ></div>
                     <h2
                       className={`text-2xl sm:text-3xl md:text-4xl font-righteous tracking-wider px-4 sm:px-8 ${
-                        state.darkMode
-                          ? "text-dark-text-primary"
-                          : "text-light-text-primary"
+                        state.darkMode ? "text-gray-100" : "text-gray-900"
                       }`}
                     >
                       Skill Based Roadmaps
                       {searchQuery && (
                         <span
                           className={`ml-2 text-base font-normal ${
-                            state.darkMode
-                              ? "text-dark-text-secondary"
-                              : "text-light-text-secondary"
+                            state.darkMode ? "text-gray-300" : "text-gray-600"
                           }`}
                         >
                           ({filteredRoadmaps.skills.length})
@@ -1054,7 +1032,7 @@ const Roadmap = () => {
                     </h2>
                     <div
                       className={`h-px flex-1 ${
-                        state.darkMode ? "bg-dark-border" : "bg-light-border"
+                        state.darkMode ? "bg-gray-700" : "bg-gray-300"
                       }`}
                     ></div>
                   </motion.div>
@@ -1077,25 +1055,19 @@ const Roadmap = () => {
                           >
                             <div
                               className={`h-px flex-1 ${
-                                state.darkMode
-                                  ? "bg-dark-border"
-                                  : "bg-light-border"
+                                state.darkMode ? "bg-gray-700" : "bg-gray-300"
                               }`}
                             ></div>
                             <h3
                               className={`text-xl sm:text-2xl md:text-3xl font-righteous tracking-wider px-4 sm:px-6 flex items-center ${
-                                state.darkMode
-                                  ? "text-dark-text-primary"
-                                  : "text-light-text-primary"
+                                state.darkMode ? "text-gray-100" : "text-gray-900"
                               }`}
                             >
                               <span className="mr-3">{tierData.icon}</span>
                               {tierData.name}
                               <span
                                 className={`ml-3 text-sm font-normal ${
-                                  state.darkMode
-                                    ? "text-dark-text-secondary"
-                                    : "text-light-text-secondary"
+                                  state.darkMode ? "text-gray-300" : "text-gray-600"
                                 }`}
                               >
                                 ({tierSkills.length})
@@ -1103,18 +1075,14 @@ const Roadmap = () => {
                             </h3>
                             <div
                               className={`h-px flex-1 ${
-                                state.darkMode
-                                  ? "bg-dark-border"
-                                  : "bg-light-border"
+                                state.darkMode ? "bg-gray-700" : "bg-gray-300"
                               }`}
                             ></div>
                           </motion.div>
 
                           <p
                             className={`text-center mb-8 text-base ${
-                              state.darkMode
-                                ? "text-dark-text-secondary"
-                                : "text-light-text-secondary"
+                              state.darkMode ? "text-gray-300" : "text-gray-600"
                             } max-w-2xl mx-auto`}
                           >
                             {tierData.description}
@@ -1124,27 +1092,27 @@ const Roadmap = () => {
                             variants={containerVariants}
                             initial="hidden"
                             animate="visible"
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
+                            className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-6 lg:gap-8"
                           >
                             {tierSkills.map((item, index) => (
                               <motion.div
                                 key={`tier-${tierKey}-${item.name}-${index}`}
                                 variants={cardVariants}
                                 whileHover="hover"
-                                className={`group relative p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg flex flex-col justify-between min-h-[200px] bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900 backdrop-blur-xl ${
+                                className={`group relative p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg flex flex-col justify-between min-h-[200px] backdrop-blur-xl ${
                                   state.darkMode
-                                    ? "border border-dark-border hover:border-primary/50"
-                                    : "bg-light-bg-secondary border border-light-border hover:border-primary/50"
+                                    ? "bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-blue-500/50"
+                                    : "bg-gradient-to-br from-blue-50 to-indigo-50 border border-gray-300 hover:border-blue-500/50"
                                 } transition-all duration-300 overflow-hidden`}
                               >
                                 {/* Bookmark Button */}
                                 <button
                                   onClick={() => toggleBookmark(item)}
-                                  className={`absolute top-4 right-4 z-20 text-primary hover:text-primary-dark ${
+                                  className={`absolute top-4 right-4 z-20 text-blue-500 hover:text-blue-600 ${
                                     bookmarkSaving[
                                       (item.name || "").toLowerCase()
                                     ]
-                                      ? "opacity-60 cursor-not-allowed hover:text-primary"
+                                      ? "opacity-60 cursor-not-allowed hover:text-blue-500"
                                       : ""
                                   }`}
                                   aria-busy={
@@ -1162,7 +1130,7 @@ const Roadmap = () => {
                                     (item.name || "").toLowerCase()
                                   ] ? (
                                     <svg
-                                      className="animate-spin h-5 w-5 text-current"
+                                      className="w-5 h-5 text-current animate-spin"
                                       xmlns="http://www.w3.org/2000/svg"
                                       fill="none"
                                       viewBox="0 0 24 24"
@@ -1197,7 +1165,7 @@ const Roadmap = () => {
 
                                 {/* Animated border on right and bottom */}
                                 <motion.div
-                                  className="absolute top-0 right-0 w-0 h-full bg-primary rounded-r-2xl"
+                                  className="absolute top-0 right-0 w-0 h-full bg-blue-500 rounded-r-2xl"
                                   whileHover={{
                                     width: "3px",
                                     transition: {
@@ -1207,7 +1175,7 @@ const Roadmap = () => {
                                   }}
                                 />
                                 <motion.div
-                                  className="absolute bottom-0 left-0 w-full h-0 bg-primary rounded-b-2xl"
+                                  className="absolute bottom-0 left-0 w-full h-0 bg-blue-500 rounded-b-2xl"
                                   whileHover={{
                                     height: "3px",
                                     transition: {
@@ -1221,33 +1189,29 @@ const Roadmap = () => {
                                 {/* Skill icon with enhanced animation */}
                                 <motion.div
                                   className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg mb-4 flex items-center justify-center ${
-                                    state.darkMode
-                                      ? "bg-dark-bg-primary"
-                                      : "bg-light-bg-primary"
+                                    state.darkMode ? "bg-gray-900" : "bg-gray-200"
                                   }`}
                                   whileHover={{ rotate: 360 }}
                                   transition={{ duration: 0.5 }}
                                 >
-                                  <span className="text-3xl sm:text-4xl flex items-center justify-center">
+                                  <span className="flex items-center justify-center text-3xl sm:text-4xl">
                                     {skillIcons[item.name] || item.icon || "⚡"}
                                   </span>
                                 </motion.div>
 
-                                <div className="flex-1 relative z-10">
+                                <div className="relative z-10 flex-1">
                                   <h3
                                     className={`text-lg sm:text-xl lg:text-2xl font-semibold mb-3 leading-tight ${
                                       state.darkMode
-                                        ? "text-dark-text-primary"
-                                        : "text-light-text-primary"
-                                    } group-hover:text-primary transition-colors duration-300`}
+                                        ? "text-gray-100 group-hover:text-blue-400"
+                                        : "text-gray-900 group-hover:text-blue-600"
+                                    } transition-colors duration-300`}
                                   >
                                     {item.name || "Untitled Roadmap"}
                                   </h3>
                                   <p
                                     className={`text-sm ${
-                                      state.darkMode
-                                        ? "text-dark-text-secondary"
-                                        : "text-light-text-secondary"
+                                      state.darkMode ? "text-gray-300" : "text-gray-600"
                                     } mb-6`}
                                   >
                                     {getDescription(item.name, item.type)}
@@ -1263,12 +1227,16 @@ const Roadmap = () => {
                                     initial="initial"
                                     whileHover="hover"
                                     whileTap="tap"
-                                    className="text-white flex items-center justify-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-3 text-center me-2 mb-2"
+                                    className={`text-white flex items-center justify-center bg-gradient-to-r ${
+                                      state.darkMode
+                                        ? "from-purple-600 via-purple-700 to-purple-800 hover:from-purple-700 hover:via-purple-800 hover:to-purple-900"
+                                        : "from-purple-500 via-purple-600 to-purple-700 hover:from-purple-600 hover:via-purple-700 hover:to-purple-800"
+                                    } focus:ring-4 focus:outline-none focus:ring-purple-300 shadow-lg shadow-purple-500/50 font-medium rounded-lg text-sm px-5 py-3 text-center me-2 mb-2`}
                                   >
                                     Explore Path
                                     <motion.svg
                                       variants={iconVariants}
-                                      className="ml-2 w-4 h-4"
+                                      className="w-4 h-4 ml-2"
                                       fill="none"
                                       stroke="currentColor"
                                       viewBox="0 0 24 24"
@@ -1305,24 +1273,20 @@ const Roadmap = () => {
             animate="visible"
             className={`mt-24 text-center p-8 sm:p-12 rounded-3xl ${
               state.darkMode
-                ? "bg-gradient-to-r from-dark-bg-secondary to-dark-bg-secondary border border-dark-border"
-                : "bg-gradient-to-r from-light-bg-secondary to-light-bg-secondary border border-light-border"
+                ? "bg-gradient-to-r from-gray-800 to-gray-800 border border-gray-700"
+                : "bg-gradient-to-r from-gray-100 to-gray-100 border border-gray-300"
             }`}
           >
             <h3
               className={`text-xl sm:text-2xl md:text-3xl font-righteous mb-4 ${
-                state.darkMode
-                  ? "text-dark-text-primary"
-                  : "text-light-text-primary"
+                state.darkMode ? "text-gray-100" : "text-gray-900"
               }`}
             >
               Ready to Start Your Learning Journey?
             </h3>
             <p
               className={`text-base sm:text-lg ${
-                state.darkMode
-                  ? "text-dark-text-secondary"
-                  : "text-light-text-secondary"
+                state.darkMode ? "text-gray-300" : "text-gray-600"
               } max-w-2xl mx-auto`}
             >
               Choose a roadmap that aligns with your career goals and start
