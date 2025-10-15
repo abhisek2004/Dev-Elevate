@@ -23,19 +23,33 @@ const QuizHistory: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchQuizAttempts = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+          console.error('Please log in to view quiz attempts');
+          setLoading(false);
+          return;
+        }
+
+        const response = await axiosInstance.get('/api/v1/quiz/attempts', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        setAttempts(response.data as QuizAttempt[]);
+      } catch (error) {
+        console.error('Error fetching quiz attempts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchQuizAttempts();
   }, []);
-
-  const fetchQuizAttempts = async () => {
-    try {
-      const response = await axiosInstance.get('/api/v1/quiz/attempts');
-      setAttempts(response.data.slice(0, 2));
-    } catch (error) {
-      console.error('Error fetching quiz attempts:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);

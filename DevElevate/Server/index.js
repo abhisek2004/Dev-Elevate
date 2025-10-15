@@ -29,6 +29,7 @@ import contactSupport from "./routes/contactSupport.js";
 import newsRoutes from "./routes/newsRoutes.js";
 import Faq from "./routes/faq.js";
 import systemSettings from "./routes/SystemSettingRoute.js";
+import seedRoutes from "./routes/seedRoutes.js";
 
 // sanitizeMiddleware
 
@@ -82,6 +83,7 @@ app.use("/api/v1/admin/courses", courseRoutes); // course create/delete/edit
 app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
 app.use("/api/v1/admin/quiz", quizRoutes); //quiz-related
 app.use("/api/v1/quiz", userQuizRoutes); // user quiz routes
+app.use("/api/v1/admin/seed", seedRoutes); // seed data routes
 app.use("/api/v1", aiRoutes);
 app.use('/api/v1/admin/analytics',analyticRoute)
 

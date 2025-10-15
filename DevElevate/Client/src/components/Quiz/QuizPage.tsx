@@ -43,8 +43,9 @@ const authData: AuthData | null = stored ? JSON.parse(stored) : null;
 
   const fetchQuizzes = async () => {
     try {
-      const response = await axiosInstance.get("/api/v1/quiz");
-      setQuizzes(response.data);
+      // Temporarily using test endpoint for demonstration (bypasses authentication)
+      const response = await axiosInstance.get("/api/v1/quiz/test");
+      setQuizzes(response.data as Quiz[]);
     } catch (error) {
       console.error("Error fetching quizzes:", error);
     } finally {

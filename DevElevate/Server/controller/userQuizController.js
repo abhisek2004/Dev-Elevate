@@ -25,6 +25,7 @@ export const getUserQuizzes = async (req, res) => {
 export const getQuizForAttempt = async (req, res) => {
   try {
     const { quizId } = req.params;
+    
     const quiz = await Quiz.findById(quizId).lean();
 
     if (!quiz) {
@@ -57,6 +58,7 @@ export const submitQuizAttempt = async (req, res) => {
     const userId = req.user.id;
 
     const quiz = await Quiz.findById(quizId);
+
     if (!quiz) {
       return res.status(404).json({ message: "Quiz not found" });
     }
@@ -67,6 +69,7 @@ export const submitQuizAttempt = async (req, res) => {
     // Calculate score for each answer
     for (const answer of answers) {
       const question = quiz.questions.id(answer.questionId);
+      
       if (!question) continue;
 
       let isCorrect = false;
