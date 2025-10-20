@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.8",
@@ -28,8 +28,9 @@
     "class-variance-authority": "^0.7.1",
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.1",
+    "embla-carousel-react": "^8.6.0",
     "express": "^5.1.0",
-    "firebase": "^12.0.0",
+    "firebase": "^12.4.0",
     "framer-motion": "^12.23.13",
     "jspdf": "^3.0.1",
     "lucide-react": "^0.344.0",
