@@ -3,6 +3,8 @@ import { useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaReddit, FaDiscord, FaLinkedin, FaArrowRight } from "react-icons/fa";
+import useEmblaCarousel from 'embla-carousel-react';
+import AutoPlay from 'embla-carousel-autoplay';
 
 const socials = [
   {
@@ -36,40 +38,16 @@ const socials = [
 
 const cardVariant = {
   hidden: { y: 15, opacity: 0 },
-  show: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-  },
+  show: { y: 0, opacity: 1 },
 };
 
 const iconVariant = {
   hover: {
     scale: 1.2,
     rotate: [0, 15, -15, 0],
-    transition: { duration: 0.6 },
   },
   float: {
     y: [0, -5, 0],
-    transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-  },
-};
-
-const cardHoverVariant = {
-  rest: {
-    scale: 1,
-    boxShadow:
-      "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-  },
-  hover: {
-    scale: 1.03,
-    y: -5,
-    boxShadow:
-      "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-    transition: {
-      duration: 0.3,
-      ease: "easeOut",
-    },
   },
 };
 
@@ -79,19 +57,6 @@ const buttonHoverVariant = {
   },
   hover: {
     width: "100%",
-    transition: {
-      duration: 0.3,
-      ease: "easeOut",
-    },
-  },
-};
-
-const carouselItemVariant = {
-  hidden: { opacity: 0, x: 20 },
-  show: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
   },
 };
 
@@ -139,30 +104,19 @@ const CommunityAndCTA = () => {
     { name: "Disney", logo: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Disney_Logo.svg" },
   ];
 
+  // Embla Carousel setup with AutoPlay
+  const [emblaRef] = useEmblaCarousel(
+    { 
+      loop: true, 
+      dragFree: true,
+      align: 'start',
+      slidesToScroll: 1,
+    },
+    [AutoPlay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true })]
+  );
+
   return (
     <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
-      <style>
-        {`
-          @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-          }
-          .carousel-container {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-          }
-          .carousel-track {
-            display: flex;
-            animation: scroll 60s linear infinite;
-            width: calc(200% + 1rem); /* Double the width for seamless looping */
-          }
-          .carousel-track:hover {
-            animation-play-state: paused; /* Pause on hover */
-          }
-        `}
-      </style>
-
       {/* Floating shapes */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div className="absolute w-40 h-40 bg-blue-500 rounded-full opacity-20 blur-3xl animate-blob top-10 left-10"></div>
@@ -173,18 +127,20 @@ const CommunityAndCTA = () => {
       <div className="relative z-10 max-w-6xl px-4 mx-auto text-center">
         {/* Heading */}
         <motion.h2
-          variants={cardVariant}
-          initial="hidden"
-          animate="show"
-          className="mb-8 text-4xl font-extrabold text-gray-100 sm:text-5xl"
-        >
-          <span className="block mb-2">Connect, collaborate, and</span>
-          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-400">
-            grow with DevElevate.
-          </span>
-        </motion.h2>
+  variants={cardVariant}
+  initial="hidden"
+  animate="show"
+  transition={{ duration: 0.5, ease: "easeOut" }}
+  className="mb-8 text-4xl font-extrabold text-gray-100 sm:text-5xl px-2"
+>
+  <span className="block mb-2">Connect, collaborate, and</span>
+  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-400 leading-loose">
+  grow with DevElevate.
+</span>
+</motion.h2>
         <motion.p
           variants={cardVariant}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="max-w-2xl mx-auto mb-12 text-lg text-gray-400"
         >
           Join our community of developers, share best practices, and get
@@ -197,6 +153,7 @@ const CommunityAndCTA = () => {
             <motion.div
               key={idx}
               variants={cardVariant}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               whileHover="hover"
               className="w-80"
             >
@@ -217,6 +174,7 @@ const CommunityAndCTA = () => {
                       variants={iconVariant}
                       animate="float"
                       whileHover="hover"
+                      transition={{ duration: 0.6 }}
                     >
                       {social.icon}
                     </motion.div>
@@ -231,6 +189,7 @@ const CommunityAndCTA = () => {
                   <motion.div
                     className="flex items-center"
                     variants={buttonHoverVariant}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                   >
                     <span
                       className={`text-sm font-medium text-white px-4 py-2 rounded-lg bg-gradient-to-r ${social.gradient} flex items-center justify-center`}
@@ -255,61 +214,33 @@ const CommunityAndCTA = () => {
           ))}
         </div>
 
-        {/* Partner Carousel */}
+        {/* Partner Carousel with Embla */}
         <motion.div
           className="mb-16"
           variants={cardVariant}
           initial="hidden"
           animate="show"
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <h3 className="mb-6 text-2xl font-bold text-white">🌐 Global Industry Leaders</h3>
-          <div className="carousel-container" data-slot="carousel-content">
-            <div className="flex gap-4 -ml-4 carousel-track">
-              {partners.map((partner, idx) => (
-                <motion.div
+          <h3 className="mb-8 text-3xl font-bold text-white">🌐 Global Industry Leaders</h3>
+          
+          {/* Embla Carousel */}
+          <div className="overflow-hidden py-6" ref={emblaRef}>
+            <div className="flex gap-16">
+              {[...partners, ...partners, ...partners].map((partner, idx) => (
+                <div
                   key={idx}
-                  role="group"
-                  aria-roledescription="slide"
-                  data-slot="carousel-item"
-                  className="min-w-0 pl-4 shrink-0 grow-0 basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6"
-                  aria-label={`Partner: ${partner.name}`}
-                  variants={carouselItemVariant}
+                  className="flex-[0_0_250px] min-w-0 flex items-center justify-center"
                 >
-                  <div className="flex items-center justify-center p-2 border rounded-lg bg-white/10 border-gray-700/50 backdrop-blur-sm">
-  <img
-    src={partner.logo}
-    alt={`${partner.name} logo`}
-    className="object-contain max-h-12 max-w-full"
-    onError={(e) => {
-      e.target.src = "https://via.placeholder.com/100x40?text=Logo";
-    }}
-  />
-</div>
-
-                </motion.div>
-              ))}
-              {/* Duplicate items for seamless looping */}
-              {partners.map((partner, idx) => (
-                <motion.div
-                  key={`duplicate-${idx}`}
-                  role="group"
-                  aria-roledescription="slide"
-                  data-slot="carousel-item"
-                  className="min-w-0 pl-4 shrink-0 grow-0 basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6"
-                  aria-label={`Partner: ${partner.name}`}
-                  variants={carouselItemVariant}
-                >
-                  <div className="inline-flex items-center justify-center border-[0.5px] rounded-md bg-white/10 border-gray-700/50 backdrop-blur-sm">
-                    <img
-                      src={partner.logo}
-                      alt={`${partner.name} logo`}
-                      className="object-contain w-auto h-10"
-                      onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/100x40?text=Logo";
-                      }}
-                    />
-                  </div>
-                </motion.div>
+                  <img
+                    src={partner.logo}
+                    alt={`${partner.name} logo`}
+                    className="h-24 w-auto max-w-[220px] object-contain opacity-80 hover:opacity-100 transition-opacity duration-300 filter brightness-0 invert"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "https://via.placeholder.com/150x60?text=Logo";
+                    }}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -320,7 +251,7 @@ const CommunityAndCTA = () => {
           className="max-w-5xl p-8 mx-4 text-center bg-gradient-to-r rounded-2xl backdrop-blur-sm from-indigo-900/30 to-blue-900/30 sm:p-12 sm:mx-auto"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
         >
           <h3 className="mb-4 text-2xl font-bold text-white sm:text-3xl">
             Ready to transform your tech career?

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote, X as FiX } from 'lucide-react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
@@ -69,15 +69,16 @@ const Testimonials = () => {
     },
   ];
 
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : false;
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     // Simulate form submission
@@ -257,7 +258,10 @@ const Testimonials = () => {
               </div>
               <div className="relative z-10 w-full h-full">
                 <button
+                  type="button"
                   onClick={closeModal}
+                  aria-label="Close modal"
+                  title="Close modal"
                   className="absolute z-20 p-2 transition-colors rounded-full top-4 right-4 hover:bg-gray-800/80 backdrop-blur-sm"
                 >
                   <FiX size={20} className="text-gray-200" />
