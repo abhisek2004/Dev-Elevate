@@ -177,7 +177,7 @@ const TechStackAndStats: React.FC = () => {
   ];
 
   // Duplicate for infinite effect
-  const extendedTechnologies = [...technologies, ...technologies];
+  //const extendedTechnologies = [...technologies, ...technologies];
 
   return (
     <section id="learning" className="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
@@ -205,14 +205,14 @@ const TechStackAndStats: React.FC = () => {
           <div className="flex gap-8">
             <motion.div
               className="flex gap-8"
-              animate={{ x: [0, -2400] }}
+              animate={{ x: -1200 }}
               transition={{
                 duration: 25,
                 repeat: Infinity,
                 ease: "linear",
               }}
             >
-              {extendedTechnologies.map((tech, i) => (
+              {technologies.concat(technologies).map((tech, i) => (
                 <motion.div
                   key={i}
                   className="flex flex-col items-center justify-center gap-4 flex-shrink-0"
