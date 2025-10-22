@@ -310,6 +310,10 @@ const LoginRegister: React.FC = () => {
                         key={index}
                         type="text"
                         maxLength={1}
+                        aria-label={`OTP digit ${index + 1}`}
+                        title={`OTP digit ${index + 1}`}
+                        placeholder="-"
+                        inputMode="numeric"
                         value={digit}
                         onChange={(e) => handleOtpChange(e.target.value, index)}
                         onKeyDown={(e) => handleOtpKeyDown(e, index)}

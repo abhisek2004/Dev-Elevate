@@ -29,9 +29,7 @@ import contactSupport from "./routes/contactSupport.js";
 import newsRoutes from "./routes/newsRoutes.js";
 import Faq from "./routes/faq.js";
 import systemSettings from "./routes/SystemSettingRoute.js";
-
-// sanitizeMiddleware
-
+import videoProgressRoutes from "./routes/videoProgressRoutes.js";
 import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
 import analyticRoute from "./routes/analytics.js";
 
@@ -49,7 +47,7 @@ if (process.env.MONGO_URI) {
 }
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(
@@ -73,25 +71,29 @@ app.use("/api/v1/notifications", notificationRoutes);
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", contactSupport)
 app.use("/api/v1", Faq);
+app.use("/api/v1", newsRoutes);
 app.use("/api/v1/community", communityRoutes);
-app.use("/api/v1/ats", atsRoutes); // ATS resume scanner functionality
+app.use("/api/v1/ats", atsRoutes);
+
+// ✅ Video Progress & Saved Videos (ONLY ONCE!)
+app.use("/api/v1/video", videoProgressRoutes);
 
 // ADMIN ROUTES
-app.use("/api/v1/admin", adminRoutes); // general admin stuff like login, profile
-app.use("/api/v1/admin/courses", courseRoutes); // course create/delete/edit
-app.use("/api/v1/admin/feedback", adminFeedbackRoutes); // feedback-related
-app.use("/api/v1/admin/quiz", quizRoutes); //quiz-related
-app.use("/api/v1/quiz", userQuizRoutes); // user quiz routes
+app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/admin/courses", courseRoutes);
+app.use("/api/v1/admin/feedback", adminFeedbackRoutes);
+app.use("/api/v1/admin/quiz", quizRoutes);
+app.use("/api/v1/quiz", userQuizRoutes);
 app.use("/api/v1", aiRoutes);
 app.use('/api/v1/admin/analytics',analyticRoute)
 
 app.use('/api/v1/admin',systemSettings)
 
 // Learning Routes
-app.use("/api/v1/learning/java", javaRoutes); // Java learning content
-app.use("/api/v1/learning/aiml", aimlRoutes); // AI/ML learning content
-app.use("/api/v1/learning/mern", mernRoutes); // MERN stack learning content
-app.use("/api/v1/learning/dsa", dsaRoutes); // DSA learning content
+app.use("/api/v1/learning/java", javaRoutes);
+app.use("/api/v1/learning/aiml", aimlRoutes);
+app.use("/api/v1/learning/mern", mernRoutes);
+app.use("/api/v1/learning/dsa", dsaRoutes);
 
 // Placement Routes
 app.use("/api/v1/placements", placementRoutes);
@@ -120,7 +122,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-// 404 handler
+// 404 handler - MUST BE LAST!
 app.use((req, res) => {
     res.status(404).json({
         success: false,
@@ -128,8 +130,13 @@ app.use((req, res) => {
     });
 });
 
-// Use news routes
-app.use("/api/v1", newsRoutes);
+// 🐛 DEBUG: Check if routes are registered
+console.log("✅ Video Progress Routes Registered!");
+videoProgressRoutes.stack.forEach((r) => {
+  if (r.route) {
+    console.log(`   ${Object.keys(r.route.methods)[0].toUpperCase()} /api/v1/video${r.route.path}`);
+  }
+});
 
 // Create HTTP server from Express app
 const server = http.createServer(app);

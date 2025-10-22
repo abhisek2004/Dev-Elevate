@@ -84,7 +84,7 @@ const FocusMode: React.FC = () => {
   const playTickSound = () => {
     try {
       // Create a more pleasant tick sound using Web Audio API
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
       
@@ -102,7 +102,7 @@ const FocusMode: React.FC = () => {
       oscillator.stop(audioContext.currentTime + 0.5);
     } catch (error) {
       // Fallback to simple beep if Web Audio API fails
-      console.log('Web Audio API not supported, using fallback sound');
+      console.log('Web Audio API not supported, using fallback sound', error);
       const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT');
       audio.play().catch(() => {
         // Silent fallback if audio fails
@@ -223,12 +223,36 @@ const FocusMode: React.FC = () => {
       </div>
       <div className="flex justify-center mb-4 space-x-2">
         {!isRunning ? (
-          <Button variant="default" onClick={handleStart}>Start</Button>
+          <Button 
+            variant="default" 
+            onClick={handleStart}
+            className="text-white dark:text-white"
+          >
+            Start
+          </Button>
         ) : (
-          <Button variant="secondary" onClick={handlePause}>Pause</Button>
+          <Button 
+            variant="secondary" 
+            onClick={handlePause}
+            className="text-gray-900 dark:text-white"
+          >
+            Pause
+          </Button>
         )}
-        <Button variant="outline" onClick={handleReset}>Reset</Button>
-        <Button variant="ghost" onClick={() => setShowSettings(true)}>Settings</Button>
+        <Button 
+          variant="outline" 
+          onClick={handleReset}
+          className="text-gray-900 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
+        >
+          Reset
+        </Button>
+        <Button 
+          variant="ghost" 
+          onClick={() => setShowSettings(true)}
+          className="text-gray-900 dark:text-white dark:hover:bg-gray-700"
+        >
+          Settings
+        </Button>
       </div>
       <Modal isOpen={showSettings} onClose={() => setShowSettings(false)} title="Focus Mode Settings">
         <div className="space-y-6">
@@ -359,13 +383,15 @@ const DailyGoals: React.FC = () => {
         
         if (response.ok) {
           const data = await response.json();
-          dispatch({ 
-            type: 'SET_USER', 
-            payload: {
-              ...state.user,
-              streak: data.currentStreak
-            }
-          });
+          if (state.user) {
+            dispatch({ 
+              type: 'SET_USER', 
+              payload: {
+                ...state.user,
+                streak: data.currentStreak
+              }
+            });
+          }
         }
       } catch (error) {
         console.error('Error updating streak:', error);
@@ -409,6 +435,8 @@ const DailyGoals: React.FC = () => {
               <button
                 onClick={addGoal}
                 className="flex justify-center items-center px-4 py-2 text-white bg-green-600 rounded-lg transition-all duration-200 hover:bg-green-700"
+                aria-label="Add goal"
+                title="Add goal"
               >
                 <Check className="w-5 h-5" />
               </button>
@@ -432,6 +460,8 @@ const DailyGoals: React.FC = () => {
                 <button
                   onClick={() => toggleGoal(goal)}
                   className="flex justify-center items-center w-6 h-6 rounded-full border-2 border-green-500 transition-all duration-200 hover:bg-green-500 group"
+                  aria-label="Toggle goal completion"
+                  title="Toggle goal completion"
                 >
                   <Check className="w-3 h-3 text-transparent transition-colors group-hover:text-white" />
                 </button>

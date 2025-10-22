@@ -39,7 +39,7 @@ useEffect(() => {
       });
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && state.user) {
         // Update global state with streak data
         dispatch({ 
           type: 'SET_USER', 
