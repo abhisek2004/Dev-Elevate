@@ -7,10 +7,15 @@ let io;
 export const initSocketIO = (server) => {
   io = new Server(server, {
     cors: {
-      origin: process.env.CLIENT_URL || "http://localhost:5173",
+      // ✅ FIXED: Use FRONTEND_URL to match your server.js CORS config
+      origin: process.env.FRONTEND_URL || "http://localhost:5173",
       methods: ["GET", "POST"],
       credentials: true,
     },
+    // ✅ ADD: Socket.IO path configuration
+    path: "/socket.io/",
+    // ✅ ADD: Transports configuration for better compatibility
+    transports: ["websocket", "polling"],
   });
 
   // Socket authentication middleware
@@ -48,13 +53,13 @@ export const initSocketIO = (server) => {
   });
 
   io.on("connection", (socket) => {
-    // console.log("New client connected:", socket.id);
+    console.log("✅ New client connected:", socket.id);
 
     // Join contest room for real-time updates
     socket.on("join-contest", (contestId) => {
       const roomName = `contest-${contestId}`;
       socket.join(roomName);
-      // console.log(`User joined contest room: ${roomName}`);
+      console.log(`User joined contest room: ${roomName}`);
 
       // Emit join event to room for connected users count
       io.to(roomName).emit("user-joined", {
@@ -66,7 +71,7 @@ export const initSocketIO = (server) => {
     socket.on("leave-contest", (contestId) => {
       const roomName = `contest-${contestId}`;
       socket.leave(roomName);
-      // console.log(`User left contest room: ${roomName}`);
+      console.log(`User left contest room: ${roomName}`);
 
       // Emit leave event to room for connected users count
       io.to(roomName).emit("user-left", {
@@ -82,10 +87,11 @@ export const initSocketIO = (server) => {
     });
 
     socket.on("disconnect", () => {
-      // console.log("Client disconnected:", socket.id);
+      console.log("❌ Client disconnected:", socket.id);
     });
   });
 
+  console.log("✅ Socket.IO initialized successfully!");
   return io;
 };
 

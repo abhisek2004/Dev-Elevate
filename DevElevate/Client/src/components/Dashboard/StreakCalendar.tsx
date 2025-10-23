@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Flame, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Flame, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
-import { useAuth } from '../../contexts/AuthContext';
 
 const StreakCalendar: React.FC = () => {
   const { state: globalState, dispatch } = useGlobalState();
-  const { state: authState } = useAuth();
   const [viewDate, setViewDate] = useState(() => {
     const date = new Date();
     return new Date(date.getFullYear(), date.getMonth(), 1);
@@ -14,7 +12,7 @@ const StreakCalendar: React.FC = () => {
   useEffect(() => {
     // Mark today as completed if user has any activity
     const today = new Date().toISOString().split('T')[0];
-    if (globalState.user?.streak > 0 && !globalState.streakData[today]) {
+    if ((globalState.user?.streak ?? 0) > 0 && !globalState.streakData?.[today]) {
       dispatch({ 
         type: 'UPDATE_STREAK', 
         payload: { date: today, completed: true } 
@@ -96,13 +94,13 @@ const StreakCalendar: React.FC = () => {
       {/* Month + Year Navigation */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
-          <button onClick={() => changeMonth(-1)} className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+          <button type="button" onClick={() => changeMonth(-1)} className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Previous month" title="Previous month">
             <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-gray-300" />
           </button>
           <span className={`text-lg font-medium ${globalState.darkMode ? 'text-white' : 'text-gray-800'}`}>
             {monthName}
           </span>
-          <button onClick={() => changeMonth(1)} className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+          <button type="button" onClick={() => changeMonth(1)} className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Next month" title="Next month">
             <ChevronRight className="w-5 h-5 text-gray-600 dark:text-gray-300" />
           </button>
         </div>
@@ -111,6 +109,8 @@ const StreakCalendar: React.FC = () => {
           className={`text-sm px-2 py-1 border rounded-md focus:outline-none ${globalState.darkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-gray-800 border-gray-300'}`}
           value={year}
           onChange={(e) => changeYear(Number(e.target.value))}
+          aria-label="Select year"
+          title="Select year"
         >
           {yearOptions.map((y) => (
             <option key={y} value={y}>

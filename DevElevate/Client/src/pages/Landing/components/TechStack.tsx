@@ -147,14 +147,15 @@ const TechStackAndStats: React.FC = () => {
   // calculate language string
   let languageString = "N/A";
   if (Object.keys(stats.languages).length > 0) {
-    const total = Object.values(stats.languages).reduce((a, b) => a + (b as number), 0);
-    const sorted = Object.entries(stats.languages).sort(
-      (a, b) => (b[1] as number) - (a[1] as number)
+    const languageValues = Object.values(stats.languages) as number[];
+    const total = languageValues.reduce((sum, bytes) => sum + bytes, 0);
+    const sorted = (Object.entries(stats.languages) as [string, number][]).sort(
+      (a, b) => b[1] - a[1]
     );
     let other = 0;
     const mainLangs: string[] = [];
     for (const [lang, bytes] of sorted) {
-      const perc = ((bytes as number) / total) * 100;
+      const perc = (bytes / total) * 100;
       if (perc < 1) other += perc;
       else mainLangs.push(`${lang} ${perc.toFixed(1)}%`);
     }
@@ -174,6 +175,9 @@ const TechStackAndStats: React.FC = () => {
     { label: "Code Size", value: `${(stats.size / 1024).toFixed(1)} MB`, icon: <Code2 className="text-green-500" size={40} />, link: `https://github.com/${GITHUB_USER}/${GITHUB_REPO}` },
     { label: "Languages", value: languageString, icon: <Languages className="text-amber-600" size={40} />, link: `https://github.com/${GITHUB_USER}/${GITHUB_REPO}` },
   ];
+
+  // Duplicate for infinite effect
+  //const extendedTechnologies = [...technologies, ...technologies];
 
   return (
     <section id="learning" className="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
@@ -196,22 +200,40 @@ const TechStackAndStats: React.FC = () => {
           </p>
         </div>
 
-        {/* Technologies */}
-        <div className="flex flex-wrap justify-center gap-8 mb-20">
-          {technologies.map((tech, i) => (
+        {/* Auto-moving Carousel */}
+        <div className="mb-20 relative overflow-hidden">
+          <div className="flex gap-8">
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="flex flex-col items-center p-6 space-y-4 transition-all duration-300 border rounded-xl backdrop-blur-sm bg-white/10 border-gray-700/50 hover:border-indigo-500/50 hover:scale-110"
+              className="flex gap-8"
+              animate={{ x: -1200 }}
+              transition={{
+                duration: 25,
+                repeat: Infinity,
+                ease: "linear",
+              }}
             >
-              <div className="flex items-center justify-center w-16 h-16">
-                <img src={tech.logo} alt={tech.name} className="object-contain w-full h-full" />
-              </div>
-              <span className="text-sm font-medium text-gray-300">{tech.name}</span>
+              {technologies.concat(technologies).map((tech, i) => (
+                <motion.div
+                  key={i}
+                  className="flex flex-col items-center justify-center gap-4 flex-shrink-0"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  <div className="flex items-center justify-center w-24 h-24 transition-all hover:drop-shadow-[0_0_20px_rgba(99,102,241,0.6)]">
+                    <img 
+                      src={tech.logo} 
+                      alt={tech.name} 
+                      className="object-contain w-full h-full" 
+                    />
+                  </div>
+                  <span className="text-sm font-medium text-gray-300 text-center whitespace-nowrap">{tech.name}</span>
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
+          </div>
+
+          {/* Gradient overlay for seamless effect */}
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-gray-900 to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-gray-900 to-transparent pointer-events-none" />
         </div>
 
         {/* Learning Paths */}
@@ -297,8 +319,8 @@ const TechStackAndStats: React.FC = () => {
               ?
             </h2>
             <p className="max-w-3xl mx-auto mb-8 text-lg leading-relaxed text-gray-300 md:text-xl">
-              <span className="font-semibold text-blue-400">DevElevate</span> isn’t just another coding
-              platform — it’s your <span className="font-semibold text-pink-400">developer journey</span>{" "}
+              <span className="font-semibold text-blue-400">DevElevate</span> isn't just another coding
+              platform — it's your <span className="font-semibold text-pink-400">developer journey</span>{" "}
               companion.
               <br />
               <br />
@@ -325,7 +347,7 @@ const TechStackAndStats: React.FC = () => {
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-3 px-10 py-4 font-semibold text-white transition-all duration-300 rounded-2xl bg-gradient-to-r from-blue-600 to-pink-600 hover:from-blue-700 hover:to-pink-700"
             >
-              💬 Join the Community
+              Join the Community
             </motion.a>
           </motion.div>
         </div>

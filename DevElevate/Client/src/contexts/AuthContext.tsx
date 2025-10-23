@@ -384,6 +384,37 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       dispatch({ type: "REGISTER_FAILURE", payload: errorMessage });
     }
   };
+  const changePassword = async (
+    currentPassword: string,
+    newPassword: string
+  ) => {
+    if (!state.user) return;
+
+    try {
+      const response = await fetch(`${baseUrl}/api/v1/auth/change-password`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Password change failed");
+      }
+
+      dispatch({ type: "CHANGE_PASSWORD_SUCCESS" });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Password change failed";
+      console.error("Password change error:", errorMessage);
+      dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
+    }
+  };
+
   const logout = () => {
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("devElevateAuth");
@@ -473,6 +504,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         register,
         verifySignupOtp,
         logout,
+        changePassword,
         updateProfile,
         loadUsers,
         updateUser,
