@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, Star, BookmarkPlus, BookmarkCheck, Play, Filter, X, TrendingUp, Clock, Users } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
-// ✅ ADD: Import API functions
 import {
     updateVideoProgress,
-    getVideoProgress,
     getContinueLearning,
     saveVideo,
     unsaveVideo,
     getSavedVideos,
+    getYouTubeCourses,
 } from '../../services/videoProgressService';
 
 interface VideoData {
@@ -26,8 +25,27 @@ interface VideoData {
     progress?: number;
     courseId?: string; // ✅ ADD: For API integration
 }
+interface VideoProgressData {
+    progressPercentage: number;
+    currentTime: number;
+    duration: number;
+}
+declare global {
+    interface Window {
+        YT: {
+            Player: new (elementId: string, config: Record<string, unknown>) => YTPlayer;
+        };
+        onYouTubeIframeAPIReady: () => void;
+    }
+}
 
-const fetchCourses = async (): Promise<VideoData[] | null> => {
+interface YTPlayer {
+    seekTo(seconds: number, allowSeekAhead: boolean): void;
+    getCurrentTime(): number;
+    getDuration(): number;
+    destroy(): void;
+}
+/*const fetchCourses = async (): Promise<VideoData[] | null> => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const hasData = Math.random() > 0.1;
@@ -129,95 +147,156 @@ const fetchCourses = async (): Promise<VideoData[] | null> => {
             }
         }, 1000);
     });
-};
+};*/
+const formatTime = (minutes: number): string => {
+    const hrs = Math.floor(minutes / 60);
+    const mins = Math.floor(minutes % 60);
 
+    if (hrs > 0) {
+        return `${hrs}h ${mins}m`;
+    }
+    return `${mins}m`;
+};
 const UserVideoPage: React.FC = () => {
     const { state } = useGlobalState();
     const darkMode = state.darkMode;
     const [courses, setCourses] = useState<VideoData[] | null>(null);
     const [selectedCourse, setSelectedCourse] = useState<VideoData | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(''); // NEW
     const [loading, setLoading] = useState(true);
+    const [searching, setSearching] = useState(false); // NEW
+    const [error, setError] = useState<string | null>(null); // NEW
     const [bookmarkedCourses, setBookmarkedCourses] = useState<Set<string>>(new Set());
     const [selectedCategory, setSelectedCategory] = useState<string>('All');
     const [sortBy, setSortBy] = useState<string>('popular');
     const [showFilters, setShowFilters] = useState(false);
 
     // ✅ ADD: New state for API integration
-    const [videoProgress, setVideoProgress] = useState<Record<string, number>>({});
+    const [videoProgress, setVideoProgress] = useState<Record<string, VideoProgressData>>({});
+    const [progressLoading, setProgressLoading] = useState<boolean>(false);
+    const playerRef = useRef<YTPlayer | null>(null);
     const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
-    const videoStartTimeRef = useRef<number>(0);
+    const hasStartedFromSavedTime = useRef(false);
+    // ✅ IMPROVED: Debounce search term
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm);
+        }, 500); // Wait 500ms after user stops typing
 
+        return () => clearTimeout(timer);
+    }, [searchTerm]);
     // ✅ ADD: Load courses with saved videos and progress data
+    // ✅ UPDATE: Load courses from YouTube API
+    // ✅ IMPROVED: Load courses with better error handling
     useEffect(() => {
         const loadCourses = async () => {
-            setLoading(true);
+            // Show searching state only if there's a search term
+            if (debouncedSearchTerm) {
+                setSearching(true);
+            } else {
+                setLoading(true);
+            }
+
+            setError(null);
+
             try {
-                // Fetch courses
-                const data = await fetchCourses();
-                
+                console.log('🔍 Loading courses with:', {
+                    search: debouncedSearchTerm || 'default',
+                    category: selectedCategory
+                });
+
+                // ✅ Fetch real YouTube courses
+                const youtubeResponse = await getYouTubeCourses(
+                    debouncedSearchTerm || undefined,
+                    selectedCategory !== 'All' ? selectedCategory : undefined,
+                    12
+                );
+
+                console.log('📦 YouTube API Response:', youtubeResponse);
+
+                let coursesData: VideoData[] | null = null;
+
+                if (youtubeResponse.success && youtubeResponse.data) {
+                    coursesData = youtubeResponse.data;
+                    console.log('✅ Loaded', coursesData.length, 'courses');
+                } else {
+                    console.warn('⚠️ No data in YouTube response');
+                }
+                // ✅ NEW: Show loading state for progress
+                setProgressLoading(true)
+
                 // Fetch saved videos from API
                 try {
                     const savedResponse = await getSavedVideos();
                     if (savedResponse.success && savedResponse.data) {
-                        const savedIds = new Set<string>(savedResponse.data.map((v: { videoId: string }) => v.videoId));
+                        const savedIds = new Set<string>(
+                            savedResponse.data.map((v: { videoId: string }) => v.videoId)
+                        );
                         setBookmarkedCourses(savedIds);
+                        console.log('📚 Loaded', savedIds.size, 'saved videos');
                     }
                 } catch (error) {
                     console.log("Could not load saved videos:", error);
                 }
 
-                // Fetch continue learning data (videos with progress)
+                // Fetch continue learning data
+                // ✅ IMPROVED: Fetch progress data properly
                 try {
                     const continueResponse = await getContinueLearning();
                     if (continueResponse.success && continueResponse.data) {
-                        const progressMap: Record<string, number> = {};
-                        continueResponse.data.forEach((item: { videoId: string; progressPercentage: number }) => {
-                            progressMap[item.videoId] = Math.round(item.progressPercentage);
+                        const progressMap: Record<string, VideoProgressData> = {};
+
+                        continueResponse.data.forEach((item: { videoId: string; progressPercentage: number; currentTime: number; duration: number }) => {
+                            progressMap[item.videoId] = {
+                                progressPercentage: Math.round(item.progressPercentage || 0),
+                                currentTime: item.currentTime || 0,
+                                duration: item.duration || 0
+                            };
                         });
+
                         setVideoProgress(progressMap);
+                        console.log('📊 Loaded progress for', Object.keys(progressMap).length, 'videos');
                     }
                 } catch (error) {
                     console.log("Could not load progress data:", error);
+                } finally {
+                    setProgressLoading(false);
                 }
 
                 // Merge progress into courses
-                if (data) {
-                    const coursesWithProgress = data.map(course => ({
+                if (coursesData && coursesData.length > 0) {
+                    const coursesWithProgress = coursesData.map((course) => ({
                         ...course,
-                        progress: videoProgress[course.videoId] || 0
+                        progress: videoProgress[course.videoId]?.progressPercentage || 0,
                     }));
                     setCourses(coursesWithProgress);
+                } else if (debouncedSearchTerm) {
+                    // If there's a search term but no results, set courses to empty array
+                    setCourses([]);
                 } else {
-                    setCourses(data);
+                    setCourses(null);
                 }
-                
-            } catch (error) {
-                console.error("Error loading courses:", error);
-                const data = await fetchCourses();
-                setCourses(data);
+            } catch (error: unknown) {
+                const errorMessage = error instanceof Error ? error.message : "Failed to load courses. Please try again.";
+                console.error("❌ Error loading courses:", error);
+                setError(errorMessage);
+                setCourses(null);
             } finally {
                 setLoading(false);
+                setSearching(false);
             }
         };
-        loadCourses();
-    }, []);
 
-    // ✅ ADD: Update courses when progress changes
-    useEffect(() => {
-        if (courses) {
-            const updatedCourses = courses.map(course => ({
-                ...course,
-                progress: videoProgress[course.videoId] || course.progress || 0
-            }));
-            setCourses(updatedCourses);
-        }
-    }, [videoProgress]);
+        loadCourses();
+    }, [debouncedSearchTerm, selectedCategory]); // Changed from searchTerm to debouncedSearchTerm
+
+
 
     // ✅ MODIFIED: Toggle bookmark with API integration
     const toggleBookmark = async (videoId: string, course?: VideoData) => {
         const isCurrentlyBookmarked = bookmarkedCourses.has(videoId);
-        
+
         try {
             if (isCurrentlyBookmarked) {
                 // Unsave from API
@@ -254,44 +333,23 @@ const UserVideoPage: React.FC = () => {
         }
     };
 
-    // ✅ ADD: Start tracking video progress
-    const startProgressTracking = (videoId: string, courseId: string) => {
-        // Clear any existing interval
+    const startProgressTracking = () => {
         if (progressIntervalRef.current) {
             clearInterval(progressIntervalRef.current);
         }
 
-        videoStartTimeRef.current = Date.now();
+        progressIntervalRef.current = setInterval(() => {
+            if (playerRef.current && selectedCourse) {
+                const currentTime = playerRef.current.getCurrentTime();
+                const duration = playerRef.current.getDuration();
 
-        // Update progress every 10 seconds
-        progressIntervalRef.current = setInterval(async () => {
-            try {
-                // Calculate elapsed time (simulated progress)
-                const elapsedSeconds = (Date.now() - videoStartTimeRef.current) / 1000;
-                const videoDuration = 3600; // Placeholder: 1 hour (you can parse from course.duration)
-                
-                await updateVideoProgress(
-                    videoId,
-                    courseId,
-                    elapsedSeconds,
-                    videoDuration
-                );
-
-                // Update local progress state
-                const response = await getVideoProgress(videoId);
-                if (response.success && response.data) {
-                    setVideoProgress(prev => ({
-                        ...prev,
-                        [videoId]: Math.round(response.data!.progressPercentage)
-                    }));
+                if (currentTime && duration) {
+                    saveCurrentProgress(currentTime, duration);
                 }
-            } catch (error) {
-                console.error("Failed to update progress:", error);
             }
-        }, 10000); // Every 10 seconds
+        }, 10000);
     };
 
-    // ✅ ADD: Stop tracking progress
     const stopProgressTracking = () => {
         if (progressIntervalRef.current) {
             clearInterval(progressIntervalRef.current);
@@ -299,21 +357,121 @@ const UserVideoPage: React.FC = () => {
         }
     };
 
-    // ✅ ADD: Cleanup on unmount
+    const saveCurrentProgress = async (currentTime: number, duration: number) => {
+        if (!selectedCourse) return;
+
+        try {
+            const progressPercentage = (currentTime / duration) * 100;
+
+            await updateVideoProgress(
+                selectedCourse.videoId,
+                selectedCourse.courseId || 'unknown',
+                currentTime,
+                duration
+            );
+
+            setVideoProgress(prev => ({
+                ...prev,
+                [selectedCourse.videoId]: {
+                    progressPercentage: Math.round(progressPercentage),
+                    currentTime,
+                    duration
+                }
+            }));
+
+            console.log('💾 Progress saved:', Math.round(progressPercentage) + '%');
+        } catch (error) {
+            console.error("Failed to save progress:", error);
+        }
+    };
+
     useEffect(() => {
-        return () => stopProgressTracking();
+        if (!selectedCourse) return;
+
+        if (!window.YT) {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+        }
+
+        const initializePlayer = () => {
+            if (!selectedCourse) return;
+
+            const savedProgress = videoProgress[selectedCourse.videoId];
+            const startTime = savedProgress?.currentTime || 0;
+
+            console.log('🎬 Initializing player at', startTime, 'seconds');
+
+            playerRef.current = new window.YT.Player('youtube-player', {
+                videoId: selectedCourse.videoId,
+                playerVars: {
+                    autoplay: 1,
+                    start: Math.floor(startTime),
+                    rel: 0,
+                    modestbranding: 1
+                },
+                events: {
+                    onReady: () => {
+                        console.log('✅ Player ready');
+                        hasStartedFromSavedTime.current = false;
+                    },
+                    onStateChange: (event: { data: number; target: YTPlayer }) => {
+                        const playerState = event.data;
+
+                        if (playerState === 1) {
+                            console.log('▶️ Video playing');
+                            startProgressTracking();
+
+                            if (!hasStartedFromSavedTime.current && selectedCourse) {
+                                const savedProgress = videoProgress[selectedCourse.videoId];
+                                if (savedProgress && savedProgress.currentTime > 0) {
+                                    console.log('⏩ Seeking to saved position:', savedProgress.currentTime);
+                                    event.target.seekTo(savedProgress.currentTime, true);
+                                    hasStartedFromSavedTime.current = true;
+                                }
+                            }
+                        } else if (playerState === 2 || playerState === 0) {
+                            console.log('⏸️ Video paused/ended');
+                            stopProgressTracking();
+
+                            if (selectedCourse && playerRef.current) {
+                                const currentTime = playerRef.current.getCurrentTime();
+                                const duration = playerRef.current.getDuration();
+                                saveCurrentProgress(currentTime, duration);
+                            }
+                        }
+                    }
+                }
+            });
+        };
+
+        window.onYouTubeIframeAPIReady = () => {
+            initializePlayer();
+        };
+
+        if (window.YT && window.YT.Player) {
+            initializePlayer();
+        }
+
+        return () => {
+            if (playerRef.current) {
+                playerRef.current.destroy();
+                playerRef.current = null;
+            }
+            stopProgressTracking();
+        };
+    }, [selectedCourse, videoProgress]);
+
+    useEffect(() => {
+        return () => {
+            stopProgressTracking();
+            if (playerRef.current) {
+                playerRef.current.destroy();
+            }
+        };
     }, []);
 
-    // ✅ ADD: Start/stop tracking when video selection changes
-    useEffect(() => {
-        if (selectedCourse) {
-            startProgressTracking(selectedCourse.videoId, selectedCourse.courseId || 'unknown');
-        } else {
-            stopProgressTracking();
-        }
-        
-        return () => stopProgressTracking();
-    }, [selectedCourse]);
 
     const categories = ['All', ...Array.from(new Set(courses?.map(c => c.category) || []))];
 
@@ -334,7 +492,8 @@ const UserVideoPage: React.FC = () => {
     const CourseCard = ({ course }: { course: VideoData }) => {
         const isBookmarked = bookmarkedCourses.has(course.videoId);
         // ✅ MODIFIED: Use videoProgress state instead of course.progress directly
-        const progress = videoProgress[course.videoId] || course.progress || 0;
+        const progress = videoProgress[course.videoId]?.progressPercentage || 0;
+        const isLoadingProgress = progressLoading && !videoProgress[course.videoId];
 
         return (
             <div className={`group relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${darkMode ? 'bg-[#374151]' : 'bg-white'
@@ -363,10 +522,15 @@ const UserVideoPage: React.FC = () => {
                         )}
                     </button>
                     {/* ✅ MODIFIED: Use progress variable */}
-                    {progress > 0 && (
+                    {/* ✅ NEW: Progress bar with loading state */}
+                    {isLoadingProgress ? (
+                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200/30">
+                            <div className="h-full bg-gray-400/50 animate-pulse" style={{ width: '50%' }} />
+                        </div>
+                    ) : progress > 0 && (
                         <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200/30">
                             <div
-                                className="h-full bg-gradient-to-r from-purple-500 to-blue-500"
+                                className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300"
                                 style={{ width: `${progress}%` }}
                             />
                         </div>
@@ -376,8 +540,8 @@ const UserVideoPage: React.FC = () => {
                 <div className="p-5">
                     <div className="flex items-center justify-between mb-3">
                         <span className={`px-3 py-1 text-xs font-semibold rounded-full ${darkMode
-                                ? 'text-purple-400 bg-purple-900/30'
-                                : 'text-purple-600 bg-purple-100'
+                            ? 'text-purple-400 bg-purple-900/30'
+                            : 'text-purple-600 bg-purple-100'
                             }`}>
                             {course.category}
                         </span>
@@ -422,14 +586,14 @@ const UserVideoPage: React.FC = () => {
                             className="w-full py-2.5 px-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2"
                         >
                             <Play className="w-4 h-4" />
-                            Continue Learning
+                            Continue Learning ({progress}%)
                         </button>
                     ) : (
                         <button
                             onClick={() => setSelectedCourse(course)}
                             className={`w-full py-2.5 px-4 text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-200 ${darkMode
-                                    ? 'bg-gray-700 hover:bg-gray-600'
-                                    : 'bg-gray-800 hover:bg-gray-900'
+                                ? 'bg-gray-900 hover:bg-gray-600'
+                                : 'bg-gray-800 hover:bg-gray-900'
                                 }`}
                         >
                             Start Course
@@ -440,19 +604,16 @@ const UserVideoPage: React.FC = () => {
         );
     };
 
-    const LoadingSkeleton = () => (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden animate-pulse">
-                    <div className="w-full h-48 bg-gray-300 dark:bg-gray-700" />
-                    <div className="p-5">
-                        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mb-3" />
-                        <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-full mb-2" />
-                        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-2/3 mb-4" />
-                        <div className="h-10 bg-gray-300 dark:bg-gray-700 rounded w-full" />
-                    </div>
+    const LoadingSkeleton = ({ message = "Loading courses..." }: { message?: string }) => (
+        <div className="space-y-4">
+            <div className="text-center py-4">
+                <div className="inline-flex items-center gap-3 px-6 py-3 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                    <div className="animate-spin w-5 h-5 border-3 border-purple-600 border-t-transparent rounded-full"></div>
+                    <span className="text-purple-700 dark:text-purple-300 font-medium">{message}</span>
                 </div>
-            ))}
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
         </div>
     );
 
@@ -549,14 +710,54 @@ const UserVideoPage: React.FC = () => {
                             )}
                         </div>
 
-                        {loading ? (
-                            <LoadingSkeleton />
-                        ) : courses ? (
+                        {loading || searching ? (
+                            <LoadingSkeleton message={searching ? `Searching for "${debouncedSearchTerm}"...` : "Loading courses..."} />
+                        ) : error ? (
+                            <div className="text-center py-16">
+                                <div className="w-24 h-24 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <X className="w-12 h-12 text-red-500 dark:text-red-400" />
+                                </div>
+                                <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Oops! Something went wrong
+                                </h3>
+                                <p className="text-gray-600 dark:text-gray-400 mb-4">
+                                    {error}
+                                </p>
+                                <button
+                                    onClick={() => {
+                                        setError(null);
+                                        setDebouncedSearchTerm('');
+                                        setSearchTerm('');
+                                    }}
+                                    className="px-6 py-3 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 transition-all duration-200"
+                                >
+                                    Try Again
+                                </button>
+                            </div>
+                        ) : courses && courses.length > 0 ? (
                             <>
                                 {filteredAndSortedCourses.length > 0 ? (
                                     <>
-                                        <div className={`mb-4 text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                                            Showing {filteredAndSortedCourses.length} {filteredAndSortedCourses.length === 1 ? 'course' : 'courses'}
+                                        <div className={`mb-4 flex items-center justify-between ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                                            <div className="text-sm">
+                                                Showing {filteredAndSortedCourses.length} {filteredAndSortedCourses.length === 1 ? 'course' : 'courses'}
+                                                {debouncedSearchTerm && (
+                                                    <span className="ml-2">
+                                                        for <span className="font-semibold text-purple-600 dark:text-purple-400">"{debouncedSearchTerm}"</span>
+                                                    </span>
+                                                )}
+                                            </div>
+                                            {debouncedSearchTerm && (
+                                                <button
+                                                    onClick={() => {
+                                                        setSearchTerm('');
+                                                        setDebouncedSearchTerm('');
+                                                    }}
+                                                    className="text-sm px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors"
+                                                >
+                                                    Clear search
+                                                </button>
+                                            )}
                                         </div>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                             {filteredAndSortedCourses.map((course) => (
@@ -572,9 +773,28 @@ const UserVideoPage: React.FC = () => {
                                         <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
                                             No courses found
                                         </h3>
-                                        <p className="text-gray-600 dark:text-gray-400">
-                                            Try adjusting your search or filters
+                                        <p className="text-gray-600 dark:text-gray-400 mb-4">
+                                            {debouncedSearchTerm ? (
+                                                <>
+                                                    No results for <span className="font-semibold">"{debouncedSearchTerm}"</span>
+                                                    <br />
+                                                    Try different keywords or check your spelling
+                                                </>
+                                            ) : (
+                                                "Try adjusting your filters"
+                                            )}
                                         </p>
+                                        {debouncedSearchTerm && (
+                                            <button
+                                                onClick={() => {
+                                                    setSearchTerm('');
+                                                    setDebouncedSearchTerm('');
+                                                }}
+                                                className="px-6 py-3 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 transition-all duration-200"
+                                            >
+                                                Clear Search
+                                            </button>
+                                        )}
                                     </div>
                                 )}
                             </>
@@ -586,17 +806,29 @@ const UserVideoPage: React.FC = () => {
                                 <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
                                     No courses available
                                 </h3>
-                                <p className="text-gray-600 dark:text-gray-400">
-                                    Please check back later or contact the admin.
+                                <p className="text-gray-600 dark:text-gray-400 mb-4">
+                                    Unable to load courses at this time
                                 </p>
+                                <button
+                                    onClick={() => window.location.reload()}
+                                    className="px-6 py-3 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 transition-all duration-200"
+                                >
+                                    Refresh Page
+                                </button>
                             </div>
                         )}
                     </>
                 ) : (
-                    <div className="space-y-6">
+                    <div className={`space-y-8 pt-6 px-4 ${darkMode ? '' : 'bg-white'}`}>
                         <button
-                            onClick={() => setSelectedCourse(null)}
-                            className="px-6 py-3 bg-gray-800 dark:bg-gray-700 text-white rounded-xl font-medium hover:bg-gray-900 dark:hover:bg-gray-600 transition-all duration-200 flex items-center gap-2"
+                            onClick={() => {
+                                setSelectedCourse(null);
+                                hasStartedFromSavedTime.current = false;
+                            }}
+                            className={`px-6  my-5 py-3 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 flex items-center gap-2 ${darkMode
+                                ? 'bg-gray-800 hover:bg-gray-900'
+                                : 'bg-blue-600 hover:bg-blue-700'
+                                }`}
                         >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -604,23 +836,33 @@ const UserVideoPage: React.FC = () => {
                             Back to Courses
                         </button>
 
-                        <div className="bg-white dark:bg-[#374151] rounded-2xl shadow-xl overflow-hidden">
-                            <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+                        <div className={`rounded-2xl shadow-xl overflow-hidden ${darkMode ? 'bg-[#374151]' : 'bg-white'
+                            }`}>
+                            <div className={`p-6 border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'
+                                }`}>
                                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-3">
-                                            <span className="px-3 py-1 text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/30 rounded-full">
+                                            <span className={`px-3 py-1 text-xs font-semibold rounded-full ${darkMode
+                                                ? 'text-purple-400 bg-purple-900/30'
+                                                : 'text-purple-600 bg-purple-100'
+                                                }`}>
                                                 {selectedCourse.category}
                                             </span>
                                             <div className="flex items-center gap-1">
                                                 <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                                <span className="text-sm font-semibold">{selectedCourse.rating}</span>
+                                                <span className={`text-sm font-semibold ${darkMode ? 'text-gray-300' : 'text-gray-700'
+                                                    }`}>
+                                                    {selectedCourse.rating}
+                                                </span>
                                             </div>
                                         </div>
-                                        <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+                                        <h2 className={`text-3xl font-bold mb-2 ${darkMode ? 'text-gray-100' : 'text-gray-800'
+                                            }`}>
                                             {selectedCourse.title}
                                         </h2>
-                                        <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+                                        <div className={`flex items-center gap-3 text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'
+                                            }`}>
                                             <div className="flex items-center gap-1">
                                                 <Clock className="w-4 h-4" />
                                                 <span>{selectedCourse.duration}</span>
@@ -634,7 +876,10 @@ const UserVideoPage: React.FC = () => {
                                     <div className="flex gap-3">
                                         <button
                                             onClick={() => toggleBookmark(selectedCourse.videoId, selectedCourse)}
-                                            className="px-5 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 flex items-center gap-2"
+                                            className={`px-5 py-3 rounded-xl font-medium transition-all duration-200 flex items-center gap-2 ${darkMode
+                                                ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
+                                                }`}
                                         >
                                             {bookmarkedCourses.has(selectedCourse.videoId) ? (
                                                 <>
@@ -666,70 +911,103 @@ const UserVideoPage: React.FC = () => {
                             <div className="grid md:grid-cols-3 gap-6 p-6">
                                 <div className="md:col-span-2 space-y-6">
                                     <div className="relative pb-[56.25%] h-0 rounded-xl overflow-hidden shadow-lg">
-                                        <iframe
+                                        {/*<iframe
                                             className="absolute top-0 left-0 w-full h-full"
                                             src={`https://www.youtube.com/embed/${selectedCourse.videoId}?enablejsapi=1`}
                                             title={selectedCourse.title}
                                             frameBorder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
-                                        ></iframe>
+                                        ></iframe>*/}
+                                        { /* Video Player Container - Update the background */}
+                                        <div className={`relative pb-[56.25%] h-0 rounded-xl overflow-hidden shadow-lg ${darkMode ? 'bg-black' : 'bg-gray-900 border-2 border-gray-300'
+                                            }`}>
+
+                                            <div
+                                                id="youtube-player"
+                                                className="absolute top-0 left-0 w-full h-full"
+                                            />
+                                        </div>
                                     </div>
 
                                     {/* ✅ MODIFIED: Use videoProgress state */}
-                                    {videoProgress[selectedCourse.videoId] && videoProgress[selectedCourse.videoId] > 0 && (
-                                        <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl border border-purple-200 dark:border-purple-800">
+                                    {/* Progress Section - Update styling */}
+                                    {videoProgress[selectedCourse.videoId] && videoProgress[selectedCourse.videoId].progressPercentage > 0 && (
+                                        <div className={`p-4 rounded-xl border ${darkMode
+                                            ? 'bg-purple-900/20 border-purple-800'
+                                            : 'bg-purple-50 border-purple-200'
+                                            }`}>
                                             <div className="flex items-center justify-between mb-2">
-                                                <span className="text-sm font-semibold text-purple-900 dark:text-purple-300">
+                                                <span className={`text-sm font-semibold ${darkMode ? 'text-purple-300' : 'text-purple-900'
+                                                    }`}>
                                                     Course Progress
                                                 </span>
-                                                <span className="text-sm font-bold text-purple-600 dark:text-purple-400">
-                                                    {videoProgress[selectedCourse.videoId]}%
+                                                <span className={`text-sm font-bold ${darkMode ? 'text-purple-400' : 'text-purple-600'
+                                                    }`}>
+                                                    {videoProgress[selectedCourse.videoId].progressPercentage}%
                                                 </span>
                                             </div>
-                                            <div className="w-full h-2 bg-purple-200 dark:bg-purple-900 rounded-full overflow-hidden">
+                                            <div className={`w-full h-2 rounded-full overflow-hidden ${darkMode ? 'bg-purple-900' : 'bg-purple-200'
+                                                }`}>
                                                 <div
                                                     className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-500"
-                                                    style={{ width: `${videoProgress[selectedCourse.videoId]}%` }}
+                                                    style={{ width: `${videoProgress[selectedCourse.videoId].progressPercentage}%` }}
                                                 />
+                                            </div>
+                                            <div className={`mt-2 text-xs ${darkMode ? 'text-purple-300' : 'text-purple-700'
+                                                }`}>
+                                                {formatTime(videoProgress[selectedCourse.videoId].currentTime / 60)} watched
                                             </div>
                                         </div>
                                     )}
 
                                     <div>
-                                        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-3">
+                                        <h3 className={`text-xl font-bold mb-3 ${darkMode ? 'text-gray-100' : 'text-gray-800'
+                                            }`}>
                                             About This Course
                                         </h3>
-                                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                        <p className={`leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-600'
+                                            }`}>
                                             {selectedCourse.description}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="space-y-6">
-                                    <div className="p-6 bg-gray-50 dark:bg-gray-900 rounded-xl border-2 border-gray-200 dark:border-gray-700">
-                                        <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
+                                    <div className={`p-6 rounded-xl border-2 ${darkMode
+                                            ? 'bg-gray-900 border-gray-700'
+                                            : 'bg-gray-50 border-gray-200'
+                                        }`}>
+                                        <h3 className={`text-lg font-bold mb-4 ${darkMode ? 'text-gray-100' : 'text-gray-800'
+                                            }`}>
                                             Instructor
                                         </h3>
                                         <div className="flex items-center gap-3 mb-4">
                                             <img
                                                 src={selectedCourse.creatorImage}
                                                 alt={selectedCourse.creator}
-                                                className="w-16 h-16 rounded-full border-4 border-white dark:border-gray-800 shadow-lg"
+                                                className={`w-16 h-16 rounded-full shadow-lg ${darkMode ? 'border-4 border-gray-800' : 'border-4 border-white'
+                                                    }`}
                                             />
                                             <div>
-                                                <h4 className="font-semibold text-gray-800 dark:text-gray-100">
+                                                <h4 className={`font-semibold ${darkMode ? 'text-gray-100' : 'text-gray-800'
+                                                    }`}>
                                                     {selectedCourse.creator}
                                                 </h4>
-                                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'
+                                                    }`}>
                                                     Course Instructor
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="p-6 bg-gray-50 dark:bg-gray-900 rounded-xl border-2 border-gray-200 dark:border-gray-700">
-                                        <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
+                                    <div className={`p-6 rounded-xl border-2 ${darkMode
+                                            ? 'bg-gray-900 border-gray-700'
+                                            : 'bg-gray-50 border-gray-200'
+                                        }`}>
+                                        <h3 className={`text-lg font-bold mb-4 ${darkMode ? 'text-gray-100' : 'text-gray-800'
+                                            }`}>
                                             Course Preview
                                         </h3>
                                         <img
@@ -744,7 +1022,7 @@ const UserVideoPage: React.FC = () => {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 

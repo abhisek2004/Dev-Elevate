@@ -1,7 +1,7 @@
 import Course from "../model/Course.js";
 import LearningModule from "../model/LearningModule.js";
 import { createNotification } from "./notificationController.js";
-
+import { fetchYouTubeVideos, fetchVideosByCategory } from '../utils/youtubeService.js';
 /**
  * ===========================
  *   Course Controller
@@ -133,5 +133,49 @@ export const deleteCourse = async (req, res) => {
   } catch (error) {
     console.error("Course deletion failed:", error);
     return res.status(500).json({ message: "Failed to delete course" });
+  }
+};
+
+
+/**
+ * Get YouTube courses for users (with fallback)
+ */
+export const getYouTubeCourses = async (req, res) => {
+  try {
+    const { search, category, maxResults = 12 } = req.query;
+
+    console.log('🎥 Fetching YouTube courses:', { search, category, maxResults });
+
+    let videos;
+
+    try {
+      if (category && category !== 'All') {
+        videos = await fetchVideosByCategory(category, parseInt(maxResults));
+      } else if (search) {
+        videos = await fetchYouTubeVideos(search, parseInt(maxResults));
+      } else {
+        // Default: fetch popular programming tutorials
+        videos = await fetchYouTubeVideos('programming tutorial', parseInt(maxResults));
+      }
+    } catch (youtubeError) {
+      console.error('⚠️ YouTube API failed, using mock data:', youtubeError.message);
+      // Fallback to mock data
+      videos = getMockCourses();
+    }
+
+    console.log('✅ YouTube courses fetched:', videos.length);
+
+    return res.status(200).json({
+      success: true,
+      data: videos,
+      message: 'YouTube courses fetched successfully',
+    });
+  } catch (error) {
+    console.error('❌ Failed to fetch YouTube courses:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to fetch YouTube courses',
+      error: error.message,
+    });
   }
 };

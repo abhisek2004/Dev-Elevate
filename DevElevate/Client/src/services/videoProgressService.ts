@@ -1,33 +1,30 @@
 // frontend/src/services/videoProgressService.ts
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api/v1` : "http://localhost:5000/api/v1";
+const API_URL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api/v1` 
+  : "http://localhost:5000/api/v1";
 
-// Create axios instance
 const api = axios.create({
   baseURL: API_URL,
-  withCredentials: true, // ✅ Send cookies with requests (important!)
+  withCredentials: true,
 });
 
-// Add token to requests with better debugging
+// ✅ IMPROVED: Better token extraction
 api.interceptors.request.use(
   (config) => {
-    // ✅ FIXED: Get token from devElevateAuth.sessionToken
     let token = null;
     
-    // First, try to get token from devElevateAuth
     const devElevateAuth = localStorage.getItem("devElevateAuth");
     if (devElevateAuth) {
       try {
         const authData = JSON.parse(devElevateAuth);
-        // ✅ The token is stored as 'sessionToken' in devElevateAuth
         token = authData.sessionToken || authData.token || authData.accessToken || authData.authToken;
       } catch (e) {
         console.error("❌ Failed to parse devElevateAuth:", e);
       }
     }
     
-    // Fallback to other possible token locations
     if (!token) {
       token = 
         localStorage.getItem("token") || 
@@ -36,74 +33,71 @@ api.interceptors.request.use(
         sessionStorage.getItem("token");
     }
     
-    console.log("🔍 Checking for token...");
-    console.log("📦 devElevateAuth found:", devElevateAuth ? "✅ Yes" : "❌ No");
-    console.log("🔑 sessionToken extracted:", token ? "✅ Yes" : "❌ No");
-    
     if (token) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;
-      console.log("✅ Authorization header set with Bearer token");
-    } else {
-      console.warn("⚠️ WARNING: No authentication token found!");
-      console.warn("   Please make sure you're logged in");
     }
     
-    console.log("📡 Making request to:", config.baseURL + config.url);
     return config;
   },
   (error) => {
-    console.error("❌ Request interceptor error:", error);
     return Promise.reject(error);
   }
 );
 
-// Add response interceptor for better error handling
 api.interceptors.response.use(
-  (response) => {
-    console.log("✅ Response received:", response.status);
-    return response;
-  },
+  (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       console.error("🔴 401 Unauthorized - Token might be invalid or expired");
-      console.error("Response:", error.response.data);
     }
-    console.error("❌ API Error:", error.message);
     return Promise.reject(error);
   }
 );
 
-// Types
+// ✅ IMPROVED: Better TypeScript types
+interface VideoProgressData {
+  progressPercentage: number;
+  currentTime: number;
+  duration: number;
+  isCompleted: boolean;
+  lastWatchedAt: string;
+}
+
 interface VideoProgressResponse {
   success: boolean;
-  data?: {
-    progressPercentage: number;
-    currentTime: number;
-    duration: number;
-  };
+  data?: VideoProgressData | null;
   message?: string;
+}
+
+interface ContinueLearningItem {
+  videoId: string;
+  courseId: string;
+  progressPercentage: number;
+  currentTime: number;
+  duration: number;
+  videoTitle?: string;
+  courseName?: string;
+  lastWatchedAt: string;
 }
 
 interface ContinueLearningResponse {
   success: boolean;
-  data?: Array<{
-    videoId: string;
-    progressPercentage: number;
-    videoTitle: string;
-    courseName: string;
-  }>;
+  data?: ContinueLearningItem[];
   message?: string;
+}
+
+interface SavedVideoItem {
+  videoId: string;
+  courseId: string;
+  videoTitle: string;
+  courseName: string;
+  createdAt: string;
 }
 
 interface SavedVideoResponse {
   success: boolean;
-  data?: Array<{
-    videoId: string;
-    courseId: string;
-    videoTitle: string;
-    courseName: string;
-  }>;
+  data?: SavedVideoItem[];
   message?: string;
 }
 
@@ -111,6 +105,28 @@ interface ApiResponse {
   success: boolean;
   message?: string;
   data?: unknown;
+}
+
+interface YouTubeCourse {
+  title: string;
+  creator: string;
+  courseImage: string;
+  creatorImage: string;
+  link: string;
+  description: string;
+  videoId: string;
+  category?: string;
+  duration?: string;
+  students?: number;
+  rating?: number;
+  progress?: number;
+  courseId?: string;
+}
+
+interface YouTubeCoursesResponse {
+  success: boolean;
+  data?: YouTubeCourse[];
+  message?: string;
 }
 
 // Video Progress API
@@ -213,4 +229,37 @@ export const checkIfVideoSaved = async (videoId: string): Promise<ApiResponse> =
     console.error("Failed to check if video is saved:", error);
     throw error;
   }
+};
+
+// YouTube Courses API
+export const getYouTubeCourses = async (
+  search?: string,
+  category?: string,
+  maxResults: number = 12
+): Promise<YouTubeCoursesResponse> => {
+  try {
+    const params = new URLSearchParams();
+    if (search) params.append('search', search);
+    if (category && category !== 'All') params.append('category', category);
+    params.append('maxResults', maxResults.toString());
+
+    const response = await api.get(`/courses/youtube?${params.toString()}`);
+    return response.data as YouTubeCoursesResponse;
+  } catch (error) {
+    console.error("Failed to fetch YouTube courses:", error);
+    throw error;
+  }
+};
+
+// ✅ Export types for use in components
+export type {
+  VideoProgressData,
+  VideoProgressResponse,
+  ContinueLearningItem,
+  ContinueLearningResponse,
+  SavedVideoItem,
+  SavedVideoResponse,
+  YouTubeCourse,
+  YouTubeCoursesResponse,
+  ApiResponse
 };
