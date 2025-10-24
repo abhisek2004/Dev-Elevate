@@ -20,8 +20,8 @@ export const fetchYouTubeVideos = async (
 ) => {
   try {
     console.log('🔍 Searching YouTube for:', searchQuery);
-    console.log('🔑 API Key exists:', !!YOUTUBE_API_KEY);
-    console.log('🔑 API Key length:', YOUTUBE_API_KEY?.length || 0);
+    //console.log('🔑 API Key exists:', !!YOUTUBE_API_KEY);
+    //console.log('🔑 API Key length:', YOUTUBE_API_KEY?.length || 0);
     
     if (!YOUTUBE_API_KEY) {
       throw new Error('YouTube API key is not configured. Please set YOUTUBE_API_KEY in .env file');
