@@ -7,13 +7,12 @@ const quizSchema = new mongoose.Schema(
       required: true,
     },
     type: {
-          type: String,
-          enum: ["MCQ", "Code"],
-          required: true,
-        },
+      type: String,
+      enum: ["MCQ", "Code"],
+      required: true,
+    },
     questions: [
       {
-        
         questionText: {
           type: String,
           required: true,
@@ -31,6 +30,10 @@ const quizSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+    },
+    isAIGenerated: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

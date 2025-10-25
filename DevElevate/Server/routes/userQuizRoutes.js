@@ -3,7 +3,8 @@ import {
   getUserQuizzes,
   getQuizForAttempt,
   submitQuizAttempt,
-  getUserQuizAttempts
+  getUserQuizAttempts,
+  deleteAIQuiz
 } from "../controller/userQuizController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 
@@ -18,6 +19,7 @@ router.get("/", getUserQuizzes);
 // Get user's quiz attempts
 router.get("/attempts", getUserQuizAttempts);
 
+router.delete("/:quizId", deleteAIQuiz);
 // Get specific quiz for attempting
 router.get("/:quizId", getQuizForAttempt);
 

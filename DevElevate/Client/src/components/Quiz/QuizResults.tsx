@@ -1,18 +1,18 @@
 import React from 'react';
 import { ArrowLeft, Trophy, Clock, CheckCircle, XCircle } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
-
+import { Button } from '../ui/button';
+import { Play } from 'lucide-react';
+import { QuizResultsData } from './QuizPage';
 interface QuizResultsProps {
-  results: {
-    score: number;
-    totalQuestions: number;
-    percentage: number;
-    timeTaken: number;
-  };
+  results: QuizResultsData;
   onBack: () => void;
+  onRetakeQuiz: () => void; // Add this
 }
 
-const QuizResults: React.FC<QuizResultsProps> = ({ results, onBack }) => {
+
+
+const QuizResults: React.FC<QuizResultsProps> = ({ results, onBack, onRetakeQuiz }) => {
   const { state } = useGlobalState();
 
   const formatTime = (seconds: number) => {
@@ -36,6 +36,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onBack }) => {
       <div className={`border-b ${state.darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'} p-4`}>
         <div className="max-w-4xl mx-auto flex items-center space-x-4">
           <button
+            aria-label="back"
             onClick={onBack}
             className={`p-2 rounded-lg ${state.darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
           >
@@ -124,19 +125,19 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onBack }) => {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={onBack}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            <Button
+              onClick={onRetakeQuiz}
+              className="bg-blue-600 hover:bg-blue-700"
             >
-              Take Another Quiz
-            </button>
+              <Play className="h-4 w-4 mr-2" />
+              Retake Quiz
+            </Button>
             <button
               onClick={() => window.location.href = '/dashboard'}
-              className={`px-6 py-3 rounded-lg font-medium transition-colors ${
-                state.darkMode
+              className={`px-6 py-3 rounded-lg font-medium transition-colors ${state.darkMode
                   ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+                }`}
             >
               Back to Dashboard
             </button>

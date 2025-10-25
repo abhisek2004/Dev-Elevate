@@ -18,20 +18,13 @@ const quizAttemptSchema = new mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           required: true,
         },
-        userAnswer: {
-          type: String,
-          required: true,
-        },
-        isCorrect: {
-          type: Boolean,
-          default: false,
-        },
+        userAnswer: String,
+        isCorrect: Boolean,
       },
     ],
     score: {
       type: Number,
-      required: true,
-      min: 0,
+      default: 0,
     },
     totalQuestions: {
       type: Number,
@@ -39,15 +32,18 @@ const quizAttemptSchema = new mongoose.Schema(
     },
     timeTaken: {
       type: Number, // in seconds
-      required: true,
+      default: 0,
     },
-    completedAt: {
-      type: Date,
-      default: Date.now,
+    isGenerated: {
+      type: Boolean,
+      default: false, // true if quiz is just generated but not actually attempted
     },
   },
   { timestamps: true }
 );
+
+// Index for faster queries
+quizAttemptSchema.index({ userId: 1, quizId: 1 });
 
 const QuizAttempt = mongoose.model("QuizAttempt", quizAttemptSchema);
 export default QuizAttempt;
