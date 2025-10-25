@@ -78,6 +78,11 @@ app.use("/api/v1/ats", atsRoutes);
 // ✅ Video Progress & Saved Videos (ONLY ONCE!)
 app.use("/api/v1/video", videoProgressRoutes);
 
+// ✅ PUBLIC COURSE ROUTES (No auth required - for YouTube videos)
+console.log('🔧 Registering public course routes at /api/v1/courses');
+app.use("/api/v1/courses", courseRoutes);
+
+
 // ADMIN ROUTES
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/admin/courses", courseRoutes);
@@ -121,7 +126,14 @@ app.use((err, req, res, next) => {
         error: process.env.NODE_ENV === "development" ? err.message : undefined,
     });
 });
-
+// TEST ROUTE
+app.get('/api/v1/test', (req, res) => {
+    res.json({ message: 'Server is working!' });
+  });
+  
+  app.get('/api/v1/courses/test', (req, res) => {
+    res.json({ message: 'Course route is working!' });
+  });
 // 404 handler - MUST BE LAST!
 app.use((req, res) => {
     res.status(404).json({
