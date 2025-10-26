@@ -464,74 +464,6 @@ Includes:
 
 ---
 
-</details>
-
-### 🔒 _Strict Contribution Guidelines (Must Follow):_
-
-❗ YOU ARE *NOT ALLOWED TO:
-
-🔴 ❌ You are NOT allowed to change or update any existing backend files or original code.
-
-🔴 ❌ You are NOT allowed to update or modify any existing routes or their logic in any form.
-
-🔴 ❌ You are NOT allowed to change the project structure or delete/edit core files without permission.
-
-🔴 ❌ You are NOT allowed to add or push any .env, .env.local, or sensitive environment files to the frontend OR backend.
-
----
-
-### 🧾 **Error Pages (🚨 Required)**
-
-- ❌ 404 Not Found
-- 🔒 403 Forbidden
-- ⚠️ Validation/Submission Errors
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-## 🔧 Tech Stack
-
-| Layer         | Tech Used                                  |
-| ------------- | ------------------------------------------ |
-| Frontend      | Typescript, Tailwind CSS, Shadcn UI, Axios |
-| Backend       | Node.js + Express                          |
-| Database      | MongoDB Atlas                              |
-| Auth          | JWT                                        |
-| AI Chatbot    | GPT-4 API, any other                       |
-| Resume Engine | HTML2PDF, GPT Suggestion APIs              |
-| APIs          | YouTube API, Google Sheets API, News API   |
-| Hosting       | Vercel                                     |
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-## 🌟 Summary – Trending Enhancements
-
-| Category           | Feature Examples                                     |
-| ------------------ | ---------------------------------------------------- |
-| 🧠 AI              | Career Advisor, Resume GPT, Roadmap Recommender      |
-| 🔁 Real-Time       | Collaborative Coding, Study Groups, Hackathons       |
-| 🎨 Personalization | One-Click Portfolio, Dark Mode, TTS, Resume Tools    |
-| 📢 Community       | Plugin Store, Forum, Mentorship Matching             |
-| 🎓 Learning        | Voice AI, Flashcards, Skill Graphs, Watch Mode       |
-| 🚀 Career          | Job Recommender, LinkedIn/GitHub Sync, Interview Bot |
-| 🌍 Inclusive       | Multi-language, Accessibility Focus                  |
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-## 🧑‍🤝‍🧑 Open Source Roles
-
-| Role              | Responsibility                               |
-| ----------------- | -------------------------------------------- |
-| 📱 Frontend Lead  | UI development (Dashboard, Learning, Resume) |
-| 🖥️ Backend Lead   | APIs for users, resumes, quizzes, etc.       |
-| 🤖 AI Integrator  | LangChain, GPT APIs, Vector DB               |
-| 🔌 API Dev        | Integrate 3rd-party tools (GSheets, NewsAPI) |
-| 🎨 UX Designer    | UI/UX flows, accessibility                   |
-| 📝 Content Writer | Notes, Quizzes, Assignments, Flashcards      |
-| 🧪 QA Tester      | Feature testing, bug fixing                  |
-| 📣 Community Lead | Docs, Outreach, GitHub management            |
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
 ## 🔥 Bonus Enhancements – Phase 2 / 3
 
 ### 🎧 AI-Powered Voice Interaction
@@ -684,6 +616,75 @@ Includes:
 - Supports voice + text interaction
 - Offers instant feedback on quizzes or code
   -🛠️ Tech: GPT-4, LangChain Agents, Whisper API, Speech Synthesis
+
+---
+
+### 🧾 **Error Pages (🚨 Required)**
+
+- ❌ 404 Not Found
+- 🔒 403 Forbidden
+- ⚠️ Validation/Submission Errors
+
+---
+
+## 🌟 Summary – Trending Enhancements
+
+| Category           | Feature Examples                                     |
+| ------------------ | ---------------------------------------------------- |
+| 🧠 AI              | Career Advisor, Resume GPT, Roadmap Recommender      |
+| 🔁 Real-Time       | Collaborative Coding, Study Groups, Hackathons       |
+| 🎨 Personalization | One-Click Portfolio, Dark Mode, TTS, Resume Tools    |
+| 📢 Community       | Plugin Store, Forum, Mentorship Matching             |
+| 🎓 Learning        | Voice AI, Flashcards, Skill Graphs, Watch Mode       |
+| 🚀 Career          | Job Recommender, LinkedIn/GitHub Sync, Interview Bot |
+| 🌍 Inclusive       | Multi-language, Accessibility Focus                  |
+
+
+</details>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+### 🔒 _Strict Contribution Guidelines (Must Follow):_
+
+❗ YOU ARE *NOT ALLOWED TO:
+
+🔴 ❌ You are NOT allowed to change or update any existing backend files or original code.
+
+🔴 ❌ You are NOT allowed to update or modify any existing routes or their logic in any form.
+
+🔴 ❌ You are NOT allowed to change the project structure or delete/edit core files without permission.
+
+🔴 ❌ You are NOT allowed to add or push any .env, .env.local, or sensitive environment files to the frontend OR backend.
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+## 🔧 Tech Stack
+
+| Layer         | Tech Used                                  |
+| ------------- | ------------------------------------------ |
+| Frontend      | Typescript, Tailwind CSS, Shadcn UI, Axios |
+| Backend       | Node.js + Express                          |
+| Database      | MongoDB Atlas                              |
+| Auth          | JWT                                        |
+| AI Chatbot    | GPT-4 API, any other                       |
+| Resume Engine | HTML2PDF, GPT Suggestion APIs              |
+| APIs          | YouTube API, Google Sheets API, News API   |
+| Hosting       | Vercel & Render                            |
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+## 🧑‍🤝‍🧑 Open Source Roles
+
+| Role              | Responsibility                               |
+| ----------------- | -------------------------------------------- |
+| 📱 Frontend Lead  | UI development (Dashboard, Learning, Resume) |
+| 🖥️ Backend Lead   | APIs for users, resumes, quizzes, etc.       |
+| 🤖 AI Integrator  | LangChain, GPT APIs, Vector DB               |
+| 🔌 API Dev        | Integrate 3rd-party tools (GSheets, NewsAPI) |
+| 🎨 UX Designer    | UI/UX flows, accessibility                   |
+| 📝 Content Writer | Notes, Quizzes, Assignments, Flashcards      |
+| 🧪 QA Tester      | Feature testing, bug fixing                  |
+| 📣 Community Lead | Docs, Outreach, GitHub management            |
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
