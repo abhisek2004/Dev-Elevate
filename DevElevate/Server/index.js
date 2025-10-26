@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorize.js";
 import { authenticateToken } from "./middleware/authMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js";
+import adminCourseRoutes from "./routes/adminCourseRoutes.js"; // ✅ ADD THIS
 import adminFeedbackRoutes from "./routes/adminFeedbackRoutes.js";
 import communityRoutes from "./routes/communityRoutes.js";
 import quizRoutes from "./routes/quizRoutes.js";
@@ -78,14 +79,16 @@ app.use("/api/v1/ats", atsRoutes);
 // ✅ Video Progress & Saved Videos (ONLY ONCE!)
 app.use("/api/v1/video", videoProgressRoutes);
 
-// ✅ PUBLIC COURSE ROUTES (No auth required - for YouTube videos)
-console.log('🔧 Registering public course routes at /api/v1/courses');
+// ✅ PUBLIC COURSE ROUTES (YouTube API - No auth required)
+console.log('🔧 Registering YouTube course routes at /api/v1/courses');
 app.use("/api/v1/courses", courseRoutes);
 
+// ✅ ADMIN COURSE ROUTES (MongoDB courses - Public read, Admin write)
+console.log('🔧 Registering admin course routes at /api/v1/admin-courses');
+app.use("/api/v1/admin-courses", adminCourseRoutes);
 
 // ADMIN ROUTES
 app.use("/api/v1/admin", adminRoutes);
-app.use("/api/v1/admin/courses", courseRoutes);
 app.use("/api/v1/admin/feedback", adminFeedbackRoutes);
 app.use("/api/v1/admin/quiz", quizRoutes);
 app.use('/api/v1/admin/analytics', analyticRoute);
@@ -93,7 +96,6 @@ app.use('/api/v1/admin', systemSettings);
 
 // ✅ USER QUIZ ROUTES (Changed from /quiz to /user-quiz)
 app.use("/api/v1/user-quiz", userQuizRoutes);
-// Add this after app.use("/api/v1/user-quiz", userQuizRoutes);
 console.log('✅ User Quiz Routes registered at: /api/v1/user-quiz');
 console.log('✅ AI Routes registered at: /api/v1/ai')
 // ✅ AI ROUTES (Changed from / to /ai)
@@ -131,14 +133,16 @@ app.use((err, req, res, next) => {
         error: process.env.NODE_ENV === "development" ? err.message : undefined,
     });
 });
+
 // TEST ROUTE
 app.get('/api/v1/test', (req, res) => {
     res.json({ message: 'Server is working!' });
-  });
-  
-  app.get('/api/v1/courses/test', (req, res) => {
+});
+
+app.get('/api/v1/courses/test', (req, res) => {
     res.json({ message: 'Course route is working!' });
-  });
+});
+
 // 404 handler - MUST BE LAST!
 app.use((req, res) => {
     res.status(404).json({
@@ -173,4 +177,6 @@ app.listen = function (...args) {
 // Start server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
+    console.log('📚 YouTube Courses API: http://localhost:' + PORT + '/api/v1/courses');
+    console.log('📚 Admin Courses API: http://localhost:' + PORT + '/api/v1/admin-courses');
 });

@@ -172,6 +172,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       return state;
   }
 };
+
 const AuthContext = createContext<{
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
@@ -219,7 +220,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.setItem("devElevateAuth", JSON.stringify(state));
   }, [state]);
 
-  const login = async (
+  /*const login = async (
     email: string,
     password: string
   ) => {
@@ -237,7 +238,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
       const data = await response.json();
 
-
+      console.log("Login response:", data); // Debug log
 
       if (!response.ok) {
         throw new Error(data.message || "Login failed");
@@ -245,24 +246,27 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
       // Backend returns real JWT token and user data
       if (data.token && data.user) {
+        // CRITICAL FIX: Ensure role is properly extracted and defaulted
+        const userRole = (data.user.role || "user").toLowerCase();
+        
         const user: User = {
-          id: data.user.id,
+          id: data.user.id || data.user._id, // Handle both id formats
           name: data.user.name,
           email: data.user.email,
-          role: data.user.role,
-          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
-          bio: data.user.bio,
-          socialLinks: {},
-          joinDate: new Date().toISOString(),
+          role: (userRole === "admin" ? "admin" : "user") as "user" | "admin", // Explicit type casting
+          avatar: data.user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
+          bio: data.user.bio || "",
+          socialLinks: data.user.socialLinks || {},
+          joinDate: data.user.joinDate || data.user.createdAt || new Date().toISOString(),
           lastLogin: new Date().toISOString(),
-          isActive: true,
-          preferences: {
+          isActive: data.user.isActive !== undefined ? data.user.isActive : true,
+          preferences: data.user.preferences || {
             theme: "light",
             notifications: true,
             language: "en",
             emailUpdates: true,
           },
-          progress: {
+          progress: data.user.progress || {
             coursesEnrolled: [],
             completedModules: 0,
             totalPoints: 0,
@@ -270,6 +274,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
             level: "Beginner",
           },
         };
+
+        console.log("Processed user object:", user); // Debug log
 
         dispatch({
           type: "LOGIN_SUCCESS",
@@ -284,7 +290,81 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       console.error("Login error:", errorMessage);
       dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
     }
-  };
+  };*/
+  // Replace your login function in AuthContext.tsx with this debug version
+
+const login = async (email: string, password: string) => {
+  dispatch({ type: "LOGIN_START" });
+  
+  
+  
+  // Check for hidden characters
+  for (let i = 0; i < password.length; i++) {
+    console.log(`Char ${i}: '${password[i]}' (code: ${password.charCodeAt(i)})`);
+  }
+
+  try {
+    const requestBody = { email, password };
+    console.log("Request body:", JSON.stringify(requestBody));
+    
+    const response = await fetch(`${baseUrl}/api/v1/auth/login`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    const data = await response.json();
+    console.log("Login response:", data);
+
+    if (!response.ok) {
+      throw new Error(data.message || "Login failed");
+    }
+
+    if (data.token && data.user) {
+      const userRole = (data.user.role || "user").toLowerCase();
+      
+      const user: User = {
+        id: data.user.id || data.user._id,
+        name: data.user.name,
+        email: data.user.email,
+        role: (userRole === "admin" ? "admin" : "user") as "user" | "admin",
+        avatar: data.user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
+        bio: data.user.bio || "",
+        socialLinks: data.user.socialLinks || {},
+        joinDate: data.user.joinDate || data.user.createdAt || new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
+        isActive: data.user.isActive !== undefined ? data.user.isActive : true,
+        preferences: data.user.preferences || {
+          theme: "light",
+          notifications: true,
+          language: "en",
+          emailUpdates: true,
+        },
+        progress: data.user.progress || {
+          coursesEnrolled: [],
+          completedModules: 0,
+          totalPoints: 0,
+          streak: 0,
+          level: "Beginner",
+        },
+      };
+
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: { user, token: data.token },
+      });
+    } else {
+      throw new Error("Invalid response from server");
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Login failed";
+    console.error("Login error:", errorMessage);
+    dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
+  }
+};
 
   const register = async (
     name: string,
@@ -344,24 +424,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }
 
       if (data.token && data.user) {
+        const userRole = (data.user.role || "user").toLowerCase();
+        
         const user: User = {
-          id: data.user.id,
+          id: data.user.id || data.user._id,
           name: data.user.name,
           email: data.user.email,
-          role: data.user.role,
-          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
-          bio: data.user.bio,
-          socialLinks: {},
-          joinDate: new Date().toISOString(),
+          role: (userRole === "admin" ? "admin" : "user") as "user" | "admin",
+          avatar: data.user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
+          bio: data.user.bio || "",
+          socialLinks: data.user.socialLinks || {},
+          joinDate: data.user.joinDate || data.user.createdAt || new Date().toISOString(),
           lastLogin: new Date().toISOString(),
-          isActive: true,
-          preferences: {
+          isActive: data.user.isActive !== undefined ? data.user.isActive : true,
+          preferences: data.user.preferences || {
             theme: "light",
             notifications: true,
             language: "en",
             emailUpdates: true,
           },
-          progress: {
+          progress: data.user.progress || {
             coursesEnrolled: [],
             completedModules: 0,
             totalPoints: 0,
@@ -384,6 +466,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       dispatch({ type: "REGISTER_FAILURE", payload: errorMessage });
     }
   };
+
   const changePassword = async (
     currentPassword: string,
     newPassword: string
@@ -423,11 +506,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const updateProfile = async (data: Partial<User>) => {
     if (!state.user) return;
 
-
-
-
-
-
     try {
       const response = await fetch(`${baseUrl}/api/v1/update-profile`, {
         method: "POST",
@@ -461,7 +539,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       console.error("Profile update failed:", error);
     }
   };
-
 
   const loadUsers = () => {
     const savedUsers = JSON.parse(
