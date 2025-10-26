@@ -189,6 +189,9 @@ To help learners and aspiring professionals master skills like DSA, Java, MERN S
 
 ---
 
+<details>
+  <summary>📘 Click to Read More </summary>
+
 ## ⚠️ **🚨 All Pages Below Are Mandatory and Must Be Fully Functional Without Bugs**
 
 > ⚙️ **Each page must be implemented with complete functionality, bug-free execution, proper routing, clean UI/UX, and complete backend integration.**
@@ -460,6 +463,8 @@ Includes:
   - Date navigation and today highlighting
 
 ---
+
+</details>
 
 ### 🔒 _Strict Contribution Guidelines (Must Follow):_
 
