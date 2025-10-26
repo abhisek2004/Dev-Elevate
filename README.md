@@ -715,8 +715,8 @@ You all are the heart of this community! 💖
 <details>
 <summary> TOP Contributors List </summary>
 
-| Contributor           | Role                 | Points | PRs | Commits | GitHub | LinkedIn |
-| --------------------- | ------------------- | ------ | --- | ------- | ------ | -------- |
+| Contributor           | Role                 | Points | PRs | Commits | GitHub |
+| --------------------- | ------------------- | ------ | --- | ------- | ------ | 
 | GOBINDA-GAGAN         | 👑 Contributor      | 457    | 66  | 105     | [GitHub](https://github.com/GOBINDA-GAGAN) | - |
 | Richajaishwal0        | 🏆 Contributor      | 93     | 14  | 17      | [GitHub](https://github.com/Richajaishwal0) | - |
 | Coder-010506          | 🏆 Contributor      | 50     | 5   | 11      | [GitHub](https://github.com/Coder-010506) | - |
