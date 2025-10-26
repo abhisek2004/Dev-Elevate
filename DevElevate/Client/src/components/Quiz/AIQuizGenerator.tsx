@@ -4,11 +4,12 @@ import axiosInstance from "../../api/axiosinstance";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Quiz } from "./QuizPage";
+import { Input } from "../ui/Input";
 
 interface AIQuizGeneratorProps {
   open: boolean;
@@ -96,7 +97,7 @@ const AIQuizGenerator: React.FC<AIQuizGeneratorProps> = ({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-5 mt-4">
+        <form onSubmit={handleSubmit} className="mt-4 space-y-5">
           {error && (
             <Alert variant="destructive">
               <AlertDescription>{error}</AlertDescription>
@@ -335,12 +336,12 @@ const AIQuizGenerator: React.FC<AIQuizGeneratorProps> = ({
             >
               {loading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Generating...
                 </>
               ) : (
                 <>
-                  <Sparkles className="mr-2 h-4 w-4" />
+                  <Sparkles className="w-4 h-4 mr-2" />
                   Generate Quiz
                 </>
               )}
