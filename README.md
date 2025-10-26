@@ -744,6 +744,8 @@ Includes:
 | Mentor 1      | Pinak viramgama | [Pinak viramgama](https://github.com/pinakviramgama)   | [Pinak viramgama](https://www.linkedin.com/in/gecr-ai230200143075) |
 | Mentor 2   | Avansh Yadav       | [Avansh2006](https://github.com/Avansh2006)         | [Avansh Yadav](https://www.linkedin.com/in/avanshyadav/)                |
 | Mentor 3    | Amisha Gupta       | [amishagupta31](https://github.com/amishagupta31)   | [Amisha Gupta](https://www.linkedin.com/in/amishagupta31/)              |
+| Mentor 4    | Jay Sawant       | [Jay Sawant](https://github.com/Jay2006sawant)   | [Jay Sawant](https://www.linkedin.com/in/jay-sawant-4b59aa324/)              |
+
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
