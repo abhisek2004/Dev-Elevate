@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Clock, AlertCircle } from 'lucide-react';
 import axiosInstance from '../../api/axiosinstance';
 import { useGlobalState } from '../../contexts/GlobalContext';
 
@@ -15,10 +15,12 @@ interface Quiz {
   type: 'MCQ' | 'Code';
   difficulty: string;
 }
-
+interface QuizDataResponse {
+  questions: Question[];
+}
 interface QuizAttemptProps {
   quiz: Quiz;
-  onComplete: (results: any) => void;
+  onComplete: (results: unknown) => void;
   onBack: () => void;
 }
 
@@ -30,6 +32,7 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
   const [timeLeft, setTimeLeft] = useState(0);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string>('');
   const [startTime] = useState(Date.now());
 
   useEffect(() => {
@@ -41,17 +44,47 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
     } else if (timeLeft === 0 && questions.length > 0) {
-      handleSubmit();
+      // Call submit logic directly here instead of handleSubmit
+      const submitQuiz = async () => {
+        if (submitting) return;
+        setSubmitting(true);
+        try {
+          const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+          const formattedAnswers = Object.entries(answers).map(([questionId, userAnswer]) => ({
+            questionId,
+            userAnswer
+          }));
+
+          const response = await axiosInstance.post(`/api/v1/user-quiz/${quiz._id}/submit`, {
+            answers: formattedAnswers,
+            timeTaken
+          });
+
+          onComplete(response.data);
+        } catch (error: unknown) {
+          console.error('Error submitting quiz:', error);
+        } finally {
+          setSubmitting(false);
+        }
+      };
+      submitQuiz();
     }
-  }, [timeLeft, questions.length]);
+  }, [timeLeft, questions.length, submitting, startTime, answers, quiz._id, onComplete]);
 
   const fetchQuizQuestions = async () => {
     try {
-      const response = await axiosInstance.get(`/api/v1/quiz/${quiz._id}`);
+      setLoading(true);
+      setError('');
+
+      // ✅ FIXED: Changed from /api/v1/quiz to /api/v1/user-quiz
+      const response = await axiosInstance.get<QuizDataResponse>(`/api/v1/user-quiz/${quiz._id}`);
+
       setQuestions(response.data.questions);
-      setTimeLeft(response.data.questions.length * 120); // 2 minutes per question
-    } catch (error) {
+      setTimeLeft(response.data.questions.length * 120);
+    } catch (error: unknown) {
       console.error('Error fetching quiz questions:', error);
+      const err = error as { response?: { data?: { message?: string } } };
+      setError(err.response?.data?.message || 'Failed to load quiz questions');
     } finally {
       setLoading(false);
     }
@@ -63,7 +96,7 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
 
   const handleSubmit = async () => {
     if (submitting) return;
-    
+
     setSubmitting(true);
     try {
       const timeTaken = Math.floor((Date.now() - startTime) / 1000);
@@ -72,16 +105,19 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
         userAnswer
       }));
 
-      const response = await axiosInstance.post(`/api/v1/quiz/${quiz._id}/submit`, {
+      // ✅ FIXED: Changed from /api/v1/quiz to /api/v1/user-quiz
+      const response = await axiosInstance.post(`/api/v1/user-quiz/${quiz._id}/submit`, {
         answers: formattedAnswers,
         timeTaken
       });
 
       onComplete(response.data);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error submitting quiz:', error);
-      alert('Error submitting quiz. Please try again.');
-    } finally {
+      const err = error as { response?: { data?: { message?: string } } };
+      alert(err.response?.data?.message || 'Error submitting quiz. Please try again.');
+    }
+    finally {
       setSubmitting(false);
     }
   };
@@ -102,6 +138,29 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
     );
   }
 
+  // ✅ ADDED: Error state display
+  if (error) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+        <div className="text-center max-w-md mx-auto p-6">
+          <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
+          <h2 className={`text-xl font-semibold mb-2 ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+            Failed to Load Quiz
+          </h2>
+          <p className={`mb-4 ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            {error}
+          </p>
+          <button
+            onClick={onBack}
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const currentQ = questions[currentQuestion];
 
   return (
@@ -111,6 +170,7 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button
+              aria-label="Go back"
               onClick={onBack}
               className={`p-2 rounded-lg ${state.darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
             >
@@ -123,17 +183,16 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
               </p>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-4">
-            <div className={`flex items-center space-x-2 px-3 py-1 rounded-lg ${
-              timeLeft < 300 ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
-            }`}>
+            <div className={`flex items-center space-x-2 px-3 py-1 rounded-lg ${timeLeft < 300 ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
+              }`}>
               <Clock className="h-4 w-4" />
               <span className="font-medium">{formatTime(timeLeft)}</span>
             </div>
           </div>
         </div>
-        
+
         {/* Progress Bar */}
         <div className="max-w-4xl mx-auto mt-4">
           <div className={`w-full bg-gray-200 rounded-full h-2 ${state.darkMode ? 'bg-gray-700' : ''}`}>
@@ -155,13 +214,12 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
               {currentQ.options.map((option, index) => (
                 <label
                   key={index}
-                  className={`flex items-center p-4 rounded-lg border cursor-pointer transition-all ${
-                    answers[currentQ._id] === option
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                      : state.darkMode
+                  className={`flex items-center p-4 rounded-lg border cursor-pointer transition-all ${answers[currentQ._id] === option
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    : state.darkMode
                       ? 'border-gray-600 hover:border-gray-500'
                       : 'border-gray-200 hover:border-gray-300'
-                  }`}
+                    }`}
                 >
                   <input
                     type="radio"
@@ -180,11 +238,10 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
               value={answers[currentQ._id] || ''}
               onChange={(e) => handleAnswerChange(currentQ._id, e.target.value)}
               placeholder="Enter your code here..."
-              className={`w-full h-64 p-4 border rounded-lg font-mono text-sm ${
-                state.darkMode
-                  ? 'bg-gray-700 border-gray-600 text-white'
-                  : 'bg-gray-50 border-gray-300'
-              }`}
+              className={`w-full h-64 p-4 border rounded-lg font-mono text-sm ${state.darkMode
+                ? 'bg-gray-700 border-gray-600 text-white'
+                : 'bg-gray-50 border-gray-300'
+                }`}
             />
           )}
         </div>
@@ -194,11 +251,10 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
           <button
             onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
             disabled={currentQuestion === 0}
-            className={`px-4 py-2 rounded-lg font-medium ${
-              currentQuestion === 0
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-gray-600 text-white hover:bg-gray-700'
-            }`}
+            className={`px-4 py-2 rounded-lg font-medium ${currentQuestion === 0
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-gray-600 text-white hover:bg-gray-700'
+              }`}
           >
             Previous
           </button>
@@ -208,15 +264,14 @@ const QuizAttempt: React.FC<QuizAttemptProps> = ({ quiz, onComplete, onBack }) =
               <button
                 key={index}
                 onClick={() => setCurrentQuestion(index)}
-                className={`w-8 h-8 rounded-full text-sm font-medium ${
-                  index === currentQuestion
-                    ? 'bg-blue-600 text-white'
-                    : answers[questions[index]._id]
+                className={`w-8 h-8 rounded-full text-sm font-medium ${index === currentQuestion
+                  ? 'bg-blue-600 text-white'
+                  : answers[questions[index]._id]
                     ? 'bg-green-100 text-green-700'
                     : state.darkMode
-                    ? 'bg-gray-700 text-gray-300'
-                    : 'bg-gray-200 text-gray-600'
-                }`}
+                      ? 'bg-gray-700 text-gray-300'
+                      : 'bg-gray-200 text-gray-600'
+                  }`}
               >
                 {index + 1}
               </button>

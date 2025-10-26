@@ -88,11 +88,16 @@ app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/admin/courses", courseRoutes);
 app.use("/api/v1/admin/feedback", adminFeedbackRoutes);
 app.use("/api/v1/admin/quiz", quizRoutes);
-app.use("/api/v1/quiz", userQuizRoutes);
-app.use("/api/v1", aiRoutes);
-app.use('/api/v1/admin/analytics',analyticRoute)
+app.use('/api/v1/admin/analytics', analyticRoute);
+app.use('/api/v1/admin', systemSettings);
 
-app.use('/api/v1/admin',systemSettings)
+// ✅ USER QUIZ ROUTES (Changed from /quiz to /user-quiz)
+app.use("/api/v1/user-quiz", userQuizRoutes);
+// Add this after app.use("/api/v1/user-quiz", userQuizRoutes);
+console.log('✅ User Quiz Routes registered at: /api/v1/user-quiz');
+console.log('✅ AI Routes registered at: /api/v1/ai')
+// ✅ AI ROUTES (Changed from / to /ai)
+app.use("/api/v1/ai", aiRoutes);
 
 // Learning Routes
 app.use("/api/v1/learning/java", javaRoutes);

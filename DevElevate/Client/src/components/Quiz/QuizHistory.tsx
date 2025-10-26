@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Trophy, Clock, Calendar } from "lucide-react";
+import { Trophy } from "lucide-react";
 import axiosInstance from "../../api/axiosinstance";
 import { useGlobalState } from "../../contexts/GlobalContext";
 
@@ -39,7 +39,7 @@ const QuizHistory: React.FC = () => {
     }
   };
 
-  const formatTime = (seconds: number) => {
+  /*const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}m ${secs}s`;
@@ -49,7 +49,7 @@ const QuizHistory: React.FC = () => {
     if (percentage >= 75) return "text-green-600";
     if (percentage >= 60) return "text-yellow-600";
     return "text-red-600";
-  };
+  };*/
 
   if (loading) {
     return (

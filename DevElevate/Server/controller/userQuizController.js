@@ -5,13 +5,18 @@ import QuizAttempt from "../model/QuizAttempt.js";
 export const getUserQuizzes = async (req, res) => {
   try {
     const quizzes = await Quiz.find()
-      .select("title topic difficulty type createdAt questions")
+      .select("title topic difficulty type createdAt questions isAIGenerated")
       .lean();
 
     const quizzesWithCount = quizzes.map(quiz => ({
-      ...quiz,
+      _id: quiz._id,
+      title: quiz.title,
+      topic: quiz.topic,
+      difficulty: quiz.difficulty,
+      type: quiz.type,
+      createdAt: quiz.createdAt,
       questionCount: quiz.questions?.length || 0,
-      questions: undefined // Remove questions from response for security
+      isAIGenerated: quiz.isAIGenerated || false
     }));
 
     res.status(200).json(quizzesWithCount);
@@ -32,15 +37,28 @@ export const getQuizForAttempt = async (req, res) => {
     }
 
     // Remove correct answers from questions for security
-    const sanitizedQuestions = quiz.questions.map(q => ({
-      _id: q._id,
-      questionText: q.questionText,
-      options: q.options,
-      // Don't send correctAnswer or expectedOutput
-    }));
+    const sanitizedQuestions = quiz.questions.map(q => {
+      if (quiz.type === "MCQ") {
+        return {
+          _id: q._id,
+          questionText: q.questionText,
+          options: q.options
+        };
+      } else {
+        return {
+          _id: q._id,
+          questionText: q.questionText
+        };
+      }
+    });
 
     res.status(200).json({
-      ...quiz,
+      _id: quiz._id,
+      title: quiz.title,
+      topic: quiz.topic,
+      difficulty: quiz.difficulty,
+      type: quiz.type,
+      isAIGenerated: quiz.isAIGenerated || false,
       questions: sanitizedQuestions
     });
   } catch (error) {
@@ -54,7 +72,11 @@ export const submitQuizAttempt = async (req, res) => {
   try {
     const { quizId } = req.params;
     const { answers, timeTaken } = req.body;
-    const userId = req.user.id;
+    const userId = req.user.id || req.user._id;
+
+    if (!answers || !Array.isArray(answers)) {
+      return res.status(400).json({ message: "Invalid answers format" });
+    }
 
     const quiz = await Quiz.findById(quizId);
     if (!quiz) {
@@ -73,8 +95,9 @@ export const submitQuizAttempt = async (req, res) => {
       if (quiz.type === 'MCQ') {
         isCorrect = answer.userAnswer === question.correctAnswer;
       } else if (quiz.type === 'Code') {
-        // For code questions, you might want to implement more sophisticated checking
-        isCorrect = answer.userAnswer.trim() === question.expectedOutput?.trim();
+        // For code questions, basic string comparison
+        // You can enhance this with more sophisticated checking
+        isCorrect = answer.userAnswer?.trim() === question.expectedOutput?.trim();
       }
 
       if (isCorrect) score++;
@@ -92,7 +115,7 @@ export const submitQuizAttempt = async (req, res) => {
       answers: processedAnswers,
       score,
       totalQuestions: quiz.questions.length,
-      timeTaken
+      timeTaken: timeTaken || 0
     });
 
     await quizAttempt.save();
@@ -102,27 +125,75 @@ export const submitQuizAttempt = async (req, res) => {
       score,
       totalQuestions: quiz.questions.length,
       percentage: Math.round((score / quiz.questions.length) * 100),
-      timeTaken
+      timeTaken: timeTaken || 0
     });
   } catch (error) {
     console.error("Error submitting quiz attempt:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ 
+      message: "Internal Server Error",
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 
 // Get user's quiz attempts
 export const getUserQuizAttempts = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.id || req.user._id;
     
     const attempts = await QuizAttempt.find({ userId })
-      .populate('quizId', 'title topic difficulty type')
+      .populate({
+        path: 'quizId',
+        select: 'title topic difficulty type isAIGenerated questions'
+      })
       .sort({ createdAt: -1 })
       .lean();
 
-    res.status(200).json(attempts);
+    // Filter out attempts where quiz was deleted and add questionCount
+    const validAttempts = attempts
+      .filter(attempt => attempt.quizId)
+      .map(attempt => ({
+        ...attempt,
+        quizId: {
+          ...attempt.quizId,
+          questionCount: attempt.quizId.questions?.length || attempt.totalQuestions,
+          questions: undefined // Remove questions from response
+        }
+      }));
+
+    res.status(200).json(validAttempts);
   } catch (error) {
     console.error("Error fetching user quiz attempts:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+export const deleteAIQuiz = async (req, res) => {
+  try {
+    const { quizId } = req.params;
+    const userId = req.user.id; // From auth middleware
+
+    // Find the quiz
+    const quiz = await Quiz.findById(quizId);
+    
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    // Only allow deleting AI-generated quizzes
+    if (!quiz.isAIGenerated) {
+      return res.status(403).json({ message: "Can only delete AI-generated quizzes" });
+    }
+
+    // Delete the quiz
+    await Quiz.findByIdAndDelete(quizId);
+    
+    // Also delete all attempts for this quiz
+    const QuizAttempt = (await import("../model/QuizAttempt.js")).default;
+    await QuizAttempt.deleteMany({ quizId: quizId });
+
+    res.status(200).json({ message: "Quiz deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting quiz:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

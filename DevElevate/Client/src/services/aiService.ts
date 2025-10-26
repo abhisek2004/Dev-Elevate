@@ -3,13 +3,28 @@ interface ExpenseData {
   amount: number;
 }
 
+interface QuizGenerationParams {
+  topic: string;
+  difficulty: string;
+  type: string;
+  questionCount: number;
+}
+
+interface GeneratedQuizResponse {
+  title: string;
+  topic: string;
+  difficulty: string;
+  type: string;
+  questionCount: number;
+  isAIGenerated: boolean;
+  questions: unknown[]; // Backend will populate this - use unknown[] or define a proper Question interface
+}
+
 export class AIService {
   // Generate AI tags for notes
   static async generateTags(content: string): Promise<string[]> {
-    // Simulate AI processing delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Simple keyword extraction (in a real app, this would call an AI API)
     const keywords = content.toLowerCase()
       .split(/\s+/)
       .filter(word => word.length > 3)
@@ -21,10 +36,8 @@ export class AIService {
 
   // Generate AI summary for notes
   static async summarizeText(content: string): Promise<string> {
-    // Simulate AI processing delay
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    // Simple summary generation (in a real app, this would call an AI API)
     const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
     const summary = sentences.slice(0, 2).join('. ') + '.';
     
@@ -33,10 +46,8 @@ export class AIService {
 
   // Optimize budget with AI insights
   static async optimizeBudget(expenses: ExpenseData[]): Promise<string> {
-    // Simulate AI processing delay
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    // Simple budget optimization (in a real app, this would call an AI API)
     const totalSpent = expenses.reduce((sum, exp) => sum + exp.amount, 0);
     const highestCategory = expenses.reduce((max, exp) => 
       exp.amount > max.amount ? exp : max
@@ -57,5 +68,25 @@ export class AIService {
     optimization += `• Consider using cash for categories where you tend to overspend`;
     
     return optimization;
+  }
+
+  // Generate AI Quiz
+  static async generateQuiz(params: QuizGenerationParams): Promise<GeneratedQuizResponse> {
+    // This would call your backend endpoint
+    // The backend will use Gemini API to generate the quiz
+    // For now, this is a placeholder that shows the expected structure
+    
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Example structure - actual implementation should call backend
+    return {
+      title: `${params.topic} - ${params.difficulty} Quiz`,
+      topic: params.topic,
+      difficulty: params.difficulty,
+      type: params.type,
+      questionCount: params.questionCount,
+      isAIGenerated: true,
+      questions: [] // Backend will populate this
+    };
   }
 }
