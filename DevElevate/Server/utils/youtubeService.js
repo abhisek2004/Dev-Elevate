@@ -19,9 +19,6 @@ export const fetchYouTubeVideos = async (
   order = 'relevance'
 ) => {
   try {
-    // console.log('🔍 Searching YouTube for:', searchQuery);
-    //console.log('🔑 API Key exists:', !!YOUTUBE_API_KEY);
-    //console.log('🔑 API Key length:', YOUTUBE_API_KEY?.length || 0);
     
     if (!YOUTUBE_API_KEY) {
       throw new Error('YouTube API key is not configured. Please set YOUTUBE_API_KEY in .env file');
@@ -41,12 +38,9 @@ export const fetchYouTubeVideos = async (
         relevanceLanguage: 'en',
       },
     });
-    
-    // console.log('✅ Search response status:', searchResponse.status);
-    // console.log('📊 Items found:', searchResponse.data.items?.length || 0);
+
 
     if (!searchResponse.data.items || searchResponse.data.items.length === 0) {
-      console.log('⚠️ No videos found');
       return [];
     }
 
@@ -55,10 +49,8 @@ export const fetchYouTubeVideos = async (
       .filter(Boolean) // Remove null/undefined values
       .join(',');
 
-    // console.log('📹 Found video IDs:', videoIds);
 
     if (!videoIds) {
-      // console.log('⚠️ No valid video IDs found');
       return [];
     }
 
@@ -72,7 +64,6 @@ export const fetchYouTubeVideos = async (
     });
 
     if (!videosResponse.data.items || videosResponse.data.items.length === 0) {
-      // console.log('⚠️ No video details found');
       return [];
     }
 
@@ -149,7 +140,6 @@ export const fetchYouTubeVideos = async (
       })
       .filter(Boolean); // Remove any null entries from failed formatting
 
-    // console.log('✅ Formatted', formattedVideos.length, 'videos');
     return formattedVideos;
   } catch (error) {
     console.error('❌ YouTube API Error Details:');
