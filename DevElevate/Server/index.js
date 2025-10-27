@@ -42,9 +42,6 @@ import { startContestFinalizationCron } from "./controller/contestController.js"
 if (process.env.MONGO_URI) {
     connectDB();
 } else {
-    console.log(
-        "MongoDB connection skipped - PDF routes will work without database"
-    );
 }
 
 const app = express();
@@ -80,11 +77,9 @@ app.use("/api/v1/ats", atsRoutes);
 app.use("/api/v1/video", videoProgressRoutes);
 
 // ✅ PUBLIC COURSE ROUTES (YouTube API - No auth required)
-console.log('🔧 Registering YouTube course routes at /api/v1/courses');
 app.use("/api/v1/courses", courseRoutes);
 
 // ✅ ADMIN COURSE ROUTES (MongoDB courses - Public read, Admin write)
-console.log('🔧 Registering admin course routes at /api/v1/admin-courses');
 app.use("/api/v1/admin-courses", adminCourseRoutes);
 
 // ADMIN ROUTES
@@ -96,8 +91,6 @@ app.use('/api/v1/admin', systemSettings);
 
 // ✅ USER QUIZ ROUTES (Changed from /quiz to /user-quiz)
 app.use("/api/v1/user-quiz", userQuizRoutes);
-console.log('✅ User Quiz Routes registered at: /api/v1/user-quiz');
-console.log('✅ AI Routes registered at: /api/v1/ai')
 // ✅ AI ROUTES (Changed from / to /ai)
 app.use("/api/v1/ai", aiRoutes);
 
@@ -151,11 +144,8 @@ app.use((req, res) => {
     });
 });
 
-// 🐛 DEBUG: Check if routes are registered
-console.log("✅ Video Progress Routes Registered!");
 videoProgressRoutes.stack.forEach((r) => {
   if (r.route) {
-    console.log(`   ${Object.keys(r.route.methods)[0].toUpperCase()} /api/v1/video${r.route.path}`);
   }
 });
 
@@ -166,17 +156,9 @@ initSocketIO(server);
 // Override app.listen to use the HTTP server internally
 const originalListen = app.listen;
 app.listen = function (...args) {
-  console.log(
-    `Server with WebSocket support starting on port ${
-      args[0] || process.env.PORT || 3001
-    }`
-  );
   return server.listen.apply(server, args);
 };
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-    console.log('📚 YouTube Courses API: http://localhost:' + PORT + '/api/v1/courses');
-    console.log('📚 Admin Courses API: http://localhost:' + PORT + '/api/v1/admin-courses');
 });

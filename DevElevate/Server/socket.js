@@ -45,7 +45,6 @@ export const initSocketIO = (server) => {
       socket.user = user;
       next();
     } catch (error) {
-      console.error("Socket authentication error:", error);
       // Still allow connection but without user data
       socket.user = null;
       next();
@@ -53,14 +52,10 @@ export const initSocketIO = (server) => {
   });
 
   io.on("connection", (socket) => {
-    console.log("✅ New client connected:", socket.id);
-
     // Join contest room for real-time updates
     socket.on("join-contest", (contestId) => {
       const roomName = `contest-${contestId}`;
       socket.join(roomName);
-      console.log(`User joined contest room: ${roomName}`);
-
       // Emit join event to room for connected users count
       io.to(roomName).emit("user-joined", {
         count: io.sockets.adapter.rooms.get(roomName)?.size || 1,
@@ -71,8 +66,6 @@ export const initSocketIO = (server) => {
     socket.on("leave-contest", (contestId) => {
       const roomName = `contest-${contestId}`;
       socket.leave(roomName);
-      console.log(`User left contest room: ${roomName}`);
-
       // Emit leave event to room for connected users count
       io.to(roomName).emit("user-left", {
         count: io.sockets.adapter.rooms.get(roomName)?.size || 0,
@@ -86,12 +79,8 @@ export const initSocketIO = (server) => {
       socket.emit("active-count", { contestId, count });
     });
 
-    socket.on("disconnect", () => {
-      console.log("❌ Client disconnected:", socket.id);
-    });
+    socket.on("disconnect", () => {});
   });
-
-  console.log("✅ Socket.IO initialized successfully!");
   return io;
 };
 
@@ -104,12 +93,10 @@ export const notifyContestSubmission = (
 ) => {
   try {
     if (!io) {
-      console.log("Socket.io instance not available");
       return;
     }
 
     if (typeof io.to !== "function") {
-      console.log("Socket.io to() method not available");
       return;
     }
 
@@ -120,9 +107,7 @@ export const notifyContestSubmission = (
       status,
       timestamp: new Date(),
     });
-  } catch (error) {
-    console.error("Error sending contest submission notification:", error);
-  }
+  } catch (error) {}
 };
 
 export { io };
