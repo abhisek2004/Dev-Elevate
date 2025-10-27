@@ -145,8 +145,95 @@ export const verifySignupOtp = async (req, res) => {
       .json({ message: "Something went wrong", error: error.message });
   }
 };
+// Replace your loginUser function in userAuthController.js with this
 
 export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+  
+    
+    // Check for hidden characters
+    if (password) {
+      console.log('Password chars:');
+      for (let i = 0; i < password.length; i++) {
+        console.log(`  [${i}]: '${password[i]}' (code: ${password.charCodeAt(i)})`);
+      }
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log('❌ User not found for email:', email);
+      return res.status(404).json({ message: "User not found" });
+    }
+
+   
+
+    
+    const isMatch = await bcrypt.compare(password, user.password);
+    
+    console.log('✅ bcrypt.compare result:', isMatch);
+
+    if (!isMatch) {
+      console.log('❌ Password mismatch - authentication failed');
+      
+      // Extra debug: try comparing with the test hash from your quickHash.js
+      const testHash = '$2b$10$fZirYv9iJS92OaUnI6vC2evpDUpIBP6Le49W2GRKqtFFTVZ3w/wpS';
+      const testMatch = await bcrypt.compare(password, testHash);
+      console.log('🧪 Test against known hash:', testMatch);
+      
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    console.log('✅ Password match successful - proceeding with login');
+
+    const JWT_SECRET = process.env.JWT_SECRET;
+    const JWT_EXPIRES = "3d";
+    
+    // Create JWT token
+    const payLode = {
+      userId: user._id,
+    };
+    const token = jwt.sign(payLode, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+
+    // Set token in cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 3 * 24 * 60 * 60 * 1000,
+    });
+
+    // Create notification for login success
+    await createNotification(
+      user._id,
+      "Login successful! Welcome back.",
+      "success"
+    );
+
+    console.log('✅ Login completed successfully');
+    console.log('=== END LOGIN ATTEMPT ===\n');
+
+    res.status(200).json({
+      message: "Login successful",
+      userId: user._id,
+      token: token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error('🔥 LOGIN ERROR:', error);
+    console.error('Error stack:', error.stack);
+    res
+      .status(500)
+      .json({ message: "Something went wrong", error: error.message });
+  }
+};
+/*export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -195,7 +282,7 @@ export const loginUser = async (req, res) => {
       .status(500)
       .json({ message: "Something went wrong", error: error.message });
   }
-};
+};*/
 
 export const googleUser = async (req, res) => {
   try {

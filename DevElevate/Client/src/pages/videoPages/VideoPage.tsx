@@ -9,7 +9,7 @@ import {
     getSavedVideos,
     getYouTubeCourses,
 } from '../../services/videoProgressService';
-
+import { getAllAdminCourses } from '../../services/adminCourseService';
 interface VideoData {
     title: string;
     creator: string;
@@ -171,7 +171,7 @@ const UserVideoPage: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>('All');
     const [sortBy, setSortBy] = useState<string>('popular');
     const [showFilters, setShowFilters] = useState(false);
-
+    const [activeTab, setActiveTab] = useState<'youtube' | 'admin'>('youtube');
     // ✅ ADD: New state for API integration
     const [videoProgress, setVideoProgress] = useState<Record<string, VideoProgressData>>({});
     const [progressLoading, setProgressLoading] = useState<boolean>(false);
@@ -217,11 +217,27 @@ const UserVideoPage: React.FC = () => {
 
                 let coursesData: VideoData[] | null = null;
 
-                if (youtubeResponse.success && youtubeResponse.data) {
-                    coursesData = youtubeResponse.data;
-                    console.log('✅ Loaded', coursesData.length, 'courses');
+                if (activeTab === 'youtube') {
+                    // Fetch YouTube courses
+                    const youtubeResponse = await getYouTubeCourses(
+                        debouncedSearchTerm || undefined,
+                        selectedCategory !== 'All' ? selectedCategory : undefined,
+                        12
+                    );
+
+                    if (youtubeResponse.success && youtubeResponse.data) {
+                        coursesData = youtubeResponse.data;
+                    }
                 } else {
-                    console.warn('⚠️ No data in YouTube response');
+                    // ✅ NEW: Fetch Admin courses
+                    const adminResponse = await getAllAdminCourses(
+                        debouncedSearchTerm || undefined,
+                        selectedCategory !== 'All' ? selectedCategory : undefined
+                    );
+
+                    if (adminResponse.success && adminResponse.data) {
+                        coursesData = adminResponse.data;
+                    }
                 }
                 // ✅ NEW: Show loading state for progress
                 setProgressLoading(true)
@@ -289,7 +305,7 @@ const UserVideoPage: React.FC = () => {
         };
 
         loadCourses();
-    }, [debouncedSearchTerm, selectedCategory]); // Changed from searchTerm to debouncedSearchTerm
+    }, [debouncedSearchTerm, selectedCategory, activeTab]); // ✅ Add activeTab
 
 
 
@@ -630,7 +646,41 @@ const UserVideoPage: React.FC = () => {
                                 Discover comprehensive courses designed to accelerate your learning journey and master new skills.
                             </p>
                         </div>
-
+                        {/* ✅ UPDATED: Tab Switcher with better dark mode styling */}
+<div className="mb-6">
+    <div className={`flex gap-2 p-1 rounded-xl w-fit ${
+        darkMode ? 'bg-gray-700/50' : 'bg-gray-200'
+    }`}>
+        <button
+            onClick={() => setActiveTab('youtube')}
+            className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                activeTab === 'youtube'
+                    ? darkMode
+                        ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg'
+                        : 'bg-white text-purple-600 shadow-md'
+                    : darkMode
+                        ? 'text-gray-300 hover:text-white hover:bg-gray-600/50'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+            }`}
+        >
+            YouTube Courses
+        </button>
+        <button
+            onClick={() => setActiveTab('admin')}
+            className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                activeTab === 'admin'
+                    ? darkMode
+                        ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg'
+                        : 'bg-white text-purple-600 shadow-md'
+                    : darkMode
+                        ? 'text-gray-300 hover:text-white hover:bg-gray-600/50'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+            }`}
+        >
+            Admin Courses
+        </button>
+    </div>
+</div>
                         <div className="mb-6 space-y-4">
                             <div className="flex flex-col sm:flex-row gap-3">
                                 <div className="relative flex-1">
@@ -975,8 +1025,8 @@ const UserVideoPage: React.FC = () => {
 
                                 <div className="space-y-6">
                                     <div className={`p-6 rounded-xl border-2 ${darkMode
-                                            ? 'bg-gray-900 border-gray-700'
-                                            : 'bg-gray-50 border-gray-200'
+                                        ? 'bg-gray-900 border-gray-700'
+                                        : 'bg-gray-50 border-gray-200'
                                         }`}>
                                         <h3 className={`text-lg font-bold mb-4 ${darkMode ? 'text-gray-100' : 'text-gray-800'
                                             }`}>
@@ -1003,8 +1053,8 @@ const UserVideoPage: React.FC = () => {
                                     </div>
 
                                     <div className={`p-6 rounded-xl border-2 ${darkMode
-                                            ? 'bg-gray-900 border-gray-700'
-                                            : 'bg-gray-50 border-gray-200'
+                                        ? 'bg-gray-900 border-gray-700'
+                                        : 'bg-gray-50 border-gray-200'
                                         }`}>
                                         <h3 className={`text-lg font-bold mb-4 ${darkMode ? 'text-gray-100' : 'text-gray-800'
                                             }`}>
