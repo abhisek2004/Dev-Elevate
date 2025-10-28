@@ -163,8 +163,6 @@ export const getYouTubeCourses = async (req, res) => {
       videos = getMockCourses();
     }
 
-    console.log('✅ YouTube courses fetched:', videos.length);
-
     return res.status(200).json({
       success: true,
       data: videos,
