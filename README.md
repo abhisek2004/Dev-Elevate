@@ -32,6 +32,7 @@
 **_🔄 First: Sync (pull) to the latest merged code from the main branch._**
 **_✅ Then: Start working on your assigned issue or feature._**
 
+
 **_⚠ Skipping this step can cause merge conflicts and your PR may be rejected._**
 
 **_🚧 Important Note: login, registration, or Google authentication system Everything is working properly._**
@@ -39,6 +40,23 @@
 **_⚠ Do NOT remove or change any existing code unrelated to your issue! If your PR modifies or deletes any core code without a valid reason, it will not be merged._**
 
 **_🚫 Strict Rule: Do NOT bypass the login, registration, or Google authentication system. If any such activity is found, you will be removed and reported from this project._**
+
+---
+
+> ⚠️ **IMPORTANT WARNING:**  
+> 💡 **Before pushing your changes, make sure to _switch to the correct branch_ first!** 🪄  
+>  
+> 🔴 **Commands to Follow:**  
+> ```bash
+> git checkout <branch-name>    # 🔁 Switch to your assigned branch
+> git pull origin <branch-name> # ⬇️ Pull latest updates
+> git add .                     # ➕ Add your changes
+> git commit -m "your message"  # 💬 Commit with a clear message
+> git push origin <branch-name> # 🚀 Push your code safely
+> ```
+> 🧠 **Tip:** Always double-check the branch before pushing to avoid merge conflicts! ⚡  
+
+---
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
@@ -333,7 +351,7 @@ All user/admin credentials and email logs are safely stored using **MongoDB Atla
 ---
 
 🧪 **Test Locally First**
-Before pushing to production, test the signup + mail flow on **localhost**. Make sure emails are triggered, and data is saved correctly in the DB.
+Before pushing to production, Change the branch and then push test the signup + mail flow on **localhost**. Make sure emails are triggered, and data is saved correctly in the DB.
 
 Once confirmed — go ahead and connect to the live MongoDB Atlas cluster for full deployment 🚀
 
