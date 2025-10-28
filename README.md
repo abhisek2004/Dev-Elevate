@@ -148,6 +148,11 @@ Click the link below to explore the complete guide:
 
 - 👤 **Users**
 - 🛡️ **Admins**
+---
+
+### 🔑 Admin Credentials
+### Email: officialdevelevate@gmail.com
+### Password: Develevate@2025
 
 ---
 
