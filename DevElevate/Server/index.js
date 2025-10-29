@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import notesRoutes from "./routes/notesRoutes.js";
 
 // Load environment variables first
 dotenv.config();
@@ -33,7 +34,10 @@ import systemSettings from "./routes/SystemSettingRoute.js";
 import videoProgressRoutes from "./routes/videoProgressRoutes.js";
 import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
 import analyticRoute from "./routes/analytics.js";
-
+// Add static file serving for uploaded files (add this after other middleware)
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 import http from "http";
 import { initSocketIO } from "./socket.js";
 import { startContestFinalizationCron } from "./controller/contestController.js";
@@ -46,7 +50,8 @@ if (process.env.MONGO_URI) {
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 // Middleware
 app.use(
     cors({
@@ -106,7 +111,21 @@ app.use("/api/v1/placements", placementRoutes);
 // Contest Routes
 app.use("/api/v1/contests", contestRoutes);
 startContestFinalizationCron(app);
+// ✅ NOTES ROUTES (Add detailed logging)
+console.log('🔧 Registering notes routes at /api/notes');
+app.use("/api/notes", notesRoutes);
+console.log("✅ Notes Routes Registered!");
 
+// Debug: Log all registered routes
+notesRoutes.stack.forEach((r) => {
+  if (r.route) {
+    const methods = Object.keys(r.route.methods).join(', ').toUpperCase();
+    console.log(`   ${methods} /api/notes${r.route.path}`);
+  }
+});
+
+// Serve uploaded files
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Sample Usage of authenticate and authorize middleware for roleBased Features
 app.get(
     "/api/admin/dashboard",
