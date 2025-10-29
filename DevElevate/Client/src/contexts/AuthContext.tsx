@@ -1,4 +1,5 @@
 import { baseUrl } from "../config/routes";
+import { useGlobalState } from "./GlobalContext";
 import React, {
   createContext,
   useContext,
@@ -201,7 +202,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
-
+  const { dispatch: globalDispatch } = useGlobalState(); // ✅ Add this
   // Load auth state from localStorage
   useEffect(() => {
     const savedAuth = localStorage.getItem("devElevateAuth");
@@ -293,20 +294,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };*/
   // Replace your login function in AuthContext.tsx with this debug version
 
+// Replace ONLY the login function in your AuthContext.tsx with this:
+
 const login = async (email: string, password: string) => {
   dispatch({ type: "LOGIN_START" });
-  
-  
-  
-  // Check for hidden characters
-  for (let i = 0; i < password.length; i++) {
-    console.log(`Char ${i}: '${password[i]}' (code: ${password.charCodeAt(i)})`);
-  }
 
   try {
     const requestBody = { email, password };
-    console.log("Request body:", JSON.stringify(requestBody));
-    
     const response = await fetch(`${baseUrl}/api/v1/auth/login`, {
       method: "POST",
       credentials: "include",
@@ -317,7 +311,10 @@ const login = async (email: string, password: string) => {
     });
 
     const data = await response.json();
-    console.log("Login response:", data);
+    console.log("=== LOGIN RESPONSE ===");
+    console.log("Backend user:", data.user);
+    console.log("User _id:", data.user?._id);
+    console.log("=====================");
 
     if (!response.ok) {
       throw new Error(data.message || "Login failed");
@@ -326,8 +323,104 @@ const login = async (email: string, password: string) => {
     if (data.token && data.user) {
       const userRole = (data.user.role || "user").toLowerCase();
       
+      // ✅ Use MongoDB _id
+      const userId = data.user._id || data.user.id;
+      
+      if (!userId) {
+        throw new Error("User ID not found in response");
+      }
+      
       const user: User = {
-        id: data.user.id || data.user._id,
+        id: userId, // ✅ MongoDB _id
+        name: data.user.name,
+        email: data.user.email,
+        role: (userRole === "admin" ? "admin" : "user") as "user" | "admin",
+        avatar: data.user.avatar || data.user.profilePicture || `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.name}`,
+        bio: data.user.bio || "",
+        socialLinks: data.user.socialLinks || {},
+        joinDate: data.user.joinDate || data.user.createdAt || new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
+        isActive: data.user.isActive !== undefined ? data.user.isActive : true,
+        preferences: data.user.preferences || {
+          theme: "light",
+          notifications: true,
+          language: "en",
+          emailUpdates: true,
+        },
+        progress: data.user.progress || {
+          coursesEnrolled: [],
+          completedModules: 0,
+          totalPoints: 0,
+          streak: 0,
+          level: "Beginner",
+        },
+      };
+
+      console.log("=== USER OBJECT CREATED ===");
+      console.log("User.id:", user.id);
+      console.log("========================");
+
+      // ✅ Update AuthContext
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: { user, token: data.token },
+      });
+
+      // ✅ ALSO update GlobalContext
+      globalDispatch({
+        type: "SET_USER",
+        payload: {
+          _id: userId, // MongoDB _id
+          id: userId,  // Same as _id for compatibility
+          name: data.user.name,
+          email: data.user.email,
+          avatar: data.user.avatar || data.user.profilePicture,
+          profilePicture: data.user.profilePicture || data.user.avatar,
+          joinDate: data.user.joinDate || data.user.createdAt || new Date().toISOString(),
+          streak: data.user.progress?.streak || 0,
+          totalPoints: data.user.progress?.totalPoints || 0,
+          level: data.user.progress?.level || "Beginner",
+          role: userRole === "admin" ? "admin" : "user",
+        },
+      });
+    } else {
+      throw new Error("Invalid response from server");
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Login failed";
+    console.error("Login error:", errorMessage);
+    dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
+  }
+};
+
+// ✅ ALSO UPDATE verifySignupOtp function (same fix):
+const verifySignupOtp = async (email: string, otp: string) => {
+  dispatch({ type: "REGISTER_START" });
+  try {
+    const response = await fetch(`${baseUrl}/api/v1/auth/verify-otp`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "OTP verification failed");
+    }
+
+    if (data.token && data.user) {
+      const userRole = (data.user.role || "user").toLowerCase();
+      
+      // ✅ CRITICAL FIX: Use _id from MongoDB
+      const userId = data.user._id || data.user.id;
+      
+      if (!userId) {
+        throw new Error("User ID not found in response");
+      }
+      
+      const user: User = {
+        id: userId, // ✅ This should be the MongoDB _id
         name: data.user.name,
         email: data.user.email,
         role: (userRole === "admin" ? "admin" : "user") as "user" | "admin",
@@ -353,16 +446,17 @@ const login = async (email: string, password: string) => {
       };
 
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: "REGISTER_SUCCESS",
         payload: { user, token: data.token },
       });
-    } else {
-      throw new Error("Invalid response from server");
+      return;
     }
+
+    throw new Error("Invalid verification response");
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : "Login failed";
-    console.error("Login error:", errorMessage);
-    dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
+    const errorMessage =
+      error instanceof Error ? error.message : "OTP verification failed";
+    dispatch({ type: "REGISTER_FAILURE", payload: errorMessage });
   }
 };
 
@@ -408,7 +502,7 @@ const login = async (email: string, password: string) => {
     }
   };
 
-  const verifySignupOtp = async (email: string, otp: string) => {
+  /*const verifySignupOtp = async (email: string, otp: string) => {
     dispatch({ type: "REGISTER_START" });
     try {
       const response = await fetch(`${baseUrl}/api/v1/auth/verify-otp`, {
@@ -465,7 +559,7 @@ const login = async (email: string, password: string) => {
         error instanceof Error ? error.message : "OTP verification failed";
       dispatch({ type: "REGISTER_FAILURE", payload: errorMessage });
     }
-  };
+  };*/
 
   const changePassword = async (
     currentPassword: string,
@@ -500,6 +594,7 @@ const login = async (email: string, password: string) => {
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
+    globalDispatch({ type: "SET_USER", payload: null as any });
     localStorage.removeItem("devElevateAuth");
   };
 

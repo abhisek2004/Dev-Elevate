@@ -7,15 +7,19 @@ import React, {
 } from "react";
 
 // Types
+// Update the User interface in GlobalContext.tsx
 export interface User {
-  id: string;
+  _id: string;        // ✅ Add MongoDB _id
+  id: string;         // Keep for compatibility
   name: string;
   email: string;
   avatar?: string;
+  profilePicture?: string;  // ✅ Add for notes
   joinDate: string;
   streak: number;
   totalPoints: number;
   level: string;
+  role?: string;      // ✅ Add role
 }
 
 export interface LearningProgress {

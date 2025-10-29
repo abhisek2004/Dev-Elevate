@@ -284,62 +284,136 @@ export const loginUser = async (req, res) => {
   }
 };*/
 
+//  googleUser function 
+
+
 export const googleUser = async (req, res) => {
   try {
     const { name, email, role } = req.body;
 
-    // Check if user already exists
+    console.log("\n=== GOOGLE LOGIN DEBUG ===");
+    console.log("Request data:", { name, email, role });
+
+    // ✅ Check if user already exists
     let user = await User.findOne({ email });
 
-    if (!user) {
+    if (user) {
+      console.log("✅ Existing user found:", user.name, "- ID:", user._id);
+      console.log("   Current role:", user.role);
+      
+      // ✅ CRITICAL FIX: Don't change existing user's role
+      // Only update name if it's different (e.g., user changed their Google name)
+      if (user.name !== name) {
+        console.log("   Updating name from", user.name, "to", name);
+        user.name = name;
+        await user.save();
+      }
+      
+      // ✅ Check if this user should NOT be admin
+      // Only officialdevelevate@gmail.com should be admin
+      if (user.role === "admin" && email !== "officialdevelevate@gmail.com") {
+        console.log("⚠️  WARNING: Regular user has admin role, fixing...");
+        user.role = "user";
+        await user.save();
+        console.log("✅ Role updated to 'user'");
+      }
+      
+    } else {
+      console.log("📝 Creating new user...");
+      
+      // ✅ CRITICAL: Always create new users with 'user' role
+      // Only make admin if email is officialdevelevate@gmail.com
+      const userRole = email === "officialdevelevate@gmail.com" ? "admin" : "user";
+      
       user = new User({
         name,
         email,
-        role,
-        password: "google-oauth", // Dummy password for Google users because in MongoDB User Schema requires a password
-      });
-
-      // Create notification for login success
-      await createNotification(
-        user._id,
-        "Login successful! Welcome back.",
-        "success"
-      );
-      await user.save();
-    }
-
-    // JWT token
-    const JWT_SECRET = process.env.JWT_SECRET;
-    const JWT_EXPIRES = "3d";
-    const payLode = { userId: user._id };
-    const token = jwt.sign(payLode, JWT_SECRET, { expiresIn: JWT_EXPIRES });
-
-    // Set token in cookie and send response
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
-        maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
-      })
-      .status(200)
-      .json({
-        message: "Google login successful",
-        userId: user._id,
-        token: token,
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
+        role: userRole, // ✅ Use determined role, not from request
+        password: "google-oauth-" + Math.random().toString(36).substring(7), // Random password
+        bio: "",
+        socialLinks: {
+          github: "",
+          linkedin: "",
+          twitter: "",
         },
       });
+
+      await user.save();
+      
+      console.log("✅ New user created:");
+      console.log("   ID:", user._id);
+      console.log("   Name:", user.name);
+      console.log("   Email:", user.email);
+      console.log("   Role:", user.role);
+
+      // Create welcome notification
+      try {
+        await createNotification(
+          user._id,
+          "Welcome to DevElevate! Your account has been created successfully.",
+          "success"
+        );
+      } catch (notifError) {
+        console.error("Notification creation failed:", notifError.message);
+      }
+    }
+
+    // ✅ Generate JWT token with user ID
+    const JWT_SECRET = process.env.JWT_SECRET;
+    const JWT_EXPIRES = "3d";
+    
+    // Include multiple ID formats for compatibility
+    const payload = { 
+      userId: user._id,
+      id: user._id,
+      _id: user._id,
+      email: user.email,
+      role: user.role 
+    };
+    
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+
+    console.log("✅ JWT token generated");
+    console.log("   Token payload:", payload);
+
+    // Set cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
+    });
+
+    console.log("✅ Google login successful for:", user.name);
+    console.log("=== END GOOGLE LOGIN ===\n");
+
+    // Return user data
+    return res.status(200).json({
+      success: true,
+      message: "Google login successful",
+      userId: user._id,
+      token: token,
+      user: {
+        id: user._id,
+        _id: user._id, // Include both formats
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        bio: user.bio || "",
+        socialLinks: user.socialLinks || {},
+        createdAt: user.createdAt,
+      },
+    });
     
   } catch (error) {
-    console.error("Google login error:", error);
-    res
-      .status(500)
-      .json({ message: "Something went wrong", error: error.message });
+    console.error("❌ Google login error:", error);
+    console.error("Stack trace:", error.stack);
+    
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      error: error.message
+    });
   }
 };
 

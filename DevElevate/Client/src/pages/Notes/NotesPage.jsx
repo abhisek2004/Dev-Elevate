@@ -2,19 +2,24 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import { Link } from "react-router-dom";
-import { FileText, Link2 } from "lucide-react";
+import { FileText, Link2, Plus } from "lucide-react";
 import NotesData from "./NotesData";
 import { AIService } from "../../services/aiService";
 import { searchNotes } from "../../utils/searchNotes";
+import CreateNoteModal from "./components/CreateNoteModal";
+import UserNotesGrid from "./components/UserNotesGrid";
 
 const NotesPage = () => {
   const { state } = useGlobalState();
   const [searchQuery, setSearchQuery] = useState("");
   const [summaries, setSummaries] = useState({});
   const [loadingSummary, setLoadingSummary] = useState({});
+  const [activeTab, setActiveTab] = useState("admin"); // admin, user, ai
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState(null);
 
-  // Filter notes based on search query
-  const filteredNotes = searchQuery
+  // Filter admin notes based on search query
+  const filteredAdminNotes = searchQuery
     ? searchNotes(searchQuery, NotesData)
     : NotesData;
 
@@ -34,6 +39,11 @@ const NotesPage = () => {
     const summary = await AIService.summarizeText(content);
     setSummaries((prev) => ({ ...prev, [noteId]: summary }));
     setLoadingSummary((prev) => ({ ...prev, [noteId]: false }));
+  };
+
+  const handleCreateNote = (topic) => {
+    setSelectedTopic(topic);
+    setShowCreateModal(true);
   };
 
   // Animation variants
@@ -175,7 +185,7 @@ const NotesPage = () => {
             initial="hidden"
             animate="visible"
             variants={searchAnimation}
-            className="max-w-2xl mx-auto mb-12"
+            className="max-w-2xl mx-auto mb-8"
           >
             <div className="relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
@@ -242,193 +252,253 @@ const NotesPage = () => {
                   state.darkMode ? "text-gray-300" : "text-gray-600"
                 }`}
               >
-                {filteredNotes.length === 1
+                {filteredAdminNotes.length === 1
                   ? `Found 1 note matching "${searchQuery}"`
-                  : `Found ${filteredNotes.length} notes matching "${searchQuery}"`}
+                  : `Found ${filteredAdminNotes.length} notes matching "${searchQuery}"`}
               </motion.p>
             )}
           </motion.div>
 
-          {/* Notes Section */}
+          {/* Tabs */}
           <motion.div
             initial="hidden"
             animate="visible"
             variants={contentAnimation}
-            className="flex flex-col items-center justify-between gap-4 mb-8 sm:flex-row"
+            className="flex justify-center mb-8"
           >
-            <div className="w-full sm:w-auto">
-              <h2
-                className={`text-2xl sm:text-3xl font-righteous tracking-wider text-center sm:text-left ${
-                  state.darkMode ? "text-gray-100" : "text-gray-900"
-                }`}
-              >
-                Notes Topics
-              </h2>
-              <p
-                className={`text-sm mt-1 text-center sm:text-left ${
-                  state.darkMode ? "text-gray-300" : "text-gray-600"
-                }`}
-              >
-                Browse through our collection of curated notes and resources
-              </p>
-            </div>
-
             <div
-              className={`px-4 py-2 rounded-lg ${
-                state.darkMode ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-200"
-              } border`}
+              className={`inline-flex p-1 rounded-xl ${
+                state.darkMode ? "bg-gray-800" : "bg-gray-100"
+              }`}
             >
-              <p
-                className={`text-sm font-medium flex items-center ${
-                  state.darkMode ? "text-blue-500" : "text-blue-600"
+              <button
+                onClick={() => setActiveTab("admin")}
+                className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                  activeTab === "admin"
+                    ? state.darkMode
+                      ? "bg-blue-600 text-white"
+                      : "bg-blue-600 text-white"
+                    : state.darkMode
+                    ? "text-gray-300 hover:text-gray-100"
+                    : "text-gray-600 hover:text-gray-900"
                 }`}
               >
-                <span
-                  className={`mr-2 ${
-                    state.darkMode ? "text-gray-300" : "text-gray-500"
-                  }`}
-                >
-                  Total Notes:
-                </span>
-                <span className="font-bold">{filteredNotes.length}</span>
-              </p>
+                Admin Notes
+              </button>
+              <button
+                onClick={() => setActiveTab("user")}
+                className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                  activeTab === "user"
+                    ? state.darkMode
+                      ? "bg-blue-600 text-white"
+                      : "bg-blue-600 text-white"
+                    : state.darkMode
+                    ? "text-gray-300 hover:text-gray-100"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                User Notes
+              </button>
+              <button
+                onClick={() => setActiveTab("ai")}
+                className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                  activeTab === "ai"
+                    ? state.darkMode
+                      ? "bg-blue-600 text-white"
+                      : "bg-blue-600 text-white"
+                    : state.darkMode
+                    ? "text-gray-300 hover:text-gray-100"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                AI Notes
+              </button>
             </div>
           </motion.div>
 
-          {/* Notes Grid */}
-          <motion.div
-            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-            initial="hidden"
-            animate="visible"
-            variants={container}
-          >
-            {filteredNotes.map((note, index) => {
-              const Icon = note.icon;
-              return (
-                <motion.div
-                  key={index}
-                  className={`relative group overflow-hidden rounded-xl p-6 transition-all transform hover:-translate-y-0.5 ${
-                    state.darkMode
-                      ? "bg-gray-800 border-gray-700 hover:bg-gray-700 hover:shadow-lg"
-                      : "bg-white border-gray-200 hover:bg-gray-50 hover:shadow-md"
+          {/* Admin Notes Tab */}
+          {activeTab === "admin" && (
+            <>
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={contentAnimation}
+                className="flex flex-col items-center justify-between gap-4 mb-8 sm:flex-row"
+              >
+                <div className="w-full sm:w-auto">
+                  <h2
+                    className={`text-2xl sm:text-3xl font-righteous tracking-wider text-center sm:text-left ${
+                      state.darkMode ? "text-gray-100" : "text-gray-900"
+                    }`}
+                  >
+                    Notes Topics
+                  </h2>
+                  <p
+                    className={`text-sm mt-1 text-center sm:text-left ${
+                      state.darkMode ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    Browse through our collection of curated notes and resources
+                  </p>
+                </div>
+
+                <div
+                  className={`px-4 py-2 rounded-lg ${
+                    state.darkMode ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-200"
                   } border`}
-                  variants={item}
                 >
-                  {/* Top-right icon */}
-                  <div className="absolute top-3 right-3">
-                    {note.customDocs ? (
-                      <div
-                        className={`p-1.5 rounded-lg ${
-                          state.darkMode
-                            ? "bg-green-900/30 text-green-400"
-                            : "bg-green-100 text-green-600"
-                        }`}
-                      >
-                        <FileText className="w-4 h-4" />
-                      </div>
-                    ) : (
-                      <div
-                        className={`p-1.5 rounded-lg ${
-                          state.darkMode
-                            ? "bg-blue-900/30 text-blue-400"
-                            : "bg-blue-100 text-blue-600"
-                        }`}
-                      >
-                        <Link2 className="w-4 h-4" />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Note Content */}
-                  <div className="flex flex-col h-full">
-                    <div className="flex items-center mb-4 space-x-4">
-                      <div
-                        className={`p-2 rounded-lg ${
-                          state.darkMode ? "bg-gray-900/50" : "bg-gray-100"
-                        }`}
-                      >
-                        <Icon
-                          className={`w-5 h-5 ${
-                            state.darkMode ? "text-blue-500" : "text-blue-600"
-                          }`}
-                        />
-                      </div>
-                      <h3
-                        className={`text-lg font-semibold ${
-                          state.darkMode ? "text-gray-100" : "text-gray-900"
-                        }`}
-                      >
-                        {note.name}
-                      </h3>
-                    </div>
-
-                    <p
-                      className={`text-sm mb-6 line-clamp-3 ${
-                        state.darkMode ? "text-gray-300" : "text-gray-600"
+                  <p
+                    className={`text-sm font-medium flex items-center ${
+                      state.darkMode ? "text-blue-500" : "text-blue-600"
+                    }`}
+                  >
+                    <span
+                      className={`mr-2 ${
+                        state.darkMode ? "text-gray-300" : "text-gray-500"
                       }`}
                     >
-                      {note.content}
-                    </p>
+                      Total Notes:
+                    </span>
+                    <span className="font-bold">{filteredAdminNotes.length}</span>
+                  </p>
+                </div>
+              </motion.div>
 
-                    {/* AI Summary Button */}
-                    {note.content && (
-                      <div className="mb-4">
-                        {loadingSummary[note.id] ? (
-                          <p
-                            className={`text-sm ${
-                              state.darkMode ? "text-gray-400" : "text-gray-500"
-                            }`}
-                          >
-                            Loading summary...
-                          </p>
-                        ) : summaries[note.id] ? (
-                          <p
-                            className={`text-sm ${
-                              state.darkMode ? "text-gray-400" : "text-gray-500"
-                            }`}
-                          >
-                            {summaries[note.id]}
-                          </p>
-                        ) : (
-                          <button
-                            onClick={() => generateSummary(note.id, note.content)}
-                            className={`text-sm ${
+              {/* Notes Grid */}
+              <motion.div
+                className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                initial="hidden"
+                animate="visible"
+                variants={container}
+              >
+                {filteredAdminNotes.map((note, index) => {
+                  const Icon = note.icon;
+                  return (
+                    <motion.div
+                      key={index}
+                      className={`relative group overflow-hidden rounded-xl p-6 transition-all transform hover:-translate-y-0.5 ${
+                        state.darkMode
+                          ? "bg-gray-800 border-gray-700 hover:bg-gray-700 hover:shadow-lg"
+                          : "bg-white border-gray-200 hover:bg-gray-50 hover:shadow-md"
+                      } border`}
+                      variants={item}
+                    >
+                      {/* Top-right icon */}
+                      <div className="absolute top-3 right-3">
+                        {note.customDocs ? (
+                          <div
+                            className={`p-1.5 rounded-lg ${
                               state.darkMode
-                                ? "text-blue-500 hover:text-blue-400"
-                                : "text-blue-600 hover:text-blue-700"
-                            } hover:underline`}
+                                ? "bg-green-900/30 text-green-400"
+                                : "bg-green-100 text-green-600"
+                            }`}
                           >
-                            Generate Summary
-                          </button>
+                            <FileText className="w-4 h-4" />
+                          </div>
+                        ) : (
+                          <div
+                            className={`p-1.5 rounded-lg ${
+                              state.darkMode
+                                ? "bg-blue-900/30 text-blue-400"
+                                : "bg-blue-100 text-blue-600"
+                            }`}
+                          >
+                            <Link2 className="w-4 h-4" />
+                          </div>
                         )}
                       </div>
-                    )}
 
-                    {/* View Link */}
-                    <div className="mt-auto">
-                      <Link
-                        to={note.link}
-                        className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                          state.darkMode
-                            ? "bg-gray-900/50 text-blue-500 hover:bg-gray-900/80"
-                            : "bg-gray-100 text-blue-600 hover:bg-gray-200"
-                        }`}
-                      >
-                        <span className="mr-2">
-                          {note.customDocs ? "View Notes" : "View Resources"}
-                        </span>
-                        <span className="inline-block transition-transform group-hover:translate-x-1">
-                          →
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+                      {/* Note Content */}
+                      <div className="flex flex-col h-full">
+                        <div className="flex items-center mb-4 space-x-4">
+                          <div
+                            className={`p-2 rounded-lg ${
+                              state.darkMode ? "bg-gray-900/50" : "bg-gray-100"
+                            }`}
+                          >
+                            <Icon
+                              className={`w-5 h-5 ${
+                                state.darkMode ? "text-blue-500" : "text-blue-600"
+                              }`}
+                            />
+                          </div>
+                          <h3
+                            className={`text-lg font-semibold ${
+                              state.darkMode ? "text-gray-100" : "text-gray-900"
+                            }`}
+                          >
+                            {note.name}
+                          </h3>
+                        </div>
+
+                        <p
+                          className={`text-sm mb-6 line-clamp-3 ${
+                            state.darkMode ? "text-gray-300" : "text-gray-600"
+                          }`}
+                        >
+                          {note.content}
+                        </p>
+
+                        {/* View Link */}
+                        <div className="mt-auto">
+                          <Link
+                            to={note.link}
+                            className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                              state.darkMode
+                                ? "bg-gray-900/50 text-blue-500 hover:bg-gray-900/80"
+                                : "bg-gray-100 text-blue-600 hover:bg-gray-200"
+                            }`}
+                          >
+                            <span className="mr-2">
+                              {note.customDocs ? "View Notes" : "View Resources"}
+                            </span>
+                            <span className="inline-block transition-transform group-hover:translate-x-1">
+                              →
+                            </span>
+                          </Link>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            </>
+          )}
+
+          {/* User Notes Tab */}
+          {activeTab === "user" && (
+            <UserNotesGrid onCreateNote={handleCreateNote} />
+          )}
+
+          {/* AI Notes Tab */}
+          {activeTab === "ai" && (
+            <div className="text-center py-20">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`${state.darkMode ? "text-gray-300" : "text-gray-600"}`}
+              >
+                <p className="text-xl mb-4">AI Generated Notes Coming Soon!</p>
+                <p className="text-sm">
+                  We're working on bringing you AI-powered note generation and summaries.
+                </p>
+              </motion.div>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Create Note Modal */}
+      {showCreateModal && (
+        <CreateNoteModal
+          isOpen={showCreateModal}
+          onClose={() => {
+            setShowCreateModal(false);
+            setSelectedTopic(null);
+          }}
+          selectedTopic={selectedTopic}
+        />
+      )}
     </div>
   );
 };
