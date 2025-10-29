@@ -11,7 +11,6 @@ import {
   getAdminCourseStats
 } from "../controller/adminCourseController.js";
 
-console.log('📌 Admin Course routes loading...');
 
 // ✅ PUBLIC ROUTES - No authentication required (for users to view courses)
 router.get("/stats", getAdminCourseStats);  // Must be BEFORE /:courseId
@@ -24,14 +23,5 @@ router.post("/fetch-youtube", authenticateToken, requireAdmin, fetchYouTubeDetai
 router.post("/", authenticateToken, requireAdmin, createAdminCourse);
 router.put("/:courseId", authenticateToken, requireAdmin, updateAdminCourse);
 router.delete("/:courseId", authenticateToken, requireAdmin, deleteAdminCourse);
-
-console.log('✅ Admin Course routes loaded successfully');
-console.log('   GET  /api/v1/admin-courses');
-console.log('   GET  /api/v1/admin-courses/stats');
-console.log('   GET  /api/v1/admin-courses/:courseId');
-console.log('   POST /api/v1/admin-courses (Admin only)');
-console.log('   POST /api/v1/admin-courses/fetch-youtube (Admin only)');
-console.log('   PUT  /api/v1/admin-courses/:courseId (Admin only)');
-console.log('   DELETE /api/v1/admin-courses/:courseId (Admin only)');
 
 export default router;

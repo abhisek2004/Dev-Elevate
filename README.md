@@ -1,6 +1,10 @@
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-<h1 align="center">🚀 Dev_Elevate_GSSoC-2025_&_Hacktoberfest-2025 </h1>
+<h1 align="center">🚀 Dev_Elevate </h1>
+
+<h1 align="center"> GSSoC-2025 </h1>
+
+<h1 align="center"> Hacktoberfest-2025 </h1>
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
@@ -184,6 +188,9 @@ Click the link below to explore the complete guide:
 To help learners and aspiring professionals master skills like DSA, Java, MERN Stack, AI/ML, and Data Science while also preparing for placements through an AI-driven, highly personalized, and community-powered platform.
 
 ---
+
+<details>
+  <summary>📘 Click to Read More </summary>
 
 ## ⚠️ **🚨 All Pages Below Are Mandatory and Must Be Fully Functional Without Bugs**
 
@@ -457,72 +464,6 @@ Includes:
 
 ---
 
-### 🔒 _Strict Contribution Guidelines (Must Follow):_
-
-❗ YOU ARE *NOT ALLOWED TO:
-
-🔴 ❌ You are NOT allowed to change or update any existing backend files or original code.
-
-🔴 ❌ You are NOT allowed to update or modify any existing routes or their logic in any form.
-
-🔴 ❌ You are NOT allowed to change the project structure or delete/edit core files without permission.
-
-🔴 ❌ You are NOT allowed to add or push any .env, .env.local, or sensitive environment files to the frontend OR backend.
-
----
-
-### 🧾 **Error Pages (🚨 Required)**
-
-- ❌ 404 Not Found
-- 🔒 403 Forbidden
-- ⚠️ Validation/Submission Errors
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-## 🔧 Tech Stack
-
-| Layer         | Tech Used                                  |
-| ------------- | ------------------------------------------ |
-| Frontend      | Typescript, Tailwind CSS, Shadcn UI, Axios |
-| Backend       | Node.js + Express                          |
-| Database      | MongoDB Atlas                              |
-| Auth          | JWT                                        |
-| AI Chatbot    | GPT-4 API, any other                       |
-| Resume Engine | HTML2PDF, GPT Suggestion APIs              |
-| APIs          | YouTube API, Google Sheets API, News API   |
-| Hosting       | Vercel                                     |
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-## 🌟 Summary – Trending Enhancements
-
-| Category           | Feature Examples                                     |
-| ------------------ | ---------------------------------------------------- |
-| 🧠 AI              | Career Advisor, Resume GPT, Roadmap Recommender      |
-| 🔁 Real-Time       | Collaborative Coding, Study Groups, Hackathons       |
-| 🎨 Personalization | One-Click Portfolio, Dark Mode, TTS, Resume Tools    |
-| 📢 Community       | Plugin Store, Forum, Mentorship Matching             |
-| 🎓 Learning        | Voice AI, Flashcards, Skill Graphs, Watch Mode       |
-| 🚀 Career          | Job Recommender, LinkedIn/GitHub Sync, Interview Bot |
-| 🌍 Inclusive       | Multi-language, Accessibility Focus                  |
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-## 🧑‍🤝‍🧑 Open Source Roles
-
-| Role              | Responsibility                               |
-| ----------------- | -------------------------------------------- |
-| 📱 Frontend Lead  | UI development (Dashboard, Learning, Resume) |
-| 🖥️ Backend Lead   | APIs for users, resumes, quizzes, etc.       |
-| 🤖 AI Integrator  | LangChain, GPT APIs, Vector DB               |
-| 🔌 API Dev        | Integrate 3rd-party tools (GSheets, NewsAPI) |
-| 🎨 UX Designer    | UI/UX flows, accessibility                   |
-| 📝 Content Writer | Notes, Quizzes, Assignments, Flashcards      |
-| 🧪 QA Tester      | Feature testing, bug fixing                  |
-| 📣 Community Lead | Docs, Outreach, GitHub management            |
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
 ## 🔥 Bonus Enhancements – Phase 2 / 3
 
 ### 🎧 AI-Powered Voice Interaction
@@ -676,6 +617,75 @@ Includes:
 - Offers instant feedback on quizzes or code
   -🛠️ Tech: GPT-4, LangChain Agents, Whisper API, Speech Synthesis
 
+---
+
+### 🧾 **Error Pages (🚨 Required)**
+
+- ❌ 404 Not Found
+- 🔒 403 Forbidden
+- ⚠️ Validation/Submission Errors
+
+---
+
+## 🌟 Summary – Trending Enhancements
+
+| Category           | Feature Examples                                     |
+| ------------------ | ---------------------------------------------------- |
+| 🧠 AI              | Career Advisor, Resume GPT, Roadmap Recommender      |
+| 🔁 Real-Time       | Collaborative Coding, Study Groups, Hackathons       |
+| 🎨 Personalization | One-Click Portfolio, Dark Mode, TTS, Resume Tools    |
+| 📢 Community       | Plugin Store, Forum, Mentorship Matching             |
+| 🎓 Learning        | Voice AI, Flashcards, Skill Graphs, Watch Mode       |
+| 🚀 Career          | Job Recommender, LinkedIn/GitHub Sync, Interview Bot |
+| 🌍 Inclusive       | Multi-language, Accessibility Focus                  |
+
+
+</details>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+### 🔒 _Strict Contribution Guidelines (Must Follow):_
+
+❗ YOU ARE *NOT ALLOWED TO:
+
+🔴 ❌ You are NOT allowed to change or update any existing backend files or original code.
+
+🔴 ❌ You are NOT allowed to update or modify any existing routes or their logic in any form.
+
+🔴 ❌ You are NOT allowed to change the project structure or delete/edit core files without permission.
+
+🔴 ❌ You are NOT allowed to add or push any .env, .env.local, or sensitive environment files to the frontend OR backend.
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+## 🔧 Tech Stack
+
+| Layer         | Tech Used                                  |
+| ------------- | ------------------------------------------ |
+| Frontend      | Typescript, Tailwind CSS, Shadcn UI, Axios |
+| Backend       | Node.js + Express                          |
+| Database      | MongoDB Atlas                              |
+| Auth          | JWT                                        |
+| AI Chatbot    | GPT-4 API, any other                       |
+| Resume Engine | HTML2PDF, GPT Suggestion APIs              |
+| APIs          | YouTube API, Google Sheets API, News API   |
+| Hosting       | Vercel & Render                            |
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+## 🧑‍🤝‍🧑 Open Source Roles
+
+| Role              | Responsibility                               |
+| ----------------- | -------------------------------------------- |
+| 📱 Frontend Lead  | UI development (Dashboard, Learning, Resume) |
+| 🖥️ Backend Lead   | APIs for users, resumes, quizzes, etc.       |
+| 🤖 AI Integrator  | LangChain, GPT APIs, Vector DB               |
+| 🔌 API Dev        | Integrate 3rd-party tools (GSheets, NewsAPI) |
+| 🎨 UX Designer    | UI/UX flows, accessibility                   |
+| 📝 Content Writer | Notes, Quizzes, Assignments, Flashcards      |
+| 🧪 QA Tester      | Feature testing, bug fixing                  |
+| 📣 Community Lead | Docs, Outreach, GitHub management            |
+
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 ### 🙌 **Thank You, Contributors!**
@@ -687,6 +697,36 @@ Includes:
     <img src="https://api.vaunt.dev/v1/github/entities/abhisek2004/repositories/Dev-Elevate/contributors?format=svg&limit=54" width="700" height="250" />
   </a>
 </p>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+## 🌟 Our Amazing Contributors
+
+Every line of code, every fix, every idea — it all adds up.  
+Grateful to have you building with us.  
+You all are the heart of this community! 💖
+
+**Summary:**
+- 70 Contributors  
+- 1,119 Total Points  
+- 200 Eligible PRs  
+- 838 Total Commits  
+
+<details>
+<summary> TOP Contributors List </summary>
+
+| Contributor           | Role                 | Points | PRs | Commits | GitHub |
+| --------------------- | ------------------- | ------ | --- | ------- | ------ | 
+| GOBINDA-GAGAN         | 👑 Contributor      | 457    | 66  | 105     | [GitHub](https://github.com/GOBINDA-GAGAN) | - |
+| Richajaishwal0        | 🏆 Contributor      | 93     | 14  | 17      | [GitHub](https://github.com/Richajaishwal0) | - |
+| Coder-010506          | 🏆 Contributor      | 50     | 5   | 11      | [GitHub](https://github.com/Coder-010506) | - |
+| Nagasrineelamshetty   | 🏆 Contributor      | 41     | 5   | 5       | [GitHub](https://github.com/Nagasrineelamshetty) | - |
+| manasdutta04          | 🏆 Contributor      | 34     | 4   | 5       | [GitHub](https://github.com/manasdutta04) | - |
+| akofficial10          | 🏆 Contributor      | 28     | 4   | 4       | [GitHub](https://github.com/akofficial10) | - |
+| 100NikhilBro          | 🏆 Contributor      | 24     | 3   | 6       | [GitHub](https://github.com/100NikhilBro) | - |
+| Kritika11052005       | 🏆 Contributor      | 23     | 3   | 8       | [GitHub](https://github.com/Kritika11052005) | - |
+
+</details>
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
@@ -734,6 +774,8 @@ Includes:
 | Mentor 1      | Pinak viramgama | [Pinak viramgama](https://github.com/pinakviramgama)   | [Pinak viramgama](https://www.linkedin.com/in/gecr-ai230200143075) |
 | Mentor 2   | Avansh Yadav       | [Avansh2006](https://github.com/Avansh2006)         | [Avansh Yadav](https://www.linkedin.com/in/avanshyadav/)                |
 | Mentor 3    | Amisha Gupta       | [amishagupta31](https://github.com/amishagupta31)   | [Amisha Gupta](https://www.linkedin.com/in/amishagupta31/)              |
+| Mentor 4    | Jay Sawant       | [Jay Sawant](https://github.com/Jay2006sawant)   | [Jay Sawant](https://www.linkedin.com/in/jay-sawant-4b59aa324/)              |
+
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
