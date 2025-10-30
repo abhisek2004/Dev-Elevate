@@ -111,6 +111,17 @@ app.use("/api/v1/placements", placementRoutes);
 // Contest Routes
 app.use("/api/v1/contests", contestRoutes);
 startContestFinalizationCron(app);
+// ✅ AI ROUTES (Should come BEFORE notes routes)
+app.use("/api/v1/ai", aiRoutes);
+console.log("✅ AI Routes Registered at /api/v1/ai");
+
+// Debug: Log all AI routes
+aiRoutes.stack.forEach((r) => {
+  if (r.route) {
+    const methods = Object.keys(r.route.methods).join(', ').toUpperCase();
+    console.log(`   ${methods} /api/v1/ai${r.route.path}`);
+  }
+});
 // ✅ NOTES ROUTES (Add detailed logging)
 console.log('🔧 Registering notes routes at /api/notes');
 app.use("/api/notes", notesRoutes);

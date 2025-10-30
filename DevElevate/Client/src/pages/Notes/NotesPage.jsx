@@ -1,39 +1,117 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import { Link } from "react-router-dom";
-import { FileText, Link2, Plus } from "lucide-react";
+import { FileText, Link2, Plus, Sparkles, Loader2, Calendar, Tag, Eye, Trash2 } from "lucide-react";
 import NotesData from "./NotesData";
 import { AIService } from "../../services/aiService";
 import { searchNotes } from "../../utils/searchNotes";
 import CreateNoteModal from "./components/CreateNoteModal";
 import UserNotesGrid from "./components/UserNotesGrid";
+import AINoteGeneratorModal from "./components/AINoteGeneratorModal";
+import axiosInstance from "../../api/axiosinstance";
+import { toast } from "sonner"; // ✅ Changed to Sonner
 
 const NotesPage = () => {
   const { state } = useGlobalState();
   const [searchQuery, setSearchQuery] = useState("");
   const [summaries, setSummaries] = useState({});
   const [loadingSummary, setLoadingSummary] = useState({});
-  const [activeTab, setActiveTab] = useState("admin"); // admin, user, ai
+  const [activeTab, setActiveTab] = useState("admin");
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showAIModal, setShowAIModal] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState(null);
+  const [aiNotes, setAiNotes] = useState([]);
+  const [loadingAiNotes, setLoadingAiNotes] = useState(false);
 
-  // Filter admin notes based on search query
   const filteredAdminNotes = searchQuery
     ? searchNotes(searchQuery, NotesData)
     : NotesData;
 
-  // Handle search input change
+  useEffect(() => {
+    if (activeTab === "ai") {
+      fetchAiNotes();
+    }
+  }, [activeTab]);
+
+  const fetchAiNotes = async () => {
+    setLoadingAiNotes(true);
+    try {
+      const response = await axiosInstance.get("/api/notes/ai-notes");
+      if (response.data.success) {
+        setAiNotes(response.data.notes);
+      }
+    } catch (error) {
+      console.error("Error fetching AI notes:", error);
+      if (error.response?.status !== 401) {
+        toast.error("Failed to load AI notes");
+      }
+    } finally {
+      setLoadingAiNotes(false);
+    }
+  };
+
+  // ✅ Replace window.confirm with Sonner confirmation
+  const deleteAiNote = async (noteId, noteTitle) => {
+    toast.promise(
+      new Promise((resolve, reject) => {
+        toast.warning(
+          <div>
+            <p className="font-semibold">Delete "{noteTitle}"?</p>
+            <p className="text-sm mt-1">This AI-generated note will be permanently removed.</p>
+            <div className="flex gap-2 mt-3">
+              <button
+                onClick={() => {
+                  toast.dismiss();
+                  resolve(true);
+                }}
+                className="px-3 py-1.5 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => {
+                  toast.dismiss();
+                  reject(new Error("Cancelled"));
+                }}
+                className="px-3 py-1.5 bg-gray-300 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>,
+          {
+            duration: Infinity,
+            closeButton: false,
+          }
+        );
+      }).then(async () => {
+        const response = await axiosInstance.delete(`/api/notes/${noteId}`);
+        if (response.data.success) {
+          setAiNotes(aiNotes.filter(note => note._id !== noteId));
+          return response;
+        }
+        throw new Error("Failed to delete");
+      }),
+      {
+        loading: "Deleting AI note...",
+        success: "AI note deleted successfully!",
+        error: (err) => {
+          if (err.message === "Cancelled") return null;
+          return "Failed to delete note";
+        },
+      }
+    );
+  };
+
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  // Clear search query
   const clearSearch = () => {
     setSearchQuery("");
   };
 
-  // Generate AI summary for a note
   const generateSummary = async (noteId, content) => {
     setLoadingSummary((prev) => ({ ...prev, [noteId]: true }));
     const summary = await AIService.summarizeText(content);
@@ -46,7 +124,6 @@ const NotesPage = () => {
     setShowCreateModal(true);
   };
 
-  // Animation variants
   const titleAnimation = {
     hidden: { opacity: 0, y: -50 },
     visible: {
@@ -126,7 +203,6 @@ const NotesPage = () => {
           : "bg-white text-gray-900"
       }`}
     >
-      {/* Background */}
       <div
         className={`absolute top-0 left-0 w-full h-full -z-10 bg-[size:30px_30px] ${
           state.darkMode ? "bg-grid-pattern-dark" : "bg-grid-pattern-light"
@@ -142,7 +218,6 @@ const NotesPage = () => {
       </div>
 
       <div className="px-4 py-12 mx-auto max-w-7xl md:py-16 lg:py-20">
-        {/* Header Section */}
         <div className="mb-12 text-center">
           <div className="inline-block overflow-hidden">
             <motion.h1
@@ -180,7 +255,6 @@ const NotesPage = () => {
             learning journey.
           </motion.p>
 
-          {/* Search Input */}
           <motion.div
             initial="hidden"
             animate="visible"
@@ -259,7 +333,6 @@ const NotesPage = () => {
             )}
           </motion.div>
 
-          {/* Tabs */}
           <motion.div
             initial="hidden"
             animate="visible"
@@ -316,7 +389,6 @@ const NotesPage = () => {
             </div>
           </motion.div>
 
-          {/* Admin Notes Tab */}
           {activeTab === "admin" && (
             <>
               <motion.div
@@ -344,7 +416,9 @@ const NotesPage = () => {
 
                 <div
                   className={`px-4 py-2 rounded-lg ${
-                    state.darkMode ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-200"
+                    state.darkMode
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-gray-100 border-gray-200"
                   } border`}
                 >
                   <p
@@ -359,12 +433,13 @@ const NotesPage = () => {
                     >
                       Total Notes:
                     </span>
-                    <span className="font-bold">{filteredAdminNotes.length}</span>
+                    <span className="font-bold">
+                      {filteredAdminNotes.length}
+                    </span>
                   </p>
                 </div>
               </motion.div>
 
-              {/* Notes Grid */}
               <motion.div
                 className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
                 initial="hidden"
@@ -383,7 +458,6 @@ const NotesPage = () => {
                       } border`}
                       variants={item}
                     >
-                      {/* Top-right icon */}
                       <div className="absolute top-3 right-3">
                         {note.customDocs ? (
                           <div
@@ -408,7 +482,6 @@ const NotesPage = () => {
                         )}
                       </div>
 
-                      {/* Note Content */}
                       <div className="flex flex-col h-full">
                         <div className="flex items-center mb-4 space-x-4">
                           <div
@@ -418,7 +491,9 @@ const NotesPage = () => {
                           >
                             <Icon
                               className={`w-5 h-5 ${
-                                state.darkMode ? "text-blue-500" : "text-blue-600"
+                                state.darkMode
+                                  ? "text-blue-500"
+                                  : "text-blue-600"
                               }`}
                             />
                           </div>
@@ -439,7 +514,6 @@ const NotesPage = () => {
                           {note.content}
                         </p>
 
-                        {/* View Link */}
                         <div className="mt-auto">
                           <Link
                             to={note.link}
@@ -465,30 +539,210 @@ const NotesPage = () => {
             </>
           )}
 
-          {/* User Notes Tab */}
           {activeTab === "user" && (
             <UserNotesGrid onCreateNote={handleCreateNote} />
           )}
 
-          {/* AI Notes Tab */}
           {activeTab === "ai" && (
-            <div className="text-center py-20">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`${state.darkMode ? "text-gray-300" : "text-gray-600"}`}
-              >
-                <p className="text-xl mb-4">AI Generated Notes Coming Soon!</p>
-                <p className="text-sm">
-                  We're working on bringing you AI-powered note generation and summaries.
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="py-8"
+            >
+              <div className="text-center mb-12">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 bg-gradient-to-br from-purple-500 to-blue-500">
+                  <Sparkles className="w-10 h-10 text-white" />
+                </div>
+                <h3
+                  className={`text-2xl font-bold mb-4 ${
+                    state.darkMode ? "text-gray-100" : "text-gray-900"
+                  }`}
+                >
+                  AI-Powered Note Generation
+                </h3>
+                <p
+                  className={`text-lg mb-8 max-w-2xl mx-auto ${
+                    state.darkMode ? "text-gray-300" : "text-gray-600"
+                  }`}
+                >
+                  Use artificial intelligence to generate comprehensive study
+                  notes on any topic instantly.
                 </p>
-              </motion.div>
-            </div>
+                <button
+                  onClick={() => {
+                    console.log("🔥 AI Button clicked!");
+                    setShowAIModal(true);
+                  }}
+                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl flex items-center gap-3 mx-auto"
+                >
+                  <Sparkles className="w-6 h-6" />
+                  Generate AI Notes
+                </button>
+              </div>
+
+              {loadingAiNotes ? (
+                <div className="flex justify-center items-center py-20">
+                  <Loader2
+                    className={`w-8 h-8 animate-spin ${
+                      state.darkMode ? "text-blue-500" : "text-blue-600"
+                    }`}
+                  />
+                </div>
+              ) : aiNotes.length > 0 ? (
+                <div>
+                  <div className="flex justify-between items-center mb-6">
+                    <h4
+                      className={`text-xl font-semibold ${
+                        state.darkMode ? "text-gray-100" : "text-gray-900"
+                      }`}
+                    >
+                      Your AI-Generated Notes ({aiNotes.length})
+                    </h4>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {aiNotes.map((note) => (
+                      <motion.div
+                        key={note._id}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className={`p-6 rounded-xl border transition-all hover:shadow-lg ${
+                          state.darkMode
+                            ? "bg-gray-800 border-gray-700 hover:border-purple-500"
+                            : "bg-white border-gray-200 hover:border-purple-400"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center gap-2">
+                            <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500">
+                              <Sparkles className="w-4 h-4 text-white" />
+                            </div>
+                            <span
+                              className={`text-xs px-2 py-1 rounded-full ${
+                                state.darkMode
+                                  ? "bg-purple-900/30 text-purple-400"
+                                  : "bg-purple-100 text-purple-600"
+                              }`}
+                            >
+                              AI Generated
+                            </span>
+                          </div>
+                        </div>
+
+                        <h5
+                          className={`text-lg font-semibold mb-2 line-clamp-2 ${
+                            state.darkMode ? "text-gray-100" : "text-gray-900"
+                          }`}
+                        >
+                          {note.title}
+                        </h5>
+
+                        <p
+                          className={`text-sm mb-4 line-clamp-3 ${
+                            state.darkMode ? "text-gray-400" : "text-gray-600"
+                          }`}
+                        >
+                          {note.content.substring(0, 150)}...
+                        </p>
+
+                        {note.tags && note.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {note.tags.slice(0, 3).map((tag, index) => (
+                              <span
+                                key={index}
+                                className={`text-xs px-2 py-1 rounded-full flex items-center gap-1 ${
+                                  state.darkMode
+                                    ? "bg-gray-700 text-gray-300"
+                                    : "bg-gray-100 text-gray-600"
+                                }`}
+                              >
+                                <Tag className="w-3 h-3" />
+                                {tag}
+                              </span>
+                            ))}
+                            {note.tags.length > 3 && (
+                              <span
+                                className={`text-xs px-2 py-1 rounded-full ${
+                                  state.darkMode
+                                    ? "text-gray-400"
+                                    : "text-gray-500"
+                                }`}
+                              >
+                                +{note.tags.length - 3} more
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        <div
+                          className={`flex items-center gap-2 text-xs mb-4 ${
+                            state.darkMode ? "text-gray-400" : "text-gray-500"
+                          }`}
+                        >
+                          <Calendar className="w-3 h-3" />
+                          {new Date(note.createdAt).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            }
+                          )}
+                        </div>
+
+                        <div className="flex gap-2">
+                          <Link
+                            to={`/notes/view/${note._id}`}
+                            className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                              state.darkMode
+                                ? "bg-purple-600 text-white hover:bg-purple-700"
+                                : "bg-purple-600 text-white hover:bg-purple-700"
+                            }`}
+                          >
+                            <Eye className="w-4 h-4" />
+                            View
+                          </Link>
+                          <button
+                            onClick={() => deleteAiNote(note._id, note.title)}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                              state.darkMode
+                                ? "bg-red-900/30 text-red-400 hover:bg-red-900/50"
+                                : "bg-red-100 text-red-600 hover:bg-red-200"
+                            }`}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className={`text-center py-12 px-4 rounded-xl border-2 border-dashed ${
+                    state.darkMode ? "border-gray-700" : "border-gray-300"
+                  }`}
+                >
+                  <FileText
+                    className={`w-16 h-16 mx-auto mb-4 ${
+                      state.darkMode ? "text-gray-600" : "text-gray-400"
+                    }`}
+                  />
+                  <p
+                    className={`text-lg ${
+                      state.darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    No AI-generated notes yet. Click the button above to create
+                    your first AI note!
+                  </p>
+                </div>
+              )}
+            </motion.div>
           )}
         </div>
       </div>
 
-      {/* Create Note Modal */}
       {showCreateModal && (
         <CreateNoteModal
           isOpen={showCreateModal}
@@ -497,6 +751,23 @@ const NotesPage = () => {
             setSelectedTopic(null);
           }}
           selectedTopic={selectedTopic}
+        />
+      )}
+
+      {showAIModal && (
+        <AINoteGeneratorModal
+          isOpen={showAIModal}
+          onClose={() => {
+            console.log("🔒 Closing AI modal");
+            setShowAIModal(false);
+          }}
+          onSuccess={() => {
+            console.log("✅ AI note saved successfully");
+            setShowAIModal(false);
+            fetchAiNotes();
+            setActiveTab("ai");
+          }}
+          darkMode={state.darkMode}
         />
       )}
     </div>

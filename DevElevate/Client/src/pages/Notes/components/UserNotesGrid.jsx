@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useAuth } from "../../../contexts/AuthContext"; // ✅ CHANGED: Use AuthContext
-import { useGlobalState } from "../../../contexts/GlobalContext"; // ✅ Keep for darkMode
+import { useAuth } from "../../../contexts/AuthContext";
+import { useGlobalState } from "../../../contexts/GlobalContext";
 import { Plus, Heart, Eye, FileText, Tag, Calendar, User, Trash2, Edit } from "lucide-react";
 import axiosInstance from "../../../api/axiosinstance";
 import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
 import { Link, useNavigate } from "react-router-dom";
 
-// ✅ Helper functions OUTSIDE component
+// Helper functions OUTSIDE component
 const getUserId = (userObj) => {
   if (!userObj) return null;
   return userObj.id || userObj._id || userObj.userId || null;
@@ -21,8 +21,8 @@ const getNoteOwnerId = (note) => {
 };
 
 const UserNotesGrid = ({ onCreateNote }) => {
-  const { state: authState } = useAuth(); // ✅ Get user from AuthContext
-  const { state: globalState } = useGlobalState(); // ✅ Get darkMode from GlobalContext
+  const { state: authState } = useAuth();
+  const { state: globalState } = useGlobalState();
   
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
@@ -30,7 +30,6 @@ const UserNotesGrid = ({ onCreateNote }) => {
   const [filter, setFilter] = useState("all");
   const [deletingNoteId, setDeletingNoteId] = useState(null);
 
-  // ✅ Use authState.user for user data, globalState.darkMode for theme
   const user = authState.user;
   const darkMode = globalState.darkMode;
 
@@ -109,10 +108,42 @@ const UserNotesGrid = ({ onCreateNote }) => {
   };
 
   const handleDeleteNote = async (noteId, noteTitle) => {
-    if (!window.confirm(`Are you sure you want to delete "${noteTitle}"?`)) {
-      return;
-    }
+    // Show confirmation toast with custom buttons
+    toast((t) => (
+      <div className="flex flex-col gap-3">
+        <div>
+          <p className="font-semibold text-gray-900">Delete Note?</p>
+          <p className="text-sm text-gray-600 mt-1">
+            Are you sure you want to delete "{noteTitle}"?
+          </p>
+        </div>
+        <div className="flex gap-2 justify-end">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={async () => {
+              toast.dismiss(t.id);
+              await performDelete(noteId);
+            }}
+            className="px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ), {
+      duration: Infinity,
+      style: {
+        maxWidth: '400px',
+      }
+    });
+  };
 
+  const performDelete = async (noteId) => {
     try {
       setDeletingNoteId(noteId);
       const response = await axiosInstance.delete(`/api/notes/${noteId}`);
@@ -144,7 +175,6 @@ const UserNotesGrid = ({ onCreateNote }) => {
     navigate(`/notes/edit/${noteId}`);
   };
 
-  // ✅ Check if current user owns the note
   const isNoteOwner = (note) => {
     if (!user) return false;
     
@@ -318,8 +348,6 @@ const UserNotesGrid = ({ onCreateNote }) => {
                 } border`}
                 variants={item}
               >
-                {/* Privacy Badge & Action Buttons */}
-                {/* Privacy Badge - Left Side */}
                 <div className="absolute top-3 left-3 z-10">
                   <span
                     className={`px-2 py-1 rounded-md text-xs font-medium ${
@@ -336,7 +364,6 @@ const UserNotesGrid = ({ onCreateNote }) => {
                   </span>
                 </div>
 
-                {/* Action Buttons - Right Side */}
                 {showActions && (
                   <div className="absolute top-3 right-3 z-10">
                     <div className="flex items-center gap-1">
@@ -378,7 +405,6 @@ const UserNotesGrid = ({ onCreateNote }) => {
                   </div>
                 )}
 
-                {/* Content Container */}
                 <div className="p-6">
                   <h3
                     className={`text-xl font-bold mb-3 line-clamp-2 ${
