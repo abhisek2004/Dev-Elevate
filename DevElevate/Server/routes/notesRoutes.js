@@ -174,8 +174,42 @@ router.get("/my-notes", authenticateToken, async (req, res) => {
   }
 });
 
+// ✅ GET /api/notes/ai-notes - Get AI-generated notes (MOVED HERE - BEFORE /:noteId)
+router.get("/ai-notes", authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user._id || req.user.id;
+    
+    console.log("=== GET AI NOTES DEBUG ===");
+    console.log("User ID:", userId);
 
-// ✅ GET /api/notes/:noteId - Get single note by ID
+    // ✅ Fixed: Changed Note to Notes, added isAiGenerated filter
+    const notes = await Notes.find({
+      userId: userId,
+      isAiGenerated: true  // Only fetch AI-generated notes
+    })
+    .populate({
+      path: "userId",
+      select: "name email profilePicture bio"
+    })
+    .sort({ createdAt: -1 })
+    .lean();
+
+    console.log(`✅ Found ${notes.length} AI-generated notes`);
+
+    res.json({
+      success: true,
+      notes: notes || []
+    });
+  } catch (error) {
+    console.error("❌ Error fetching AI notes:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch AI notes",
+      error: error.message
+    });
+  }
+});
+
 // ✅ GET /api/notes/:noteId - Get single note by ID
 router.get("/:noteId", authenticateToken, async (req, res) => {
   try {
@@ -216,8 +250,6 @@ router.get("/:noteId", authenticateToken, async (req, res) => {
         message: "Note not found"
       });
     }
-
-    
 
     console.log("📝 Note found:", {
       id: note._id,
@@ -282,10 +314,10 @@ router.get("/:noteId", authenticateToken, async (req, res) => {
 // ✅ POST /api/notes - Create new note (with file uploads)
 router.post("/", authenticateToken, upload.array("files", 5), async (req, res) => {
   try {
-    const { title, content, topicName, tags, isPublic } = req.body;
+    const { title, content, topicName, tags, isPublic, isAiGenerated } = req.body;
     const userId = req.user._id || req.user.id;
 
-    console.log("Creating note with data:", { title, content, topicName, tags, isPublic });
+    console.log("Creating note with data:", { title, content, topicName, tags, isPublic, isAiGenerated });
     console.log("Files:", req.files);
 
     if (!title || !content) {
@@ -336,6 +368,7 @@ router.post("/", authenticateToken, upload.array("files", 5), async (req, res) =
       topicName: topicName || 'General',
       tags: tagsArray,
       isPublic: isPublic === "true" || isPublic === true,
+      isAiGenerated: isAiGenerated === "true" || isAiGenerated === true || false, // ✅ ADDED
       files: filesData,
       likeCount: 0,
       views: 0

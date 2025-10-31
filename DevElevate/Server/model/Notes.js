@@ -25,6 +25,10 @@ const notesSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isAiGenerated: {  // ✅ ADD THIS FIELD
+      type: Boolean,
+      default: false,
+    },
     tags: [{
       type: String,
       trim: true,

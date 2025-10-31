@@ -217,3 +217,127 @@ Requirements:
     });
   }
 };
+
+// Add this to your existing aiController.js file
+
+// NEW FUNCTION: Generate AI Notes
+export const generateAINote = async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const userId = req.user?.id || req.user?._id;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
+
+    if (!prompt || !prompt.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "Prompt is required",
+      });
+    }
+
+    console.log("Generating AI note for prompt:", prompt);
+
+    // Build comprehensive prompt for note generation
+    const fullPrompt = `You are an expert educational content creator and study guide writer. Generate comprehensive, well-structured study notes on the following topic. 
+
+Topic: ${prompt}
+
+Requirements:
+1. Use clear Markdown formatting with proper headings (# ## ###)
+2. Include an introduction/overview section
+3. Break down key concepts with explanations
+4. Add relevant examples where applicable
+5. Use bullet points and numbered lists for clarity
+6. Include code examples if the topic is technical (use proper code blocks with language specification)
+7. Add a summary section at the end
+8. Make the content educational, detailed, and easy to understand
+9. Aim for comprehensive coverage - not too brief
+
+Format the entire response in clean Markdown. Make it suitable for students to study from.`;
+
+    // Call Gemini API
+    const response = await axios.post(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: fullPrompt }],
+          },
+        ],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const generatedContent = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!generatedContent) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to generate note content",
+      });
+    }
+
+    // Generate title from prompt (capitalize first letter of each word)
+    const title = prompt
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+
+    const finalTitle = title.length > 60 
+      ? title.substring(0, 60) + "..." 
+      : title;
+
+    // Extract potential tags from prompt
+    const commonWords = [
+      'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 
+      'for', 'of', 'with', 'by', 'from', 'about', 'how', 'what', 'why',
+      'explain', 'describe', 'create', 'make', 'write', 'notes'
+    ];
+    
+    const words = prompt
+      .toLowerCase()
+      .replace(/[^\w\s]/g, '') // Remove punctuation
+      .split(/\s+/)
+      .filter(word => word.length > 3 && !commonWords.includes(word))
+      .slice(0, 5);
+
+    // Add "AI" tag
+    const tags = ['AI-Generated', ...words];
+
+    console.log("✅ AI note generated successfully");
+
+    return res.status(200).json({
+      success: true,
+      content: generatedContent,
+      title: finalTitle,
+      tags: tags,
+      message: "Note generated successfully",
+    });
+
+  } catch (error) {
+    console.error("❌ AI note generation error:", error);
+    
+    if (error.response?.status === 429) {
+      return res.status(429).json({
+        success: false,
+        message: "AI service rate limit exceeded. Please try again later.",
+      });
+    }
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to generate note",
+      error: error.message,
+    });
+  }
+};
