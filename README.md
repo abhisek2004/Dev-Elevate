@@ -59,29 +59,36 @@
 **📊 Project Insights**
 
 <table align="center">
-    <thead align="center">
-        <tr>
-            <td><b>🌟 Stars</b></td>
-            <td><b>🍴 Forks</b></td>
-            <td><b>🐛 Issues</b></td>
-            <td><b>🔔 Open PRs</b></td>
-            <td><b>🔕 Closed PRs</b></td>
-            <td><b>🛠️ Languages</b></td>
-            <td><b>👥 Contributors</b></td>
-        </tr>
-     </thead>
-    <tbody>
-         <tr>
-            <td><img alt="Stars" src="https://img.shields.io/github/stars/abhisek2004/Dev-Elevate?style=flat&logo=github"/></td>
-            <td><img alt="Forks" src="https://img.shields.io/github/forks/abhisek2004/Dev-Elevate?style=flat&logo=github"/></td>
-            <td><img alt="Issues" src="https://img.shields.io/github/issues/abhisek2004/Dev-Elevate?style=flat&logo=github"/></td>
-            <td><img alt="Open PRs" src="https://img.shields.io/github/issues-pr/abhisek2004/Dev-Elevate?style=flat&logo=github"/></td>
-            <td><img alt="Closed PRs" src="https://img.shields.io/github/issues-pr-closed/abhisek2004/Dev-Elevate?style=flat&color=critical&logo=github"/></td>
-            <td><img alt="Languages Count" src="https://img.shields.io/github/languages/count/abhisek2004/Dev-Elevate?style=flat&color=green&logo=github"></td>
-            <td><img alt="Contributors Count" src="https://img.shields.io/github/contributors/abhisek2004/Dev-Elevate?style=flat&color=blue&logo=github"/></td>
-        </tr>
-    </tbody>
+  <thead align="center">
+    <tr>
+      <td><b>🌟 Stars</b></td>
+      <td><b>🍴 Forks</b></td>
+      <td><b>🐛 Issues</b></td>
+      <td><b>🔔 Open PRs</b></td>
+      <td><b>🔕 Closed PRs</b></td>
+      <td><b>🛠️ Languages</b></td>
+      <td><b>👥 Contributors</b></td>
+      <td><b>📦 Repo Size</b></td>
+      <td><b>🕒 Last Commit</b></td>
+      <td><b>📈 Commit Activity</b></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img alt="Stars" src="https://img.shields.io/github/stars/abhisek2004/Dev-Elevate?style=flat&logo=github"/></td>
+      <td><img alt="Forks" src="https://img.shields.io/github/forks/abhisek2004/Dev-Elevate?style=flat&logo=github"/></td>
+      <td><img alt="Issues" src="https://img.shields.io/github/issues/abhisek2004/Dev-Elevate?style=flat&logo=github"/></td>
+      <td><img alt="Open PRs" src="https://img.shields.io/github/issues-pr/abhisek2004/Dev-Elevate?style=flat&logo=github"/></td>
+      <td><img alt="Closed PRs" src="https://img.shields.io/github/issues-pr-closed/abhisek2004/Dev-Elevate?style=flat&color=critical&logo=github"/></td>
+      <td><img alt="Languages Count" src="https://img.shields.io/github/languages/count/abhisek2004/Dev-Elevate?style=flat&color=green&logo=github"/></td>
+      <td><img alt="Contributors Count" src="https://img.shields.io/github/contributors/abhisek2004/Dev-Elevate?style=flat&color=blue&logo=github"/></td>
+      <td><img alt="Repo Size" src="https://img.shields.io/github/repo-size/abhisek2004/Dev-Elevate?style=flat&color=orange&logo=github"/></td>
+      <td><img alt="Last Commit" src="https://img.shields.io/github/last-commit/abhisek2004/Dev-Elevate?style=flat&color=yellow&logo=github"/></td>
+      <td><img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/y/abhisek2004/Dev-Elevate?style=flat&color=brightgreen&logo=github"/></td>
+    </tr>
+  </tbody>
 </table>
+
 
 ---
 
@@ -710,6 +717,13 @@ Includes:
     <img src="https://api.vaunt.dev/v1/github/entities/abhisek2004/repositories/Dev-Elevate/contributors?format=svg&limit=54" width="700" height="250" />
   </a>
 </p>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+## 🧩 Contributions
+
+![Repobeats analytics](https://repobeats.axiom.co/api/embed/7b517cb34a7f7df74b62f5112b15a1cc3c9f0b13.svg "Repobeats analytics image")
+
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
