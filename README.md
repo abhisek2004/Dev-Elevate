@@ -93,19 +93,30 @@
 
 🌟 **Exciting News...**
 
-🚀 This project is now an official part of GirlScript Summer of Code – GSSoC 2025! 💃🎉💻 We’re thrilled to welcome contributors from all over India and beyond to collaborate, build, and grow with DevElevate. Let’s make learning and career development smarter – together! 🌟👨‍💻👩‍💻
+🚀💃🎉💻 We’re beyond excited to welcome passionate contributors from across India and around the world 🌍 to collaborate, innovate, and grow with **DevElevate** — an open-source platform built to make learning, development, and career growth smarter, faster, and community-driven. 🌟👨‍💻👩‍💻  
 
-👩‍💻 GSSoC is one of India’s **largest 3-month-long open-source programs** that encourages developers of all levels to contribute to real-world projects 🌍 while learning, collaborating, and growing together. 🌱
+👩‍💻 **DevElevate** is India’s next-generation open-source movement that empowers developers, designers, and innovators of all experience levels to contribute to real-world solutions 🌐 while gaining hands-on experience, personalized mentorship, and global exposure. 🌱  
 
-🌈 With **mentorship, community support**, and **collaborative coding**, it's the perfect platform for developers to:
+💡 Here, open source meets intelligence — blending **AI, community, and creativity** to redefine how people learn, build, and grow together. Whether it’s solving real challenges, contributing to meaningful projects, or exploring futuristic tech, **DevElevate** is your launchpad to innovation. 🚀  
 
-✨ Improve their skills
-🤝 Contribute to impactful projects
-🏆 Get recognized for their work
-📜 Receive certificates and swag!
+🌈 With **dedicated mentors**, **vibrant community support**, and **collaborative coding opportunities**, this platform creates a powerful ecosystem for developers to:  
 
-🎉 **I can’t wait to welcome new contributors** from GSSoC 2025 to this DevElevate project family!
-Let’s build, learn, and grow together — one commit at a time. 🔥👨‍💻👩‍💻
+✨ Master modern tech stacks (Full Stack, AI/ML, Cloud, DevOps, and more)  
+🤝 Contribute to impactful, scalable, and production-level projects  
+🧠 Learn the principles of teamwork, leadership, and clean coding  
+🎯 Participate in hackathons, open-source programs & live project sprints  
+🏆 Gain global recognition, certificates, and exclusive DevElevate swag  
+📚 Get personalized learning recommendations and resume-building support  
+💬 Network with peers, mentors, and organizations across the world  
+⚡ Sharpen technical, creative, and problem-solving skills through collaboration  
+
+🌍 **DevElevate isn’t just a project — it’s a movement.**  
+A movement that unites passionate minds to code for impact, share knowledge, and shape the future of technology together. 💫  
+
+🎉 Whether you’re a beginner contributing your first line of code or a seasoned developer mentoring others, there’s a place for everyone here.  
+
+❤️ **We’re thrilled to have you join the DevElevate family — where innovation meets opportunity, and ideas turn into impact.**  
+Let’s code, collaborate, and create the future — one smart commit at a time. 🔥👨‍💻👩‍💻🌟
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
@@ -724,12 +735,7 @@ Includes:
 ## 🌐 Connect with Me
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/22605f6d-f782-4ad9-a274-3373ab3f07f4" alt="Selected Project Admin badge" height="200"/>
-  &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/user-attachments/assets/a92d4e36-c38a-4af2-bbfa-aae37e35ccbf" alt="Abhisek Panda_DSC0019" height="200"/>
-  
-![ABHI - Copy](https://github.com/user-attachments/assets/47eac541-24f5-414b-bb6f-9b576d717cf8)
-
 </p>
 
 - 👨‍💻 **Website Creator:** [Abhisek Panda](https://abhisekpanda072.vercel.app)
@@ -745,6 +751,8 @@ Includes:
     <td align="center">
       <h2>🚀 GirlScript Summer of Code 2025 (GSSoC'25)</h2>
       <img src="https://github.com/apu52/METAVERSE/assets/114172928/e79eb6de-81b1-4ffb-b6ed-f018bb977e88" alt="GSSoC" width="60%">
+        <img src="https://github.com/user-attachments/assets/22605f6d-f782-4ad9-a274-3373ab3f07f4" alt="Selected Project Admin badge" height="200"/>
+  &nbsp;&nbsp;&nbsp;
       <br/>
       <h3>👥 Project Admin & 👨‍🏫 Mentors – DevElevate (GSSoC'25)</h3>
       <table>
