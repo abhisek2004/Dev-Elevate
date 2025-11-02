@@ -8,7 +8,7 @@ We’re beyond thrilled to have you here and excited to see your ideas come to l
 > 💡 **Every single contribution counts!** From fixing a typo to building a new feature — you’re helping shape the future of learning.  
 
 Please make sure to read and follow our [Code of Conduct](CODE_OF_CONDUCT.md). 💖  
-For architecture, setup, and onboarding — check [LEARN.md](LEARN.md) for a complete contributor roadmap. 🗺️  
+For architecture, setup, and onboarding — check [.project-docs/LEARN.md](.project-docs/LEARN.md) for a complete contributor roadmap. 🗺️
 
 ---
 
