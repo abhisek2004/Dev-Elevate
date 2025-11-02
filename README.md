@@ -722,8 +722,7 @@ Includes:
 
 ## 🧩 Contributions
 
-![Repobeats analytics](https://repobeats.axiom.co/api/embed/7b517cb34a7f7df74b62f5112b15a1cc3c9f0b13.svg "Repobeats analytics image")
-
+![Alt](https://repobeats.axiom.co/api/embed/851ffe555f955e88c86fc35dd49ee685aeb572d9.svg "Repobeats analytics image")
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
