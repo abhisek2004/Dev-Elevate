@@ -2,10 +2,6 @@
 
 <h1 align="center">🚀 Dev_Elevate </h1>
 
-<h1 align="center"> GSSoC-2025 </h1>
-
-<h1 align="center"> Hacktoberfest-2025 </h1>
-
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 <p align="center">
@@ -94,23 +90,6 @@
 <p align="center">
   <b>This project is now OFFICIALLY accepted for:</b>
 </p>
-
-<div align="center">
-  <img src="https://github.com/apu52/METAVERSE/assets/114172928/e79eb6de-81b1-4ffb-b6ed-f018bb977e88" alt="GSSOC" width="80%">
-</div>
-
-
-<div align="center">
- 
-  <img width="1201" height="631" alt="image" src="https://github.com/user-attachments/assets/2c5183df-77c8-4220-beab-69e01290ea56" />
-
-[![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2025-blueviolet?style=for-the-badge&logo=hacktoberfest)](https://hacktoberfest.com/)
-
-### 🎃 Contribute to this project during Hacktoberfest 2025!  
-
-### We welcome all meaningful contributions — from code to documentation.
-
-</div>
 
 🌟 **Exciting News...**
 
@@ -789,15 +768,70 @@ You all are the heart of this community! 💖
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-### 👥 Project Admin & 👨‍🏫 Mentors – DevElevate (GSSoC'25)
+<h1 align="center">🌐 Open Source Programs & Project Mentors</h1>
 
-| Role          | Name               | GitHub Profile                                      | LinkedIn Profile                                                        |
-| ------------- | ------------------ | --------------------------------------------------- | ----------------------------------------------------------------------- |
-| Project Admin | Abhisek Panda      | [abhisek2004](https://github.com/abhisek2004)       | [Abhisek Panda](http://www.linkedin.com/in/abhisekpanda2004)            |
-| Mentor 1      | Pinak viramgama | [Pinak viramgama](https://github.com/pinakviramgama)   | [Pinak viramgama](https://www.linkedin.com/in/gecr-ai230200143075) |
-| Mentor 2   | Avansh Yadav       | [Avansh2006](https://github.com/Avansh2006)         | [Avansh Yadav](https://www.linkedin.com/in/avanshyadav/)                |
-| Mentor 3    | Amisha Gupta       | [amishagupta31](https://github.com/amishagupta31)   | [Amisha Gupta](https://www.linkedin.com/in/amishagupta31/)              |
-| Mentor 4    | Jay Sawant       | [Jay Sawant](https://github.com/Jay2006sawant)   | [Jay Sawant](https://www.linkedin.com/in/jay-sawant-4b59aa324/)              |
+<table align="center">
+  <tr>
+    <td align="center">
+      <h2>🚀 GirlScript Summer of Code 2025 (GSSoC'25)</h2>
+      <img src="https://github.com/apu52/METAVERSE/assets/114172928/e79eb6de-81b1-4ffb-b6ed-f018bb977e88" alt="GSSoC" width="60%">
+      <br/>
+      <h3>👥 Project Admin & 👨‍🏫 Mentors – DevElevate (GSSoC'25)</h3>
+      <table>
+        <tr>
+          <th>Role</th>
+          <th>Name</th>
+          <th>GitHub Profile</th>
+          <th>LinkedIn Profile</th>
+        </tr>
+        <tr>
+          <td>Project Admin</td>
+          <td>Abhisek Panda</td>
+          <td><a href="https://github.com/abhisek2004">abhisek2004</a></td>
+          <td><a href="http://www.linkedin.com/in/abhisekpanda2004">Abhisek Panda</a></td>
+        </tr>
+        <tr>
+          <td>Mentor 1</td>
+          <td>Pinak Viramgama</td>
+          <td><a href="https://github.com/pinakviramgama">pinakviramgama</a></td>
+          <td><a href="https://www.linkedin.com/in/gecr-ai230200143075">Pinak Viramgama</a></td>
+        </tr>
+        <tr>
+          <td>Mentor 2</td>
+          <td>Avansh Yadav</td>
+          <td><a href="https://github.com/Avansh2006">Avansh2006</a></td>
+          <td><a href="https://www.linkedin.com/in/avanshyadav/">Avansh Yadav</a></td>
+        </tr>
+        <tr>
+          <td>Mentor 3</td>
+          <td>Amisha Gupta</td>
+          <td><a href="https://github.com/amishagupta31">amishagupta31</a></td>
+          <td><a href="https://www.linkedin.com/in/amishagupta31/">Amisha Gupta</a></td>
+        </tr>
+        <tr>
+          <td>Mentor 4</td>
+          <td>Jay Sawant</td>
+          <td><a href="https://github.com/Jay2006sawant">Jay2006sawant</a></td>
+          <td><a href="https://www.linkedin.com/in/jay-sawant-4b59aa324/">Jay Sawant</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      <h2>🎃 Hacktoberfest 2025</h2>
+      <img width="60%" alt="Hacktoberfest Banner" src="https://github.com/user-attachments/assets/2c5183df-77c8-4220-beab-69e01290ea56" />
+      <br><br>
+      <a href="https://hacktoberfest.com/">
+        <img src="https://img.shields.io/badge/Hacktoberfest-2025-blueviolet?style=for-the-badge&logo=hacktoberfest" alt="Hacktoberfest 2025 Badge"/>
+      </a>
+      <br><br>
+      <h3>🎉 Contribute to this project during Hacktoberfest 2025!</h3>
+      <p>We welcome all meaningful contributions — from code to documentation.</p>
+    </td>
+  </tr>
+</table>
 
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
