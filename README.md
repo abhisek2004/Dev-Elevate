@@ -4,6 +4,17 @@
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
+<div align="center">
+  <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/852c043e-216f-49c9-8057-99e5edd8283a" /><br><br>
+  <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/49cb72f9-ff2c-43ef-9c59-c3d55ba12a15" />
+  <p align="center">
+  <b>This project is now OFFICIALLY accepted for: Code Social </b> <br><br>
+  <b>Cognise. Connect. Cultivate. Code Social.🚀💃🎉💻 </b>  
+</p>
+</div>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/55ca587c-6019-449a-9409-0aea0cfcba13" alt="logo" width="200" height="200">
 </p>
@@ -95,10 +106,12 @@
 <h2 align="center">🎯 Open Source Programmes ⭐</h2>
 
 <p align="center">
-  <b>This project is now OFFICIALLY accepted for:</b>
+  <b>This project is now OFFICIALLY accepted for: Code Social </b>
 </p>
 
 🌟 **Exciting News...**
+
+### Cognise. Connect. Cultivate. Code Social.🚀💃🎉💻
 
 🚀💃🎉💻 We’re beyond excited to welcome passionate contributors from across India and around the world 🌍 to collaborate, innovate, and grow with **DevElevate** — an open-source platform built to make learning, development, and career growth smarter, faster, and community-driven. 🌟👨‍💻👩‍💻  
 
