@@ -765,15 +765,15 @@ Includes:
 </p>
 
 - 👨‍💻 **Website Creator:** [Abhisek Panda](https://abhisekpanda072.vercel.app)
-- 🐙 **GitHub:** [github.com/abhisek2004](https://github.com/abhisek2004)
-- 💼 **LinkedIn:** [linkedin.com/in/abhisekpanda2004](https://www.linkedin.com/in/abhisekpanda2004/)
+- 🐙 **GitHub:** [abhisek2004](https://github.com/abhisek2004)
+- 💼 **LinkedIn:** [abhisekpanda2004](https://www.linkedin.com/in/abhisekpanda2004/)
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 <h1 align="center">🌐 Currently Project Admin & Mentor for <a href="https://github.com/abhisek2004/Dev-Elevate" target="_blank">DevElevate</a> under Winter of Code Social ❄ — Let’s Get Started!</h1>
 
 <div align="center">
-  <img width="300" height="340" alt="WOCS-ProjectAdmin-badge" src="https://github.com/user-attachments/assets/e65b8a7c-08a6-4162-9e24-f4c08977d6fa" />
+  <img src="https://github.com/user-attachments/assets/e65b8a7c-08a6-4162-9e24-f4c08977d6fa" width="100px" height="100px" /></a>
 </div>
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
