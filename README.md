@@ -8,8 +8,8 @@
   <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/852c043e-216f-49c9-8057-99e5edd8283a" /><br><br>
   <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/49cb72f9-ff2c-43ef-9c59-c3d55ba12a15" />
   <p align="center">
-  <b>This project is now OFFICIALLY accepted for: Code Social </b> <br><br>
-  <b>Cognise. Connect. Cultivate. Code Social.🚀💃🎉💻 </b>  
+  <b>This project is now OFFICIALLY accepted for: ❄ Code Social ❄ </b> <br><br>
+  <b>❄ Cognise. Connect. Cultivate. Code Social. ❄ 🚀💃🎉💻 </b>  
 </p>
 </div>
 
@@ -770,7 +770,17 @@ Includes:
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
+<h1 align="center">🌐 Currently Project Admin & Mentor for <a href="https://github.com/abhisek2004/Dev-Elevate" target="_blank">DevElevate</a> under Winter of Code Social ❄ — Let’s Get Started!</h1>
+
+<div align="center">
+  <img width="300" height="340" alt="WOCS-ProjectAdmin-badge" src="https://github.com/user-attachments/assets/e65b8a7c-08a6-4162-9e24-f4c08977d6fa" />
+</div>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
 <h1 align="center">🌐 Previously Accepted Open Source Programs & Project Mentors</h1>
+<details>
+  <summary>📘 Click to Read More </summary>
 
 <table align="center">
   <tr>
@@ -837,10 +847,15 @@ Includes:
   </tr>
 </table>
 
+</details>
+
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-## 🌟 Our Amazing Contributors
+## 🌟 Our  Previously Amazing Contributors
 
+<details>
+  <summary>📘 Click to Read More </summary>
+  
 Every line of code, every fix, every idea — it all adds up.  
 Grateful to have you building with us.  
 You all are the heart of this community! 💖
@@ -851,7 +866,6 @@ You all are the heart of this community! 💖
 - 200 Eligible PRs  
 - 838 Total Commits  
 
-<details>
 <summary> TOP Contributors List </summary>
 
 | Contributor           | Role                 | Points | PRs | Commits | GitHub |
