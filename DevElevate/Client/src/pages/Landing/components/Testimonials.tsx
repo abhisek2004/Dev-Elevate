@@ -1,13 +1,42 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote, X as FiX } from 'lucide-react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
+import axios from 'axios';
+
+// TypeScript interfaces
+interface Experience {
+  name: string;
+  designation: string;
+  avatar?: string;
+  feedback: string;
+  rating: number;
+}
+
+interface Testimonial {
+  name: string;
+  role: string;
+  image: string;
+  content: string;
+  rating: number;
+}
+
+interface ApiResponse {
+  success: boolean;
+  data: Experience[];
+  message?: string;
+}
 
 const Testimonials = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [userExperiences, setUserExperiences] = useState<Testimonial[]>([]);
   const scrollRef = useRef(null);
+
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
   const [formData, setFormData] = useState({
     name: '',
@@ -21,7 +50,8 @@ const Testimonials = () => {
     displayPreference: 'anonymous',
   });
 
-  const testimonials = [
+  // Static testimonials
+  const staticTestimonials: Testimonial[] = [
     {
       name: 'Sarah Chen',
       role: 'Software Engineer at Google',
@@ -69,6 +99,34 @@ const Testimonials = () => {
     },
   ];
 
+  // Fetch approved experiences function (reusable)
+  const fetchApprovedExperiences = useCallback(async () => {
+    try {
+      const response = await axios.get<ApiResponse>(`${API_URL}/api/v1/experience/approved`);
+      if (response.data.success) {
+        // Transform API data to match testimonial format
+        const transformedExperiences: Testimonial[] = response.data.data.map((exp: Experience) => ({
+          name: exp.name,
+          role: exp.designation,
+          image: exp.avatar || 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=400',
+          content: exp.feedback,
+          rating: exp.rating,
+        }));
+        setUserExperiences(transformedExperiences);
+      }
+    } catch (error) {
+      console.error('Failed to fetch experiences:', error);
+    }
+  }, [API_URL]);
+
+  // Fetch approved experiences on component mount
+  useEffect(() => {
+    fetchApprovedExperiences();
+  }, [fetchApprovedExperiences]);
+
+  // Merge static and user experiences
+  const testimonials = [...staticTestimonials, ...userExperiences];
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : false;
@@ -80,22 +138,76 @@ const Testimonials = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitError('');
+    setSubmitSuccess(false);
+
+    // Client-side validation
+    if (!formData.name.trim()) {
+      setSubmitError('Please enter your name');
+      return;
+    }
+
+    if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) {
+      setSubmitError('Please enter a valid email address');
+      return;
+    }
+
+    if (!formData.designation.trim()) {
+      setSubmitError('Please enter your designation');
+      return;
+    }
+
+    if (formData.rating === 0) {
+      setSubmitError('Please select a rating');
+      return;
+    }
+
+    if (!formData.likedMost.trim() || !formData.howHelped.trim() || !formData.feedback.trim()) {
+      setSubmitError('Please fill in all required fields');
+      return;
+    }
+
     setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    setIsModalOpen(false);
-    setFormData({
-      name: '',
-      email: '',
-      designation: '',
-      rating: 0,
-      likedMost: '',
-      howHelped: '',
-      feedback: '',
-      canShow: false,
-      displayPreference: 'anonymous',
-    });
+
+    try {
+      const response = await axios.post<ApiResponse>(`${API_URL}/api/v1/experience/submit`, formData);
+      
+      if (response.data.success) {
+        setSubmitSuccess(true);
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          designation: '',
+          rating: 0,
+          likedMost: '',
+          howHelped: '',
+          feedback: '',
+          canShow: false,
+          displayPreference: 'anonymous',
+        });
+        
+        // Re-fetch experiences to update the list (in case of auto-approval or for future updates)
+        fetchApprovedExperiences();
+        
+        // Close modal after showing success message
+        setTimeout(() => {
+          setIsModalOpen(false);
+          setSubmitSuccess(false);
+        }, 2500);
+      }
+    } catch (error) {
+      let errorMessage = 'Failed to submit experience. Please try again.';
+      
+      if (error && typeof error === 'object' && 'response' in error) {
+        const axiosError = error as { response?: { data?: { message?: string } } };
+        errorMessage = axiosError.response?.data?.message || errorMessage;
+      }
+      
+      setSubmitError(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const openModal = () => setIsModalOpen(true);
@@ -126,6 +238,7 @@ const Testimonials = () => {
         <div className="relative">
           <div className="overflow-hidden">
             <motion.div
+              key={testimonials.length} // Force re-render when testimonials count changes
               ref={scrollRef}
               className="flex gap-8"
               animate={{
@@ -274,7 +387,24 @@ const Testimonials = () => {
                     Help others by sharing how DevElevate helped you in your journey
                   </p>
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-6">
+
+                {/* Success Alert */}
+                {submitSuccess && (
+                  <div className="p-4 mb-4 text-green-200 bg-green-900/40 border border-green-500/50 rounded-lg backdrop-blur-sm">
+                    <p className="font-medium">✅ Success!</p>
+                    <p className="text-sm">Thank you! Your experience has been submitted and is pending approval.</p>
+                  </div>
+                )}
+
+                {/* Error Alert */}
+                {submitError && (
+                  <div className="p-4 mb-4 text-red-200 bg-red-900/40 border border-red-500/50 rounded-lg backdrop-blur-sm">
+                    <p className="font-medium">❌ Error</p>
+                    <p className="text-sm">{submitError}</p>
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} noValidate className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-200">
                       Full Name *
