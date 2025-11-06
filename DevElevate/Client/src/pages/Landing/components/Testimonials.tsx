@@ -124,8 +124,8 @@ const Testimonials = () => {
     fetchApprovedExperiences();
   }, [fetchApprovedExperiences]);
 
-  // Merge static and user experiences
-  const testimonials = [...staticTestimonials, ...userExperiences];
+  // Merge user experiences first (so they appear at the beginning), then static testimonials
+  const testimonials = [...userExperiences, ...staticTestimonials];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
