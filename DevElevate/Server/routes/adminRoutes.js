@@ -1,11 +1,14 @@
 // routes/adminRoutes.js
 import express from "express";
-import { 
+import {
   addUser,
-  createAdminLog, 
-  deleteUserById, 
+  createAdminLog,
+  deleteUserById,
   getAdminLogs,
-  getAllUserRegister
+  getAllUserRegister,
+  getAdminStats,
+  getActiveUsers,
+  updateUserById,
 } from "../controller/adminController.js";
 import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
 
@@ -25,6 +28,15 @@ router.get("/all-users", authenticateToken, requireAdmin, getAllUserRegister);
 
 // ✅ Delete user by ID (better to pass ID in URL param)
 router.delete("/delete-user/:id", authenticateToken, requireAdmin, deleteUserById);
+
+// ✅ Get dashboard statistics
+router.get("/stats", authenticateToken, requireAdmin, getAdminStats);
+
+// ✅ Get active users
+router.get("/users/active", authenticateToken, requireAdmin, getActiveUsers);
+
+// ✅ Update user by ID
+router.put("/users/:id", authenticateToken, requireAdmin, updateUserById);
 
 export default router;
 
