@@ -34,6 +34,7 @@ import systemSettings from "./routes/SystemSettingRoute.js";
 import videoProgressRoutes from "./routes/videoProgressRoutes.js";
 import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
 import analyticRoute from "./routes/analytics.js";
+import experienceRoutes from "./routes/experienceRoutes.js";
 // Add static file serving for uploaded files (add this after other middleware)
 import path from "path";
 import { fileURLToPath } from "url";
@@ -77,6 +78,7 @@ app.use("/api/v1", Faq);
 app.use("/api/v1", newsRoutes);
 app.use("/api/v1/community", communityRoutes);
 app.use("/api/v1/ats", atsRoutes);
+app.use("/api/v1/experience", experienceRoutes);
 
 // ✅ Video Progress & Saved Videos (ONLY ONCE!)
 app.use("/api/v1/video", videoProgressRoutes);
