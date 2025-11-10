@@ -10,6 +10,8 @@ import {
   Plus,
   Download,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import * as adminApi from "../../services/adminApi";
 
 type Course = {
   id: string;
@@ -37,60 +39,73 @@ type NewsArticle = {
 };
 
 interface OverviewProps {
-  courses: Course[];
-  newsArticles: NewsArticle[];
-  feedback: any[];
-  onAddCourse: () => void;
-  onAddNews: () => void;
-  onExportData: () => void;
+  courses?: Course[];
+  newsArticles?: NewsArticle[];
+  feedback?: any[];
+  onAddCourse?: () => void;
+  onAddNews?: () => void;
+  onExportData?: () => void;
 }
 
 const Overview: React.FC<OverviewProps> = ({
-  courses,
-  newsArticles,
-  feedback,
   onAddCourse,
   onAddNews,
   onExportData,
 }) => {
   const { state: globalState } = useGlobalState();
-  const { state: authState } = useAuth();
+  const [stats, setStats] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const stats = [
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        const response = (await adminApi.getAdminStats()) as any;
+        if (response.success) {
+          setStats(response.data);
+        } else {
+          setStats(response.data);
+        }
+      } catch (err: any) {
+        console.error("Error fetching stats:", err);
+        setError(err.message || "Failed to fetch stats");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  const statCards = [
     {
       title: "Total Users",
-      value: authState.users.length,
+      value: stats?.totalRegistered || 0,
       change: "+12%",
       icon: Users,
       color: "blue",
     },
     {
-      title: "Active Courses",
-      value: courses.filter((c) => c.status === "active").length,
+      title: "Total Courses",
+      value: stats?.totalCourses || 0,
       change: "+5%",
       icon: BookOpen,
       color: "green",
     },
     {
-      title: "Total Enrollments",
-      value: courses.reduce((sum, course) => sum + course.enrolled, 0),
+      title: "Total Videos",
+      value: stats?.totalVideos || 0,
       change: "+8%",
       icon: Target,
       color: "purple",
     },
     {
-      title: "News Articles",
-      value: newsArticles.length,
+      title: "Total Quizzes",
+      value: stats?.totalQuizzes || 0,
       change: "+15%",
       icon: Newspaper,
       color: "orange",
-    },
-    {
-      title: "Feedback",
-      value: feedback.length,
-      change: "+12%",
-      icon: Target,
-      color: "yellow",
     },
   ];
 
@@ -98,30 +113,27 @@ const Overview: React.FC<OverviewProps> = ({
     <div className="space-y-6">
       {/* Stats Grid */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat, index) => {
+        {statCards.map((stat, index) => {
           const Icon = stat.icon;
           return (
             <div
               key={index}
-              className={`${
-                globalState.darkMode
-                  ? "bg-gray-800 border-gray-700"
-                  : "bg-white border-gray-200"
-              } rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow`}
+              className={`${globalState.darkMode
+                ? "bg-gray-800 border-gray-700"
+                : "bg-white border-gray-200"
+                } rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow`}
             >
               <div className="flex justify-between items-center">
                 <div>
                   <p
-                    className={`text-sm ${
-                      globalState.darkMode ? "text-gray-400" : "text-gray-600"
-                    }`}
+                    className={`text-sm ${globalState.darkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
                   >
                     {stat.title}
                   </p>
                   <p
-                    className={`text-3xl font-bold ${
-                      globalState.darkMode ? "text-white" : "text-gray-900"
-                    }`}
+                    className={`text-3xl font-bold ${globalState.darkMode ? "text-white" : "text-gray-900"
+                      }`}
                   >
                     {stat.value}
                   </p>
@@ -143,16 +155,14 @@ const Overview: React.FC<OverviewProps> = ({
 
       {/* Quick Actions */}
       <div
-        className={`${
-          globalState.darkMode
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-200"
-        } rounded-xl p-6 border shadow-sm`}
+        className={`${globalState.darkMode
+          ? "bg-gray-800 border-gray-700"
+          : "bg-white border-gray-200"
+          } rounded-xl p-6 border shadow-sm`}
       >
         <h3
-          className={`text-xl font-semibold mb-4 ${
-            globalState.darkMode ? "text-white" : "text-gray-900"
-          }`}
+          className={`text-xl font-semibold mb-4 ${globalState.darkMode ? "text-white" : "text-gray-900"
+            }`}
         >
           Quick Actions
         </h3>
@@ -183,16 +193,14 @@ const Overview: React.FC<OverviewProps> = ({
 
       {/* Recent Activity */}
       <div
-        className={`${
-          globalState.darkMode
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-200"
-        } rounded-xl p-6 border shadow-sm`}
+        className={`${globalState.darkMode
+          ? "bg-gray-800 border-gray-700"
+          : "bg-white border-gray-200"
+          } rounded-xl p-6 border shadow-sm`}
       >
         <h3
-          className={`text-xl font-semibold mb-4 ${
-            globalState.darkMode ? "text-white" : "text-gray-900"
-          }`}
+          className={`text-xl font-semibold mb-4 ${globalState.darkMode ? "text-white" : "text-gray-900"
+            }`}
         >
           Recent Activity
         </h3>
@@ -235,39 +243,35 @@ const Overview: React.FC<OverviewProps> = ({
             >
               <div className="flex items-center space-x-3">
                 <div
-                  className={`w-2 h-2 rounded-full ${
-                    activity.type === "user"
-                      ? "bg-blue-500"
-                      : activity.type === "course"
+                  className={`w-2 h-2 rounded-full ${activity.type === "user"
+                    ? "bg-blue-500"
+                    : activity.type === "course"
                       ? "bg-green-500"
                       : activity.type === "assignment"
-                      ? "bg-yellow-500"
-                      : activity.type === "admin"
-                      ? "bg-purple-500"
-                      : "bg-orange-500"
-                  }`}
+                        ? "bg-yellow-500"
+                        : activity.type === "admin"
+                          ? "bg-purple-500"
+                          : "bg-orange-500"
+                    }`}
                 ></div>
                 <div>
                   <p
-                    className={`font-medium ${
-                      globalState.darkMode ? "text-white" : "text-gray-900"
-                    }`}
+                    className={`font-medium ${globalState.darkMode ? "text-white" : "text-gray-900"
+                      }`}
                   >
                     {activity.action}
                   </p>
                   <p
-                    className={`text-sm ${
-                      globalState.darkMode ? "text-gray-400" : "text-gray-600"
-                    }`}
+                    className={`text-sm ${globalState.darkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
                   >
                     {activity.user}
                   </p>
                 </div>
               </div>
               <span
-                className={`text-sm ${
-                  globalState.darkMode ? "text-gray-400" : "text-gray-600"
-                }`}
+                className={`text-sm ${globalState.darkMode ? "text-gray-400" : "text-gray-600"
+                  }`}
               >
                 {activity.time}
               </span>
@@ -279,16 +283,14 @@ const Overview: React.FC<OverviewProps> = ({
       {/* System Health */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div
-          className={`${
-            globalState.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-xl p-6 border shadow-sm`}
+          className={`${globalState.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } rounded-xl p-6 border shadow-sm`}
         >
           <h3
-            className={`text-xl font-semibold mb-4 ${
-              globalState.darkMode ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-xl font-semibold mb-4 ${globalState.darkMode ? "text-white" : "text-gray-900"
+              }`}
           >
             System Health
           </h3>
@@ -336,16 +338,14 @@ const Overview: React.FC<OverviewProps> = ({
         </div>
 
         <div
-          className={`${
-            globalState.darkMode
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-xl p-6 border shadow-sm`}
+          className={`${globalState.darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-200"
+            } rounded-xl p-6 border shadow-sm`}
         >
           <h3
-            className={`text-xl font-semibold mb-4 ${
-              globalState.darkMode ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-xl font-semibold mb-4 ${globalState.darkMode ? "text-white" : "text-gray-900"
+              }`}
           >
             Platform Metrics
           </h3>
@@ -359,9 +359,8 @@ const Overview: React.FC<OverviewProps> = ({
                 Uptime
               </span>
               <span
-                className={`font-medium ${
-                  globalState.darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`font-medium ${globalState.darkMode ? "text-white" : "text-gray-900"
+                  }`}
               >
                 99.9%
               </span>
@@ -375,9 +374,8 @@ const Overview: React.FC<OverviewProps> = ({
                 Response Time
               </span>
               <span
-                className={`font-medium ${
-                  globalState.darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`font-medium ${globalState.darkMode ? "text-white" : "text-gray-900"
+                  }`}
               >
                 120ms
               </span>
@@ -391,9 +389,8 @@ const Overview: React.FC<OverviewProps> = ({
                 Active Sessions
               </span>
               <span
-                className={`font-medium ${
-                  globalState.darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`font-medium ${globalState.darkMode ? "text-white" : "text-gray-900"
+                  }`}
               >
                 1,247
               </span>
