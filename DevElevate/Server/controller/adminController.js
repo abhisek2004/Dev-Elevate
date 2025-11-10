@@ -2,10 +2,6 @@
 import bcrypt from "bcryptjs";
 import User from "../model/UserModel.js";
 import AdminLog from "../model/AdminLog.js";
-import Course from "../model/Course.js";
-import Video from "../model/Video.js";
-import Quiz from "../model/Quiz.js";
-import Feedback from "../model/Feedback.js";
 
 // ================== Admin Log Controllers ==================
 
@@ -158,105 +154,6 @@ export const deleteUserById = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: "Error deleting user",
-      error: error.message,
-    });
-  }
-};
-
-// ================== Dashboard Stats Controllers ==================
-
-// Get dashboard statistics (total users, courses, videos, etc.)
-export const getAdminStats = async (req, res) => {
-  try {
-    const [totalUsers, totalAdmins, totalCourses, totalVideos, totalQuizzes, totalFeedback] = await Promise.all([
-      User.countDocuments({ role: "user" }),
-      User.countDocuments({ role: "admin" }),
-      Course.countDocuments(),
-      Video.countDocuments(),
-      Quiz.countDocuments(),
-      Feedback.countDocuments(),
-    ]);
-
-    return res.status(200).json({
-      success: true,
-      data: {
-        totalUsers,
-        totalAdmins,
-        totalRegistered: totalUsers + totalAdmins,
-        totalCourses,
-        totalVideos,
-        totalQuizzes,
-        totalFeedback,
-      },
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Error fetching admin stats",
-      error: error.message,
-    });
-  }
-};
-
-// Get active users (recently active)
-export const getActiveUsers = async (req, res) => {
-  try {
-    const limit = parseInt(req.query.limit) || 10;
-
-    const activeUsers = await User.find()
-      .select("-password")
-      .sort({ updatedAt: -1 })
-      .limit(limit)
-      .lean();
-
-    return res.status(200).json({
-      success: true,
-      data: activeUsers,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Error fetching active users",
-      error: error.message,
-    });
-  }
-};
-
-// Update user by ID
-export const updateUserById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, email, role } = req.body;
-
-    if (!name && !email && !role) {
-      return res.status(400).json({
-        message: "At least one field (name, email, or role) is required",
-      });
-    }
-
-    const updateData = {};
-    if (name) updateData.name = name;
-    if (email) updateData.email = email;
-    if (role) updateData.role = role;
-
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    ).select("-password");
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: "User updated successfully",
-      data: updatedUser,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: "Error updating user",
       error: error.message,
     });
   }
