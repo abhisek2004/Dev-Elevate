@@ -34,6 +34,7 @@ import systemSettings from "./routes/SystemSettingRoute.js";
 import videoProgressRoutes from "./routes/videoProgressRoutes.js";
 import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
 import analyticRoute from "./routes/analytics.js";
+import interviewExperienceRoutes from "./routes/interviewExperienceRoutes.js";
 // Add static file serving for uploaded files (add this after other middleware)
 import path from "path";
 import { fileURLToPath } from "url";
@@ -126,6 +127,10 @@ aiRoutes.stack.forEach((r) => {
 console.log('🔧 Registering notes routes at /api/notes');
 app.use("/api/notes", notesRoutes);
 console.log("✅ Notes Routes Registered!");
+
+// ✅ Interview Experience ROUTES (Add detailed logging)
+
+app.use("/api/interview-experience", interviewExperienceRoutes);
 
 // Debug: Log all registered routes
 notesRoutes.stack.forEach((r) => {
