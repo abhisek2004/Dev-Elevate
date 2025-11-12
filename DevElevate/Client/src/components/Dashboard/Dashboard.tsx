@@ -5,6 +5,7 @@ import StatsCards from './StatsCards';
 import ProgressWidget from './ProgressWidget';
 import NewsWidget from './NewsWidget';
 import QuickActions from './QuickActions';
+import SkillAssessmentSummary from './SkillAssessmentSummary';
 import StreakCalendar from './StreakCalendar';
 import DailyGoals from './DailyGoals';
 import QuizHistory from '../Quiz/QuizHistory';
@@ -94,6 +95,7 @@ useEffect(() => {
 
           {/* Right Column */}
           <div className="space-y-6">
+            <SkillAssessmentSummary />
             <QuickActions />
             <QuizHistory />
             <DailyGoals />

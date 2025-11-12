@@ -47,6 +47,7 @@ import CalendarView from "./components/calendar/CalendarView";
 import Coding from "./pages/Coding/Coding";
 import InterviewPage from "./pages/Interview/InterviewPage";
 import QuizPage from "./components/Quiz/QuizPage";
+import SkillAssessmentPage from "./pages/Assessments/SkillAssessmentPage";
 import BackToTopButton from "./components/Layout/BackToTopButton";
 import HelpCenter from "./components/HelpCenter/HelpCenter";
 import LandingPage from "./pages/Landing/LandingPage";
@@ -162,6 +163,10 @@ const AppContent = () => {
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="learning" element={<LearningHub />} />
                         <Route path="quiz" element={<QuizPage />} />
+                        <Route
+                          path="skill-assessment"
+                          element={<SkillAssessmentPage />}
+                        />
                         <Route path="coding/*" element={<Coding />} />
                         <Route path="interview" element={<InterviewPage />} />
                         <Route path="chatbot" element={<Chatbot />} />

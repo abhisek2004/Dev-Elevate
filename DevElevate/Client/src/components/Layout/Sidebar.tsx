@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useGlobalState } from "../../contexts/GlobalContext";
 import SearchModal from "./SearchModal";
 import NotificationPanel from "./NotificationPanel";
-import { FiBookOpen, FiCalendar, FiCode, FiCpu, FiFileText, FiGlobe, FiHome, FiMessageSquare, FiTarget, FiTrendingUp, FiUsers } from "react-icons/fi";
+import { FiActivity, FiBookOpen, FiCalendar, FiCode, FiCpu, FiFileText, FiGlobe, FiHome, FiMessageSquare, FiTarget, FiTrendingUp, FiUsers } from "react-icons/fi";
 import { FaNewspaper, FaRegStickyNote } from "react-icons/fa";
 import { MdLightbulbOutline, MdMap } from "react-icons/md";
 
@@ -22,6 +22,7 @@ const Sidebar: React.FC = () => {
     { path: "/learning", icon: FiBookOpen, label: "Learning Hub" },
     { path: "/course", icon: FiBookOpen, label: "Video" },
     { path: "/quiz", icon: FiCpu, label: "Quiz Center" },
+    { path: "/skill-assessment", icon: FiActivity, label: "Skill Assessment" },
     { path: "/coding", icon: FiCode, label: "Coding" },
     { path: "/interview", icon: FiUsers, label: "Interview" },
     { path: "/chatbot", icon: FiMessageSquare, label: "Study Buddy" },

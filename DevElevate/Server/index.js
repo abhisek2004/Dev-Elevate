@@ -35,6 +35,7 @@ import videoProgressRoutes from "./routes/videoProgressRoutes.js";
 import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
 import analyticRoute from "./routes/analytics.js";
 import experienceRoutes from "./routes/experienceRoutes.js";
+import assessmentRoutes from "./routes/assessmentRoutes.js";
 // Add static file serving for uploaded files (add this after other middleware)
 import path from "path";
 import { fileURLToPath } from "url";
@@ -44,10 +45,10 @@ import { initSocketIO } from "./socket.js";
 import { startContestFinalizationCron } from "./controller/contestController.js";
 
 // Connect to MongoDB only if MONGO_URI is available
-if (process.env.MONGO_URI) {
-    connectDB();
-} else {
-}
+// if (process.env.MONGO_URI) {
+//     connectDB();
+// } else {
+// }
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -79,6 +80,7 @@ app.use("/api/v1", newsRoutes);
 app.use("/api/v1/community", communityRoutes);
 app.use("/api/v1/ats", atsRoutes);
 app.use("/api/v1/experience", experienceRoutes);
+app.use("/api/v1/assessment", assessmentRoutes);
 
 // ✅ Video Progress & Saved Videos (ONLY ONCE!)
 app.use("/api/v1/video", videoProgressRoutes);
@@ -100,6 +102,8 @@ app.use('/api/v1/admin', systemSettings);
 app.use("/api/v1/user-quiz", userQuizRoutes);
 // ✅ AI ROUTES (Changed from / to /ai)
 app.use("/api/v1/ai", aiRoutes);
+// Skill Assessment Routes
+app.use("/api/v1/assessments", assessmentRoutes);
 
 // Learning Routes
 app.use("/api/v1/learning/java", javaRoutes);

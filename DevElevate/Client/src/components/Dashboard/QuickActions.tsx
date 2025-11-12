@@ -9,6 +9,13 @@ const QuickActions: React.FC = () => {
 
   const actions = [
     {
+      title: 'Skill Assessment',
+      description: 'Analyze your strengths in minutes',
+      icon: Target,
+      color: 'from-blue-600 to-sky-500',
+      onClick: () => navigate('/skill-assessment')
+    },
+    {
       title: 'Take Quiz',
       description: 'Test your knowledge',
       icon: Brain,
