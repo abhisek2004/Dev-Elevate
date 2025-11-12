@@ -35,6 +35,7 @@ import videoProgressRoutes from "./routes/videoProgressRoutes.js";
 import sanitizeMiddleware from "./middleware/sanitizeMiddleware.js";
 import analyticRoute from "./routes/analytics.js";
 import interviewExperienceRoutes from "./routes/interviewExperienceRoutes.js";
+import experienceRoutes from "./routes/experienceRoutes.js";
 // Add static file serving for uploaded files (add this after other middleware)
 import path from "path";
 import { fileURLToPath } from "url";
@@ -45,7 +46,7 @@ import { startContestFinalizationCron } from "./controller/contestController.js"
 
 // Connect to MongoDB only if MONGO_URI is available
 if (process.env.MONGO_URI) {
-    connectDB();
+  connectDB();
 } else {
 }
 
@@ -55,11 +56,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 // Middleware
 app.use(
-    cors({
-        origin: process.env.FRONTEND_URL,
-        credentials: true,
-        allowedHeaders: ["Content-Type", "Authorization"],
-    })
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
 );
 app.use(express.json());
 app.use(cookieParser());
@@ -73,11 +74,12 @@ app.set("trust proxy", true);
 app.use("/api/v1/notifications", notificationRoutes);
 // USER ROUTES
 app.use("/api/v1", userRoutes);
-app.use("/api/v1", contactSupport)
+app.use("/api/v1", contactSupport);
 app.use("/api/v1", Faq);
 app.use("/api/v1", newsRoutes);
 app.use("/api/v1/community", communityRoutes);
 app.use("/api/v1/ats", atsRoutes);
+app.use("/api/v1/experience", experienceRoutes);
 
 // ✅ Video Progress & Saved Videos (ONLY ONCE!)
 app.use("/api/v1/video", videoProgressRoutes);
@@ -92,8 +94,8 @@ app.use("/api/v1/admin-courses", adminCourseRoutes);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/admin/feedback", adminFeedbackRoutes);
 app.use("/api/v1/admin/quiz", quizRoutes);
-app.use('/api/v1/admin/analytics', analyticRoute);
-app.use('/api/v1/admin', systemSettings);
+app.use("/api/v1/admin/analytics", analyticRoute);
+app.use("/api/v1/admin", systemSettings);
 
 // ✅ USER QUIZ ROUTES (Changed from /quiz to /user-quiz)
 app.use("/api/v1/user-quiz", userQuizRoutes);
@@ -114,19 +116,15 @@ app.use("/api/v1/contests", contestRoutes);
 startContestFinalizationCron(app);
 // ✅ AI ROUTES (Should come BEFORE notes routes)
 app.use("/api/v1/ai", aiRoutes);
-console.log("✅ AI Routes Registered at /api/v1/ai");
 
 // Debug: Log all AI routes
 aiRoutes.stack.forEach((r) => {
   if (r.route) {
-    const methods = Object.keys(r.route.methods).join(', ').toUpperCase();
-    console.log(`   ${methods} /api/v1/ai${r.route.path}`);
+    const methods = Object.keys(r.route.methods).join(", ").toUpperCase();
   }
 });
 // ✅ NOTES ROUTES (Add detailed logging)
-console.log('🔧 Registering notes routes at /api/notes');
 app.use("/api/notes", notesRoutes);
-console.log("✅ Notes Routes Registered!");
 
 // ✅ Interview Experience ROUTES (Add detailed logging)
 
@@ -135,8 +133,7 @@ app.use("/api/interview-experience", interviewExperienceRoutes);
 // Debug: Log all registered routes
 notesRoutes.stack.forEach((r) => {
   if (r.route) {
-    const methods = Object.keys(r.route.methods).join(', ').toUpperCase();
-    console.log(`   ${methods} /api/notes${r.route.path}`);
+    const methods = Object.keys(r.route.methods).join(", ").toUpperCase();
   }
 });
 
@@ -144,39 +141,39 @@ notesRoutes.stack.forEach((r) => {
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Sample Usage of authenticate and authorize middleware for roleBased Features
 app.get(
-    "/api/admin/dashboard",
-    authenticateToken,
-    authorize("admin"),
-    (req, res) => {
-        res.send("Hello Admin");
-    }
+  "/api/admin/dashboard",
+  authenticateToken,
+  authorize("admin"),
+  (req, res) => {
+    res.send("Hello Admin");
+  }
 );
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({
-        success: false,
-        message: "Something went wrong!",
-        error: process.env.NODE_ENV === "development" ? err.message : undefined,
-    });
+  console.error(err.stack);
+  res.status(500).json({
+    success: false,
+    message: "Something went wrong!",
+    error: process.env.NODE_ENV === "development" ? err.message : undefined,
+  });
 });
 
 // TEST ROUTE
-app.get('/api/v1/test', (req, res) => {
-    res.json({ message: 'Server is working!' });
+app.get("/api/v1/test", (req, res) => {
+  res.json({ message: "Server is working!" });
 });
 
-app.get('/api/v1/courses/test', (req, res) => {
-    res.json({ message: 'Course route is working!' });
+app.get("/api/v1/courses/test", (req, res) => {
+  res.json({ message: "Course route is working!" });
 });
 
 // 404 handler - MUST BE LAST!
 app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: "Route not found",
-    });
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
 });
 
 videoProgressRoutes.stack.forEach((r) => {
@@ -195,5 +192,4 @@ app.listen = function (...args) {
 };
 
 // Start server
-app.listen(PORT, () => {
-});
+app.listen(PORT, () => {});
