@@ -29,6 +29,7 @@
     "multer": "^2.0.2",
     "nodemailer": "^7.0.5",
     "nodemon": "^3.1.10",
+    "openai": "^4.104.0",
     "pdfkit": "^0.17.1",
     "sanitize-html": "^2.17.0",
     "socket.io": "^4.8.1",
