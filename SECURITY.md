@@ -78,10 +78,5 @@ Let’s build safer, smarter, and more inclusive software—together.
 ---
 
 **Project Maintainer:**
-👤 [Abhisek Panda](https://github.com/abhisek2004)
-📧 [abhisek2004panda@gmail.com](mailto:abhisek2004panda@gmail.com)
-🔗 [https://github.com/abhisek2004/Dev-Elevate](https://github.com/abhisek2004/Dev-Elevate)
-
----
-
-Would you like this saved as a `SECURITY.md` file for direct upload to GitHub?
+📧 [Gmail](mailto:officialdevelevate@gmail.com)
+🔗 [Github](https://github.com/abhisek2004/Dev-Elevate)
