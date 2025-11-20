@@ -1,4 +1,3 @@
-import { success } from "zod";
 import InterviewExperience from "../model/InterviewExperience.js";
 export const createInterviewExperience = async (req, res) => {
   try {

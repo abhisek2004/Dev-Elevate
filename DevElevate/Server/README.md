@@ -204,6 +204,7 @@ JWT_SECRET=your_jwt_secret_here
 FRONTEND_URL=http://localhost:5173
 MAIL_USER=your_email_here
 MAIL_PASS=your_email_app_password_here
+RAPID_API_KEY=your_rapid_api_key_here
 ```
 
 ### Installation
