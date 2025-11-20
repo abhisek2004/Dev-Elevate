@@ -1,23 +1,24 @@
-import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { Search, Filter, BookOpen, Clock, CheckCircle, XCircle } from 'lucide-react';
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import { CheckCircle } from "lucide-react";
+import axios from "axios";
 
 const languages = [
-  { name: 'C', id: 50 },
-  { name: 'C++', id: 54 },
-  { name: 'Java', id: 62 },
-  { name: 'Python', id: 71 },
-  { name: 'JavaScript', id: 63 },
-  { name: 'HTML/CSS/JS', id: 'web' },
+  { name: "C", id: 104 },
+  { name: "C++", id: 54 },
+  { name: "Java", id: 62 },
+  { name: "Python", id: 71 },
+  { name: "JavaScript", id: 63 },
+  { name: "HTML/CSS/JS", id: "web" },
 ];
 
 const CompilerPage = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
-  const [code, setCode] = useState('');
-  const [stdin, setStdin] = useState('');
-  const [output, setOutput] = useState('');
-  const [htmlCode, setHtmlCode] = useState('<h1>Hello World</h1>');
-  const [cssCode, setCssCode] = useState('h1 { color: red; }');
+  const [code, setCode] = useState("");
+  const [stdin, setStdin] = useState("");
+  const [output, setOutput] = useState("");
+  const [htmlCode, setHtmlCode] = useState("<h1>Hello World</h1>");
+  const [cssCode, setCssCode] = useState("h1 { color: red; }");
   const [jsCode, setJsCode] = useState('console.log("Hello");');
 
   const srcDoc = useMemo(() => {
@@ -35,36 +36,27 @@ const CompilerPage = () => {
   }, [htmlCode, cssCode, jsCode]);
 
   const handleRun = async () => {
-    if (selectedLanguage.id === 'web') {
-      setOutput('Preview updated. Check the preview below. Note: Console logs appear in browser console.');
+    const encodedCode = btoa(code);
+    const response = await axios.post("http://localhost:4000/api/v1/compiler", {
+      source_code: encodedCode,
+      language_id: selectedLanguage.id,
+      stdin: stdin,
+      is_base64: true,
+    });
+
+    const data = (await response.data) as {
+      stdout?: string;
+      stderr?: string;
+      compile_output?: string;
+    };
+    if (data?.stdout) {
+      setOutput(data.stdout);
+    } else if (data.stderr) {
+      setOutput(data.stderr);
+    } else if (data.compile_output) {
+      setOutput(data.compile_output);
     } else {
-      try {
-        const res = await fetch(`https://judge0-ce.p.rapidapi.com/submissions?wait=true`, {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',
-            'x-rapidapi-key': process.env.REACT_APP_RAPIDAPI_KEY,
-          },
-          body: JSON.stringify({
-            language_id: selectedLanguage.id,
-            source_code: code,
-            stdin: stdin,
-          }),
-        });
-        const data = await res.json();
-        if (data.stderr) {
-          setOutput(data.stderr);
-        } else if (data.stdout) {
-          setOutput(data.stdout);
-        } else if (data.compile_output) {
-          setOutput(data.compile_output);
-        } else {
-          setOutput('No output');
-        }
-      } catch (err) {
-        setOutput(`Error: ${err.message}`);
-      }
+      setOutput("No output");
     }
   };
 
@@ -77,7 +69,9 @@ const CompilerPage = () => {
           className="mb-8"
         >
           <h1 className="mb-2 text-3xl font-bold text-white">Code Compiler</h1>
-          <p className="text-gray-400">Insert code and run it in various languages</p>
+          <p className="text-gray-400">
+            Insert code and run it in various languages
+          </p>
         </motion.div>
 
         {/* Language Selector */}
@@ -94,7 +88,13 @@ const CompilerPage = () => {
               </label>
               <select
                 value={selectedLanguage.name}
-                onChange={(e) => setSelectedLanguage(languages.find(lang => lang.name === e.target.value))}
+                onChange={(e) =>
+                  setSelectedLanguage(
+                    languages.find((lang) => lang.name === e.target.value) as
+                      | { name: string; id: number }
+                      | { name: string; id: string }
+                  )
+                }
                 className="w-full px-3 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:border-electric-400 focus:outline-none"
               >
                 {languages.map((lang) => (
@@ -115,10 +115,12 @@ const CompilerPage = () => {
           className="mb-8"
         >
           <div className="p-6 bg-gray-800 border border-gray-700 rounded-lg">
-            {selectedLanguage.id === 'web' ? (
+            {selectedLanguage.id === "web" ? (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-300">HTML</label>
+                  <label className="block mb-2 text-sm font-medium text-gray-300">
+                    HTML
+                  </label>
                   <textarea
                     value={htmlCode}
                     onChange={(e) => setHtmlCode(e.target.value)}
@@ -127,7 +129,9 @@ const CompilerPage = () => {
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-300">CSS</label>
+                  <label className="block mb-2 text-sm font-medium text-gray-300">
+                    CSS
+                  </label>
                   <textarea
                     value={cssCode}
                     onChange={(e) => setCssCode(e.target.value)}
@@ -136,7 +140,9 @@ const CompilerPage = () => {
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-300">JavaScript</label>
+                  <label className="block mb-2 text-sm font-medium text-gray-300">
+                    JavaScript
+                  </label>
                   <textarea
                     value={jsCode}
                     onChange={(e) => setJsCode(e.target.value)}
@@ -148,7 +154,9 @@ const CompilerPage = () => {
             ) : (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-300">Code</label>
+                  <label className="block mb-2 text-sm font-medium text-gray-300">
+                    Code
+                  </label>
                   <textarea
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
@@ -157,7 +165,9 @@ const CompilerPage = () => {
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-300">Input (stdin)</label>
+                  <label className="block mb-2 text-sm font-medium text-gray-300">
+                    Input (stdin)
+                  </label>
                   <textarea
                     value={stdin}
                     onChange={(e) => setStdin(e.target.value)}
@@ -184,8 +194,10 @@ const CompilerPage = () => {
           transition={{ delay: 0.3 }}
           className="p-6 bg-gray-800 border border-gray-700 rounded-lg"
         >
-          <h2 className="mb-4 text-xl font-bold text-white">Output / Preview</h2>
-          {selectedLanguage.id === 'web' ? (
+          <h2 className="mb-4 text-xl font-bold text-white">
+            Output / Preview
+          </h2>
+          {selectedLanguage.id === "web" ? (
             <iframe
               srcDoc={srcDoc}
               title="preview"
