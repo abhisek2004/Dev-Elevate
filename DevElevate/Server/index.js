@@ -27,6 +27,7 @@ import mernRoutes from "./routes/mernRoutes.js";
 import dsaRoutes from "./routes/dsaRoutes.js";
 import contestRoutes from "./routes/contestRoutes.js";
 import placementRoutes from "./routes/placementRoutes.js";
+import compilerRoutes from "./routes/compilerRoutes.js";
 import contactSupport from "./routes/contactSupport.js";
 import newsRoutes from "./routes/newsRoutes.js";
 import Faq from "./routes/faq.js";
@@ -111,6 +112,9 @@ app.use("/api/v1/learning/java", javaRoutes);
 app.use("/api/v1/learning/aiml", aimlRoutes);
 app.use("/api/v1/learning/mern", mernRoutes);
 app.use("/api/v1/learning/dsa", dsaRoutes);
+
+// Compiler Routes
+app.use("/api/v1/compiler", compilerRoutes);
 
 // Placement Routes
 app.use("/api/v1/placements", placementRoutes);
