@@ -7,6 +7,7 @@ import { IoTriangleSharp, IoFilter } from "react-icons/io5";
 import { Search, BookOpen, Brain, MessageSquare, FileText, Trophy, BarChart3, Star, Rocket, Github, Linkedin, Mail, ArrowUp } from "lucide-react";
 import { FaBriefcase } from "react-icons/fa";
 import { SiMongodb, SiExpress, SiNodedotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
+import axios from "axios";
 
 const HomePage = () => {
   // Globe Section Animation Logic
@@ -82,9 +83,14 @@ const HomePage = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
     try {
+      e.preventDefault();
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/subscribe`,
+        { email }
+      );
+      console.log(res.data);
+      setIsSubmitting(true);
       console.log("Subscribed with email:", email);
       setEmail("");
     } catch (error) {
