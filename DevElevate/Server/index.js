@@ -38,6 +38,7 @@ import analyticRoute from "./routes/analytics.js";
 import interviewExperienceRoutes from "./routes/interviewExperienceRoutes.js";
 import experienceRoutes from "./routes/experienceRoutes.js";
 import assessmentRoutes from "./routes/assessmentRoutes.js";
+import subscribeRoutes from "./routes/subscribeRoutes.js";
 // Add static file serving for uploaded files (add this after other middleware)
 import path from "path";
 import { fileURLToPath } from "url";
@@ -135,8 +136,10 @@ aiRoutes.stack.forEach((r) => {
 app.use("/api/notes", notesRoutes);
 
 // ✅ Interview Experience ROUTES (Add detailed logging)
-
 app.use("/api/interview-experience", interviewExperienceRoutes);
+
+// ✅ Subscribe route for Newsletter
+app.use("/api/subscribe", subscribeRoutes);
 
 // Debug: Log all registered routes
 notesRoutes.stack.forEach((r) => {
