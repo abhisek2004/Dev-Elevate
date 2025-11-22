@@ -10,6 +10,7 @@ import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
+import axios from "axios";
 
 function ReportIssueButton() {
   const [open, setOpen] = useState(false);
@@ -51,6 +52,7 @@ function ReportIssueButton() {
 function LandingPage() {
   const [showBanner, setShowBanner] = useState(true);
   const [showNewsletter, setShowNewsletter] = useState(false);
+  const [email, setEmail] = useState("");
 
   // Check sessionStorage on load
   useEffect(() => {
@@ -73,6 +75,21 @@ function LandingPage() {
     setShowBanner(false);
     setShowNewsletter(true);
     sessionStorage.removeItem("privacyAccepted"); // will trigger again on refresh
+  };
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/subscribe`,
+        { email }
+      );
+      console.log(res.data);
+      console.log("Subscribed with email:", email);
+      setEmail("");
+    } catch (error) {
+      console.error("Subscription error:", error);
+    }
   };
 
   return (
@@ -205,8 +222,13 @@ function LandingPage() {
                 type="email"
                 placeholder="Enter your email"
                 className="w-full p-3 mb-4 text-white placeholder-gray-400 border border-gray-600 rounded-lg bg-black/40 focus:ring-2 focus:ring-pink-500"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <button className="w-full py-3 font-bold text-white transition rounded-lg shadow-lg bg-gradient-to-r from-green-500 to-emerald-600 hover:scale-105">
+              <button
+                className="w-full py-3 font-bold text-white transition rounded-lg shadow-lg bg-gradient-to-r from-green-500 to-emerald-600 hover:scale-105"
+                onClick={handleSubscribe}
+              >
                 Subscribe
               </button>
               <button
