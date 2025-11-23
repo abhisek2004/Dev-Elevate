@@ -143,9 +143,6 @@ export const deleteCourse = async (req, res) => {
 export const getYouTubeCourses = async (req, res) => {
   try {
     const { search, category, maxResults = 12 } = req.query;
-
-    console.log('🎥 Fetching YouTube courses:', { search, category, maxResults });
-
     let videos;
 
     try {
