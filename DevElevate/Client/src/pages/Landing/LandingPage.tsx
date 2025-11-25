@@ -54,10 +54,10 @@ function LandingPage() {
   const [showNewsletter, setShowNewsletter] = useState(false);
   const [email, setEmail] = useState("");
 
-  // Check sessionStorage on load
+  // Check localStorage on load
   useEffect(() => {
-    const accepted = sessionStorage.getItem("privacyAccepted");
-    if (accepted === "true") {
+    const consent = localStorage.getItem("cookieConsent");
+    if (consent === "accepted" || consent === "rejected") {
       setShowBanner(false);
       setShowNewsletter(false);
     } else {
@@ -68,13 +68,13 @@ function LandingPage() {
   const handleAccept = () => {
     setShowBanner(false);
     setShowNewsletter(true);
-    sessionStorage.setItem("privacyAccepted", "true");
+    localStorage.setItem("cookieConsent", "accepted");
   };
 
   const handleReject = () => {
     setShowBanner(false);
     setShowNewsletter(true);
-    sessionStorage.removeItem("privacyAccepted"); // will trigger again on refresh
+    localStorage.setItem("cookieConsent", "rejected");
   };
 
   const handleSubscribe = async (e: React.FormEvent) => {
