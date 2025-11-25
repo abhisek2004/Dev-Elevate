@@ -13,6 +13,8 @@ import {
   updateProfile,
   getProfile,
   changePassword,
+  forgotPassword,
+  resetPassword,
 } from "../controller/userController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { passwordChangeLimiter } from "../utils/passwordChangeLimiter.js";
@@ -25,8 +27,15 @@ router.put("/update-profile", authenticateToken, updateProfile);
 router.get("/get-profile", authenticateToken, getProfile);
 router.post("/auth/google", googleUser);
 router.post("/feedback", authenticateToken, feedback);
-router.get("/user/streak",authenticateToken,currentStreak)
-router.post('/change-password',authenticateToken,passwordChangeLimiter,changePassword)
+router.get("/user/streak", authenticateToken, currentStreak);
+router.post(
+  "/change-password",
+  authenticateToken,
+  passwordChangeLimiter,
+  changePassword
+);
+router.post("/auth/forgot-password", forgotPassword);
+router.post("/auth/reset-password/:resetToken", resetPassword);
 
 router.get("/latest-news",latestNews)
 

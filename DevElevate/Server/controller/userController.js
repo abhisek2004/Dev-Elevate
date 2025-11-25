@@ -5,11 +5,16 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import moment from "moment";
-import sendWelcomeEmail, { sendOtpEmail } from "../utils/mailer.js";
+import sendWelcomeEmail, {
+  sendOtpEmail,
+  sendResetPasswordEmail,
+} from "../utils/mailer.js";
 import OtpToken from "../model/OtpToken.js";
 import generateWelcomeEmail from "../utils/welcomeTemplate.js";
 dotenv.config();
 import { createNotification } from "./notificationController.js";
+import generateResetPasswordEmail from "../utils/resetPasswordTemplate.js";
+import crypto from "crypto";
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -151,45 +156,43 @@ export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-  
-    
     // Check for hidden characters
     if (password) {
-      console.log('Password chars:');
+      console.log("Password chars:");
       for (let i = 0; i < password.length; i++) {
-        console.log(`  [${i}]: '${password[i]}' (code: ${password.charCodeAt(i)})`);
+        console.log(
+          `  [${i}]: '${password[i]}' (code: ${password.charCodeAt(i)})`
+        );
       }
     }
 
     const user = await User.findOne({ email });
     if (!user) {
-      console.log('❌ User not found for email:', email);
+      console.log("❌ User not found for email:", email);
       return res.status(404).json({ message: "User not found" });
     }
 
-   
-
-    
     const isMatch = await bcrypt.compare(password, user.password);
-    
-    console.log('✅ bcrypt.compare result:', isMatch);
+
+    console.log("✅ bcrypt.compare result:", isMatch);
 
     if (!isMatch) {
-      console.log('❌ Password mismatch - authentication failed');
-      
+      console.log("❌ Password mismatch - authentication failed");
+
       // Extra debug: try comparing with the test hash from your quickHash.js
-      const testHash = '$2b$10$fZirYv9iJS92OaUnI6vC2evpDUpIBP6Le49W2GRKqtFFTVZ3w/wpS';
+      const testHash =
+        "$2b$10$fZirYv9iJS92OaUnI6vC2evpDUpIBP6Le49W2GRKqtFFTVZ3w/wpS";
       const testMatch = await bcrypt.compare(password, testHash);
-      console.log('🧪 Test against known hash:', testMatch);
-      
+      console.log("🧪 Test against known hash:", testMatch);
+
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    console.log('✅ Password match successful - proceeding with login');
+    console.log("✅ Password match successful - proceeding with login");
 
     const JWT_SECRET = process.env.JWT_SECRET;
     const JWT_EXPIRES = "3d";
-    
+
     // Create JWT token
     const payLode = {
       userId: user._id,
@@ -211,8 +214,8 @@ export const loginUser = async (req, res) => {
       "success"
     );
 
-    console.log('✅ Login completed successfully');
-    console.log('=== END LOGIN ATTEMPT ===\n');
+    console.log("✅ Login completed successfully");
+    console.log("=== END LOGIN ATTEMPT ===\n");
 
     res.status(200).json({
       message: "Login successful",
@@ -226,8 +229,8 @@ export const loginUser = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('🔥 LOGIN ERROR:', error);
-    console.error('Error stack:', error.stack);
+    console.error("🔥 LOGIN ERROR:", error);
+    console.error("Error stack:", error.stack);
     res
       .status(500)
       .json({ message: "Something went wrong", error: error.message });
@@ -284,8 +287,7 @@ export const loginUser = async (req, res) => {
   }
 };*/
 
-//  googleUser function 
-
+//  googleUser function
 
 export const googleUser = async (req, res) => {
   try {
@@ -300,7 +302,7 @@ export const googleUser = async (req, res) => {
     if (user) {
       console.log("✅ Existing user found:", user.name, "- ID:", user._id);
       console.log("   Current role:", user.role);
-      
+
       // ✅ CRITICAL FIX: Don't change existing user's role
       // Only update name if it's different (e.g., user changed their Google name)
       if (user.name !== name) {
@@ -308,7 +310,7 @@ export const googleUser = async (req, res) => {
         user.name = name;
         await user.save();
       }
-      
+
       // ✅ Check if this user should NOT be admin
       // Only officialdevelevate@gmail.com should be admin
       if (user.role === "admin" && email !== "officialdevelevate@gmail.com") {
@@ -317,14 +319,14 @@ export const googleUser = async (req, res) => {
         await user.save();
         console.log("✅ Role updated to 'user'");
       }
-      
     } else {
       console.log("📝 Creating new user...");
-      
+
       // ✅ CRITICAL: Always create new users with 'user' role
       // Only make admin if email is officialdevelevate@gmail.com
-      const userRole = email === "officialdevelevate@gmail.com" ? "admin" : "user";
-      
+      const userRole =
+        email === "officialdevelevate@gmail.com" ? "admin" : "user";
+
       user = new User({
         name,
         email,
@@ -339,7 +341,7 @@ export const googleUser = async (req, res) => {
       });
 
       await user.save();
-      
+
       console.log("✅ New user created:");
       console.log("   ID:", user._id);
       console.log("   Name:", user.name);
@@ -361,16 +363,16 @@ export const googleUser = async (req, res) => {
     // ✅ Generate JWT token with user ID
     const JWT_SECRET = process.env.JWT_SECRET;
     const JWT_EXPIRES = "3d";
-    
+
     // Include multiple ID formats for compatibility
-    const payload = { 
+    const payload = {
       userId: user._id,
       id: user._id,
       _id: user._id,
       email: user.email,
-      role: user.role 
+      role: user.role,
     };
-    
+
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES });
 
     console.log("✅ JWT token generated");
@@ -404,15 +406,14 @@ export const googleUser = async (req, res) => {
         createdAt: user.createdAt,
       },
     });
-    
   } catch (error) {
     console.error("❌ Google login error:", error);
     console.error("Stack trace:", error.stack);
-    
+
     return res.status(500).json({
       success: false,
       message: "Something went wrong",
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -444,9 +445,7 @@ export const logout = async (req, res) => {
 
 export const currentStreak = async (req, res) => {
   try {
-    
     const userId = req.user._id.toString();
-    
 
     const user = await User.findById(userId).populate("dayStreak");
 
@@ -620,7 +619,6 @@ export const getProfile = async (req, res) => {
   }
 };
 
-
 export const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
@@ -634,7 +632,11 @@ export const changePassword = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
+    await User.findByIdAndUpdate(
+      userId,
+      { password: hashedPassword },
+      { new: true }
+    );
     return res.status(200).json({
       message: "Password changed successfully",
     });
@@ -644,3 +646,68 @@ export const changePassword = async (req, res) => {
   }
 };
 
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const resetToken = await user.generateForgotPasswordToken();
+    await user.save();
+
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    const html = generateResetPasswordEmail(user.name, resetPasswordUrl);
+    try {
+      await sendResetPasswordEmail(email, html);
+      return res.status(200).json({
+        success: true,
+        message: `Reset password token has been sent to ${email} successfully`,
+      });
+    } catch (error) {
+      user.forgotPasswordExpiry = undefined;
+      user.forgotPasswordToken = undefined;
+      await user.save();
+      return res.status(500).json({ message: error.message });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: error.message || "Server error" });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { resetToken } = req.params;
+    const { password } = req.body;
+    const forgotPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    const user = await User.findOne({
+      forgotPasswordToken,
+      forgotPasswordExpiry: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Token is invalid or expires" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    user.password = hashedPassword;
+    user.forgotPasswordToken = undefined;
+    user.forgotPasswordExpiry = undefined;
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Password changed successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: error.message || "Server error" });
+  }
+};
