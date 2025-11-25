@@ -1,51 +1,39 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  Eye,
-  EyeOff,
-  Mail,
-  Lock,
-  ChevronLeft,
-} from "lucide-react";
+import { Mail, ChevronLeft } from "lucide-react";
+import axios from "axios";
+import { toast } from "sonner";
 
-interface FormData {
-  email: string;
-  newPassword: string;
-  confirmPassword: string;
+interface ForgotPasswordResponse {
+  success: boolean;
+  message: string;
 }
 
 const ForgotPass: React.FC = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<FormData>({
-    email: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
 
-  const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { newPassword, confirmPassword } = formData;
-
-    if (newPassword.length < 6) {
-      alert("Password must be at least 6 characters!");
+    setLoading(true);
+    if (!email) {
+      alert("Email is required");
       return;
     }
 
-    if (newPassword !== confirmPassword) {
-      alert("Password Doesn't Match");
-      return;
+    const res = await axios.post<ForgotPasswordResponse>(
+      `${import.meta.env.VITE_API_URL}/api/v1/auth/forgot-password`,
+      { email }
+    );
+    if (res.data.success) {
+      toast.success("Email sent Successfully!");
+      setLoading(false);
+    } else {
+      toast.error("Failed to send Email!");
     }
-
-    alert("Password reset successful! Redirecting to login...");
-    navigate("/");
   };
 
   return (
@@ -59,7 +47,7 @@ const ForgotPass: React.FC = () => {
         {/* Back to Login */}
         <div
           className="flex items-center mb-6 cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/login")}
         >
           <ChevronLeft className="text-white" />
           <span className="text-white text-sm ml-1">Back to Login</span>
@@ -67,7 +55,7 @@ const ForgotPass: React.FC = () => {
 
         {/* Title */}
         <h2 className="text-2xl font-bold text-white text-center mb-6">
-          Reset Password
+          Forgot Password
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -78,51 +66,11 @@ const ForgotPass: React.FC = () => {
               type="email"
               name="email"
               placeholder="Enter your email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               required
             />
-          </div>
-
-          {/* New Password */}
-          <div className="relative">
-            <Lock className="absolute left-3 top-3 text-gray-400" />
-            <input
-              type={showNewPassword ? "text" : "password"}
-              name="newPassword"
-              placeholder="New Password"
-              value={formData.newPassword}
-              onChange={handleChange}
-              className="w-full pl-10 pr-10 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              required
-            />
-            <div
-              className="absolute right-3 top-3 cursor-pointer text-gray-400"
-              onClick={() => setShowNewPassword(!showNewPassword)}
-            >
-              {showNewPassword ? <EyeOff /> : <Eye />}
-            </div>
-          </div>
-
-          {/* Confirm Password */}
-          <div className="relative">
-            <Lock className="absolute left-3 top-3 text-gray-400" />
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full pl-10 pr-10 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              required
-            />
-            <div
-              className="absolute right-3 top-3 cursor-pointer text-gray-400"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            >
-              {showConfirmPassword ? <EyeOff /> : <Eye />}
-            </div>
           </div>
 
           {/* Submit */}
@@ -130,7 +78,7 @@ const ForgotPass: React.FC = () => {
             type="submit"
             className="w-full py-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg text-white font-semibold hover:opacity-90 transition"
           >
-            Submit
+            {loading ? "Sending Email..." : "Submit"}
           </button>
         </form>
       </motion.div>
