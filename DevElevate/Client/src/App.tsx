@@ -74,6 +74,7 @@ import PracticeProblemsPage from "./pages/Dsa/PracticeProblemsPage";
 // In your App.jsx or routes file
 import ViewNotePage from './pages/Notes/ViewNotePage.jsx';
 import EditNotePage from './pages/Notes/EditNotePage.jsx';
+import ResetPass from "./components/Auth/ResetPass.js";
 // Inside your Routes
 <Route path="/notes/view/:noteId" element={<ViewNotePage />} />
 
@@ -108,6 +109,14 @@ const AppContent = () => {
           element={
             <ProtectedRoute requireAuth={false}>
               <ForgotPass />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reset-password/:resetToken"
+          element={
+            <ProtectedRoute requireAuth={false}>
+              <ResetPass />
             </ProtectedRoute>
           }
         />

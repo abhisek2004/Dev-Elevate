@@ -28,6 +28,23 @@ const sendWelcomeEmail = async (to, htmlContent) => {
   }
 };
 
+export const sendResetPasswordEmail = async (to, htmlContent) => {
+  const mailOptions = {
+    from: `"DevElevate Team" <${process.env.MAIL_USER}>`,
+    to,
+    subject: "🔐 Reset Password",
+    html: htmlContent,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("✅ Email sent to:", to);
+  } catch (error) {
+    console.error("❌ Failed to send email:", error);
+    throw new Error("Failed to send welcome email");
+  }
+};
+
 export const sendOtpEmail = async (to, otp, minutes = 5) => {
   const mailOptions = {
     from: `"DevElevate Team" <${process.env.MAIL_USER}>`,
