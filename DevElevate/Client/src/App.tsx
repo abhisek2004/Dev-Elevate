@@ -1,4 +1,3 @@
-// ✅ All imports at the top
 import {
   BrowserRouter as Router,
   Routes,
@@ -71,14 +70,11 @@ import SearchPage from "./pages/Search/SearchPage";
 import DsaLanding from "./pages/Dsa/DsaLanding";
 import CompanyQuestionsPage from "./pages/Dsa/CompanyQuestionsPage";
 import PracticeProblemsPage from "./pages/Dsa/PracticeProblemsPage";
-// In your App.jsx or routes file
-import ViewNotePage from './pages/Notes/ViewNotePage.jsx';
-import EditNotePage from './pages/Notes/EditNotePage.jsx';
+import ViewNotePage from "./pages/Notes/ViewNotePage.jsx";
+import EditNotePage from "./pages/Notes/EditNotePage.jsx";
 import ResetPass from "./components/Auth/ResetPass.js";
-// Inside your Routes
-<Route path="/notes/view/:noteId" element={<ViewNotePage />} />
+<Route path="/notes/view/:noteId" element={<ViewNotePage />} />;
 
-// ✅ AppContent
 const AppContent = () => {
   const { state } = useGlobalState();
 
@@ -121,7 +117,6 @@ const AppContent = () => {
           }
         />
 
-        {/* Admin Routes */}
         <Route
           path="/admin/*"
           element={
@@ -156,7 +151,6 @@ const AppContent = () => {
           <Route path="feedback" element={<Feedback />} />
         </Route>
 
-        {/* Protected Routes - Require Authentication */}
         <Route
           path="/*"
           element={
@@ -164,8 +158,9 @@ const AppContent = () => {
               <AppProvider>
                 <Layout>
                   <div
-                    className={`flex-1 ${state.darkMode ? "bg-gray-900" : "bg-white"
-                      }`}
+                    className={`flex-1 ${
+                      state.darkMode ? "bg-gray-900" : "bg-white"
+                    }`}
                   >
                     <main className="flex-1">
                       <Routes>
@@ -189,8 +184,14 @@ const AppContent = () => {
                         <Route path="resume" element={<ResumeBuilder />} />
                         <Route path="placement" element={<PlacementPrep />} />
                         <Route path="placement/dsa" element={<DsaLanding />} />
-                        <Route path="placement/dsa/company" element={<CompanyQuestionsPage />} />
-                        <Route path="placement/dsa/practice" element={<PracticeProblemsPage />} />
+                        <Route
+                          path="placement/dsa/company"
+                          element={<CompanyQuestionsPage />}
+                        />
+                        <Route
+                          path="placement/dsa/practice"
+                          element={<PracticeProblemsPage />}
+                        />
                         <Route
                           path="projects"
                           element={<ProjectRecommender />}
@@ -202,13 +203,15 @@ const AppContent = () => {
                         <Route path="profile" element={<UserProfile />} />
                         <Route path="settings/*" element={<UserSettings />} />
                         <Route path="help-center" element={<HelpCenter />} />
-                        <Route path="leaderboard" element={<ContributorsPageClient />} />
+                        <Route
+                          path="leaderboard"
+                          element={<ContributorsPageClient />}
+                        />
                         <Route path="search" element={<SearchPage />} />
                         <Route
                           path="*"
                           element={<Navigate to="/dashboard" replace />}
                         />
-                        {/* All note related routes */}
                         <Route path="notes" element={<NotesPage />} />
                         <Route
                           path="/notes/javascript/*"
@@ -217,9 +220,15 @@ const AppContent = () => {
                         <Route path="/notes/python" element={<PythonNotes />} />
                         <Route path="/notes/git" element={<GitNotes />} />
                         <Route path="/notes/react" element={<ReactPattern />} />
-                        <Route path="/notes/view/:noteId" element={<ViewNotePage />} />
+                        <Route
+                          path="/notes/view/:noteId"
+                          element={<ViewNotePage />}
+                        />
 
-                        <Route path="/notes/edit/:noteId" element={<EditNotePage />} />
+                        <Route
+                          path="/notes/edit/:noteId"
+                          element={<EditNotePage />}
+                        />
                         <Route
                           path="/notes/:topic"
                           element={<FallBackNotes />}
@@ -239,14 +248,12 @@ const AppContent = () => {
   );
 };
 
-// ✅ App root
 function App() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     let timeoutId: number | undefined;
     const hide = () => setShowSplash(false);
-    // Hide when window finished loading, with a safety timeout fallback
     if (document.readyState === "complete") {
       timeoutId = window.setTimeout(hide, 400);
     } else {
