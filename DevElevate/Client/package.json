@@ -34,7 +34,7 @@
     "dotenv": "^17.2.1",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
-    "express": "^5.1.0",
+    "express": "^5.2.0",
     "firebase": "^12.4.0",
     "framer-motion": "^12.23.24",
     "jspdf": "^3.0.1",
