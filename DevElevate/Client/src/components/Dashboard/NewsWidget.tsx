@@ -22,12 +22,12 @@ const NewsWidget: React.FC = () => {
     const fetchNews = async () => {
       try {
         const res = await fetch(
-          "https://newsdata.io/api/1/latest?apikey=pub_435a52c41f174309b4357800e29821d0&category=technology,business&language=en&country=in"
+          "https://newsdata.io/api/1/latest?apikey=pub_435a52c41f174309b4357800e29821d0&category=education,technology&language=en&country=in"
         );
         const data = await res.json();
 
         if (data.results) {
-          setArticles(data.results.slice(0, 12)); // ✅ limit to 9
+          setArticles(data.results.slice(0, 20)); // Show 20 education and technology news items
         }
       } catch (err) {
         console.error("Failed to fetch news", err);
@@ -55,8 +55,8 @@ const NewsWidget: React.FC = () => {
   return (
     <div
       className={`${state.darkMode
-          ? "bg-gray-800 border-gray-700"
-          : "bg-white border-gray-200"
+        ? "bg-gray-800 border-gray-700"
+        : "bg-white border-gray-200"
         } rounded-xl p-6 border shadow-sm transition-colors duration-200`}
     >
       <div className="flex items-center justify-between mb-6">
@@ -119,8 +119,8 @@ const NewsWidget: React.FC = () => {
                   src={item.image_url || "https://via.placeholder.com/300x200?text=No+Image"}
                   alt="thumbnail"
                   className={`${viewMode === "card"
-                      ? "w-full h-28 object-cover"
-                      : "w-28 h-20 rounded-md object-cover"
+                    ? "w-full h-28 object-cover"
+                    : "w-28 h-20 rounded-md object-cover"
                     }`}
                 />
               )}
