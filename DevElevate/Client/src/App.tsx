@@ -20,6 +20,7 @@ import LearningHub from "./components/LearningHub/LearningHub";
 import Chatbot from "./components/Chatbot/Chatbot";
 import TechFeed from "./components/TechFeed/TechFeed";
 import ResumeBuilder from "./components/ResumeBuilder/ResumeBuilder";
+import CoverLetter from "./components/CoverLetter/CoverLetter";
 import PlacementPrep from "./components/PlacementPrep/PlacementPrep";
 import UserProfile from "./components/Profile/UserProfile";
 import UserSettings from "./components/Settings/UserSettings";
@@ -186,6 +187,7 @@ const AppContent = () => {
                           element={<CommunityForum />}
                         />
                         <Route path="resume" element={<ResumeBuilder />} />
+                        <Route path="cover-letter" element={<CoverLetter />} />
                         <Route path="placement" element={<PlacementPrep />} />
                         <Route path="placement/dsa" element={<DsaLanding />} />
                         <Route path="placement/dsa/company" element={<CompanyQuestionsPage />} />
