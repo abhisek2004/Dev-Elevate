@@ -5,6 +5,7 @@ import {
 import { motion } from "framer-motion";
 import HomePage from "./Pages/HomePage";
 import ProblemsPage from "./Pages/ProblemsPage";
+import { useGlobalState } from '../../contexts/GlobalContext';
 
 const Coding: React.FC = () => {
   const location = useLocation();
@@ -15,10 +16,11 @@ const Coding: React.FC = () => {
     }
     return currentPath.startsWith(`/coding/${itemPath}`);
   };
+  const { state } = useGlobalState();
   return (
-    <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+    <div className={`relative min-h-screen overflow-hidden ${state.darkMode ? 'bg-gradient-to-b from-gray-900 to-black' : 'bg-gradient-to-b from-gray-50 to-gray-100'}`}>
       {/* Main Content */}
-      <main className="px-4 py-8 mx-auto max-w-7xl">
+      <main className="px-4 mx-auto max-w-7xl">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/problems" element={<ProblemsPage />} />
