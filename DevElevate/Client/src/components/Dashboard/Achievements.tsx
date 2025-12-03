@@ -1,71 +1,118 @@
 import React, { useEffect, useState } from 'react';
 import { Trophy, Star, Zap, Target, Award, CheckCircle } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
+import { fetchDashboardData } from '../../api/dashboardApi';
+import { Achievement } from '../../api/dashboardApi';
 
 const Achievements: React.FC = () => {
     const { state } = useGlobalState();
-    const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+    const [achievements, setAchievements] = useState<Achievement[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    // Auto-refresh daily
+    const loadAchievements = async () => {
+        try {
+            setLoading(true);
+            const response = await fetchDashboardData();
+            if (response.success) {
+                setAchievements(response.data.achievements);
+            } else {
+                setError("Failed to load achievements");
+            }
+        } catch (err) {
+            console.error("Error fetching achievements:", err);
+            setError("Failed to load achievements. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
+        loadAchievements();
+
+        // Auto-refresh every 24 hours
         const interval = setInterval(() => {
-            setLastUpdated(new Date());
+            loadAchievements();
         }, 24 * 60 * 60 * 1000); // 24 hours
 
         return () => clearInterval(interval);
     }, []);
 
-    // Mock achievements - in a real app, this would come from an API
-    const achievements = [
-        {
-            id: '1',
-            title: 'First Steps',
-            description: 'Complete your first lesson',
-            icon: CheckCircle,
-            earned: true,
-            dateEarned: '2023-05-15'
-        },
-        {
-            id: '2',
-            title: 'Streak Master',
-            description: 'Maintain a 7-day learning streak',
-            icon: Zap,
-            earned: state.user?.streak && state.user.streak >= 7,
-            dateEarned: state.user?.streak && state.user.streak >= 7 ? '2023-06-20' : null
-        },
-        {
-            id: '3',
-            title: 'Quiz Champion',
-            description: 'Score 90% or higher on 5 quizzes',
-            icon: Target,
-            earned: false,
-            dateEarned: null
-        },
-        {
-            id: '4',
-            title: 'Polyglot',
-            description: 'Complete courses in 3 different tracks',
-            icon: Star,
-            earned: false,
-            dateEarned: null
-        },
-        {
-            id: '5',
-            title: 'Night Owl',
-            description: 'Complete a lesson after 10 PM',
-            icon: Award,
-            earned: true,
-            dateEarned: '2023-07-10'
-        }
-    ];
+    const getEarnedCount = () => {
+        return achievements.filter(a => a.earned).length;
+    };
 
-    const earnedCount = achievements.filter(a => a.earned).length;
+    if (loading) {
+        return (
+            <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500">
+                            <Trophy className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                            <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                                Achievements
+                            </h3>
+                            <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                                Loading...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className="space-y-4">
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className={`flex items-center gap-4 p-3 rounded-xl border ${state.darkMode ? 'bg-gray-900/50 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+                            <div className={`p-2 rounded-lg ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
+                                <div className="w-4 h-4 bg-gray-400 rounded-full animate-pulse"></div>
+                            </div>
+                            <div className="flex-1">
+                                <div className={`h-4 ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded animate-pulse`}></div>
+                                <div className={`h-3 mt-2 ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded animate-pulse w-3/4`}></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500">
+                            <Trophy className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                            <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                                Achievements
+                            </h3>
+                            <p className={`text-sm ${state.darkMode ? 'text-red-400' : 'text-red-600'}`}>
+                                {error}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <button
+                    onClick={loadAchievements}
+                    className={`mt-4 px-4 py-2 rounded-lg text-sm font-medium ${state.darkMode
+                            ? 'bg-gray-700 text-white hover:bg-gray-600'
+                            : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                        }`}
+                >
+                    Retry
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg">
+                    <div className="p-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500">
                         <Trophy className="w-5 h-5 text-white" />
                     </div>
                     <div>
@@ -73,13 +120,13 @@ const Achievements: React.FC = () => {
                             Achievements
                         </h3>
                         <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                            {earnedCount} of {achievements.length} unlocked
+                            {getEarnedCount()} of {achievements.length} unlocked
                         </p>
                     </div>
                 </div>
                 <div className="text-right">
                     <div className={`text-2xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
-                        {earnedCount}
+                        {getEarnedCount()}
                     </div>
                     <div className={`text-xs ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                         Earned
@@ -89,7 +136,7 @@ const Achievements: React.FC = () => {
 
             <div className="space-y-4">
                 {achievements.map((achievement) => {
-                    const Icon = achievement.icon;
+                    const Icon = achievement.earned ? CheckCircle : Trophy;
                     return (
                         <div
                             key={achievement.id}
