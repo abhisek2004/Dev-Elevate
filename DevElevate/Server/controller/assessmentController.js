@@ -5,8 +5,7 @@ import SkillAssessment from "../model/SkillAssessment.js";
 
 dotenv.config();
 
-const MODEL =
-  process.env.OPENAI_ASSESSMENT_MODEL?.trim() || "gpt-4o-mini";
+const MODEL = process.env.OPENAI_ASSESSMENT_MODEL?.trim() || "gpt-4o-mini";
 
 const openaiClient =
   process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== ""
@@ -14,7 +13,7 @@ const openaiClient =
     : null;
 
 const TRACK_CONFIG = {
-  "dsa": {
+  dsa: {
     displayName: "Data Structures & Algorithms",
     slug: "dsa",
     categories: [
@@ -119,7 +118,8 @@ const TRACK_CONFIG = {
         ],
       },
       Intermediate: {
-        focus: "Strengthen graph reasoning and introduce dynamic programming patterns.",
+        focus:
+          "Strengthen graph reasoning and introduce dynamic programming patterns.",
         summary:
           "Build consistency on medium-level problems while closing knowledge gaps in recursion and state modeling.",
         actionItems: [
@@ -130,7 +130,8 @@ const TRACK_CONFIG = {
         ],
       },
       Advanced: {
-        focus: "Optimize for performance and tackle hard-level problem variants.",
+        focus:
+          "Optimize for performance and tackle hard-level problem variants.",
         summary:
           "Transition from pattern recognition to creative problem construction and optimization under constraints.",
         actionItems: [
@@ -364,7 +365,8 @@ const TRACK_CONFIG = {
     },
     roadmap: {
       Beginner: {
-        focus: "Develop intuition for supervised learning and evaluation metrics.",
+        focus:
+          "Develop intuition for supervised learning and evaluation metrics.",
         summary:
           "Focus on translating problem statements into ML tasks with appropriate baseline models.",
         actionItems: [
@@ -386,7 +388,8 @@ const TRACK_CONFIG = {
         ],
       },
       Advanced: {
-        focus: "Scale deep learning systems and streamline MLOps infrastructure.",
+        focus:
+          "Scale deep learning systems and streamline MLOps infrastructure.",
         summary:
           "Optimize performance across distributed training, CI/CD for ML, and continuous monitoring.",
         actionItems: [
@@ -449,8 +452,7 @@ const TRACK_CONFIG = {
         {
           title: "Mode Analytics SQL Tutorial",
           url: "https://mode.com/sql-tutorial/",
-          description:
-            "Applied SQL cases with business scenario walkthroughs.",
+          description: "Applied SQL cases with business scenario walkthroughs.",
           type: "documentation",
           focusAreas: ["Business Insights", "Data Wrangling"],
         },
@@ -514,7 +516,8 @@ const TRACK_CONFIG = {
         ],
       },
       Advanced: {
-        focus: "Scale analytics strategy and predictive solutions across teams.",
+        focus:
+          "Scale analytics strategy and predictive solutions across teams.",
         summary:
           "Lead robust analytics initiatives, covering governance, experimentation, and advanced modeling.",
         actionItems: [
@@ -631,7 +634,8 @@ const TRACK_CONFIG = {
         ],
       },
       Intermediate: {
-        focus: "Operationalize container orchestration and resilient CI/CD pipelines.",
+        focus:
+          "Operationalize container orchestration and resilient CI/CD pipelines.",
         summary:
           "Lean into orchestration, observability, and secure delivery workflows.",
         actionItems: [
@@ -642,7 +646,8 @@ const TRACK_CONFIG = {
         ],
       },
       Advanced: {
-        focus: "Optimize reliability, security posture, and platform scalability.",
+        focus:
+          "Optimize reliability, security posture, and platform scalability.",
         summary:
           "Drive platform strategy with governance, automation at scale, and proactive resilience.",
         actionItems: [
@@ -663,17 +668,17 @@ const TRACK_ALIASES = {
   "data structures & algorithms": "dsa",
   "web development": "web-development",
   "web-development": "web-development",
-  "frontend": "web-development",
+  frontend: "web-development",
   "full stack": "web-development",
   "full-stack": "web-development",
   "machine learning": "machine-learning",
   "machine-learning": "machine-learning",
-  "ml": "machine-learning",
-  "ai": "machine-learning",
+  ml: "machine-learning",
+  ai: "machine-learning",
   "data science": "data-science",
   "data-science": "data-science",
   analytics: "data-science",
-  "cloud": "cloud-devops",
+  cloud: "cloud-devops",
   "cloud-devops": "cloud-devops",
   devops: "cloud-devops",
   "cloud & devops": "cloud-devops",
@@ -684,7 +689,11 @@ const LETTERS = ["A", "B", "C", "D", "E", "F"];
 const normalizeTrack = (track) => {
   if (!track) return null;
   const normalized = track.trim().toLowerCase();
-  return TRACK_ALIASES[normalized] || TRACK_ALIASES[normalized.replace(/\s+/g, " ")] || null;
+  return (
+    TRACK_ALIASES[normalized] ||
+    TRACK_ALIASES[normalized.replace(/\s+/g, " ")] ||
+    null
+  );
 };
 
 const ensureOpenAIClient = () => {
@@ -781,7 +790,9 @@ const buildRoadmap = (track, skillLevel, improvementAreas = []) => {
     focus: base.focus,
     summary:
       uniqueAreas.length > 0
-        ? `${base.summary} Prioritize closing gaps in ${uniqueAreas.join(", ")}.`
+        ? `${base.summary} Prioritize closing gaps in ${uniqueAreas.join(
+            ", "
+          )}.`
         : base.summary,
     actionItems: base.actionItems,
   };
@@ -797,7 +808,9 @@ const callOpenAIForQuestions = async (track, questionCount, difficulty) => {
   }
 
   const prompt = `
-Create ${questionCount} multiple choice questions for the ${config.displayName} track.
+Create ${questionCount} multiple choice questions for the ${
+    config.displayName
+  } track.
 
 Context:
 - Difficulty: ${difficulty}
@@ -809,7 +822,9 @@ Requirements:
 - Provide exactly 4 options per question.
 - The correct answer must match one of the options exactly.
 - Include a one sentence explanation.
-- Tag each question with a category chosen from: ${config.categories.join(", ")}.
+- Tag each question with a category chosen from: ${config.categories.join(
+    ", "
+  )}.
 
 Output JSON schema:
 {
@@ -826,9 +841,9 @@ Output JSON schema:
 
 Return ONLY valid JSON.`;
 
-  const response = await client.responses.create({
+  const response = await client.chat.completions.create({
     model: MODEL,
-    input: [
+    messages: [
       {
         role: "system",
         content:
@@ -842,11 +857,15 @@ Return ONLY valid JSON.`;
     response_format: { type: "json_object" },
   });
 
-  if (!response.output_text) {
+  if (
+    !response.choices ||
+    !response.choices[0] ||
+    !response.choices[0].message
+  ) {
     throw new Error("OpenAI did not return any content for the assessment.");
   }
 
-  const parsed = JSON.parse(response.output_text);
+  const parsed = JSON.parse(response.choices[0].message.content);
   if (!parsed?.questions || !Array.isArray(parsed.questions)) {
     throw new Error("OpenAI response missing questions array.");
   }
@@ -894,9 +913,9 @@ Return JSON with this structure:
 If there are no incorrect questions, provide an empty array for improvementAreas.`;
 
   try {
-    const response = await openaiClient.responses.create({
+    const response = await openaiClient.chat.completions.create({
       model: MODEL,
-      input: [
+      messages: [
         {
           role: "system",
           content:
@@ -910,8 +929,13 @@ If there are no incorrect questions, provide an empty array for improvementAreas
       response_format: { type: "json_object" },
     });
 
-    if (!response.output_text) return null;
-    const parsed = JSON.parse(response.output_text);
+    if (
+      !response.choices ||
+      !response.choices[0] ||
+      !response.choices[0].message
+    )
+      return null;
+    const parsed = JSON.parse(response.choices[0].message.content);
 
     if (!parsed.summary || !parsed.improvementAreas) return null;
     return parsed;
@@ -948,10 +972,11 @@ export const generateAssessment = async (req, res) => {
       });
     }
 
-    const cappedDifficulty =
-      ["Beginner", "Intermediate", "Advanced"].includes(difficulty)
-        ? difficulty
-        : "Intermediate";
+    const cappedDifficulty = ["Beginner", "Intermediate", "Advanced"].includes(
+      difficulty
+    )
+      ? difficulty
+      : "Intermediate";
 
     const questions = await callOpenAIForQuestions(
       normalizedTrack,
@@ -1003,10 +1028,7 @@ export const generateAssessment = async (req, res) => {
         statusCode === 500
           ? "Failed to generate assessment. Please try again later."
           : error.message,
-      error:
-        process.env.NODE_ENV === "development"
-          ? error.message
-          : undefined,
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };
@@ -1050,7 +1072,8 @@ export const submitAssessment = async (req, res) => {
     if (assessment.status === "completed") {
       return res.status(400).json({
         success: false,
-        message: "Assessment already submitted. Please generate a new assessment.",
+        message:
+          "Assessment already submitted. Please generate a new assessment.",
       });
     }
 
@@ -1082,8 +1105,7 @@ export const submitAssessment = async (req, res) => {
       );
 
       const isCorrect =
-        userAnswer.trim().toLowerCase() ===
-        correctAnswer.trim().toLowerCase();
+        userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase();
 
       if (isCorrect) {
         correctCount += 1;
@@ -1129,25 +1151,24 @@ export const submitAssessment = async (req, res) => {
       .filter((value, index, arr) => value && arr.indexOf(value) === index)
       .slice(0, 4);
 
-    const feedback =
-      (await callOpenAIForFeedback({
-        track: assessment.track,
-        score,
-        skillLevel,
-        totalQuestions,
-        correctCount,
-        incorrectDetails,
-      })) || {
-        summary:
-          score === 100
-            ? "Phenomenal work! You demonstrated complete mastery on this challenge."
-            : "Solid effort. Let’s focus on the categories where you missed a few questions.",
-        improvementAreas: fallbackImprovementAreas,
-        encouragement:
-          score >= 75
-            ? "Keep pushing — you’re on the brink of mastery!"
-            : "Consistency will pay off. Keep practicing!",
-      };
+    const feedback = (await callOpenAIForFeedback({
+      track: assessment.track,
+      score,
+      skillLevel,
+      totalQuestions,
+      correctCount,
+      incorrectDetails,
+    })) || {
+      summary:
+        score === 100
+          ? "Phenomenal work! You demonstrated complete mastery on this challenge."
+          : "Solid effort. Let’s focus on the categories where you missed a few questions.",
+      improvementAreas: fallbackImprovementAreas,
+      encouragement:
+        score >= 75
+          ? "Keep pushing — you’re on the brink of mastery!"
+          : "Consistency will pay off. Keep practicing!",
+    };
 
     const improvementAreas =
       feedback.improvementAreas && feedback.improvementAreas.length
@@ -1305,4 +1326,3 @@ export const getLatestAssessmentSummary = async (req, res) => {
     });
   }
 };
-

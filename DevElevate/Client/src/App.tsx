@@ -20,6 +20,7 @@ import LearningHub from "./components/LearningHub/LearningHub";
 import Chatbot from "./components/Chatbot/Chatbot";
 import TechFeed from "./components/TechFeed/TechFeed";
 import ResumeBuilder from "./components/ResumeBuilder/ResumeBuilder";
+import CoverLetter from "./components/CoverLetter/CoverLetter";
 import PlacementPrep from "./components/PlacementPrep/PlacementPrep";
 import UserProfile from "./components/Profile/UserProfile";
 import UserSettings from "./components/Settings/UserSettings";
@@ -66,16 +67,15 @@ import FallBackNotes from "./pages/Notes/FallBackNotes.jsx";
 import ReactPattern from "./pages/Notes/ReactPatterns/ReactPattern.jsx";
 import Roadmap from "./pages/RoadmapPage/Roadmap.jsx";
 import UserVideoPage from "./pages/videoPages/VideoPage.js";
+import AiModel from "./pages/AiModel/Ai.tsx";
 import ForgotPass from "./components/Auth/ForgotPass";
 import SearchPage from "./pages/Search/SearchPage";
 import DsaLanding from "./pages/Dsa/DsaLanding";
 import CompanyQuestionsPage from "./pages/Dsa/CompanyQuestionsPage";
 import PracticeProblemsPage from "./pages/Dsa/PracticeProblemsPage";
-// In your App.jsx or routes file
 import ViewNotePage from './pages/Notes/ViewNotePage.jsx';
 import EditNotePage from './pages/Notes/EditNotePage.jsx';
 import ResetPass from "./components/Auth/ResetPass.js";
-// Inside your Routes
 <Route path="/notes/view/:noteId" element={<ViewNotePage />} />
 
 // ✅ AppContent
@@ -187,6 +187,7 @@ const AppContent = () => {
                           element={<CommunityForum />}
                         />
                         <Route path="resume" element={<ResumeBuilder />} />
+                        <Route path="cover-letter" element={<CoverLetter />} />
                         <Route path="placement" element={<PlacementPrep />} />
                         <Route path="placement/dsa" element={<DsaLanding />} />
                         <Route path="placement/dsa/company" element={<CompanyQuestionsPage />} />
@@ -197,6 +198,7 @@ const AppContent = () => {
                         />
                         <Route path="roadmap" element={<Roadmap />} />
                         <Route path="calendar" element={<CalendarView />} />
+                        <Route path="ai-model" element={<AiModel />} />
                         <Route path="premium" element={<PremiumPage />} />
                         <Route path="payment" element={<PaymentPage />} />
                         <Route path="profile" element={<UserProfile />} />

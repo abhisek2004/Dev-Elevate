@@ -263,10 +263,4 @@ app.get('/health', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`PDF Server is running on http://localhost:${PORT}`);
-  console.log('Available endpoints:');
-  console.log('  - /api/pdf/interview-guide');
-  console.log('  - /api/pdf/system-design');
-  console.log('  - /api/pdf/dsa-cheatsheet');
-  console.log('  - /api/pdf/behavioral-questions');
 }); 

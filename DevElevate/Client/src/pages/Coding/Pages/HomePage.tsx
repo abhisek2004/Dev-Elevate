@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Code2, Zap, Trophy, Users, ArrowRight, Play, Star, GitBranch } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useGlobalState } from '../../../contexts/GlobalContext';
 
 const HomePage: React.FC = () => {
+  const { state } = useGlobalState();
   const features = [
     {
       icon: Code2,
@@ -32,7 +34,7 @@ const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+    <div className={`relative min-h-screen py-16 overflow-hidden ${state.darkMode ? 'bg-gradient-to-b from-gray-900 to-black' : 'bg-gradient-to-b from-gray-50 to-gray-100'}`}>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
@@ -41,20 +43,20 @@ const HomePage: React.FC = () => {
           <div className="absolute w-64 h-64 transform -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 blur-3xl bg-cyber-400/10"></div>
         </div>
 
-        <div className="relative px-4 py-24 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div className="relative px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="text-center">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="mb-6 text-5xl font-bold text-white md:text-7xl">
+              <h1 className={`mb-6 text-5xl font-bold md:text-7xl ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
                 Master
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-400 to-neon-500"> Coding</span>
                 <br />
                 Shape the Future
               </h1>
-              <p className="max-w-2xl mx-auto mb-8 text-xl text-gray-300">
+              <p className={`max-w-2xl mx-auto mb-8 text-xl ${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Join millions of developers on DevElevate - the most advanced platform for coding practice,
                 competitive programming, and skill development.
               </p>
@@ -81,19 +83,19 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-gray-800/30">
+      <section className="py-16 bg-gray-800/30">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="mb-16 text-center">
+          <div className="mb-12 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="mb-4 text-4xl font-bold text-white">
+              <h2 className={`mb-4 text-4xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
                 Why Choose DevElevate?
               </h2>
-              <p className="max-w-2xl mx-auto text-xl text-gray-400">
+              <p className={`max-w-2xl mx-auto text-xl ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 Experience the future of coding education with our cutting-edge platform
               </p>
             </motion.div>
@@ -110,12 +112,12 @@ const HomePage: React.FC = () => {
                 whileHover={{ scale: 1.05, y: -10 }}
                 className="group"
               >
-                <div className="h-full p-6 transition-all duration-300 border border-gray-700 rounded-2xl backdrop-blur-sm bg-gray-800/50 hover:border-gray-600">
+                <div className={`h-full p-6 transition-all duration-300 rounded-2xl backdrop-blur-sm ${state.darkMode ? 'border border-gray-700 bg-gray-800/50 hover:border-gray-600' : 'border border-gray-200 bg-white hover:border-gray-300'}`}>
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                     <feature.icon className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="mb-3 text-xl font-semibold text-white">{feature.title}</h3>
-                  <p className="text-gray-400">{feature.description}</p>
+                  <h3 className={`mb-3 text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>{feature.title}</h3>
+                  <p className={`${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{feature.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -124,7 +126,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Code Preview Section */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
             <motion.div
@@ -133,11 +135,11 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="mb-6 text-4xl font-bold text-white">
+              <h2 className={`mb-6 text-4xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
                 Code with
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-400 to-neon-500"> Confidence</span>
               </h2>
-              <p className="mb-8 text-xl text-gray-400">
+              <p className={`mb-8 text-xl ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 Our advanced code editor supports multiple languages with intelligent
                 autocomplete, syntax highlighting, and real-time error detection.
               </p>
@@ -151,7 +153,7 @@ const HomePage: React.FC = () => {
                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-electric-400/20">
                       <item.icon className="w-4 h-4 text-electric-400" />
                     </div>
-                    <span className="text-gray-300">{item.text}</span>
+                    <span className={`${state.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>{item.text}</span>
                   </div>
                 ))}
               </div>
