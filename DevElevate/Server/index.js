@@ -108,6 +108,10 @@ app.use("/api/v1/ai", aiRoutes);
 // Skill Assessment Routes
 app.use("/api/v1/assessments", assessmentRoutes);
 
+// Dashboard Routes
+import dashboardRoutes from "./routes/dashboardRoutes.js";
+app.use("/api/v1/dashboard", dashboardRoutes);
+
 // Learning Routes
 app.use("/api/v1/learning/java", javaRoutes);
 app.use("/api/v1/learning/aiml", aimlRoutes);

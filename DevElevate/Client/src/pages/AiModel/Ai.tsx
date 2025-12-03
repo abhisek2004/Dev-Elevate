@@ -402,6 +402,96 @@ const aiTools = [
     tags: ["Design"],
     color: "from-green-400 to-lime-400",
     icon: Sparkles
+  },
+  {
+    "id": 41,
+    "name": "Suno",
+    "description": "AI music generator — turn lyrics or text prompts into full songs quickly.",
+    "url": "https://suno.com/",
+    "provider": "Suno",
+    "tags": ["Music", "Audio", "Creative"],
+    "color": "from-purple-400 to-indigo-400",
+    "icon": "MusicNote"
+  },
+  {
+    "id": 42,
+    "name": "Soundful",
+    "description": "Generative-AI background music / royalty-free music maker — good for videos, streams, content creators.",
+    "url": "https://soundful.com/",
+    "provider": "Soundful",
+    "tags": ["Music", "Audio", "Content Creation"],
+    "color": "from-blue-400 to-teal-400",
+    "icon": "Headphones"
+  },
+  {
+    "id": 45,
+    "name": "Surfer SEO",
+    "description": "AI-powered content optimization & SEO assistant — helps structure and optimize written content for search engines.",
+    "url": "https://surferseo.com/",
+    "provider": "Surfer",
+    "tags": ["SEO", "Content", "Marketing"],
+    "color": "from-green-400 to-emerald-400",
+    "icon": "GlobeAlt"
+  },
+  {
+    "id": 47,
+    "name": "Midjourney",
+    "description": "AI-based image / art generator — create images from text prompts for creative projects.",
+    "url": "https://www.midjourney.com/",
+    "provider": "Midjourney",
+    "tags": ["Design", "Image", "Art"],
+    "color": "from-violet-400 to-purple-600",
+    "icon": "Photograph"
+  },
+  {
+    "id": 48,
+    "name": "Runway",
+    "description": "AI video & creative-media tool — for video editing, generation, creative content production.",
+    "url": "https://runway.com/",
+    "provider": "Runway",
+    "tags": ["Video", "Content Creation", "Media"],
+    "color": "from-red-400 to-pink-600",
+    "icon": "VideoCamera"
+  },
+  {
+    "id": 49,
+    "name": "AIVA",
+    "description": "AI composer — generate music in multiple styles instantly, usable for background scores or songs.",
+    "url": "https://www.aiva.ai/",
+    "provider": "AIVA",
+    "tags": ["Music", "Audio", "Creative"],
+    "color": "from-indigo-400 to-blue-600",
+    "icon": "MusicNote"
+  },
+  {
+    "id": 50,
+    "name": "ElevenLabs",
+    "description": "AI voice & speech generation — realistic, expressive voice synthesis useful for narration, content voiceovers, podcasts.",
+    "url": "https://elevenlabs.io/",
+    "provider": "ElevenLabs",
+    "tags": ["Audio", "Voice", "Content Creation"],
+    "color": "from-teal-400 to-cyan-600",
+    "icon": "Microphone"
+  },
+  {
+    "id": 51,
+    "name": "LMArena.ai",
+    "description": "Community-driven public arena comparing large language models (LLMs) — let users battle models and vote on best answer; live leaderboard across text, image, code, multimodal models.",
+    "url": "https://lmarena.ai/",
+    "provider": "LMArena",
+    "tags": ["AI Research", "Benchmarking", "Models", "Evaluation"],
+    "color": "from-blue-400 to-indigo-400",
+    "icon": "GlobeAlt"
+  },
+  {
+    "id": 52,
+    "name": "GetMulti.ai",
+    "description": "Platform to run and compare 400+ AI models side-by-side — get multiple model answers for the same prompt and choose what works best.",
+    "url": "https://getmulti.ai/",
+    "provider": "GetMulti",
+    "tags": ["Multi-model", "AI Chat", "Comparison", "Productivity"],
+    "color": "from-blue-400 to-purple-400",
+    "icon": "Sparkles"
   }
 ];
 

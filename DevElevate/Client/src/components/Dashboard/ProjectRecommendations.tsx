@@ -2,55 +2,42 @@ import React, { useState, useEffect } from 'react';
 import { Lightbulb, BookOpen, Clock, Tag } from 'lucide-react';
 import { useGlobalState } from '../../contexts/GlobalContext';
 import { Link } from 'react-router-dom';
+import { fetchDashboardData } from '../../api/dashboardApi';
+import { ProjectRecommendation } from '../../api/dashboardApi';
 
 const ProjectRecommendations: React.FC = () => {
     const { state } = useGlobalState();
-    const [recommendations, setRecommendations] = useState<any[]>([]);
-    const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+    const [recommendations, setRecommendations] = useState<ProjectRecommendation[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    // Auto-refresh daily
+    const loadRecommendations = async () => {
+        try {
+            setLoading(true);
+            const response = await fetchDashboardData();
+            if (response.success) {
+                setRecommendations(response.data.projectRecommendations);
+            } else {
+                setError("Failed to load project recommendations");
+            }
+        } catch (err) {
+            console.error("Error fetching project recommendations:", err);
+            setError("Failed to load project recommendations. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
+        loadRecommendations();
+
+        // Auto-refresh every 24 hours
         const interval = setInterval(() => {
-            setLastUpdated(new Date());
+            loadRecommendations();
         }, 24 * 60 * 60 * 1000); // 24 hours
 
         return () => clearInterval(interval);
     }, []);
-
-    // Mock recommendations - in a real app, this would come from an API
-    useEffect(() => {
-        // Simulate fetching recommendations
-        const mockRecommendations = [
-            {
-                id: '1',
-                title: 'E-commerce Dashboard',
-                description: 'Build a comprehensive dashboard for an online store with sales analytics.',
-                difficulty: 'Intermediate',
-                techStack: ['React', 'Node.js', 'MongoDB'],
-                estimatedTime: '2-3 weeks',
-                tags: ['fullstack', 'dashboard', 'ecommerce']
-            },
-            {
-                id: '2',
-                title: 'Task Management App',
-                description: 'Create a productivity app with drag-and-drop task boards and team collaboration.',
-                difficulty: 'Beginner',
-                techStack: ['React', 'Firebase'],
-                estimatedTime: '1-2 weeks',
-                tags: ['productivity', 'collaboration']
-            },
-            {
-                id: '3',
-                title: 'AI Chat Interface',
-                description: 'Design a modern chat interface integrated with OpenAI API for smart conversations.',
-                difficulty: 'Advanced',
-                techStack: ['React', 'Node.js', 'OpenAI'],
-                estimatedTime: '3-4 weeks',
-                tags: ['ai', 'chatbot', 'api']
-            }
-        ];
-        setRecommendations(mockRecommendations);
-    }, [lastUpdated]);
 
     const getDifficultyColor = (difficulty: string) => {
         switch (difficulty.toLowerCase()) {
@@ -64,6 +51,79 @@ const ProjectRecommendations: React.FC = () => {
                 return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
         }
     };
+
+    if (loading) {
+        return (
+            <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
+                            <Lightbulb className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                            <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                                Project Recommendations
+                            </h3>
+                            <p className={`text-sm ${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                                Loading personalized suggestions...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className="space-y-4">
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className={`p-4 rounded-xl border ${state.darkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+                            <div className="flex items-start justify-between mb-2">
+                                <div className={`h-5 ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded animate-pulse w-2/3`}></div>
+                                <div className={`h-5 w-20 ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded animate-pulse`}></div>
+                            </div>
+                            <div className={`h-4 ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded animate-pulse mb-3`}></div>
+                            <div className="flex flex-wrap gap-2 mb-3">
+                                {[1, 2, 3].map((j) => (
+                                    <div key={j} className={`h-5 w-16 ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded animate-pulse`}></div>
+                                ))}
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <div className={`h-4 w-24 ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded animate-pulse`}></div>
+                                <div className={`h-6 w-20 ${state.darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded animate-pulse`}></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
+                            <Lightbulb className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                            <h3 className={`text-xl font-semibold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
+                                Project Recommendations
+                            </h3>
+                            <p className={`text-sm ${state.darkMode ? 'text-red-400' : 'text-red-600'}`}>
+                                {error}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <button
+                    onClick={loadRecommendations}
+                    className={`mt-4 px-4 py-2 rounded-lg text-sm font-medium ${state.darkMode
+                        ? 'bg-gray-700 text-white hover:bg-gray-600'
+                        : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                        }`}
+                >
+                    Retry
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className={`${state.darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl p-6 border shadow-sm`}>
@@ -82,7 +142,7 @@ const ProjectRecommendations: React.FC = () => {
                     </div>
                 </div>
                 <Link
-                    to="/project-recommender"
+                    to="/projects"
                     className="text-sm font-medium text-blue-500 hover:text-blue-600"
                 >
                     View All
@@ -129,9 +189,9 @@ const ProjectRecommendations: React.FC = () => {
                                     <span>{project.estimatedTime}</span>
                                 </div>
                             </div>
-                            <button className="text-xs font-medium text-blue-500 hover:text-blue-600">
+                            <Link to={`/projects`} className="text-xs font-medium text-blue-500 hover:text-blue-600">
                                 Start Project
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 ))}
@@ -139,7 +199,7 @@ const ProjectRecommendations: React.FC = () => {
 
             <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
                 <Link
-                    to="/project-recommender"
+                    to="/projects"
                     className="flex items-center justify-center w-full gap-2 py-2 text-sm font-medium text-blue-500 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700"
                 >
                     <BookOpen className="w-4 h-4" />
