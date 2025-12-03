@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import axios from "axios";
+import { useGlobalState } from '../../../contexts/GlobalContext';
 
 const languages = [
   { name: "C", id: 104 },
@@ -13,6 +14,7 @@ const languages = [
 ];
 
 const CompilerPage = () => {
+  const { state } = useGlobalState();
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
   const [code, setCode] = useState("");
   const [stdin, setStdin] = useState("");
@@ -61,15 +63,15 @@ const CompilerPage = () => {
   };
 
   return (
-    <div className="min-h-screen py-8 bg-gray-900">
-      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div className={`min-h-screen ${state.darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <div className="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6"
         >
-          <h1 className="mb-2 text-3xl font-bold text-white">Code Compiler</h1>
-          <p className="text-gray-400">
+          <h1 className={`mb-2 text-3xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>Code Compiler</h1>
+          <p className={`${state.darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
             Insert code and run it in various languages
           </p>
         </motion.div>
@@ -79,11 +81,11 @@ const CompilerPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="p-6 mb-8 bg-gray-800 border border-gray-700 rounded-lg"
+          className={`p-4 mb-6 rounded-lg ${state.darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}
         >
           <div className="flex flex-col gap-4 lg:flex-row">
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-300">
+              <label className={`block mb-2 text-sm font-medium ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                 Language
               </label>
               <select
@@ -91,14 +93,14 @@ const CompilerPage = () => {
                 onChange={(e) =>
                   setSelectedLanguage(
                     languages.find((lang) => lang.name === e.target.value) as
-                      | { name: string; id: number }
-                      | { name: string; id: string }
+                    | { name: string; id: number }
+                    | { name: string; id: string }
                   )
                 }
-                className="w-full px-3 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:border-electric-400 focus:outline-none"
+                className={`w-full px-3 py-2 rounded-lg focus:border-electric-400 focus:outline-none ${state.darkMode ? 'text-white bg-gray-700 border border-gray-600' : 'text-gray-900 bg-white border border-gray-300'}`}
               >
                 {languages.map((lang) => (
-                  <option key={lang.name} value={lang.name}>
+                  <option key={lang.name} value={lang.name} className={`${state.darkMode ? 'text-white bg-gray-700' : 'text-gray-900 bg-white'}`}>
                     {lang.name}
                   </option>
                 ))}
@@ -112,41 +114,41 @@ const CompilerPage = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="mb-8"
+          className="mb-6"
         >
-          <div className="p-6 bg-gray-800 border border-gray-700 rounded-lg">
+          <div className={`p-4 rounded-lg ${state.darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}>
             {selectedLanguage.id === "web" ? (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-300">
+                  <label className={`block mb-2 text-sm font-medium ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     HTML
                   </label>
                   <textarea
                     value={htmlCode}
                     onChange={(e) => setHtmlCode(e.target.value)}
-                    className="w-full h-64 p-4 text-white bg-gray-700 border border-gray-600 rounded-lg focus:border-electric-400 focus:outline-none"
+                    className={`w-full h-40 p-4 rounded-lg focus:border-electric-400 focus:outline-none ${state.darkMode ? 'text-white bg-gray-700 border border-gray-600' : 'text-gray-900 bg-white border border-gray-300'}`}
                     placeholder="Enter HTML code..."
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-300">
+                  <label className={`block mb-2 text-sm font-medium ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     CSS
                   </label>
                   <textarea
                     value={cssCode}
                     onChange={(e) => setCssCode(e.target.value)}
-                    className="w-full h-64 p-4 text-white bg-gray-700 border border-gray-600 rounded-lg focus:border-electric-400 focus:outline-none"
+                    className={`w-full h-40 p-4 rounded-lg focus:border-electric-400 focus:outline-none ${state.darkMode ? 'text-white bg-gray-700 border border-gray-600' : 'text-gray-900 bg-white border border-gray-300'}`}
                     placeholder="Enter CSS code..."
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-300">
+                  <label className={`block mb-2 text-sm font-medium ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     JavaScript
                   </label>
                   <textarea
                     value={jsCode}
                     onChange={(e) => setJsCode(e.target.value)}
-                    className="w-full h-64 p-4 text-white bg-gray-700 border border-gray-600 rounded-lg focus:border-electric-400 focus:outline-none"
+                    className={`w-full h-40 p-4 rounded-lg focus:border-electric-400 focus:outline-none ${state.darkMode ? 'text-white bg-gray-700 border border-gray-600' : 'text-gray-900 bg-white border border-gray-300'}`}
                     placeholder="Enter JS code..."
                   />
                 </div>
@@ -154,24 +156,24 @@ const CompilerPage = () => {
             ) : (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-300">
+                  <label className={`block mb-2 text-sm font-medium ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     Code
                   </label>
                   <textarea
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    className="w-full h-64 p-4 text-white bg-gray-700 border border-gray-600 rounded-lg focus:border-electric-400 focus:outline-none"
+                    className={`w-full h-40 p-4 rounded-lg focus:border-electric-400 focus:outline-none ${state.darkMode ? 'text-white bg-gray-700 border border-gray-600' : 'text-gray-900 bg-white border border-gray-300'}`}
                     placeholder="Enter code..."
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-300">
+                  <label className={`block mb-2 text-sm font-medium ${state.darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     Input (stdin)
                   </label>
                   <textarea
                     value={stdin}
                     onChange={(e) => setStdin(e.target.value)}
-                    className="w-full h-64 p-4 text-white bg-gray-700 border border-gray-600 rounded-lg focus:border-electric-400 focus:outline-none"
+                    className={`w-full h-40 p-4 rounded-lg focus:border-electric-400 focus:outline-none ${state.darkMode ? 'text-white bg-gray-700 border border-gray-600' : 'text-gray-900 bg-white border border-gray-300'}`}
                     placeholder="Enter input..."
                   />
                 </div>
@@ -179,7 +181,7 @@ const CompilerPage = () => {
             )}
             <button
               onClick={handleRun}
-              className="flex items-center px-4 py-3 mt-4 space-x-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
+              className={`flex items-center px-4 py-3 mt-4 space-x-2 rounded-lg transition-colors ${state.darkMode ? 'text-white bg-blue-600 hover:bg-blue-700' : 'text-white bg-blue-500 hover:bg-blue-600'}`}
             >
               <CheckCircle className="w-5 h-5" />
               <span>Run Code</span>
@@ -192,9 +194,9 @@ const CompilerPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="p-6 bg-gray-800 border border-gray-700 rounded-lg"
+          className={`p-4 rounded-lg ${state.darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}
         >
-          <h2 className="mb-4 text-xl font-bold text-white">
+          <h2 className={`mb-4 text-xl font-bold ${state.darkMode ? 'text-white' : 'text-gray-900'}`}>
             Output / Preview
           </h2>
           {selectedLanguage.id === "web" ? (
@@ -202,10 +204,10 @@ const CompilerPage = () => {
               srcDoc={srcDoc}
               title="preview"
               sandbox="allow-scripts"
-              className="w-full border border-gray-600 h-96"
+              className={`w-full h-64 ${state.darkMode ? 'border border-gray-600' : 'border border-gray-300'}`}
             />
           ) : (
-            <pre className="p-4 overflow-auto text-white bg-gray-700 rounded-lg">
+            <pre className={`p-4 overflow-auto rounded-lg h-64 ${state.darkMode ? 'text-white bg-gray-700' : 'text-gray-900 bg-gray-100'}`}>
               {output}
             </pre>
           )}

@@ -8,6 +8,7 @@ import NotificationPanel from "./NotificationPanel";
 import { FiActivity, FiBookOpen, FiCalendar, FiCode, FiCpu, FiFileText, FiGlobe, FiHome, FiMessageSquare, FiTarget, FiTrendingUp, FiUsers } from "react-icons/fi";
 import { FaNewspaper, FaRegStickyNote } from "react-icons/fa";
 import { MdLightbulbOutline, MdMap } from "react-icons/md";
+import { Bot } from "lucide-react";
 
 const Sidebar: React.FC = () => {
   const { state } = useGlobalState();
@@ -31,6 +32,7 @@ const Sidebar: React.FC = () => {
     { path: "/resume", icon: FiFileText, label: "Resume Builder" },
     { path: "/placement", icon: FiTarget, label: "Placement Prep" },
     { path: "/projects", icon: MdLightbulbOutline, label: "AI Projects" },
+    { path: "/ai-model", icon: Bot, label: "AI Models" },
     { path: "/roadmap", icon: MdMap, label: "Road Map" },
     { path: "/notes", icon: FaRegStickyNote, label: "Notes" },
     { path: "/calendar", icon: FiCalendar, label: "Calendar" },
@@ -49,8 +51,8 @@ const Sidebar: React.FC = () => {
       {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 w-64 h-screen overflow-y-auto border-r backdrop-blur-md transition-colors duration-200 ${state.darkMode
-            ? "bg-gray-900/90 border-gray-800"
-            : "bg-white border-gray-200"
+          ? "bg-gray-900/90 border-gray-800"
+          : "bg-white border-gray-200"
           }`}
       >
         <div className="flex flex-col h-full p-4 space-y-6">
@@ -63,10 +65,10 @@ const Sidebar: React.FC = () => {
                   key={item.path}
                   to={item.path}
                   className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive(item.path)
-                      ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
-                      : state.darkMode
-                        ? "text-gray-300 hover:text-white hover:bg-gray-800"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                    : state.darkMode
+                      ? "text-gray-300 hover:text-white hover:bg-gray-800"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                     }`}
                 >
                   <Icon size={18} />
