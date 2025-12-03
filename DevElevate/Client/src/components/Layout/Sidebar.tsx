@@ -16,8 +16,6 @@ const Sidebar: React.FC = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
-
-
   const navItems = [
     { path: "/dashboard", icon: FiHome, label: "Dashboard" },
     { path: "/learning", icon: FiBookOpen, label: "Learning Hub" },
@@ -30,6 +28,7 @@ const Sidebar: React.FC = () => {
     { path: "/news", icon: FaNewspaper, label: "Tech Feed" },
     { path: "/community", icon: FiGlobe, label: "Community" },
     { path: "/resume", icon: FiFileText, label: "Resume Builder" },
+    { path: "/cover-letter", icon: FiFileText, label: "Cover Letter" },
     { path: "/placement", icon: FiTarget, label: "Placement Prep" },
     { path: "/projects", icon: MdLightbulbOutline, label: "AI Projects" },
     { path: "/ai-model", icon: Bot, label: "AI Models" },
@@ -57,7 +56,7 @@ const Sidebar: React.FC = () => {
       >
         <div className="flex flex-col h-full p-4 space-y-6">
           {/* Navigation Items */}
-          <div className="flex flex-col space-y-1 flex-1 overflow-y-auto pb-20 pr-2 overscroll-contain">
+          <div className="flex flex-col flex-1 pb-20 pr-2 space-y-1 overflow-y-auto overscroll-contain">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
