@@ -196,7 +196,7 @@ Click the link below to explore the complete guide:
 
 ### 🔐 **Final Reminder:**
 
-➡️ You **must register first** (as either user or admin) to access protected pages.
+➡️ You **must register first** (as user) to access protected pages.
 🚫 **Do not change or delete any existing code** not related to your issue.
 
 ❗ If your PR alters core logic without a valid reason, it **will not be merged**.
