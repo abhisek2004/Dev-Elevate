@@ -37,7 +37,7 @@
     "express": "^5.2.0",
     "firebase": "^12.4.0",
     "framer-motion": "^12.23.24",
-    "jspdf": "^3.0.1",
+    "jspdf": "^4.0.0",
     "lucide-react": "^0.344.0",
     "mathjs": "^14.7.0",
     "monaco-editor": "^0.53.0",
