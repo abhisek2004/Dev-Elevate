@@ -27,7 +27,7 @@
     "mongodb": "^6.20.0",
     "mongoose": "^8.16.4",
     "multer": "^2.0.2",
-    "nodemailer": "^7.0.5",
+    "nodemailer": "^8.0.5",
     "nodemon": "^3.1.10",
     "openai": "^4.104.0",
     "pdfkit": "^0.17.1",
